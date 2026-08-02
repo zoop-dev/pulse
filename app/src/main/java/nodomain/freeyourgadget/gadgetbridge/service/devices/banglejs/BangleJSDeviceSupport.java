@@ -676,7 +676,7 @@ public class BangleJSDeviceSupport extends AbstractBTLESingleDeviceSupport {
             case SleepAsAndroidAction.SHOW_NOTIFICATION:
                 NotificationSpec notificationSpec = new NotificationSpec();
                 notificationSpec.title = extras.getString("TITLE");
-                notificationSpec.body = extras.getString("BODY");
+                notificationSpec.body = extras.getString("TEXT");
                 this.onNotification(notificationSpec);
                 break;
             case SleepAsAndroidAction.UPDATE_ALARM:

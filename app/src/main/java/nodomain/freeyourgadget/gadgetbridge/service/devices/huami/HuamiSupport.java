@@ -4164,7 +4164,7 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
             case SleepAsAndroidAction.SHOW_NOTIFICATION: {
                 NotificationSpec spec = new NotificationSpec();
                 spec.title = extras.getString("TITLE");
-                spec.body = extras.getString("BODY");
+                spec.body = extras.getString("TEXT");
                 onNotification(spec);
                 break;
             }

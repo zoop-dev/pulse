@@ -741,7 +741,7 @@ public class ZeppOsSupport extends AbstractDeviceSupport
             case SleepAsAndroidAction.SHOW_NOTIFICATION:
                 NotificationSpec notificationSpec = new NotificationSpec();
                 notificationSpec.title = extras.getString("TITLE");
-                notificationSpec.body = extras.getString("BODY");
+                notificationSpec.body = extras.getString("TEXT");
                 notificationService.sendNotification(notificationSpec);
                 break;
             // Received when the app updates an alarm (Snoozing included too)

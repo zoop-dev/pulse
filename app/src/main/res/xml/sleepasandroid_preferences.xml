@@ -81,7 +81,7 @@
         </SwitchPreferenceCompat>
         <SwitchPreferenceCompat
             android:key="pref_key_sleepasandroid_feat_spo2"
-            android:title="@string/pref_sleepasandroid_feat_spo2"
+            android:title="@string/menuitem_spo2"
             app:iconSpaceReserved="false"
             android:defaultValue="true"
             android:enabled="false">

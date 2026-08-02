@@ -978,7 +978,7 @@
     <string name="prefs_relaxation_reminder_description">Vibrate the band to notify you if the stress value is higher than 80</string>
     <string name="prefs_spo2_monitoring_title">Blood Oxygen Monitoring</string>
     <string name="prefs_spo2_monitoring_description">Automatically monitor the blood oxygen levels throughout the day</string>
-    <string name="prefs_spo2_alert_threshold">SPO2 alert threshold</string>
+    <string name="prefs_spo2_alert_threshold">SpO2 alert threshold</string>
     <string name="prefs_activity_monitoring_title">Activity monitoring</string>
     <string name="prefs_activity_monitoring_description">Automatically increase the heart rate detection frequency when the band detects physical exercise, to increase heart rate capture accuracy.</string>
     <string name="dbaccess_error_executing">Error executing \"%1$s\"</string>
@@ -4365,9 +4365,8 @@
     <string name="pref_sleepasandroid_feat_heartrate">Heart rate</string>
     <string name="pref_sleepasandroid_feat_heart_rr_intervals">R-R Intervals</string>
     <string name="pref_sleepasandroid_feat_oximetry">Oximetry</string>
-    <string name="pref_sleepasandroid_feat_spo2">SPO2</string>
-    <string name="pref_sleepasandroid_feat_spo2_autofetch_only_summary">This device only provides SPO2 via periodic auto-fetch, not live readings</string>
-    <string name="pref_sleepasandroid_spo2_autofetch">SPO2 Auto-fetch Settings</string>
+    <string name="pref_sleepasandroid_feat_spo2_autofetch_only_summary">This device only provides SpO2 via periodic auto-fetch, not live readings</string>
+    <string name="pref_sleepasandroid_spo2_autofetch">SpO2 Auto-fetch Settings</string>
     <string name="pref_sleepasandroid_spo2_autofetch_interval">Fetch interval (seconds)</string>
     <string name="pref_title_huawei_account">Huawei Account</string>
     <string name="pref_summary_huawei_account">Huawei account used in pairing process. Setting it allows to pair without factory reset.</string>

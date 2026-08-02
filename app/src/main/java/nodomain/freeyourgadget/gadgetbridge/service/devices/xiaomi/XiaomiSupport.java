@@ -517,7 +517,7 @@ public class XiaomiSupport extends AbstractDeviceSupport {
             case SleepAsAndroidAction.SHOW_NOTIFICATION: {
                 NotificationSpec spec = new NotificationSpec();
                 spec.title = extras.getString("TITLE");
-                spec.body = extras.getString("BODY");
+                spec.body = extras.getString("TEXT");
                 notificationService.onNotification(spec);
                 break;
             }

@@ -1112,7 +1112,7 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
             case SleepAsAndroidAction.SHOW_NOTIFICATION: {
                 final NotificationSpec spec = new NotificationSpec();
                 spec.title = extras.getString("TITLE");
-                spec.body = extras.getString("BODY");
+                spec.body = extras.getString("TEXT");
                 onNotification(spec);
                 break;
             }
