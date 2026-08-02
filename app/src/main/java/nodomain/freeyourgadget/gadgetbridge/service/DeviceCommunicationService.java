@@ -34,7 +34,6 @@ import static nodomain.freeyourgadget.gadgetbridge.model.DeviceService.EXTRA_CON
 import static nodomain.freeyourgadget.gadgetbridge.model.DeviceService.EXTRA_NOTIFICATION_ID;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.ActivityManager;
 import android.app.Service;
 import android.bluetooth.BluetoothAdapter;
@@ -46,13 +45,10 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ServiceInfo;
-import android.media.AudioManager;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
-import android.util.Pair;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -66,12 +62,10 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.Stack;
 
 import nodomain.freeyourgadget.gadgetbridge.BuildConfig;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
@@ -79,37 +73,10 @@ import nodomain.freeyourgadget.gadgetbridge.GBException;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.HeartRateUtils;
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
-import nodomain.freeyourgadget.gadgetbridge.externalevents.AlarmClockReceiver;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.BluetoothConnectReceiver;
-import nodomain.freeyourgadget.gadgetbridge.externalevents.BluetoothPairingRequestReceiver;
-import nodomain.freeyourgadget.gadgetbridge.externalevents.CMWeatherReceiver;
-import nodomain.freeyourgadget.gadgetbridge.externalevents.CalendarReceiver;
-import nodomain.freeyourgadget.gadgetbridge.externalevents.DeviceAlarmReceiver;
-import nodomain.freeyourgadget.gadgetbridge.externalevents.DeviceSettingsReceiver;
-import nodomain.freeyourgadget.gadgetbridge.externalevents.GlobalSettingsReceiver;
-import nodomain.freeyourgadget.gadgetbridge.externalevents.HrvCacheInvalidationReceiver;
-import nodomain.freeyourgadget.gadgetbridge.externalevents.IntentApiReceiver;
-import nodomain.freeyourgadget.gadgetbridge.externalevents.KeyMissingReceiver;
-import nodomain.freeyourgadget.gadgetbridge.externalevents.LineageOsWeatherReceiver;
-import nodomain.freeyourgadget.gadgetbridge.externalevents.MusicPlaybackReceiver;
-import nodomain.freeyourgadget.gadgetbridge.externalevents.NewDataReceiver;
-import nodomain.freeyourgadget.gadgetbridge.externalevents.OmniJawsObserver;
-import nodomain.freeyourgadget.gadgetbridge.externalevents.OsmandEventReceiver;
-import nodomain.freeyourgadget.gadgetbridge.externalevents.PebbleReceiver;
-import nodomain.freeyourgadget.gadgetbridge.externalevents.PhoneCallReceiver;
-import nodomain.freeyourgadget.gadgetbridge.externalevents.SMSReceiver;
-import nodomain.freeyourgadget.gadgetbridge.externalevents.SilentModeReceiver;
-import nodomain.freeyourgadget.gadgetbridge.externalevents.TimeChangeReceiver;
-import nodomain.freeyourgadget.gadgetbridge.externalevents.TinyWeatherForecastGermanyReceiver;
-import nodomain.freeyourgadget.gadgetbridge.externalevents.VolumeChangeReceiver;
-import nodomain.freeyourgadget.gadgetbridge.externalevents.comaps.CoMapsNavigationReceiver;
-import nodomain.freeyourgadget.gadgetbridge.externalevents.comaps.CoMapsNavigationReceiverFactory;
-import nodomain.freeyourgadget.gadgetbridge.externalevents.gps.GBLocationService;
-import nodomain.freeyourgadget.gadgetbridge.externalevents.sleepasandroid.SleepAsAndroidReceiver;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLEScanService;
 import nodomain.freeyourgadget.gadgetbridge.service.receivers.AutoConnectIntervalReceiver;
-import nodomain.freeyourgadget.gadgetbridge.service.receivers.GBAutoFetchReceiver;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.GBPrefs;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
@@ -145,44 +112,6 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
         }
     }
 
-    private enum Feature {
-        WEATHER,
-        DATA_FETCHING,
-        CALENDAR,
-        MUSIC_INFO,
-        NAVIGATION,
-        SLEEP_AS_ANDROID,
-    }
-
-    private static class FeatureSet {
-        private final Set<Feature> features = EnumSet.noneOf(Feature.class);
-
-        public boolean supports(final Feature feature) {
-            return features.contains(feature);
-        }
-
-        public void logicalOr(final DeviceCoordinator operand, final GBDevice device) {
-            if (operand.supportsCalendarEvents(device)) {
-                features.add(Feature.CALENDAR);
-            }
-            if (operand.supportsWeather(device)) {
-                features.add(Feature.WEATHER);
-            }
-            if (operand.supportsDataFetching(device)) {
-                features.add(Feature.DATA_FETCHING);
-            }
-            if (operand.supportsMusicInfo(device)) {
-                features.add(Feature.MUSIC_INFO);
-            }
-            if (operand.supportsNavigation(device)) {
-                features.add(Feature.NAVIGATION);
-            }
-            if (operand.supportsSleepAsAndroid(device)) {
-                features.add(Feature.SLEEP_AS_ANDROID);
-            }
-        }
-    }
-
     public static class DeviceNotFoundException extends GBException {
         private final String address;
 
@@ -202,60 +131,16 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
     }
 
     private static final Logger LOG = LoggerFactory.getLogger(DeviceCommunicationService.class);
-    @SuppressLint("StaticFieldLeak") // only used for test cases
-    private static DeviceSupportFactory DEVICE_SUPPORT_FACTORY = null;
 
     private DeviceSupportFactory mFactory;
     private final ArrayList<DeviceStruct> deviceStructs = new ArrayList<>(1);
     private final HashMap<String, ArrayList<Intent>> cachedNotifications = new HashMap<>();
-    private boolean mReceiversEnabled = false;
-    private FeatureSet mCurrentFeatureSet = null;
+    private DeviceReceiversManager deviceReceiversManager;
 
-    private PhoneCallReceiver mPhoneCallReceiver = null;
-    private SMSReceiver mSMSReceiver = null;
-    private PebbleReceiver mPebbleReceiver = null;
-    private MusicPlaybackReceiver mMusicPlaybackReceiver = null;
-    private TimeChangeReceiver mTimeChangeReceiver = null;
     private BluetoothConnectReceiver mBlueToothConnectReceiver = null;
-    private KeyMissingReceiver mKeyMissingReceiver = null;
-    private BluetoothPairingRequestReceiver mBlueToothPairingRequestReceiver = null;
-    private AlarmClockReceiver mAlarmClockReceiver = null;
-    private SilentModeReceiver mSilentModeReceiver = null;
-    private GBAutoFetchReceiver mGBAutoFetchReceiver = null;
     private AutoConnectIntervalReceiver mAutoConnectIntervalReceiver = null;
 
-    private VolumeChangeReceiver mVolumeChangeReceiver = null;
-    private HrvCacheInvalidationReceiver mHrvCacheInvalidationReceiver = null;
-    private NewDataReceiver mNewDataReceiver = null;
-
-    private final List<CalendarReceiver> mCalendarReceiver = new ArrayList<>();
-    private CMWeatherReceiver mCMWeatherReceiver = null;
-    private LineageOsWeatherReceiver mLineageOsWeatherReceiver = null;
-    private TinyWeatherForecastGermanyReceiver mTinyWeatherForecastGermanyReceiver = null;
-    private OmniJawsObserver mOmniJawsObserver = null;
-
-    private final Stack<BroadcastReceiver> globalReceivers = new Stack<>();
-    private GBLocationService locationService = null;
-
-    private OsmandEventReceiver mOsmandAidlHelper = null;
-    private final List<CoMapsNavigationReceiver> mCoMapsNavigationReceivers = new ArrayList<>();
-
-    private SleepAsAndroidReceiver mSleepAsAndroidReceiver = null;
-
-    private HashMap<String, Long> deviceLastScannedTimestamps = new HashMap<>();
-
-    private final String[] mMusicActions = {
-            "com.android.music.metachanged",
-            "com.android.music.playstatechanged",
-            "com.android.music.queuechanged",
-            "com.android.music.playbackcomplete",
-            "net.sourceforge.subsonic.androidapp.EVENT_META_CHANGED",
-            "com.maxmpz.audioplayer.TPOS_SYNC",
-            "com.maxmpz.audioplayer.STATUS_CHANGED",
-            "com.maxmpz.audioplayer.PLAYING_MODE_CHANGED",
-            "com.spotify.music.metadatachanged",
-            "com.spotify.music.playbackstatechanged"
-    };
+    private final HashMap<String, Long> deviceLastScannedTimestamps = new HashMap<>();
 
     private final int NOTIFICATIONS_CACHE_MAX = 10;  // maximum amount of notifications to cache per device while disconnected
     private boolean allowBluetoothIntentApi = false;
@@ -333,16 +218,6 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
             }
         }
     };
-
-    /**
-     * For testing!
-     *
-     * @param factory
-     */
-    @SuppressWarnings("JavaDoc")
-    public static void setDeviceSupportFactory(DeviceSupportFactory factory) {
-        DEVICE_SUPPORT_FACTORY = factory;
-    }
 
     public static boolean isRunning(final Context context) {
         final ActivityManager manager = (ActivityManager) context.getSystemService(ACTIVITY_SERVICE);
@@ -449,7 +324,7 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
         boolean anyDeviceInitialized = false;
         List<GBDevice> devicesWithCalendar = new ArrayList<>();
 
-        FeatureSet features = new FeatureSet();
+        DeviceReceiversManager.FeatureSet features = new DeviceReceiversManager.FeatureSet();
 
         for (DeviceStruct struct : deviceStructs) {
             final GBDevice device = struct.getDevice();
@@ -469,13 +344,14 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
                 }
             }
         }
-        setReceiversEnableState(enableReceivers, anyDeviceInitialized, features, devicesWithCalendar);
+        deviceReceiversManager.setReceiversEnableState(enableReceivers, anyDeviceInitialized, features, devicesWithCalendar);
     }
 
     private void registerInternalReceivers() {
         IntentFilter localFilter = new IntentFilter();
         localFilter.addAction(GBDevice.ACTION_DEVICE_CHANGED);
         localFilter.addAction(BLEScanService.EVENT_DEVICE_FOUND);
+        //noinspection deprecation
         LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver, localFilter);
     }
 
@@ -491,40 +367,15 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
         bluetoothCommandFilter.addAction(API_LEGACY_COMMAND_BLUETOOTH_DISCONNECT);
         ContextCompat.registerReceiver(this, bluetoothCommandReceiver, bluetoothCommandFilter, ContextCompat.RECEIVER_EXPORTED);
 
-        if (getPrefs().getBoolean("intent_api_allow_global_settings", false)) {
-            final GlobalSettingsReceiver globalSettingsReceiver = new GlobalSettingsReceiver();
-            final IntentFilter globalSettingsIntentFilter = new IntentFilter();
-            globalSettingsIntentFilter.addAction(GlobalSettingsReceiver.COMMAND);
-            ContextCompat.registerReceiver(this, globalSettingsReceiver, globalSettingsIntentFilter, ContextCompat.RECEIVER_EXPORTED);
-            globalReceivers.add(globalSettingsReceiver);
-        }
-
-        final DeviceSettingsReceiver deviceSettingsReceiver = new DeviceSettingsReceiver();
-        final IntentFilter deviceSettingsIntentFilter = new IntentFilter();
-        deviceSettingsIntentFilter.addAction(DeviceSettingsReceiver.COMMAND);
-        ContextCompat.registerReceiver(this, deviceSettingsReceiver, deviceSettingsIntentFilter, ContextCompat.RECEIVER_EXPORTED);
-        globalReceivers.add(deviceSettingsReceiver);
-
-        final DeviceAlarmReceiver deviceAlarmReceiver = new DeviceAlarmReceiver();
-        ContextCompat.registerReceiver(this, deviceAlarmReceiver, deviceAlarmReceiver.buildFilter(), ContextCompat.RECEIVER_EXPORTED);
-        globalReceivers.add(deviceAlarmReceiver);
-
-        final IntentApiReceiver intentApiReceiver = new IntentApiReceiver();
-        ContextCompat.registerReceiver(this, intentApiReceiver, intentApiReceiver.buildFilter(), ContextCompat.RECEIVER_EXPORTED);
-        globalReceivers.add(intentApiReceiver);
-
-        mKeyMissingReceiver = new KeyMissingReceiver();
-        ContextCompat.registerReceiver(this, mKeyMissingReceiver, new IntentFilter(KeyMissingReceiver.ACTION_KEY_MISSING), ContextCompat.RECEIVER_EXPORTED);
-
-        mHrvCacheInvalidationReceiver = new HrvCacheInvalidationReceiver();
-        mHrvCacheInvalidationReceiver.registerReceiver(this);
+        deviceReceiversManager.registerReceivers();
     }
 
     @Override
     public void onCreate() {
         LOG.debug("DeviceCommunicationService is being created");
         super.onCreate();
-        mFactory = getDeviceSupportFactory();
+        mFactory = new DeviceSupportFactory(this);
+        deviceReceiversManager = new DeviceReceiversManager(this);
 
         registerInternalReceivers();
         registerExternalReceivers();
@@ -560,13 +411,6 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
             createDeviceStruct(device);
             device.setUpdateState(GBDevice.State.WAITING_FOR_SCAN, this);
         }
-    }
-
-    private DeviceSupportFactory getDeviceSupportFactory() {
-        if (DEVICE_SUPPORT_FACTORY != null) {
-            return DEVICE_SUPPORT_FACTORY;
-        }
-        return new DeviceSupportFactory(this);
     }
 
     private DeviceStruct createDeviceStruct(GBDevice target) {
@@ -762,7 +606,6 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
 
         LOG.debug("Service startcommand: {}{}", action, targetDevice != null ? " (" + targetDevice.getAddress() + ")" : "");
 
-        Prefs prefs = getPrefs();
         switch (action) {
             case ACTION_CONNECT:
                 boolean firstTime = intent.getBooleanExtra(EXTRA_CONNECT_FIRST_TIME, false);
@@ -954,237 +797,6 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
         return false;
     }
 
-    private boolean deviceHasCalendarReceiverRegistered(GBDevice device) {
-        for (CalendarReceiver receiver : mCalendarReceiver) {
-            if (receiver.getGBDevice().equals(device)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private void setReceiversEnableState(boolean enable, boolean initialized, FeatureSet features, List<GBDevice> devicesWithCalendar) {
-        LOG.info("Setting broadcast receivers to: " + enable);
-
-        if (enable && features == null) {
-            throw new RuntimeException("features cannot be null when enabling receivers");
-        }
-
-        mReceiversEnabled = enable;
-        mCurrentFeatureSet = features;
-
-        if (enable && initialized && features.supports(Feature.CALENDAR)) {
-            for (GBDevice deviceWithCalendar : devicesWithCalendar) {
-                if (!deviceHasCalendarReceiverRegistered(deviceWithCalendar)) {
-                    if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CALENDAR) == PackageManager.PERMISSION_GRANTED) {
-                        CalendarReceiver receiver = new CalendarReceiver(this, deviceWithCalendar);
-                        receiver.registerBroadcastReceivers();
-                        mCalendarReceiver.add(receiver);
-                    }
-                }
-            }
-        } else {
-            for (CalendarReceiver registeredReceiver : mCalendarReceiver) {
-                registeredReceiver.dispose();
-            }
-            mCalendarReceiver.clear();
-        }
-
-        if (enable) {
-            if (mPhoneCallReceiver == null) {
-                mPhoneCallReceiver = new PhoneCallReceiver();
-                IntentFilter filter = new IntentFilter();
-                filter.addAction("android.intent.action.PHONE_STATE");
-                filter.addAction("android.intent.action.NEW_OUTGOING_CALL");
-                filter.addAction("nodomain.freeyourgadget.gadgetbridge.MUTE_CALL");
-                ContextCompat.registerReceiver(this, mPhoneCallReceiver, filter, ContextCompat.RECEIVER_EXPORTED);
-            }
-            if (mSMSReceiver == null) {
-                mSMSReceiver = new SMSReceiver();
-                ContextCompat.registerReceiver(this, mSMSReceiver, new IntentFilter("android.provider.Telephony.SMS_RECEIVED"), ContextCompat.RECEIVER_EXPORTED);
-            }
-            if (mPebbleReceiver == null) {
-                mPebbleReceiver = new PebbleReceiver();
-                ContextCompat.registerReceiver(this, mPebbleReceiver, new IntentFilter("com.getpebble.action.SEND_NOTIFICATION"), ContextCompat.RECEIVER_EXPORTED);
-            }
-            if (mMusicPlaybackReceiver == null && features.supports(Feature.MUSIC_INFO)) {
-                mMusicPlaybackReceiver = new MusicPlaybackReceiver();
-                IntentFilter filter = new IntentFilter();
-                for (String action : mMusicActions) {
-                    filter.addAction(action);
-                }
-                ContextCompat.registerReceiver(this, mMusicPlaybackReceiver, filter, ContextCompat.RECEIVER_EXPORTED);
-            }
-            if (mVolumeChangeReceiver == null && features.supports(Feature.MUSIC_INFO)) {
-                mVolumeChangeReceiver = new VolumeChangeReceiver();
-                mVolumeChangeReceiver.registerReceiver(this);
-            }
-            if (mNewDataReceiver == null) {
-                mNewDataReceiver = new NewDataReceiver();
-                mNewDataReceiver.registerReceiver(this);
-            }
-            if (mTimeChangeReceiver == null) {
-                mTimeChangeReceiver = new TimeChangeReceiver();
-                IntentFilter filter = new IntentFilter();
-                filter.addAction("android.intent.action.TIME_SET");
-                filter.addAction("android.intent.action.TIMEZONE_CHANGED");
-                filter.addAction(TimeChangeReceiver.ACTION_DST_CHANGED_OR_PERIODIC_SYNC);
-                ContextCompat.registerReceiver(this, mTimeChangeReceiver, filter, ContextCompat.RECEIVER_EXPORTED);
-                // Ensure alarm is scheduled after registering broadcast receiver
-                // (this is important in case receiver was unregistered when the previous alarm arrived).
-                TimeChangeReceiver.ifEnabledScheduleNextDstChangeOrPeriodicSync(this);
-            }
-            if (mBlueToothPairingRequestReceiver == null) {
-                mBlueToothPairingRequestReceiver = new BluetoothPairingRequestReceiver(this);
-                ContextCompat.registerReceiver(this, mBlueToothPairingRequestReceiver, new IntentFilter(BluetoothDevice.ACTION_PAIRING_REQUEST), ContextCompat.RECEIVER_EXPORTED);
-            }
-            if (mAlarmClockReceiver == null) {
-                mAlarmClockReceiver = new AlarmClockReceiver();
-                IntentFilter filter = new IntentFilter();
-                filter.addAction(AlarmClockReceiver.ALARM_ALERT_ACTION);
-                filter.addAction(AlarmClockReceiver.ALARM_DONE_ACTION);
-                filter.addAction(AlarmClockReceiver.GOOGLE_CLOCK_ALARM_ALERT_ACTION);
-                filter.addAction(AlarmClockReceiver.GOOGLE_CLOCK_ALARM_DONE_ACTION);
-                ContextCompat.registerReceiver(this, mAlarmClockReceiver, filter, ContextCompat.RECEIVER_EXPORTED);
-            }
-
-            if (mSilentModeReceiver == null) {
-                mSilentModeReceiver = new SilentModeReceiver();
-                IntentFilter filter = new IntentFilter();
-                filter.addAction(AudioManager.RINGER_MODE_CHANGED_ACTION);
-                ContextCompat.registerReceiver(this, mSilentModeReceiver, filter, ContextCompat.RECEIVER_EXPORTED);
-            }
-
-            if (locationService == null) {
-                locationService = new GBLocationService(this);
-                LocalBroadcastManager.getInstance(this).registerReceiver(locationService, locationService.buildFilter());
-            }
-
-            if (mOsmandAidlHelper == null && features.supports(Feature.NAVIGATION)) {
-                mOsmandAidlHelper = new OsmandEventReceiver(this.getApplication());
-            }
-
-            if (features.supports(Feature.NAVIGATION) && getPrefs().getBoolean(GBPrefs.NAVIGATION_APP_COMAPS, false)) {
-                for (Pair<Uri, CoMapsNavigationReceiver> pair : CoMapsNavigationReceiverFactory.createCoMapsNavigationReceiversForApplication(this.getApplication())) {
-                    getContentResolver().registerContentObserver(pair.first, false, pair.second);
-                    mCoMapsNavigationReceivers.add(pair.second);
-                }
-            }
-
-            // Weather receivers
-            if (features.supports(Feature.WEATHER)) {
-                if (GBApplication.isRunningOreoOrLater()) {
-                    if (mLineageOsWeatherReceiver == null) {
-                        mLineageOsWeatherReceiver = new LineageOsWeatherReceiver();
-                        ContextCompat.registerReceiver(this, mLineageOsWeatherReceiver, new IntentFilter("GB_UPDATE_WEATHER"), ContextCompat.RECEIVER_EXPORTED);
-                    }
-                } else {
-                    if (mCMWeatherReceiver == null) {
-                        mCMWeatherReceiver = new CMWeatherReceiver();
-                        ContextCompat.registerReceiver(this, mCMWeatherReceiver, new IntentFilter("GB_UPDATE_WEATHER"), ContextCompat.RECEIVER_EXPORTED);
-                    }
-                }
-                if (mTinyWeatherForecastGermanyReceiver == null) {
-                    mTinyWeatherForecastGermanyReceiver = new TinyWeatherForecastGermanyReceiver();
-                    ContextCompat.registerReceiver(this, mTinyWeatherForecastGermanyReceiver, new IntentFilter("de.kaffeemitkoffein.broadcast.WEATHERDATA"), ContextCompat.RECEIVER_EXPORTED);
-                }
-                if (mOmniJawsObserver == null) {
-                    try {
-                        mOmniJawsObserver = new OmniJawsObserver(new Handler());
-                        getContentResolver().registerContentObserver(OmniJawsObserver.WEATHER_URI, true, mOmniJawsObserver);
-                    } catch (PackageManager.NameNotFoundException e) {
-                        //Nothing wrong, it just means we're not running on omnirom.
-                    }
-                }
-            }
-
-            if (features.supports(Feature.SLEEP_AS_ANDROID)) {
-                if (mSleepAsAndroidReceiver == null) {
-                    mSleepAsAndroidReceiver = new SleepAsAndroidReceiver();
-                    ContextCompat.registerReceiver(this, mSleepAsAndroidReceiver, mSleepAsAndroidReceiver.getIntentFilter(), ContextCompat.RECEIVER_EXPORTED);
-                }
-            }
-
-            if (features.supports(Feature.DATA_FETCHING) && mGBAutoFetchReceiver == null) {
-                mGBAutoFetchReceiver = new GBAutoFetchReceiver();
-                ContextCompat.registerReceiver(this, mGBAutoFetchReceiver, new IntentFilter("android.intent.action.USER_PRESENT"), ContextCompat.RECEIVER_EXPORTED);
-            }
-        } else {
-            if (mPhoneCallReceiver != null) {
-                unregisterReceiver(mPhoneCallReceiver);
-                mPhoneCallReceiver = null;
-            }
-            if (mSMSReceiver != null) {
-                unregisterReceiver(mSMSReceiver);
-                mSMSReceiver = null;
-            }
-            if (mPebbleReceiver != null) {
-                unregisterReceiver(mPebbleReceiver);
-                mPebbleReceiver = null;
-            }
-            if (mMusicPlaybackReceiver != null) {
-                unregisterReceiver(mMusicPlaybackReceiver);
-                mMusicPlaybackReceiver = null;
-            }
-            if (mVolumeChangeReceiver != null) {
-                mVolumeChangeReceiver.unregisterReceiver();
-                mVolumeChangeReceiver = null;
-            }
-            if (mTimeChangeReceiver != null) {
-                unregisterReceiver(mTimeChangeReceiver);
-                mTimeChangeReceiver = null;
-            }
-
-            if (mBlueToothPairingRequestReceiver != null) {
-                unregisterReceiver(mBlueToothPairingRequestReceiver);
-                mBlueToothPairingRequestReceiver = null;
-            }
-            if (mAlarmClockReceiver != null) {
-                unregisterReceiver(mAlarmClockReceiver);
-                mAlarmClockReceiver = null;
-            }
-            if (mSilentModeReceiver != null) {
-                unregisterReceiver(mSilentModeReceiver);
-                mSilentModeReceiver = null;
-            }
-            if (locationService != null) {
-                LocalBroadcastManager.getInstance(this).unregisterReceiver(locationService);
-                locationService.stopAll();
-                locationService = null;
-            }
-            if (mCMWeatherReceiver != null) {
-                unregisterReceiver(mCMWeatherReceiver);
-                mCMWeatherReceiver = null;
-            }
-            if (mLineageOsWeatherReceiver != null) {
-                unregisterReceiver(mLineageOsWeatherReceiver);
-                mLineageOsWeatherReceiver = null;
-            }
-            if (mOmniJawsObserver != null) {
-                getContentResolver().unregisterContentObserver(mOmniJawsObserver);
-                mOmniJawsObserver = null;
-            }
-            if (mTinyWeatherForecastGermanyReceiver != null) {
-                unregisterReceiver(mTinyWeatherForecastGermanyReceiver);
-                mTinyWeatherForecastGermanyReceiver = null;
-            }
-            if (mOsmandAidlHelper != null) {
-                mOsmandAidlHelper.cleanupResources();
-                mOsmandAidlHelper = null;
-            }
-            mCoMapsNavigationReceivers.forEach(getContentResolver()::unregisterContentObserver);
-            mCoMapsNavigationReceivers.clear();
-            if (mGBAutoFetchReceiver != null) {
-                unregisterReceiver(mGBAutoFetchReceiver);
-                mGBAutoFetchReceiver = null;
-            }
-            if (mSleepAsAndroidReceiver != null) {
-                unregisterReceiver(mSleepAsAndroidReceiver);
-                mSleepAsAndroidReceiver = null;
-            }
-        }
-    }
-
     private void sendCachedNotifications(GBDevice device) {
         ArrayList<Intent> notifCache = cachedNotifications.get(device.getAddress());
         if (notifCache == null) return;
@@ -1207,7 +819,7 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
         super.onDestroy();
 
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mReceiver);
-        setReceiversEnableState(false, false, null, null); // disable BroadcastReceivers
+        deviceReceiversManager.onDestroy();
 
         unregisterReceiver(mBlueToothConnectReceiver);
         mBlueToothConnectReceiver = null;
@@ -1226,30 +838,6 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
         GB.removeNotification(GB.NOTIFICATION_ID, this); // need to do this because the updated notification won't be cancelled when service stops
 
         unregisterReceiver(bluetoothCommandReceiver);
-
-        while (!globalReceivers.isEmpty()) {
-            final BroadcastReceiver receiver = globalReceivers.pop();
-            try {
-                LOG.debug("Unregistering global receiver {}", receiver.getClass().getSimpleName());
-                unregisterReceiver(receiver);
-            } catch (final Exception e) {
-                LOG.error("Failed to unregister broadcast receiver", e);
-            }
-        }
-
-        if (mKeyMissingReceiver != null) {
-            try {
-                LOG.debug("Unregistering missing receiver");
-                unregisterReceiver(mKeyMissingReceiver);
-            } catch (final Exception e) {
-                LOG.error("Failed to unregister broadcast receiver", e);
-            }
-        }
-
-        if (mHrvCacheInvalidationReceiver != null) {
-            mHrvCacheInvalidationReceiver.unregisterReceiver();
-            mHrvCacheInvalidationReceiver = null;
-        }
     }
 
     @Override
@@ -1274,22 +862,9 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
                 allowBluetoothIntentApi = sharedPreferences.getBoolean(GBPrefs.PREF_ALLOW_INTENT_API, false);
                 LOG.info("allowBluetoothIntentApi changed to {}", allowBluetoothIntentApi);
             }
-            case GBPrefs.NAVIGATION_APP_COMAPS -> {
-                if (mReceiversEnabled && mCurrentFeatureSet != null && mCurrentFeatureSet.supports(Feature.NAVIGATION)) {
-                    boolean enable = sharedPreferences.getBoolean(GBPrefs.NAVIGATION_APP_COMAPS, false);
-                    LOG.debug("Actioning CoMaps preference change to {}", enable);
-                    if (enable) {
-                        for (Pair<Uri, CoMapsNavigationReceiver> pair : CoMapsNavigationReceiverFactory.createCoMapsNavigationReceiversForApplication(this.getApplication())) {
-                            getContentResolver().registerContentObserver(pair.first, false, pair.second);
-                            mCoMapsNavigationReceivers.add(pair.second);
-                        }
-                    } else {
-                        mCoMapsNavigationReceivers.forEach(getContentResolver()::unregisterContentObserver);
-                        mCoMapsNavigationReceivers.clear();
-                    }
-                }
-            }
         }
+
+        deviceReceiversManager.onSharedPreferenceChanged(sharedPreferences, key);
     }
 
     protected boolean hasPrefs() {
