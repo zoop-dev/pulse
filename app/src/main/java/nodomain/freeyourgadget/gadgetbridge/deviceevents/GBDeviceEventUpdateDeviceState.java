@@ -18,6 +18,8 @@ package nodomain.freeyourgadget.gadgetbridge.deviceevents;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
+
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
 public class GBDeviceEventUpdateDeviceState extends GBDeviceEvent {
@@ -28,7 +30,13 @@ public class GBDeviceEventUpdateDeviceState extends GBDeviceEvent {
     }
 
     @Override
-    public void evaluate(final Context context, final GBDevice device) {
+    public void evaluate(@NonNull final Context context, final GBDevice device) {
         device.setUpdateState(state, context);
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return super.toString() + "state: " + state;
     }
 }

@@ -164,6 +164,7 @@ public interface DeviceCoordinator {
         BLOOD_PRESSURE_METER,
         BATTERY_MONITOR,
         SCOOTER,
+        CAMERA,
     }
 
     /**

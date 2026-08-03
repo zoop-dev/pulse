@@ -53,6 +53,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.coospo.CoospoHW807Coordinato
 import nodomain.freeyourgadget.gadgetbridge.devices.coospo.CoospoHW9Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.cycling_sensor.coordinator.CyclingSensorCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.divoom.PixooCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.dji.DjiOsmoAction4Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.domyos.DomyosT540Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.earfun.EarFunAirPro4Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.earfun.EarFunFreePro3Coordinator;
@@ -881,6 +882,7 @@ public enum DeviceType {
     BM2_BATTERY_MONITOR(Bm2Coordinator.class),
     BM6_BATTERY_MONITOR(Bm6Coordinator.class),
     VICTRON_SMARTSHUNT(VictronSmartShuntCoordinator.class),
+    DJI_OSMO_ACTION_4(DjiOsmoAction4Coordinator.class),
     SINILINK(SinilinkCoordinator.class),
     ONETOUCH(OneTouchCoordinator.class),
     SOUNDBRENNER_CORE(SoundbrennerCoordinator.class),

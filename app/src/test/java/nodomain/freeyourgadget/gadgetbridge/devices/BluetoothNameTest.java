@@ -242,6 +242,7 @@ public class BluetoothNameTest extends TestBase {
             put("Soundcore Q30", DeviceType.SOUNDCORE_Q30); // #6396
             put("Soundcore Life Tune", DeviceType.SOUNDCORE_LIFE_TUNE); // #6396
             put("Soundcore Life Tune XR", DeviceType.SOUNDCORE_LIFE_TUNE_XR); // #6396
+            put("OsmoAction4-ABCD", DeviceType.DJI_OSMO_ACTION_4);
         }};
 
         for (Map.Entry<String, DeviceType> e : bluetoothNameToExpectedType.entrySet()) {
