@@ -55,7 +55,8 @@ public class BleIntentApi {
     private boolean intentApiEnabledReadWrite= false;
     private boolean intentApiEnabledNotifications= false;
     private List<String> intentApiCharacteristicFilter = new ArrayList<>();
-    private String intentApiPackage = "";
+    // Comma-separated in the preference.
+    private List<String> intentApiPackages = new ArrayList<>();
     private boolean intentApiCharacteristicReceiverRegistered = false;
     private boolean intentApiDeviceStateReceiverRegistered = false;
     private String lastReportedState = null;
@@ -143,14 +144,22 @@ public class BleIntentApi {
         if(!intentApiCharacteristicFilter.isEmpty() && !intentApiCharacteristicFilter.contains(characteristic.getUuid().toString())) {
             return;
         }
-        Intent intent = getBleApiIntent(BLE_API_EVENT_CHARACTERISTIC_CHANGED);
-        if(!StringUtils.isNullOrEmpty(intentApiPackage)) {
-            intent.setPackage(intentApiPackage);
-        }
-        intent.putExtra("EXTRA_CHARACTERISTIC", characteristic.getUuid().toString());
-        intent.putExtra("EXTRA_PAYLOAD", StringUtils.bytesToHex(value));
+        Intent template = getBleApiIntent(BLE_API_EVENT_CHARACTERISTIC_CHANGED);
+        template.putExtra("EXTRA_CHARACTERISTIC", characteristic.getUuid().toString());
+        template.putExtra("EXTRA_PAYLOAD", StringUtils.bytesToHex(value));
 
-        getContext().sendBroadcast(intent);
+        if (intentApiPackages.isEmpty()) {
+            // implicit broadcast (runtime-registered receivers only on modern Android).
+            getContext().sendBroadcast(template);
+        } else {
+            // One explicit broadcast per configured package, so several
+            // consumer apps can ride the Intent API at once.
+            for (String targetPackage : intentApiPackages) {
+                Intent intent = new Intent(template);
+                intent.setPackage(targetPackage);
+                getContext().sendBroadcast(intent);
+            }
+        }
     }
 
     public void initializeDevice(TransactionBuilder builder) {
@@ -239,7 +248,8 @@ public class BleIntentApi {
         this.intentApiEnabledDeviceState = devicePrefs.getBoolean(PREFS_KEY_DEVICE_BLE_API_DEVICE_STATE, false);
         // Also trim whitespace from the list of UUIDs
         this.intentApiCharacteristicFilter = devicePrefs.getList(PREFS_KEY_DEVICE_BLE_API_CHARACTERISTIC, Collections.emptyList()).stream().map(String::trim).collect(Collectors.toList());
-        this.intentApiPackage = devicePrefs.getString(PREFS_KEY_DEVICE_BLE_API_PACKAGE, "");
+        this.intentApiPackages = devicePrefs.getList(PREFS_KEY_DEVICE_BLE_API_PACKAGE, Collections.emptyList())
+                .stream().map(String::trim).filter(s -> !s.isEmpty()).collect(Collectors.toList());
 
         registerBleApiCharacteristicReceivers(this.intentApiEnabledReadWrite);
     }
