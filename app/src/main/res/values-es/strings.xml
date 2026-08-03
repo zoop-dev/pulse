@@ -4605,4 +4605,11 @@
     <string name="pref_header_quick_settings">Ajustes rápidos y controles del dispositivo</string>
     <string name="activity_summary_set_header_photo_title">Establecer foto de cabecera</string>
     <string name="activity_summary_remove_header_photo_title">Eliminar foto de cabecera</string>
+    <string name="casio_interval_timer_add">Añadir temporizador</string>
+    <string name="casio_interval_timer_empty">Aún no hay temporizadores de intervalo. Pulsa + para añadir uno.</string>
+    <string name="casio_interval_timer_limit_reached">Límite de 50 temporizadores alcanzado</string>
+    <string name="authentication_settings">Opciones de autenticación</string>
+    <string name="pref_casio_interval_timer_title">Temporizador de intervalos</string>
+    <string name="casio_interval_timer_repeat">Repetir automáticamente</string>
+    <string name="casio_interval_timer_total">Total: %1$s × %2$d = %3$s</string>
 </resources>
