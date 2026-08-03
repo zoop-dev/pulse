@@ -1040,7 +1040,7 @@ public enum DeviceType {
     IGPSPORT_BSC200(IGPSportBSC200Coordinator.class),
     IGPSPORT_BSC200S(IGPSportBSC200SCoordinator.class),
     IGPSPORT_BSC300(IGPSportBSC300Coordinator.class),
-    IGPSPORT_BC500(IGPSportBSC500Coordinator.class),
+    IGPSPORT_BSC500(IGPSportBSC500Coordinator.class),
     IGPSPORT_IGS630(IGPSportiGS630Coordinator.class),
     IGPSPORT_IGS630S(IGPSportiGS630SCoordinator.class),
     IGPSPORT_IGS800(IGPSportiGS800Coordinator.class),
