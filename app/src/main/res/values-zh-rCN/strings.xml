@@ -207,7 +207,7 @@
     <string name="title_activity_sleepmonitor">睡眠检测</string>
     <string name="pref_write_logfiles">写入日志文件</string>
     <string name="initializing">初始化中</string>
-    <string name="busy_task_fetch_activity_data">获取活动数据</string>
+    <string name="busy_task_fetch_activity_data">正在获取活动数据</string>
     <string name="sleep_activity_date_range">从 %1$s 到 %2$s</string>
     <string name="prefs_wearside">佩戴在左手还是右手？</string>
     <string name="vibration_profile_short">短</string>
@@ -1877,7 +1877,7 @@
     <string name="menuitem_phone">电话</string>
     <string name="menuitem_offline_voice">离线语音</string>
     <string name="menuitem_membership_cards">会员卡</string>
-    <string name="pref_huami_truncate_fetch_operation_timestamps_title">截断提取操作的时间戳</string>
+    <string name="pref_huami_truncate_fetch_operation_timestamps_title">截断获取操作时间戳</string>
     <string name="pref_huami_truncate_fetch_operation_timestamps_summary">将获取操作的时间戳截断为分钟。如果你在获取很短的锻炼时面临问题，可禁用此设置，以保持时间戳为秒。</string>
     <string name="pref_summary_notification_media_ignores_application_list">在应用程序列表之前处理媒体通知。如果这个偏好没有被选中，媒体应用需要在应用列表中被允许，媒体控制才能在设备上工作。</string>
     <string name="pref_title_notification_media_ignores_application_list">媒体通知忽略应用列表</string>
@@ -3141,7 +3141,7 @@
     <string name="mijia_lywsd_comfort_humidity_title">湿度</string>
     <string name="mijia_lywsd_comfort_humidity_summary">推荐范围： 20–85</string>
     <string name="mijia_lywsd_comfort_lower">下限</string>
-    <string name="busy_task_fetch_hrv_data">获取心率变异性数据</string>
+    <string name="busy_task_fetch_hrv_data">正在获取心率变异性数据</string>
     <string name="hrv_sdrr">心跳间隔时间的标准偏差</string>
     <string name="hrv_rmssd">HRV典型时域指标</string>
     <string name="inactivity_warnings_minimum_steps_title">最少步数</string>
@@ -4205,7 +4205,7 @@
     <string name="health_connect_permission_denied">权限被拒：%1$s。请检查 Health Connect 权限。</string>
     <string name="health_connect_sleep_session_title">从 %1$s 起的睡眠会话</string>
     <string name="health_connect_sleep_session_notes">来自 Gadgetbridge 设备的睡眠数据：%1$s。</string>
-    <string name="busy_task_fetch_glucose_data">正赛获取血糖数据</string>
+    <string name="busy_task_fetch_glucose_data">正在获取血糖数据</string>
     <string name="glucose_level_threshold_high">高血糖阈值</string>
     <string name="glucose_level_threshold_low">低血糖阈值</string>
     <string name="glucose_value_mg_dl">%1$d mg/dL</string>
@@ -4257,7 +4257,7 @@
     <string name="min_vertical_oscillation">最小垂直振荡</string>
     <string name="min_ground_contact_time">最短地面接触时间</string>
     <string name="min_vertical_ratio">最小垂直比</string>
-    <string name="busy_task_fetch_blood_pressure_data">获取血压数据中</string>
+    <string name="busy_task_fetch_blood_pressure_data">正在获取血压数据</string>
     <string name="sleep_restless_moments">不眠时刻</string>
     <string name="sports_activity_quick_filter_distant_past">遥远的过去（所有锻炼）</string>
     <string name="internet_firewall_blacklisted_domains_title">拦截的域名</string>
