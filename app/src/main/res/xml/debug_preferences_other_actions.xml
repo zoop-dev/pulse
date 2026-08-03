@@ -17,6 +17,12 @@
         android:summary="Takes long to generate when used"
         android:title="Activity summary extra date range" />
 
+    <Preference
+        android:icon="@drawable/ic_folder"
+        android:key="pref_debug_browse_cache"
+        android:persistent="false"
+        android:title="Browse cache directory" />
+
     <PreferenceCategory
         android:key="pref_debug_header_fetch_recorded_data"
         android:title="Data fetch"
