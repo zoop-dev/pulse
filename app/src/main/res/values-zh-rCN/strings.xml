@@ -1686,7 +1686,7 @@
     <string name="prefs_relaxation_reminder_description">如果压力值高于80，则振动手环以通知您</string>
     <string name="prefs_spo2_monitoring_title">血氧监测</string>
     <string name="prefs_spo2_monitoring_description">自动监测全天的血氧水平</string>
-    <string name="prefs_spo2_alert_threshold">血氧警报阈值</string>
+    <string name="prefs_spo2_alert_threshold">血氧饱和度警报阈值</string>
     <string name="seconds_6">6 秒</string>
     <string name="seconds_7">7 秒</string>
     <string name="seconds_8">8 秒</string>
@@ -4839,4 +4839,8 @@
     <string name="casio_interval_timer_total">总计：%1$s × %2$d = %3$s</string>
     <string name="permission_navigation_comaps">%1$s 需要读取 CoMaps 导航数据的权限。请轻按\"%2$s\" 转到系统应用设置并启用权限， 然后回到这里再次切换选项。</string>
     <string name="pref_navigation_app_comaps">CoMaps</string>
+    <string name="pref_sleepasandroid_feat_heart_rr_intervals">R-R 间期</string>
+    <string name="pref_sleepasandroid_feat_spo2_autofetch_only_summary">此设备仅通过定期自动获取提供数据，不提供实时读数</string>
+    <string name="pref_sleepasandroid_spo2_autofetch">血氧饱和度自动获取设置</string>
+    <string name="pref_sleepasandroid_spo2_autofetch_interval">获取间隔（秒）</string>
 </resources>
