@@ -87,6 +87,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.garmin.hrm.GarminHrmProPlusC
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.gps.GarminETrexSeCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.gps.GarminInReachMini2;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.hrm.GarminHrm200Coordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.cirqa.GarminCirqaCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.descent.GarminDescentG1Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.descent.GarminDescentG2Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.descent.GarminDescentMk3Coordinator;
@@ -829,6 +830,7 @@ public enum DeviceType {
     GARMIN_VIVOSMART_4(GarminVivosmart4Coordinator.class),
     GARMIN_VIVOSMART_5(GarminVivosmart5Coordinator.class),
     GARMIN_VIVOSPORT(GarminVivosportCoordinator.class),
+    GARMIN_CIRQA(GarminCirqaCoordinator.class),
     GREE_AC(GreeAcCoordinator.class),
     AAWIRELESS(AAWirelessCoordinator.class),
     VIBRATISSIMO(VibratissimoCoordinator.class),

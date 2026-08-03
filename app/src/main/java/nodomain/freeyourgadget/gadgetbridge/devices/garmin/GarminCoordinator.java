@@ -121,6 +121,8 @@ public abstract class GarminCoordinator extends AbstractBLEDeviceCoordinator {
 
             // #5021 - Some new devices like Venu X1 misses a lot of files without the new sync protocol
             editor.putBoolean("new_sync_protocol", true);
+            // new sync protocol without MLR fails to sync large workouts
+            editor.putBoolean("garmin_mlr", true);
 
             editor.apply();
         }
