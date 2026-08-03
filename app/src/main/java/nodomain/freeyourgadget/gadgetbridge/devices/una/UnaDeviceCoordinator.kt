@@ -16,12 +16,18 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices.una
 
+import androidx.core.content.edit
+import nodomain.freeyourgadget.gadgetbridge.GBApplication
 import nodomain.freeyourgadget.gadgetbridge.R
+import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLEDeviceCoordinator
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceCandidate
+import nodomain.freeyourgadget.gadgetbridge.model.DeviceType
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport
 import nodomain.freeyourgadget.gadgetbridge.service.devices.una.UnaDeviceSupport
+import nodomain.freeyourgadget.gadgetbridge.util.GBPrefs
 import java.util.regex.Pattern
 
 /**
@@ -44,8 +50,18 @@ class UnaDeviceCoordinator : AbstractBLEDeviceCoordinator() {
 
     override fun getDeviceNameResource(): Int = R.string.devicetype_una_watch
 
-    override fun getDefaultIconResource(): Int = R.drawable.ic_device_default
+    override fun getDefaultIconResource(): Int = R.drawable.ic_device_miwatch
 
     // No app-layer secret; standard BLE bonding is the entire security gate on this firmware.
     override fun getBondingStyle(): Int = BONDING_STYLE_BOND
+
+    override fun createDevice(candidate: GBDeviceCandidate, deviceType: DeviceType): GBDevice {
+        val gbDevice = super.createDevice(candidate, deviceType)
+        GBApplication.getDevicePrefs(gbDevice).preferences.edit {
+            putBoolean(DeviceSettingsPreferenceConst.PREF_CONNECTION_PRIORITY_LOW_POWER, true)
+            putBoolean(GBPrefs.DEVICE_CONNECT_BACK, true)
+            putBoolean(GBPrefs.DEVICE_AUTO_RECONNECT, true)
+        }
+        return gbDevice
+    }
 }

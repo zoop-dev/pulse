@@ -63,7 +63,7 @@ class UnaDeviceSupport : AbstractBTLESingleDeviceSupport(LOG) {
         addSupportedProfile(batteryInfoProfile)
     }
 
-    override fun useAutoConnect(): Boolean = true
+    override fun useAutoConnect(): Boolean = false
 
     override fun initializeDevice(builder: TransactionBuilder): TransactionBuilder {
         builder.setDeviceState(GBDevice.State.INITIALIZING)
