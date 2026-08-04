@@ -63,9 +63,14 @@ public class YawellRingConstants {
     public static final byte BIG_DATA_TYPE_TEMPERATURE = 0x25;
     public static final byte BIG_DATA_TYPE_SLEEP = 0x27;
     public static final byte BIG_DATA_TYPE_SPO2 = 0x2a;
+    public static final byte BIG_DATA_TYPE_ALARM = 0x2c;
 
     public static final byte SLEEP_TYPE_LIGHT = 0x02;
     public static final byte SLEEP_TYPE_DEEP = 0x03;
     public static final byte SLEEP_TYPE_REM = 0x04;
     public static final byte SLEEP_TYPE_AWAKE = 0x05;
+
+    public static final byte ALARM_OP_READ = 0x01;
+    public static final byte ALARM_OP_WRITE = 0x02;
+    public static final byte ALARM_FLAG_ENABLED = (byte) 0x80;
 }

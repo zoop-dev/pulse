@@ -48,4 +48,19 @@ public class H59Coordinator extends AbstractYawellRingCoordinator {
     public DeviceKind getDeviceKind(@NonNull GBDevice device) {
         return DeviceKind.FITNESS_BAND;
     }
+
+    @Override
+    public int getAlarmSlotCount(@NonNull final GBDevice device) {
+        return 10;
+    }
+
+    @Override
+    public boolean supportsAlarmTitle(@NonNull final GBDevice device) {
+        return true;
+    }
+
+    @Override
+    public int getAlarmTitleLimit(@NonNull final GBDevice device) {
+        return 28; // bytes, not characters
+    }
 }

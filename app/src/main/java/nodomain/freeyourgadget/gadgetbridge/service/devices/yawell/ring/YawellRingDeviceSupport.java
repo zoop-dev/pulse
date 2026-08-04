@@ -57,6 +57,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.yawell.ring.YawellRingPacket
 import nodomain.freeyourgadget.gadgetbridge.entities.ColmiHeartRateSample;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityUser;
+import nodomain.freeyourgadget.gadgetbridge.model.Alarm;
 import nodomain.freeyourgadget.gadgetbridge.model.BatteryState;
 import nodomain.freeyourgadget.gadgetbridge.model.DistanceUnit;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
@@ -179,6 +180,9 @@ public class YawellRingDeviceSupport extends AbstractBTLESingleDeviceSupport {
         setUserPreferences();
         requestBatteryInfo();
         requestSettingsFromRing();
+        if (getDevice().getDeviceCoordinator().getAlarmSlotCount(getDevice()) > 0) {
+            fetchAlarms();
+        }
     }
 
     @Override
@@ -428,6 +432,9 @@ public class YawellRingDeviceSupport extends AbstractBTLESingleDeviceSupport {
                             YawellRingPacketHandler.historicalSpo2(getDevice(), getContext(), value);
                             fetchHistorySleep();
                             break;
+                        case YawellRingConstants.BIG_DATA_TYPE_ALARM:
+                            YawellRingPacketHandler.alarmsSettings(getDevice(), getContext(), value);
+                            break;
                         default:
                             LOG.info("Received unrecognized big data packet: {}", StringUtils.bytesToHex(value));
                             break;
@@ -463,6 +470,17 @@ public class YawellRingDeviceSupport extends AbstractBTLESingleDeviceSupport {
         } else {
             LOG.warn("Packet content too long!");
         }
+        return buffer.array();
+    }
+
+    private byte[] buildBigDataV2Packet(final byte type, final byte[] payload) {
+        ByteBuffer buffer = ByteBuffer.allocate(6 + payload.length);
+        buffer.order(ByteOrder.LITTLE_ENDIAN);
+        buffer.put(YawellRingConstants.CMD_BIG_DATA_V2);
+        buffer.put(type);
+        buffer.putShort((short) payload.length);
+        buffer.putShort((short) YawellRingPacketHandler.crc16Modbus(payload));
+        buffer.put(payload);
         return buffer.array();
     }
 
@@ -832,6 +850,18 @@ public class YawellRingDeviceSupport extends AbstractBTLESingleDeviceSupport {
         byte[] hrvHistoryRequest = buildPacket(hrvHistoryRequestBB.array());
         LOG.info("Fetch historical HRV data request sent ({}): {}", formatIso8601(syncingDay), StringUtils.bytesToHex(hrvHistoryRequest));
         sendWrite("hrvHistoryRequest", hrvHistoryRequest);
+    }
+
+    private void fetchAlarms() {
+        final byte[] alarmsRequest = buildBigDataV2Packet(YawellRingConstants.BIG_DATA_TYPE_ALARM, new byte[]{YawellRingConstants.ALARM_OP_READ});
+        sendCommand("getAlarmsRequest", alarmsRequest);
+    }
+
+    @Override
+    public void onSetAlarms(final ArrayList<? extends Alarm> alarms) {
+        final byte[] payload = YawellRingPacketHandler.encodeAlarmsPayload(YawellRingConstants.ALARM_OP_WRITE, alarms);
+        final byte[] setAlarmsPacket = buildBigDataV2Packet(YawellRingConstants.BIG_DATA_TYPE_ALARM, payload);
+        sendCommand("setAlarmsRequest", setAlarmsPacket);
     }
 
     private void fetchTemperature() {

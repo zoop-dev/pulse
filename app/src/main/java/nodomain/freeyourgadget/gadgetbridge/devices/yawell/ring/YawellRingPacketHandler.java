@@ -28,6 +28,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -57,6 +58,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.ColmiTemperatureSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
+import nodomain.freeyourgadget.gadgetbridge.model.Alarm;
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceService;
 import nodomain.freeyourgadget.gadgetbridge.model.TemperatureSample;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
@@ -647,6 +649,179 @@ public final class YawellRingPacketHandler {
             } catch (Exception e) {
                 LOG.error("Error acquiring database for recording temperature samples", e);
             }
+        }
+    }
+
+    /**
+     * CRC-16/MODBUS (poly 0x8005 reflected = 0xA001, init 0xffff, no final xor) of a big-data-v2
+     * payload. The result is transmitted little-endian right after the length field.
+     */
+    public static int crc16Modbus(final byte[] data) {
+        int crc = 0xffff;
+        for (byte b : data) {
+            crc ^= (b & 0xff);
+            for (int i = 0; i < 8; i++) {
+                if ((crc & 1) != 0) {
+                    crc = (crc >>> 1) ^ 0xa001;
+                } else {
+                    crc >>>= 1;
+                }
+            }
+        }
+        return crc & 0xffff;
+    }
+
+    /**
+     * Encodes the alarm list payload for a BIG_DATA_TYPE_ALARM write. The device has no
+     * concept of a per-alarm id/slot: the full desired list is sent every time, and
+     * an alarm is "deleted" simply by leaving it out.
+     */
+    public static byte[] encodeAlarmsPayload(final byte op, final List<? extends Alarm> alarms) {
+        final List<byte[]> records = new ArrayList<>();
+        for (final Alarm alarm : alarms) {
+            if (alarm.getUnused()) continue;
+            records.add(encodeAlarmRecord(alarm));
+        }
+        int totalLength = 2;
+        for (final byte[] record : records) totalLength += record.length;
+        final byte[] payload = new byte[totalLength];
+        payload[0] = op;
+        payload[1] = (byte) records.size();
+        int index = 2;
+        for (final byte[] record : records) {
+            System.arraycopy(record, 0, payload, index, record.length);
+            index += record.length;
+        }
+        return payload;
+    }
+
+    /**
+     * Converts a Gadgetbridge repetition mask ({@link Alarm#ALARM_MON}=bit0 ...
+     * {@link Alarm#ALARM_SUN}=bit6) to the device's weekday bitmask, where bit N is weekday N
+     * counting from Sunday=0 (i.e. a left-rotate by 1: Gadgetbridge's Monday=bit0 becomes the
+     * device's Monday=bit1, and Gadgetbridge's Sunday=bit6 wraps around to the device's bit0).
+     */
+    static int gbRepetitionToDeviceBits(final int gbRepetition) {
+        return ((gbRepetition << 1) | (gbRepetition >>> 6)) & 0x7f;
+    }
+
+    /**
+     * Inverse of {@link #gbRepetitionToDeviceBits}.
+     */
+    static int deviceBitsToGbRepetition(final int deviceBits) {
+        return ((deviceBits >>> 1) | ((deviceBits & 0x01) << 6)) & 0x7f;
+    }
+
+    private static byte[] encodeAlarmRecord(final Alarm alarm) {
+        final String title = alarm.getTitle() == null ? "" : alarm.getTitle();
+        final byte[] nameBytes = StringUtils.truncateToBytes(title, 28);
+        final int minutesSinceMidnight = alarm.getHour() * 60 + alarm.getMinute();
+
+        byte flags = (byte) gbRepetitionToDeviceBits(alarm.getRepetition());
+        if (alarm.getEnabled()) {
+            flags |= YawellRingConstants.ALARM_FLAG_ENABLED;
+        }
+
+        final byte[] record = new byte[4 + nameBytes.length];
+        record[0] = (byte) record.length;
+        record[1] = flags;
+        record[2] = (byte) (minutesSinceMidnight & 0xff);
+        record[3] = (byte) ((minutesSinceMidnight >> 8) & 0xff);
+        System.arraycopy(nameBytes, 0, record, 4, nameBytes.length);
+        return record;
+    }
+
+    /**
+     * @param repetition Gadgetbridge-convention mask, i.e. Alarm.ALARM_MON..ALARM_SUN
+     */
+    record DecodedAlarm(boolean enabled,
+                        int repetition,
+                        int hour,
+                        int minute,
+                        String title) {
+    }
+
+    /**
+     * Parses a BIG_DATA_TYPE_ALARM notification's list of alarms, or returns {@code null} if the
+     * notification is just the acknowledgement of a write/delete (a single op byte, no list).
+     */
+    static List<DecodedAlarm> decodeAlarmList(@NonNull final byte[] value) {
+        final int packetLength = BLETypeConversions.toUint16(value[2], value[3]);
+        if (packetLength < 2 || value[6] != YawellRingConstants.ALARM_OP_READ) {
+            return null;
+        }
+
+        final int count = value[7] & 0xff;
+        final List<DecodedAlarm> decodedAlarms = new ArrayList<>(count);
+        int index = 8;
+        for (int i = 0; i < count; i++) {
+            final int recordLength = value[index] & 0xff;
+            final byte flags = value[index + 1];
+            final int minutesSinceMidnight = BLETypeConversions.toUint16(value[index + 2], value[index + 3]);
+            final int nameLength = recordLength - 4;
+            final String title = nameLength > 0 ? new String(value, index + 4, nameLength, StandardCharsets.UTF_8) : "";
+            final boolean enabled = (flags & YawellRingConstants.ALARM_FLAG_ENABLED) != 0;
+            final int repetition = deviceBitsToGbRepetition(flags & 0x7f);
+            decodedAlarms.add(new DecodedAlarm(enabled, repetition, minutesSinceMidnight / 60, minutesSinceMidnight % 60, title));
+            index += recordLength;
+        }
+        return decodedAlarms;
+    }
+
+    /**
+     * Handles a BIG_DATA_TYPE_ALARM notification: either the acknowledgement of a write/delete
+     * (a single op byte, nothing to parse), or the alarm list in response to an ALARM_OP_READ
+     * request, which is imported into Gadgetbridge's alarm database.
+     */
+    public static void alarmsSettings(@NonNull final GBDevice device,
+                                      @NonNull final Context context,
+                                      @NonNull final byte[] value) {
+        final List<DecodedAlarm> decodedAlarms = decodeAlarmList(value);
+        if (decodedAlarms == null) {
+            LOG.info("Received alarm write/delete acknowledgement: {}", StringUtils.bytesToHex(value));
+            return;
+        }
+
+        LOG.info("Received alarm list with {} entries", decodedAlarms.size());
+        persistAlarms(device, context, decodedAlarms);
+    }
+
+    private static void persistAlarms(@NonNull final GBDevice device,
+                                      @NonNull final Context context,
+                                      @NonNull final List<DecodedAlarm> decodedAlarms) {
+        boolean changed = false;
+        final List<nodomain.freeyourgadget.gadgetbridge.entities.Alarm> dbAlarms = DBHelper.getAlarmsWithDefaults(device);
+        for (int position = 0; position < dbAlarms.size(); position++) {
+            final nodomain.freeyourgadget.gadgetbridge.entities.Alarm dbAlarm = dbAlarms.get(position);
+            if (position >= decodedAlarms.size()) {
+                if (!dbAlarm.getUnused()) {
+                    dbAlarm.setUnused(true);
+                    DBHelper.store(dbAlarm);
+                    changed = true;
+                }
+                continue;
+            }
+            final DecodedAlarm decodedAlarm = decodedAlarms.get(position);
+            final String dbTitle = dbAlarm.getTitle() == null ? "" : dbAlarm.getTitle();
+            if (!dbAlarm.getUnused()
+                    && dbAlarm.getEnabled() == decodedAlarm.enabled
+                    && dbAlarm.getHour() == decodedAlarm.hour
+                    && dbAlarm.getMinute() == decodedAlarm.minute
+                    && dbAlarm.getRepetition() == decodedAlarm.repetition
+                    && dbTitle.equals(decodedAlarm.title)) {
+                continue;
+            }
+            dbAlarm.setUnused(false);
+            dbAlarm.setEnabled(decodedAlarm.enabled);
+            dbAlarm.setHour(decodedAlarm.hour);
+            dbAlarm.setMinute(decodedAlarm.minute);
+            dbAlarm.setRepetition(decodedAlarm.repetition);
+            dbAlarm.setTitle(decodedAlarm.title);
+            DBHelper.store(dbAlarm);
+            changed = true;
+        }
+        if (changed) {
+            LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent(DeviceService.ACTION_SAVE_ALARMS));
         }
     }
 }
