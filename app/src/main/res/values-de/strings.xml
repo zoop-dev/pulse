@@ -4390,5 +4390,19 @@
     <string name="electrical_current">Stromstärke</string>
     <string name="stamina_min">Mindeststamina</string>
     <string name="workout_distance_meters_calibrated">Kalibrierte Distanz</string>
-    <string name="activity_detail_export_fit">Fit-Datei Teilen</string>
+    <string name="activity_detail_export_fit">Fit-Datei teilen</string>
+    <string name="authentication_settings">Authentifizierungseinstellungen</string>
+    <string name="pref_casio_interval_timer_title">Intervalltimer</string>
+    <string name="casio_interval_timer_add">Timer hinzufügen</string>
+    <string name="casio_interval_timer_empty">Noch keine Intervalltimer. Drücke + um welche hinzuzufügen.</string>
+    <string name="casio_interval_timer_limit_reached">Maximum von 50 erreicht</string>
+    <string name="casio_interval_timer_active">Aktiv auf der Uhr</string>
+    <string name="casio_interval_timer_skip">Überspringen</string>
+    <string name="pref_header_auto_export_fit">FIT Tracks automatisch exportieren</string>
+    <string name="pref_auto_export_fit_summary">FIT-Dateien beim Synchronisieren von Aktivitäts-Tracks automatisch exportieren</string>
+    <string name="pref_auto_export_fit_all_devices_summary">Exportiere FIT Tracks von allen Geräten</string>
+    <string name="pref_auto_export_fit_selected_devices_summary">Wähle aus, von welchen Geräten du FIT-Tracks exportieren möchtest</string>
+    <string name="ak102_pref_audio_unpair_summary">Entferne die Bluetooth Verbindung mit der Uhr</string>
+    <string name="soundbrenner_pref_metronome_toggle_title">Start/Stop</string>
+    <string name="soundbrenner_pref_metronome_toggle_summary">Metronom starten oder stoppen</string>
 </resources>
