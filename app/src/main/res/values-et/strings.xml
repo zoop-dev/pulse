@@ -1424,4 +1424,6 @@
     <string name="title_gpx_track_name">Raja nimi</string>
     <string name="pref_gps_header">GPS</string>
     <string name="pref_gps_mode_preset">GPS-režiim</string>
+    <string name="pref_header_other">Muud</string>
+    <string name="pref_title_notification_delay_calls">Viivitus kõneteavitusel</string>
 </resources>
