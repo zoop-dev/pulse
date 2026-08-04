@@ -59,7 +59,8 @@ public class SonyWF1000XM4Coordinator extends SonyHeadphonesCoordinator {
                 SonyHeadphonesCapabilities.AudioUpsampling,
                 SonyHeadphonesCapabilities.ButtonModesLeftRight,
                 SonyHeadphonesCapabilities.PauseWhenTakenOff,
-                SonyHeadphonesCapabilities.AutomaticPowerOffWhenTakenOff
+                SonyHeadphonesCapabilities.AutomaticPowerOffWhenTakenOff,
+                SonyHeadphonesCapabilities.VoiceNotifications
         ));
     }
 
