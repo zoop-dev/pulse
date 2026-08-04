@@ -4387,4 +4387,8 @@
     <string name="qs_tile_label_8">Gadgetbridge 8</string>
     <string name="qs_tile_label_9">Gadgetbridge 9</string>
     <string name="qs_tile_label_10">Gadgetbridge 10</string>
+    <string name="electrical_current">Stromstärke</string>
+    <string name="stamina_min">Mindeststamina</string>
+    <string name="workout_distance_meters_calibrated">Kalibrierte Distanz</string>
+    <string name="activity_detail_export_fit">Fit-Datei Teilen</string>
 </resources>
