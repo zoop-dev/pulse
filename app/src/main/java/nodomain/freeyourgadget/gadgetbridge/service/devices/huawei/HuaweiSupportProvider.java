@@ -2488,7 +2488,12 @@ public class HuaweiSupportProvider {
             fileInfo.setFileName(huaweiFwHelper.getFileName());
         }
 
-        fileInfo.setUploadData(new HuaweiUploadManager.UploadDataBuffer(huaweiFwHelper.getBytes()));
+        final byte[] fwBytes = huaweiFwHelper.getBytes();
+        if (fwBytes != null) {
+            fileInfo.setUploadData(new HuaweiUploadManager.UploadDataBuffer(fwBytes));
+        } else {
+            fileInfo.setUploadData(new HuaweiUploadManager.UploadDataFile(huaweiFwHelper.getUriHelper()));
+        }
 
         fileInfo.setFileUploadCallback(new HuaweiUploadManager.FileUploadCallback() {
             @Override

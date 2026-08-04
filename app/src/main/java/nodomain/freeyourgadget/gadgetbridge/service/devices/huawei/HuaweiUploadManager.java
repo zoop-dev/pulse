@@ -116,18 +116,16 @@ public class HuaweiUploadManager {
 
         @Override
         public byte[] getDataChunk(int pos, int size) {
-            try {
-                InputStream inStream = uriHelper.openInputStream();
+            try (InputStream inStream = uriHelper.openInputStream()) {
                 byte[] buf = new byte[size];
                 int n = (int) inStream.skip(pos);
                 if (n == pos) {
                     int k = inStream.read(buf);
-                    if(k == size){
+                    if (k == size) {
                         return buf;
                     }
                 }
                 LOG.error("File read error");
-                inStream.close();
             } catch (Exception e) {
                 LOG.error("Read file exception", e);
             }

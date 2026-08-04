@@ -247,21 +247,16 @@ public class HuaweiFwHelper {
 
     boolean parseAsMusic() {
         try {
-            final UriHelper uriHelper = UriHelper.get(uri, this.mContext);
             musicInfo = MusicUtils.audioInfoFromUri(mContext, uri);
             if (musicInfo == null)
                 return false;
 
-            byte[] musicData = getFileData(uriHelper);
-
             fileName = musicInfo.getFileName();
-            fw = musicData;
 
+            // Music files are streamed from disk during upload (see UploadDataFile),
+            // so we deliberately avoid loading the whole file into fw here to prevent
+            // OOM crashes on large music files.
             return true;
-        } catch (FileNotFoundException e) {
-            LOG.error("Music: File was not found {}", e.getMessage());
-        } catch (IOException e) {
-            LOG.error("Music: General IO error occurred {}", e.getMessage());
         } catch (Exception e) {
             LOG.error("Music: Unknown error occurred", e);
         }
