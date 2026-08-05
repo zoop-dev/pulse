@@ -14,30 +14,29 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
-package nodomain.freeyourgadget.gadgetbridge.service.devices.qc35;
+package nodomain.freeyourgadget.gadgetbridge.service.devices.bose;
 
 import java.util.UUID;
 
-import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.btbr.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.serial.AbstractHeadphoneSerialDeviceSupportV2;
 
-public class QC35BaseSupport extends AbstractHeadphoneSerialDeviceSupportV2<QC35Protocol> {
-    public QC35BaseSupport() {
+public class BoseSupport extends AbstractHeadphoneSerialDeviceSupportV2<BoseProtocol> {
+    public BoseSupport() {
         addSupportedService(UUID.fromString("00001101-0000-1000-8000-00805f9b34fb"));
     }
 
     @Override
-    protected QC35Protocol createDeviceProtocol() {
-        return new QC35Protocol(getDevice());
+    protected BoseProtocol createDeviceProtocol() {
+        return new BoseProtocol(getDevice());
     }
 
     @Override
     protected TransactionBuilder initializeDevice(final TransactionBuilder builder) {
 
         byte[] connectPayload = new byte[]{0x00, 0x01, 0x01, 0x00};
-        byte[] ncPayload = mDeviceProtocol.encodeSendConfiguration(DeviceSettingsPreferenceConst.PREF_QC35_NOISE_CANCELLING_LEVEL);
+        byte[] ncPayload = mDeviceProtocol.encodeNoiseCancelling();
         byte[] batteryPayload = new byte[]{0x02, 0x02, 0x01, 0x00};
         byte[] packet = new byte[connectPayload.length + ncPayload.length + batteryPayload.length];
         System.arraycopy(connectPayload, 0, packet, 0, connectPayload.length);

@@ -14,7 +14,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
-package nodomain.freeyourgadget.gadgetbridge.service.devices.qc35;
+package nodomain.freeyourgadget.gadgetbridge.service.devices.bose;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -30,15 +30,16 @@ import java.util.ArrayList;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEvent;
+import nodomain.freeyourgadget.gadgetbridge.devices.bose.AbstractBoseCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventBatteryInfo;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.BatteryState;
 import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol;
 import nodomain.freeyourgadget.gadgetbridge.util.StringUtils;
 
-public class QC35Protocol extends GBDeviceProtocol {
+public class BoseProtocol extends GBDeviceProtocol {
     Logger logger = LoggerFactory.getLogger(getClass());
-    protected QC35Protocol(GBDevice device) {
+    protected BoseProtocol(GBDevice device) {
         super(device);
     }
 
@@ -74,6 +75,12 @@ public class QC35Protocol extends GBDeviceProtocol {
     @Override
     public byte[] encodeTestNewFunction(@Nullable Bundle options) {
         return new byte[]{0x02, 0x02, 0x01, 0x00};
+    }
+
+    public byte[] encodeNoiseCancelling() {
+        final AbstractBoseCoordinator coordinator =
+                (AbstractBoseCoordinator) getDevice().getDeviceCoordinator();
+        return encodeSendConfiguration(coordinator.getNoiseCancellingPrefKey());
     }
 
     @Override

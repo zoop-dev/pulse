@@ -14,11 +14,9 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
-package nodomain.freeyourgadget.gadgetbridge.devices.qc35;
+package nodomain.freeyourgadget.gadgetbridge.devices.bose;
 
 import androidx.annotation.NonNull;
-
-import java.util.regex.Pattern;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettings;
@@ -27,35 +25,23 @@ import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.BatteryConfig;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.qc35.QC35BaseSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.bose.BoseSupport;
 
-public class QC35Coordinator extends AbstractBLClassicDeviceCoordinator {
-    @Override
-    protected Pattern getSupportedDeviceName() {
-        return Pattern.compile("Bose QC 35.*");
-    }
-
-    @Override
-    public int[] getSupportedDeviceSpecificSettings(GBDevice device) {
-        return new int[]{
-                R.xml.devicesettings_qc35
-        };
-    }
+public abstract class AbstractBoseCoordinator extends AbstractBLClassicDeviceCoordinator {
+    /**
+     * Preference key holding this model's noise cancelling level.
+     */
+    public abstract String getNoiseCancellingPrefKey();
 
     @NonNull
     @Override
     public Class<? extends DeviceSupport> getDeviceSupportClass(final GBDevice device) {
-        return QC35BaseSupport.class;
+        return BoseSupport.class;
     }
 
     @Override
     public String getManufacturer() {
         return "Bose";
-    }
-
-    @Override
-    public int getDeviceNameResource() {
-        return R.string.devicetype_bose_qc35;
     }
 
     @Override
