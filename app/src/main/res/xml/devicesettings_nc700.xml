@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <SeekBarPreference
+        android:title="Noise cancelling level"
+        android:max="10"
+        android:defaultValue="10"
+        android:key="nc700_noise_cancelling_level" />
+
+</PreferenceScreen>

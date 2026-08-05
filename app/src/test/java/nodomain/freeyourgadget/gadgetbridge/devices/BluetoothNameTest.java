@@ -256,6 +256,9 @@ public class BluetoothNameTest extends TestBase {
             put("Soundcore Life Tune", DeviceType.SOUNDCORE_LIFE_TUNE); // #6396
             put("Soundcore Life Tune XR", DeviceType.SOUNDCORE_LIFE_TUNE_XR); // #6396
             put("OsmoAction4-ABCD", DeviceType.DJI_OSMO_ACTION_4);
+            put("Bose QC 35 II", DeviceType.BOSE_QC35);
+            put("Bose NC 700 Headphones", DeviceType.BOSE_NC700);
+            put("LE-Bose NC 700 Headphones", DeviceType.BOSE_NC700);
         }};
 
         for (Map.Entry<String, DeviceType> e : bluetoothNameToExpectedType.entrySet()) {

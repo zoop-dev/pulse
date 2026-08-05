@@ -486,6 +486,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.pinetime.PineTimeJFCoordinat
 import nodomain.freeyourgadget.gadgetbridge.devices.pixel.PixelBudsACoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.polar.PolarH10DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.polar.PolarH9DeviceCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.bose.NC700Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.bose.QC35Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.qhybrid.QHybridCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.realme.RealmeBudsAir5ProCoordinator;
@@ -1026,6 +1027,7 @@ public enum DeviceType {
     MOONDROP_SPACE_TRAVEL_2(MoondropSpaceTravel2Coordinator.class),
     MOONDROP_SPACE_TRAVEL_2_ULTRA(MoondropSpaceTravel2UltraCoordinator.class),
     BOSE_QC35(QC35Coordinator.class),
+    BOSE_NC700(NC700Coordinator.class),
     ONEMORE_SONOFLOW(OneMoreSonoFlowCoordinator.class),
     HONORBAND3(HonorBand3Coordinator.class),
     HONORBAND4(HonorBand4Coordinator.class),

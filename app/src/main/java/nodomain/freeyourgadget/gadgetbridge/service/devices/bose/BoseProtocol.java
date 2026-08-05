@@ -87,6 +87,15 @@ public class BoseProtocol extends GBDeviceProtocol {
     public byte[] encodeSendConfiguration(String config) {
         SharedPreferences prefs = GBApplication.getDeviceSpecificSharedPrefs(getDevice().getAddress());
 
+        if(config.equals(DeviceSettingsPreferenceConst.PREF_NC700_NOISE_CANCELLING_LEVEL)){
+            int level = prefs.getInt(config, 10);
+            byte[] packet = new byte[]{0x01, 0x05, 0x02, 0x02, (byte) (10 - level), 0x01};
+            // device resets to its default level when enabled flips 0 -> 1, so re-send it
+            ByteBuffer repeated = ByteBuffer.allocate(packet.length * 3);
+            repeated.put(packet).put(packet).put(packet);
+            return repeated.array();
+        }
+
         if(config.equals(DeviceSettingsPreferenceConst.PREF_QC35_NOISE_CANCELLING_LEVEL)){
             int level = prefs.getInt(config, 0);
             if(level == 2){
