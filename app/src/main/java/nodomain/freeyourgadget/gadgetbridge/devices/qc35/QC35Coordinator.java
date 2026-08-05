@@ -75,6 +75,9 @@ public class QC35Coordinator extends AbstractBLClassicDeviceCoordinator {
     public DeviceSpecificSettings getDeviceSpecificSettings(final GBDevice device) {
         final DeviceSpecificSettings deviceSpecificSettings = new DeviceSpecificSettings();
         deviceSpecificSettings.addRootScreen(R.xml.devicesettings_headphones);
+        for (final int screen : getSupportedDeviceSpecificSettings(device)) {
+            deviceSpecificSettings.addRootScreen(screen);
+        }
         return deviceSpecificSettings;
     }
 
