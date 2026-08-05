@@ -17,11 +17,17 @@
 package nodomain.freeyourgadget.gadgetbridge.devices.una
 
 import androidx.core.content.edit
+import de.greenrobot.dao.AbstractDao
+import de.greenrobot.dao.Property
 import nodomain.freeyourgadget.gadgetbridge.GBApplication
 import nodomain.freeyourgadget.gadgetbridge.R
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLEDeviceCoordinator
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator
+import nodomain.freeyourgadget.gadgetbridge.devices.SampleProvider
+import nodomain.freeyourgadget.gadgetbridge.entities.AbstractActivitySample
+import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession
+import nodomain.freeyourgadget.gadgetbridge.entities.UnaDailySampleDao
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceCandidate
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceType
@@ -30,10 +36,6 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.una.UnaDeviceSupport
 import nodomain.freeyourgadget.gadgetbridge.util.GBPrefs
 import java.util.regex.Pattern
 
-/**
- * Connect, battery, firmware/hardware revision, and time sync via standard SIG GATT services.
- * Activity-file sync over the custom File Transfer Service is a separate fast-follow.
- */
 class UnaDeviceCoordinator : AbstractBLEDeviceCoordinator() {
     override fun getSupportedDeviceName(): Pattern {
         // Digit count isn't a confirmed fixed width; unconstrained to avoid missing real units.
@@ -63,5 +65,24 @@ class UnaDeviceCoordinator : AbstractBLEDeviceCoordinator() {
             putBoolean(GBPrefs.DEVICE_AUTO_RECONNECT, true)
         }
         return gbDevice
+    }
+
+    override fun supportsDataFetching(device: GBDevice): Boolean = true
+
+    override fun supportsRecordedActivities(device: GBDevice): Boolean = true
+
+    // Daily steps/active-minutes/heart-rate totals, from the watch's own CCS DailyHealth
+    // request -- one synthetic sample burst per day, not a real per-minute stream.
+    override fun supportsActivityTracking(device: GBDevice): Boolean = true
+
+    override fun getSampleProvider(device: GBDevice, session: DaoSession): SampleProvider<out AbstractActivitySample> =
+        UnaDailySampleProvider(device, session)
+
+    override fun getAllDeviceDao(session: DaoSession): MutableMap<AbstractDao<*, *>, Property> {
+        return object : HashMap<AbstractDao<*, *>, Property>() {
+            init {
+                put(session.unaDailySampleDao, UnaDailySampleDao.Properties.DeviceId)
+            }
+        }
     }
 }
