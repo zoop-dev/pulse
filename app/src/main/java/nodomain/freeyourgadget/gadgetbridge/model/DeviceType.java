@@ -350,6 +350,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.huawei.huaweiwatchultimate2.
 import nodomain.freeyourgadget.gadgetbridge.devices.id115.ID115Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.idasen.IdasenCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.igpsport.IGPSportBiNaviAirCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.igpsport.IGPSportBiNaviCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.igpsport.IGPSportBSC200Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.igpsport.IGPSportBSC200SCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.igpsport.IGPSportBSC300Coordinator;
@@ -1049,6 +1050,7 @@ public enum DeviceType {
     IGPSPORT_IGS630S(IGPSportiGS630SCoordinator.class),
     IGPSPORT_IGS800(IGPSportiGS800Coordinator.class),
     IGPSPORT_BINAVI_AIR(IGPSportBiNaviAirCoordinator.class),
+    IGPSPORT_BINAVI(IGPSportBiNaviCoordinator.class),
     OLLEE_WATCH_ONE(OlleeDeviceCoordinator.class),
     UNA_WATCH(UnaDeviceCoordinator.class),
     TEST(TestDeviceCoordinator.class);

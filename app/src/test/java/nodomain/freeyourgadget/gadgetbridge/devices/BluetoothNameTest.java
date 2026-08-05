@@ -144,6 +144,7 @@ public class BluetoothNameTest extends TestBase {
             put("Redmi Watch 5 Active E7B7", DeviceType.REDMIWATCH5ACTIVE);
             put("Move", DeviceType.REDMIWATCHMOVE); // matrix
             put("BSC300", DeviceType.IGPSPORT_BSC300); // matrix
+            put("BiNavi", DeviceType.IGPSPORT_BiNavi); // matrix
             put("Forerunner 165", DeviceType.GARMIN_FORERUNNER_165);
             put("Xiaomi Smart Band 9 7E1E", DeviceType.MIBAND9);
             put("Venu 2S", DeviceType.GARMIN_VENU_2S); // #4010
