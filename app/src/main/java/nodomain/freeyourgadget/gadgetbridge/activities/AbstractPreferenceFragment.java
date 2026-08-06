@@ -99,8 +99,7 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragmentCompa
 
     @Override
     public void onCreateMenu(@NonNull final Menu menu, @NonNull final MenuInflater inflater) {
-        menu.clear();
-        if (mSearchConfiguration != null) {
+        if (mSearchConfiguration != null && menu.findItem(R.id.preferences_search) == null) {
             inflater.inflate(R.menu.menu_preferences, menu);
         }
     }
