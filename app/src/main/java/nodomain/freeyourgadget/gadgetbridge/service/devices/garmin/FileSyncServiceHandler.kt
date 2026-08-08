@@ -185,6 +185,6 @@ class FileSyncServiceHandler(val deviceSupport: GarminSupport) {
     companion object {
         private val LOG = LoggerFactory.getLogger(FileSyncServiceHandler::class.java)
 
-        private const val FLAGS_SYNCED = 42405;
+        private const val FLAGS_SYNCED = 42405L
     }
 }
