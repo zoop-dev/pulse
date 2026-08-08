@@ -79,6 +79,7 @@ public class ExploreSyncHandlerTest extends TestBase {
                 /*btAdapter*/ null,
                 org.robolectric.RuntimeEnvironment.getApplication());
         support.getDevicePrefs().getPreferences().edit()
+                .putBoolean("garmin_exploresync", true)
                 .putStringSet(GarminPreferences.PREF_GARMIN_CAPABILITIES,
                         Collections.singleton(GarminCapability.EXPLORE_SYNC.name()))
                 .apply();

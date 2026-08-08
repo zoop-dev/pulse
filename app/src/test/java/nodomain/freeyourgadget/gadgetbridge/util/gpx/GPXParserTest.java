@@ -162,6 +162,7 @@ public class GPXParserTest extends TestBase {
         Assert.assertEquals(23.3f, trkpt0.getSpeed(), 0.0001f);
         Assert.assertEquals(28.3f, trkpt0.getTemperature(), 0.0001f);
         Assert.assertEquals(26.3f, trkpt0.getDepth(), 0.0001f);
+        Assert.assertEquals(250, trkpt0.getPower());
 
         GpxTrackPoint trkpt1 = trkseg0.getTrackPoints().get(1);
         Assert.assertEquals(Date.from(Instant.parse("2025-10-03T21:06:07+05:45")), trkpt1.getTime());
@@ -195,6 +196,7 @@ public class GPXParserTest extends TestBase {
         Assert.assertEquals(trackpoint.getLatitude(), activityPoint.getLocation().getLatitude(), 0.0);
         Assert.assertEquals(trackpoint.getLongitude(), activityPoint.getLocation().getLongitude(), 0.0);
         Assert.assertEquals(trackpoint.getPdop(), activityPoint.getLocation().getPdop(), 0.0);
+        Assert.assertEquals(trackpoint.getPower(), activityPoint.getPower(), 0.0);
         Assert.assertEquals(trackpoint.getSpeed(), activityPoint.getSpeed(), 0.0);
         Assert.assertEquals(trackpoint.getTemperature(), activityPoint.getTemperature(), 0.0);
         Assert.assertEquals(trackpoint.getTime(), activityPoint.getTime());

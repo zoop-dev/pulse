@@ -4,11 +4,12 @@
     xmlns:g3="http://www.garmin.com/xmlschemas/GpxExtensions/v3"
     xmlns:gpx="http://www.topografix.com/GPX/1/1"
     xmlns:gpxOld="http://www.topografix.com/GPX/1/0"
+    xmlns:pwr="http://www.garmin.com/xmlschemas/PowerExtension/v1"
     xmlns:tx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1"
     xmlns:tx2="http://www.garmin.com/xmlschemas/TrackPointExtension/v2"
     xmlns:w1="http://www.garmin.com/xmlschemas/WaypointExtension/v1"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    exclude-result-prefixes="ax g3 gpx tx tx2 w1 gpxOld"
+    exclude-result-prefixes="ax g3 gpx pwr tx tx2 w1 gpxOld"
     version="1.0">
     <!--
     This pre-processes GPX v1.0 and v1.1 and common extension for import by
@@ -143,6 +144,11 @@
             </xsl:when>
             <xsl:when test="ax:TrackPointExtension/ax:speed">
                 <xsl:attribute name="speed"><xsl:value-of select="normalize-space(ax:TrackPointExtension/ax:speed)" /></xsl:attribute>
+            </xsl:when>
+        </xsl:choose>
+        <xsl:choose>
+            <xsl:when test="pwr:PowerInWatts">
+                <xsl:attribute name="power"><xsl:value-of select="normalize-space(pwr:PowerInWatts)" /></xsl:attribute>
             </xsl:when>
         </xsl:choose>
     </xsl:template>

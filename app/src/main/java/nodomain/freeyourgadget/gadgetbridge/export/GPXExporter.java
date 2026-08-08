@@ -54,8 +54,11 @@ public class GPXExporter implements ActivityTrackExporter {
     private static final String NS_GPX_PREFIX = "";
     private static final String NS_TRACKPOINT_EXTENSION = "gpxtpx";
     private static final String NS_TRACKPOINT_EXTENSION_URI = "http://www.garmin.com/xmlschemas/TrackPointExtension/v2";
+    private static final String NS_POWER_EXTENSION = "gpxpx";
+    private static final String NS_POWER_EXTENSION_URI = "http://www.garmin.com/xmlschemas/PowerExtension/v1";
     private static final String NS_XSI_URI = "http://www.w3.org/2001/XMLSchema-instance";
     private static final String TRACKPOINT_EXTENSION_XSD = "https://www8.garmin.com/xmlschemas/TrackPointExtensionv2.xsd";
+    private static final String POWER_EXTENSION_XSD = "https://www8.garmin.com/xmlschemas/PowerExtensionv1.xsd";
     private static final String TOPOGRAFIX_NAMESPACE_XSD = "https://www.topografix.com/GPX/1/1/gpx.xsd";
     private static final String OPENTRACKS_PREFIX = "opentracks";
     private static final String OPENTRACKS_NAMESPACE_URI = "http://opentracksapp.com/xmlschemas/v1";
@@ -98,6 +101,7 @@ public class GPXExporter implements ActivityTrackExporter {
         ser.startDocument(encoding, Boolean.TRUE);
         ser.setPrefix("xsi", NS_XSI_URI);
         ser.setPrefix(NS_TRACKPOINT_EXTENSION, NS_TRACKPOINT_EXTENSION_URI);
+        ser.setPrefix(NS_POWER_EXTENSION, NS_POWER_EXTENSION_URI);
         ser.setPrefix(NS_GPX_PREFIX, NS_GPX_URI);
         ser.setPrefix(OPENTRACKS_PREFIX, OPENTRACKS_NAMESPACE_URI);
 
@@ -110,6 +114,7 @@ public class GPXExporter implements ActivityTrackExporter {
         }
         ser.attribute(NS_XSI_URI, "schemaLocation",NS_GPX_URI + " " + TOPOGRAFIX_NAMESPACE_XSD
                 + " " + NS_TRACKPOINT_EXTENSION_URI + " " + TRACKPOINT_EXTENSION_XSD
+                + " " + NS_POWER_EXTENSION_URI + " " + POWER_EXTENSION_XSD
                 + " " + OPENTRACKS_NAMESPACE_URI + " " + OPENTRACKS_XSD);
 
         exportMetadata(ser, track);
@@ -246,6 +251,7 @@ public class GPXExporter implements ActivityTrackExporter {
         float speed = point.getSpeed();
         int cadence = point.getCadence();
         int hr = point.getHeartRate();
+        float power = point.getPower();
         if (!HeartRateUtils.getInstance().isValidHeartRateValue(hr) && includeHeartRateOfNearestSample) {
 
             ActivityPoint closestPointItem = findClosestSensibleActivityPoint(point.getTime(), trackPoints);
@@ -260,31 +266,39 @@ public class GPXExporter implements ActivityTrackExporter {
         boolean exportSpeed = speed >= 0.0f;
         boolean exportTemperature = temperature > -273.0;
         boolean exportDepth = !Double.isNaN(depth) && depth != -1.0;
+        boolean exportPower = !Float.isNaN(power) && power >= 0.0f;
+        boolean exportTrackPointExtension = exportHr || exportCadence || exportSpeed || exportTemperature || exportDepth;
 
-        if (!(exportHr || exportCadence || exportSpeed || exportTemperature || exportDepth)) {
+        if (!(exportTrackPointExtension || exportPower)) {
             // No valid data to export in extensions
             return;
         }
 
         ser.startTag(NS_GPX_URI, "extensions");
-        ser.setPrefix(NS_TRACKPOINT_EXTENSION, NS_TRACKPOINT_EXTENSION_URI);
-        ser.startTag(NS_TRACKPOINT_EXTENSION_URI, "TrackPointExtension");
-        if (exportTemperature) {
-            ser.startTag(NS_TRACKPOINT_EXTENSION_URI, "atemp").text(formatDouble(temperature)).endTag(NS_TRACKPOINT_EXTENSION_URI, "atemp");
+        if (exportTrackPointExtension) {
+            ser.setPrefix(NS_TRACKPOINT_EXTENSION, NS_TRACKPOINT_EXTENSION_URI);
+            ser.startTag(NS_TRACKPOINT_EXTENSION_URI, "TrackPointExtension");
+            if (exportTemperature) {
+                ser.startTag(NS_TRACKPOINT_EXTENSION_URI, "atemp").text(formatDouble(temperature)).endTag(NS_TRACKPOINT_EXTENSION_URI, "atemp");
+            }
+            if (exportDepth) {
+                ser.startTag(NS_TRACKPOINT_EXTENSION_URI, "depth").text(formatDouble(depth)).endTag(NS_TRACKPOINT_EXTENSION_URI, "depth");
+            }
+            if (exportHr) {
+                ser.startTag(NS_TRACKPOINT_EXTENSION_URI, "hr").text(formatLong(hr)).endTag(NS_TRACKPOINT_EXTENSION_URI, "hr");
+            }
+            if (exportCadence) {
+                ser.startTag(NS_TRACKPOINT_EXTENSION_URI, "cad").text(formatLong(cadence)).endTag(NS_TRACKPOINT_EXTENSION_URI, "cad");
+            }
+            if (exportSpeed) {
+                ser.startTag(NS_TRACKPOINT_EXTENSION_URI, "speed").text(formatDouble(speed)).endTag(NS_TRACKPOINT_EXTENSION_URI, "speed");
+            }
+            ser.endTag(NS_TRACKPOINT_EXTENSION_URI, "TrackPointExtension");
         }
-        if (exportDepth) {
-            ser.startTag(NS_TRACKPOINT_EXTENSION_URI, "depth").text(formatDouble(depth)).endTag(NS_TRACKPOINT_EXTENSION_URI, "depth");
+        if (exportPower) {
+            ser.setPrefix(NS_POWER_EXTENSION, NS_POWER_EXTENSION_URI);
+            ser.startTag(NS_POWER_EXTENSION_URI, "PowerInWatts").text(formatLong(Math.round(power))).endTag(NS_POWER_EXTENSION_URI, "PowerInWatts");
         }
-        if (exportHr) {
-            ser.startTag(NS_TRACKPOINT_EXTENSION_URI, "hr").text(formatLong(hr)).endTag(NS_TRACKPOINT_EXTENSION_URI, "hr");
-        }
-        if (exportCadence) {
-            ser.startTag(NS_TRACKPOINT_EXTENSION_URI, "cad").text(formatLong(cadence)).endTag(NS_TRACKPOINT_EXTENSION_URI, "cad");
-        }
-        if (exportSpeed) {
-            ser.startTag(NS_TRACKPOINT_EXTENSION_URI, "speed").text(formatDouble(speed)).endTag(NS_TRACKPOINT_EXTENSION_URI, "speed");
-        }
-        ser.endTag(NS_TRACKPOINT_EXTENSION_URI, "TrackPointExtension");
         ser.endTag(NS_GPX_URI, "extensions");
     }
 

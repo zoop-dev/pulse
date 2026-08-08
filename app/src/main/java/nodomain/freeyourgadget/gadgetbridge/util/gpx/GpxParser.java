@@ -284,7 +284,8 @@ public class GpxParser {
                                 getFloat("speed", -1),
                                 getInt("cad", -1),
                                 getFloat("temperature", Float.NaN),
-                                getFloat("depth", Float.NaN)
+                                getFloat("depth", Float.NaN),
+                                getInt("power", -1)
                         );
                         segmentBuilder.withTrackPoint(trackPoint);
                         break;

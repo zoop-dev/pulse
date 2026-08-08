@@ -38,20 +38,21 @@ public class GpxTrackPoint extends GPSCoordinate {
     private final int cadence;
     private final float temperature;
     private final float depth;
+    private final int power;
 
     public GpxTrackPoint(final double longitude, final double latitude, final double altitude, final Date time) {
         this(longitude, latitude, altitude, time, -1);
     }
 
     public GpxTrackPoint(final double longitude, final double latitude, final double altitude, final Date time, final int heartRate) {
-        this(longitude, latitude, altitude, time, null, null, null, Double.NaN, Double.NaN, Double.NaN, heartRate, -1, -1, Float.NaN, Float.NaN);
+        this(longitude, latitude, altitude, time, null, null, null, Double.NaN, Double.NaN, Double.NaN, heartRate, -1, -1, Float.NaN, Float.NaN, -1);
     }
 
     public GpxTrackPoint(final double longitude, final double latitude, final double altitude,
                          final Date time, final String name, final String description,
                          final String symbol, double hdop, double vdop, double pdop,
                          final int heartRate, final float speed, final int cadence,
-                         final float temperature, final float depth) {
+                         final float temperature, final float depth, final int power) {
         super(longitude, latitude, altitude, hdop, vdop, pdop);
         this.name = name;
         this.symbol = symbol;
@@ -62,6 +63,7 @@ public class GpxTrackPoint extends GPSCoordinate {
         this.cadence = cadence;
         this.temperature = temperature;
         this.depth = depth;
+        this.power = power;
     }
 
     @Nullable
@@ -96,6 +98,10 @@ public class GpxTrackPoint extends GPSCoordinate {
         return depth;
     }
 
+    public int getPower() {
+        return power;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -109,12 +115,13 @@ public class GpxTrackPoint extends GPSCoordinate {
                 Objects.equals(symbol, that.symbol) &&
                 Objects.equals(description, that.description) &&
                 Objects.equals(temperature, that.temperature) &&
-                Objects.equals(depth, that.depth);
+                Objects.equals(depth, that.depth) &&
+                Objects.equals(power, that.power);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), time, heartRate, speed, cadence, name, symbol, description, temperature, depth);
+        return Objects.hash(super.hashCode(), time, heartRate, speed, cadence, name, symbol, description, temperature, depth, power);
     }
 
     @NonNull
@@ -132,6 +139,7 @@ public class GpxTrackPoint extends GPSCoordinate {
         builder.setDepth(depth);
         builder.setTemperature(temperature);
         builder.setDescription(description);
+        builder.setPower(power);
 
         return builder.build();
     }

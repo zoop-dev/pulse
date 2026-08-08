@@ -6,6 +6,7 @@
     xmlns:t1="http://www.garmin.com/xmlschemas/TrackPointExtension/v1"
     xmlns:t2="http://www.garmin.com/xmlschemas/TrackPointExtension/v2"
     xmlns:wpx="http://www.garmin.com/xmlschemas/WaypointExtension/v1"
+    xmlns:gpxpx="http://www.garmin.com/xmlschemas/PowerExtension/v1"
 >
 
     <metadata>
@@ -92,6 +93,7 @@
                     <ax:TrackPointExtension>
                         <ax:speed>23.3 <!-- comment --></ax:speed>
                     </ax:TrackPointExtension>
+                    <gpxpx:PowerInWatts>250 <!-- comment --></gpxpx:PowerInWatts>
                 </extensions>
             </trkpt>
             <trkpt lat="47.60899250395596" lon="9.55604980699718">
