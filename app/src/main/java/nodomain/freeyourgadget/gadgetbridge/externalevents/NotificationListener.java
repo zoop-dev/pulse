@@ -1158,10 +1158,11 @@ public class NotificationListener extends NotificationListenerService {
 
     private void logNotification(StatusBarNotification sbn, boolean posted) {
         LOG.debug(
-                "Notification {} {}: packageName={}, when={}, priority={}, category={}, flags={}",
+                "Notification {} {}: packageName={}, channelId={} when={}, priority={}, category={}, flags={}",
                 sbn.getId(),
                 posted ? "posted" : "removed",
                 sbn.getPackageName(),
+                Build.VERSION.SDK_INT >= Build.VERSION_CODES.O ? sbn.getNotification().getChannelId() : "N/A",
                 sbn.getNotification().when,
                 sbn.getNotification().priority,
                 sbn.getNotification().category,
@@ -1194,6 +1195,16 @@ public class NotificationListener extends NotificationListenerService {
         return false;
     }
 
+    private boolean isOtherUser(StatusBarNotification sbn) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            if (sbn.getPackageName().equals("android")) {
+                return "OTHER_USERS".equals(sbn.getNotification().getChannelId());
+            }
+        }
+
+        return false;
+    }
+
     private boolean shouldIgnoreSource(StatusBarNotification sbn) {
         String source = sbn.getPackageName();
 
@@ -1209,6 +1220,15 @@ public class NotificationListener extends NotificationListenerService {
                 source.equals("com.android.dialer") ||
                 source.equals("com.google.android.dialer") ||
                 source.equals("com.cyanogenmod.eleven")) {
+            if (isOtherUser(sbn)) {
+                final boolean ignoreOtherUsers = prefs.getBoolean("notifications_ignore_other_users", false);
+                if (ignoreOtherUsers) {
+                    LOG.info("Ignoring notification, is from another user");
+                } else {
+                    LOG.debug("Allowing notification from another user");
+                    return false;
+                }
+            }
             LOG.info("Ignoring notification, is a system event");
             return true;
         }
