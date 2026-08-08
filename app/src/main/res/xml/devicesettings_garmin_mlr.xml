@@ -7,4 +7,12 @@
         android:layout="@layout/preference_checkbox"
         android:summary="@string/feature_experimental_unstable"
         android:title="@string/garmin_mlr_protocol" />
+
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:icon="@drawable/ic_bolt"
+        android:key="garmin_exploresync"
+        android:layout="@layout/preference_checkbox"
+        android:summary="@string/feature_exploresync_summary"
+        android:title="@string/feature_exploresync_title" />
 </androidx.preference.PreferenceScreen>

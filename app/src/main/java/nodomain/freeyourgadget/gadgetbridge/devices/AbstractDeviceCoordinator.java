@@ -177,17 +177,27 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
         GBDevice gbDevice = new GBDevice(candidate.getDevice().getAddress(), candidate.getName(), null, null, deviceType);
         setBatteryConfigOnDevice(gbDevice);
 
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
-            final DevicePrefs devicePreferences = GBApplication.getDevicePrefs(gbDevice);
-            final SharedPreferences.Editor editor = devicePreferences.getPreferences().edit();
+        final DevicePrefs devicePreferences = GBApplication.getDevicePrefs(gbDevice);
+        final SharedPreferences.Editor editor = devicePreferences.getPreferences().edit();
 
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
             // #5414 - Some old Android versions misbehave
             editor.putBoolean(DeviceSettingsPreferenceConst.PREF_CONNECTION_FORCE_LEGACY_GATT, true);
-
-            editor.apply();
         }
 
+        applyDefaultPreferences(devicePreferences, editor);
+
+        editor.apply();
+
         return gbDevice;
+    }
+
+    /**
+     * Allows for default preferences to be applied on device creation. These do not apply to already-paired devices,
+     * for those you should implement a preference migrator in {@link nodomain.freeyourgadget.gadgetbridge.prefs.GBPrefsMigrator}.
+     */
+    protected void applyDefaultPreferences(final DevicePrefs devicePreferences, final SharedPreferences.Editor editor) {
+        // nothing by default
     }
 
     @Override

@@ -31,7 +31,6 @@ import java.util.regex.Pattern;
 
 import de.greenrobot.dao.AbstractDao;
 import de.greenrobot.dao.Property;
-import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettings;
@@ -55,9 +54,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.GenericTemperatureSampleDao
 import nodomain.freeyourgadget.gadgetbridge.entities.UltrahumanActivitySampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.UltrahumanDeviceStateSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
-import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceCandidate;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
-import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
 import nodomain.freeyourgadget.gadgetbridge.model.HeartRateSample;
 import nodomain.freeyourgadget.gadgetbridge.model.HrvSummarySample;
 import nodomain.freeyourgadget.gadgetbridge.model.HrvValueSample;
@@ -71,13 +68,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.preferences.DevicePrefs;
 
 public class UltrahumanDeviceCoordinator extends AbstractBLEDeviceCoordinator {
     @Override
-    public GBDevice createDevice(GBDeviceCandidate candidate, DeviceType deviceType) {
-        GBDevice gbDevice = super.createDevice(candidate, deviceType);
-
-        DevicePrefs devicePreferences = GBApplication.getDevicePrefs(gbDevice);
-        SharedPreferences preferences = devicePreferences.getPreferences();
-        SharedPreferences.Editor editor = preferences.edit();
-
+    protected void applyDefaultPreferences(final DevicePrefs devicePreferences, final SharedPreferences.Editor editor) {
         // a low powered BLE gadget with gadget initiated connections
         editor.putBoolean(DeviceSettingsPreferenceConst.PREF_CONNECTION_PRIORITY_LOW_POWER, true);
         editor.putBoolean(GBPrefs.DEVICE_CONNECT_BACK, true);
@@ -88,10 +79,6 @@ public class UltrahumanDeviceCoordinator extends AbstractBLEDeviceCoordinator {
 
         // O2 measurement with smart rings is still work in progress
         editor.putBoolean(DeviceSettingsPreferenceConst.PREF_SPO2_ALL_DAY_MONITORING, false);
-
-        editor.apply();
-
-        return gbDevice;
     }
 
     @NonNull

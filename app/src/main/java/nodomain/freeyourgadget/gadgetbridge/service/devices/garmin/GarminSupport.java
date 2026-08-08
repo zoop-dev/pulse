@@ -1019,7 +1019,9 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
         getDevice().sendDeviceUpdateIntent(getContext());
 
         if (getCoordinator().supports(getDevice(), GarminCapability.EXPLORE_SYNC)) {
-            protocolBufferHandler.getExploreSyncHandler().startSession();
+            if (getDevicePrefs().getBoolean("garmin_exploresync", false)) {
+                protocolBufferHandler.getExploreSyncHandler().startSession();
+            }
         }
     }
 

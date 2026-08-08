@@ -17,34 +17,30 @@
 package nodomain.freeyourgadget.gadgetbridge.devices.casio.gbd200;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 
 import androidx.annotation.NonNull;
 
 import java.util.regex.Pattern;
 
-import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsCustomizer;
 import nodomain.freeyourgadget.gadgetbridge.devices.casio.CasioIntervalTimerSettingsCustomizer;
 import nodomain.freeyourgadget.gadgetbridge.devices.casio.gbx100.CasioGBX100DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
-import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceCandidate;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryParser;
-import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.casio.gbd200.CasioGBD200DeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.util.preferences.DevicePrefs;
 
 public class CasioGBD200DeviceCoordinator extends CasioGBX100DeviceCoordinator {
-
     @Override
-    public GBDevice createDevice(final GBDeviceCandidate candidate, final DeviceType deviceType) {
-        final GBDevice device = super.createDevice(candidate, deviceType);
-        GBApplication.getDevicePrefs(device).getPreferences().edit()
-                .putString(DeviceSettingsPreferenceConst.PREFS_DEVICE_CHARTS_TABS,
-                        "activity,activitylist,stepsweek")
-                .apply();
-        return device;
+    protected void applyDefaultPreferences(final DevicePrefs devicePreferences, final SharedPreferences.Editor editor) {
+        editor.putString(
+                DeviceSettingsPreferenceConst.PREFS_DEVICE_CHARTS_TABS,
+                "activity,activitylist,stepsweek"
+        );
     }
 
     @Override

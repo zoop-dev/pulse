@@ -15,6 +15,14 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.Alarm;
 
 public abstract class GarminWatchCoordinator extends GarminCoordinator {
+
+    @Override
+    public boolean defaultExploreSync() {
+        // On watches this often results in duplicated activities due to timestamp mismatches,
+        // and they should all have FIT files for activities.
+        return false;
+    }
+
     @Override
     public int getDefaultIconResource() {
         return R.drawable.ic_device_zetime;
