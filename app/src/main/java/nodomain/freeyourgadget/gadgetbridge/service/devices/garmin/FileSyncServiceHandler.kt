@@ -91,7 +91,7 @@ class FileSyncServiceHandler(val deviceSupport: GarminSupport) {
             }
 
             LOG.debug("Adding to download: {}/{} ({})", file.id.id1, file.id.id2, typeName)
-            //deviceSupport.addFileToDownloadList(file)
+            deviceSupport.addFileToDownloadList(file)
         }
 
         // #5461 - some watches to not send the next page ID
