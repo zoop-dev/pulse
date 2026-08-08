@@ -775,7 +775,7 @@ public class DefaultWorkoutCharts {
         return new WorkoutChart(
                 "chart_performance_condition",
                 context.getString(R.string.performance_condition),
-                ActivitySummaryEntries.GROUP_RUNNING_FORM,
+                ActivitySummaryEntries.GROUP_PERFORMANCE_CONDITION,
                 new LineData(dataset),
                 valueFormatter,
                 ""

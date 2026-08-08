@@ -339,6 +339,12 @@ object ActivitySummaryGroup {
             // Pace
             put(ActivitySummaryEntries.GROUP_PACE, listOf<String>())
 
+            // Performance condition
+            put(
+                ActivitySummaryEntries.GROUP_PERFORMANCE_CONDITION, listOf<String>(
+                )
+            )
+
             // Running form
             put(
                 ActivitySummaryEntries.GROUP_RUNNING_FORM, listOf<String>(

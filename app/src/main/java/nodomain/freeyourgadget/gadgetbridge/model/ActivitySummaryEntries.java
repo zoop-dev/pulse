@@ -344,6 +344,7 @@ public class ActivitySummaryEntries {
     public static final String GROUP_TRAINING_EFFECT = "TrainingEffect";
     public static final String GROUP_LAPS = "laps";
     public static final String GROUP_RUNNING_FORM = "RunningForm";
+    public static final String GROUP_PERFORMANCE_CONDITION = "performance_condition";
     public static final String GROUP_INTERVALS = "workout_intervals";
     public static final String GROUP_DIVING = "activity_type_diving";
     public static final String GROUP_RECOVERY_HEART_RATE = "recovery_heart_rate";
