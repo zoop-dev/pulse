@@ -378,7 +378,7 @@ public class CommunicatorV2 implements ICommunicator {
             case CLOSE_HANDLE_RESP: {
                 final short serviceCode = message.getShort();
                 final Service service = Service.fromCode(serviceCode);
-                final int handle = message.get();
+                final int handle = message.get() & 0xff;
                 final byte status = message.get();
                 LOG.debug("Received close handle response: service={}, handle={}, status={}", service, handle, status);
                 if (service != null) {
