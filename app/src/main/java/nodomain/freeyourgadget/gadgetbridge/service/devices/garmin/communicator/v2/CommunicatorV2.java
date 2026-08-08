@@ -397,6 +397,14 @@ public class CommunicatorV2 implements ICommunicator {
 
                     handleByService.remove(service);
                     serviceCallbacks.remove(service);
+
+                    if (service == Service.GFDI) {
+                        // The watch closed the main GFDI channel, re-register it.
+                        LOG.warn("GFDI handle was closed unexpectedly");
+                        mSupport.createTransactionBuilder("open GFDI")
+                                .write(characteristicSend, registerService(Service.GFDI, mSupport.mlrEnabled()))
+                                .queue();
+                    }
                 }
 
                 serviceByHandle.remove(handle);
