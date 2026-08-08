@@ -49,14 +49,22 @@ message FileResponse {
 }
 
 message FileListRequest {
+  // Set to FileListResponse.cursor_id to continue an in-progress listing.
+  // Mutually exclusive with start_page_id: only set one of the two.
+  optional uint32 cursor_id = 1;
   optional uint32 start_page_id = 2; // 33737
-  optional FileId flags1 = 4; // 0x000000000000a5a5 / 42405
+  // Exclusion flags? If we omit this, it sends back already synced files going back months.
+  // 0x000000000000a5a5 / 42405 appears to be the "already synced" flag.
+  optional FileId flags1 = 4;
   optional FileId flags2 = 5; // 0x000000000000a5a5 / 42405
 }
 
 message FileListResponse {
   optional uint32 unk1 = 1; // 0
-  optional uint32 unk2 = 2; // 2 on venu 4
+  // Present when more items are pending for *this* listing (> 100 items) - send it back
+  // on the next FileListRequest.cursor_id to get the remaining items.
+  // Mutually exclusive with next_page_id: only one of the two is set.
+  optional uint32 cursor_id = 2; // 2 on venu 4, 1 on venu 3
   optional uint32 next_page_id = 3; // 33737, incrementing
   repeated File file = 4;
   optional uint32 unk6 = 6; // 1 on venu 4

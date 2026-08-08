@@ -1,12 +1,14 @@
 package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin
 
 import nodomain.freeyourgadget.gadgetbridge.proto.garmin.GdiFileSyncService
+import nodomain.freeyourgadget.gadgetbridge.proto.garmin.GdiSmartProto
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.deviceevents.FileDownloadedDeviceEvent
 import nodomain.freeyourgadget.gadgetbridge.util.protobuf.buildWith
 import org.slf4j.LoggerFactory
 
 class FileSyncServiceHandler(val deviceSupport: GarminSupport) {
     private var nextPageId: Int? = null
+    private var cursorId: Int? = null
 
     fun handle(fileSyncService: GdiFileSyncService.FileSyncService): GdiFileSyncService.FileSyncService? {
         return when {
@@ -58,14 +60,13 @@ class FileSyncServiceHandler(val deviceSupport: GarminSupport) {
 
     private fun handleFileListResponse(fileListResponse: GdiFileSyncService.FileListResponse): GdiFileSyncService.FileSyncService? {
         LOG.debug(
-            "Handling file list response with {} files, nextPageId={}",
+            "Handling file list response with {} files, cursorId={}, nextPageId={}",
             fileListResponse.fileList.size,
-            fileListResponse.nextPageId
+            if (fileListResponse.hasCursorId()) fileListResponse.cursorId else null,
+            fileListResponse.nextPageId,
         )
 
         val fetchUnknownFiles = deviceSupport.devicePrefs.fetchUnknownFiles
-
-        nextPageId = fileListResponse.nextPageId
 
         // Only the first entry for a type seems to contain the type name, so keep track of them
         val codeMap: MutableMap<Int?, String?> = HashMap()
@@ -90,30 +91,44 @@ class FileSyncServiceHandler(val deviceSupport: GarminSupport) {
             }
 
             LOG.debug("Adding to download: {}/{} ({})", file.id.id1, file.id.id2, typeName)
-            deviceSupport.addFileToDownloadList(file)
+            //deviceSupport.addFileToDownloadList(file)
         }
 
         // #5461 - some watches to not send the next page ID
         // however, from previous logs, it always seems to match the max seen across all sent items, so attempt
         // to fall back to that as a workaround so we can fetch the subsequent files
-        if (fileListResponse.nextPageId == 0) {
-            nextPageId = fileListResponse.fileList
-                .mapNotNull { it.pageId }
-                .maxOrNull() ?: 0
+        nextPageId = fileListResponse.nextPageId
+
+        // The device sets cursor_id when there are more items pending for *this same* listing
+        // request. Keep pulling pages within this cursor immediately instead of stopping after
+        // one page - otherwise anything past the first ~100 items (which can easily be all SPORTS
+        // backlog) is never seen.
+        cursorId = if (fileListResponse.hasCursorId()) fileListResponse.cursorId else null
+        if (cursorId != null) {
+            deviceSupport.sendProtobufRequest(
+                "continue file list",
+                GdiSmartProto.Smart.newBuilder().setFileSyncService(requestFileList()).build()
+            )
         }
 
         return null
     }
 
     fun requestFileList(): GdiFileSyncService.FileSyncService {
-        LOG.debug("Requesting file list starting at page {}", nextPageId)
+        LOG.debug("Requesting file list starting at page {} (cursorId={})", nextPageId, cursorId)
 
         val fileListRequestBuilder = GdiFileSyncService.FileListRequest.newBuilder().apply {
-            flags1 = GdiFileSyncService.FileId.newBuilder().setId1(42405).setId2(42405).build()
-            flags2 = GdiFileSyncService.FileId.newBuilder().setId1(42405).setId2(42405).build()
+            // Exclusion flags? If we omit this, it sends back already synced files going back months.
+            flags1 = GdiFileSyncService.FileId.newBuilder().setId1(FLAGS_SYNCED).setId2(FLAGS_SYNCED).build()
+            flags2 = GdiFileSyncService.FileId.newBuilder().setId1(FLAGS_SYNCED).setId2(FLAGS_SYNCED).build()
         }
 
-        nextPageId?.let { fileListRequestBuilder.startPageId = it }
+        val currentcursorId = cursorId
+        if (currentcursorId != null) {
+            fileListRequestBuilder.cursorId = currentcursorId
+        } else {
+            nextPageId?.let { fileListRequestBuilder.startPageId = it }
+        }
 
         return GdiFileSyncService.FileSyncService.newBuilder().buildWith {
             fileListRequest = fileListRequestBuilder.build()
@@ -162,12 +177,14 @@ class FileSyncServiceHandler(val deviceSupport: GarminSupport) {
         return GdiFileSyncService.FileSyncService.newBuilder().buildWith {
             fileSetFlags = GdiFileSyncService.FileSetFlags.newBuilder().buildWith {
                 file = syncFile.id
-                flags = GdiFileSyncService.FileId.newBuilder().setId1(42405).setId2(42405).build()
+                flags = GdiFileSyncService.FileId.newBuilder().setId1(FLAGS_SYNCED).setId2(FLAGS_SYNCED).build()
             }
         }
     }
 
     companion object {
         private val LOG = LoggerFactory.getLogger(FileSyncServiceHandler::class.java)
+
+        private const val FLAGS_SYNCED = 42405;
     }
 }
