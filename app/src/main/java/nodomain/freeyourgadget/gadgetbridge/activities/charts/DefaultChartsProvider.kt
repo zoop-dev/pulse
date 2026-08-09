@@ -147,7 +147,7 @@ open class DefaultChartsProvider : DeviceChartsProvider {
             "heartrate" -> HeartRateCollectionFragment.newInstance(allowSwipe)
             "hrvstatus" -> HrvStatusCollectionFragment.newInstance(allowSwipe)
             "bodyenergy" -> BodyEnergyCollectionFragment.newInstance(allowSwipe)
-            "vo2max" -> VO2MaxFragment()
+            "vo2max" -> VO2MaxCollectionFragment.newInstance(allowSwipe)
             "load" -> LoadFragment()
             "genericmetrics" -> GenericMetricCollectionFragment.newInstance(allowSwipe)
             "stress" -> StressCollectionFragment.newInstance(allowSwipe)
