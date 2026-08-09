@@ -4845,4 +4845,10 @@
     <string name="internet_helper_error_permission">Pomocník s internetem nemá oprávnění k přístupu k internetu</string>
     <string name="toast_error_invalid_api_key">Neplatný klíč API</string>
     <string name="notification_channel_device_warnings">Varování zařízení</string>
+    <string name="pref_sleepasandroid_feat_heart_rr_intervals">Intervaly R-R</string>
+    <string name="pref_sleepasandroid_feat_spo2_autofetch_only_summary">Toto zařízení poskytuje SpO2 pouze skrze periodické automatické zjišťování, ne jako živá data</string>
+    <string name="pref_sleepasandroid_spo2_autofetch">Nastavení automatického zjišťování SpO2</string>
+    <string name="pref_sleepasandroid_spo2_autofetch_interval">Interval zjišťování (sekundy)</string>
+    <string name="feature_exploresync_title">Protokol ExploreSync</string>
+    <string name="feature_exploresync_summary">Synchronizovat stopy GPS aktivit pomocí protokolu ExploreSync. Mělo by být použito pouze, když zařízení neposkytuje soubory FIT.</string>
 </resources>
