@@ -236,10 +236,14 @@ public class ProtocolBufferHandler implements MessageHandler {
                 processed = appConfigHandler.process(smart.getAppConfigService());
             }
             if (smart.hasExploreSyncService()) {
-                processed = true;
-                final GdiExploreSyncService.ExploreSyncService response = exploreSyncHandler.handle(smart.getExploreSyncService());
-                if (response != null) {
-                    return prepareProtobufResponse(GdiSmartProto.Smart.newBuilder().setExploreSyncService(response).build(), message.getRequestId());
+                if (deviceSupport.getDevicePrefs().getBoolean("garmin_exploresync", false)) {
+                    processed = true;
+                    final GdiExploreSyncService.ExploreSyncService response = exploreSyncHandler.handle(smart.getExploreSyncService());
+                    if (response != null) {
+                        return prepareProtobufResponse(GdiSmartProto.Smart.newBuilder().setExploreSyncService(response).build(), message.getRequestId());
+                    }
+                } else {
+                    LOG.warn("Ignoring explore sync service - explore sync is disabled");
                 }
             }
             if (processed) {
