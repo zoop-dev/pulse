@@ -4843,4 +4843,6 @@
     <string name="pref_sleepasandroid_feat_spo2_autofetch_only_summary">此设备仅通过定期自动获取提供数据，不提供实时读数</string>
     <string name="pref_sleepasandroid_spo2_autofetch">血氧饱和度自动获取设置</string>
     <string name="pref_sleepasandroid_spo2_autofetch_interval">获取间隔（秒）</string>
+    <string name="feature_exploresync_title">ExploreSync 协议</string>
+    <string name="feature_exploresync_summary">使用 ExploreSync 协议同步活动 GPS 轨迹。应只在设备不提供 FIT 文件时使用。</string>
 </resources>
