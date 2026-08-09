@@ -16,6 +16,8 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.huawei;
 
+import android.widget.Toast;
+
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,10 +27,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.App;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceApp;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetAppNames;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SendAppDelete;
+import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 public class HuaweiAppManager {
 
@@ -88,6 +92,50 @@ public class HuaweiAppManager {
             gbDeviceApps.add(gbDeviceApp);
         }
         support.setGbWatchApps(gbDeviceApps);
+    }
+
+    /**
+     * Handle an install report the watch sends on its own while it unpacks a bundle we uploaded.
+     * The 0x28 file upload service only tells us the bytes arrived, so without this the user is
+     * left with the "installation complete, 100%" notification the upload posted even when the
+     * watch goes on to reject the bundle - which is what an incompatible or untrusted app does.
+     */
+    public void handleInstallStatus(int status, String packageName) {
+        if (status <= App.AppInstallStatus.PROGRESS_MAX) {
+            LOG.debug("Installing app {}: {}%", packageName, status);
+            support.onUploadProgress(R.string.updatefirmwareoperation_update_in_progress, status, true);
+            return;
+        }
+        switch (status) {
+            case App.AppInstallStatus.STATE_INSTALL_STARTED:
+                LOG.info("Watch started installing app {}", packageName);
+                support.onUploadProgress(R.string.updatefirmwareoperation_update_in_progress, 0, true);
+                break;
+            case App.AppInstallStatus.STATE_UNINSTALL_STARTED:
+                LOG.info("Watch started removing app {}", packageName);
+                break;
+            case App.AppInstallStatus.STATE_INSTALLED:
+                LOG.info("Watch installed app {}", packageName);
+                support.onUploadProgress(R.string.updatefirmwareoperation_update_complete, 100, false);
+                requestAppList();
+                break;
+            case App.AppInstallStatus.STATE_UNINSTALLED:
+                LOG.info("Watch removed app {}", packageName);
+                requestAppList();
+                break;
+            case App.AppInstallStatus.STATE_INSTALL_FAILED:
+                LOG.error("Watch refused to install app {}", packageName);
+                support.onUploadProgress(R.string.updatefirmwareoperation_write_failed, 0, false);
+                GB.toast(support.getContext(), R.string.huawei_app_install_failed, Toast.LENGTH_LONG, GB.ERROR);
+                break;
+            case App.AppInstallStatus.STATE_UNINSTALL_FAILED:
+                LOG.error("Watch failed to remove app {}", packageName);
+                GB.toast(support.getContext(), R.string.huawei_app_uninstall_failed, Toast.LENGTH_LONG, GB.ERROR);
+                requestAppList();
+                break;
+            default:
+                LOG.warn("Unknown install status {} for app {}", status, packageName);
+        }
     }
 
     public void requestAppList() {

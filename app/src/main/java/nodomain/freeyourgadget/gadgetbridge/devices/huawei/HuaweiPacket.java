@@ -739,6 +739,8 @@ public class HuaweiPacket {
                 }
             case App.id:
                 switch (this.commandId) {
+                    case App.AppInstallStatus.id:
+                        return new App.AppInstallStatus.Response(paramsProvider).fromPacket(this);
                     case App.AppNames.id:
                         return new App.AppNames.Response(paramsProvider).fromPacket(this);
                     case App.AppInfoParams.id:

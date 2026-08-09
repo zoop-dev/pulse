@@ -598,16 +598,11 @@ public class AsynchronousResponse {
 
     private void handleApp(HuaweiPacket response) throws Request.ResponseParseException {
         if (response.serviceId == App.id) {
-            if (response.commandId == 0x2) {
-                try {
-                    byte status = response.getTlv().getByte(0x1);
-                    if (status == (byte) 0x66 || status == (byte) 0x69) {
-                        this.support.getHuaweiAppManager().requestAppList();
-                    }
-                } catch (HuaweiPacket.MissingTagException e) {
-                    LOG.error("Could not send watchface confirm request", e);
-                }
-
+            if (response.commandId == App.AppInstallStatus.id) {
+                if (!(response instanceof App.AppInstallStatus.Response))
+                    throw new Request.ResponseTypeMismatchException(response, App.AppInstallStatus.Response.class);
+                App.AppInstallStatus.Response resp = (App.AppInstallStatus.Response) response;
+                this.support.getHuaweiAppManager().handleInstallStatus(resp.status, resp.packageName);
             }
         }
     }

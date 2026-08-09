@@ -4444,6 +4444,8 @@
     <string name="cannot_upload_watchface_too_many_watchfaces_installed">Cannot upload watchface, too many watchfaces installed</string>
     <string name="insufficient_space_for_upload">Insufficient space for upload</string>
     <string name="file_already_exists">File already exists</string>
+    <string name="huawei_app_install_failed">The watch refused to install the app</string>
+    <string name="huawei_app_uninstall_failed">The watch could not remove the app</string>
     <string name="smart_ring_measurement_error_worn_incorrectly">Measurement error. Are the ring\'s sensors oriented correctly?</string>
     <string name="smart_ring_measurement_error_unknown">Unknown measurement error %d received from ring</string>
     <string name="pref_header_deprecated_functionalities">Deprecated functionalities</string>

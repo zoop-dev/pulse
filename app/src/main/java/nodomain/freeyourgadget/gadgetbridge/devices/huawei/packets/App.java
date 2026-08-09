@@ -78,6 +78,43 @@ public class App {
         }
     }
 
+    /**
+     * Unsolicited progress and result reports the watch sends while it unpacks and installs a
+     * bundle that was just transferred over the 0x28 file upload service, or while it removes one.
+     * Tag 1 is a percentage up to {@link #PROGRESS_MAX}, above that a state; tag 2 is the package
+     * the report is about. 101 and 104 are not results of their own, they announce that an install
+     * or a removal has begun - 101 arrives right after the transfer, before the first percentage,
+     * and 104 immediately before the 105 that reports the removal itself.
+     */
+    public static class AppInstallStatus {
+        public static final byte id = 0x02;
+
+        /** Highest tag 1 value that is still a percentage rather than a state. */
+        public static final int PROGRESS_MAX = 100;
+        public static final int STATE_INSTALL_STARTED = 101;
+        public static final int STATE_INSTALLED = 102;
+        public static final int STATE_INSTALL_FAILED = 103;
+        public static final int STATE_UNINSTALL_STARTED = 104;
+        public static final int STATE_UNINSTALLED = 105;
+        public static final int STATE_UNINSTALL_FAILED = 106;
+
+        public static class Response extends HuaweiPacket {
+            public int status = 0;
+            public String packageName = "";
+
+            public Response(ParamsProvider paramsProvider) {
+                super(paramsProvider);
+            }
+
+            @Override
+            public void parseTlv() throws HuaweiPacket.ParseException {
+                this.status = this.tlv.getAsInteger(0x01);
+                if (this.tlv.contains(0x02))
+                    this.packageName = this.tlv.getString(0x02);
+            }
+        }
+    }
+
     public static class AppNames {
         public static final byte id = 0x03;
 
