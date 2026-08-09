@@ -772,6 +772,15 @@ public class HuaweiSupportProvider {
     }
 
     protected void initializeDeviceConfigure() {
+        // The PAKE/STS path authenticates with its own session keys and never populates the packet
+        // secret key. AsynchronousResponse takes that key being non-null as its "auth has finished"
+        // signal and silently drops every unsolicited packet while it is null, which kills all
+        // device-initiated flows - notably the whole 0x28 file upload state machine, so a watchface
+        // install stalls right after the file info request. We are past auth here, so open the
+        // async path. These devices don't encrypt transactions, so the key value itself is unused.
+        if (getCoordinator().supportsHiChainPake() && paramsProvider.getSecretKey() == null)
+            createSecretKey();
+
         if (isBLE()) {
             nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder leBuilder = createLeTransactionBuilder("Initializing");
             leBuilder.setCallback(leSupport);
