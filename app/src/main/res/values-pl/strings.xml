@@ -4833,4 +4833,22 @@
     <string name="internet_helper_error_permission">Internet Helper nie ma uprawnień do korzystania z internetu</string>
     <string name="toast_error_invalid_api_key">Nieprawidłowy klucz API</string>
     <string name="notification_channel_device_warnings">Ostrzeżenia dotyczące urządzeń</string>
+    <string name="xiaomi_scooter_tire_pressure_interval_14">14 dni</string>
+    <string name="xiaomi_scooter_tire_pressure_interval_30">30 dni</string>
+    <string name="xiaomi_scooter_tire_pressure_interval_60">60 dni</string>
+    <string name="xiaomi_scooter_tire_pressure_interval_180">180 dni</string>
+    <string name="xiaomi_scooter_tire_pressure_remaining_title">Pozostałych dni</string>
+    <string name="xiaomi_scooter_tire_pressure_reset_title">Zresetuj przypomnienie</string>
+    <string name="xiaomi_scooter_tire_pressure_reset_summary">Kliknij ten przycisk, aby zresetować licznik czasu konserwacji ciśnienia w oponach.</string>
+    <string name="xiaomi_scooter_tire_pressure_reset_confirmation">Czy zresetować przypomnienie o kontroli ciśnienia w oponach?</string>
+    <string name="pref_navigation_app_comaps">CoMaps</string>
+    <string name="pref_sleepasandroid_feat_heart_rr_intervals">Przedziały R-R</string>
+    <string name="pref_sleepasandroid_feat_spo2_autofetch_only_summary">Urządzenie to wyświetla wartość SpO2 wyłącznie na podstawie okresowego automatycznego pobierania danych, a nie na podstawie odczytów na żywo</string>
+    <string name="pref_sleepasandroid_spo2_autofetch">Ustawienia automatycznego pobierania wartości SpO2</string>
+    <string name="pref_sleepasandroid_spo2_autofetch_interval">Częstotliwość pobierania danych (w sekundach)</string>
+    <string name="huawei_app_install_failed">Zegarek nie pozwolił na zainstalowanie aplikacji</string>
+    <string name="huawei_app_uninstall_failed">Zegarek nie mógł usunąć aplikacji</string>
+    <string name="huawei_adaptive_volume_title">Głośność adaptacyjna</string>
+    <string name="feature_exploresync_title">Protokół ExploreSync</string>
+    <string name="feature_exploresync_summary">Synchronizuj trasy GPS za pomocą protokołu ExploreSync. Funkcji tej należy używać wyłącznie wtedy, gdy urządzenie nie udostępnia plików FIT.</string>
 </resources>
