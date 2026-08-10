@@ -901,7 +901,7 @@
     <string name="averageStrokesPerSecond">Foulées moyennes</string>
     <string name="averageStrokeDistance">Distance moyenne de foulée</string>
     <string name="averageStride">Foulée moyenne</string>
-    <string name="averageKMPaceSeconds">Rythme</string>
+    <string name="averageKMPaceSeconds">Rythme moyen</string>
     <string name="averageHR">Fréquence cardiaque moyenne</string>
     <string name="totalStride">Foulées totales</string>
     <string name="caloriesBurnt">Calories totales</string>
@@ -4123,7 +4123,7 @@
     <string name="sony_button_function_nc_ambient_switch_ambient_sound">Commuter le bruit ambiant</string>
     <string name="sony_button_function_nc_ambient_google_assistant">Assistant Google</string>
     <string name="soundcore_3d_surround_title">Son Surround 3D</string>
-    <string name="soundcore_3d_surround_summary">Activer le 3D Surround</string>
+    <string name="soundcore_3d_surround_summary">Activer le son 3D Surround</string>
     <string name="soundcore_enable_pairing_mode_summary">Activer le mode découverte/appairage afin de connecter un nouvel appareil</string>
     <string name="soundcore_equalizer_preset_acoustic">Acoustique</string>
     <string name="soundcore_equalizer_preset_bass_reducer">Réducteur de basses</string>
@@ -4326,7 +4326,7 @@
     <string name="internet_helper_pref_pebble_app_config_title">Pages de configuration des applications Pebble</string>
     <string name="notification_pebble_js_service_title">Service JavaScript Pebble</string>
     <string name="pref_experimental_metrics_title">Calculs métriques génériques</string>
-    <string name="pref_experimental_metrics_summary">Activer une interface utilisateur expérimentale pour les mesures génériques. Ne s\'applique actuellement qu\'à la charge d\'entraînement et aux calories enregistrées par les appareils Garmin.</string>
+    <string name="pref_experimental_metrics_summary">Utiliser des mesures génériques pour les calculs comme la charge d\'entraînement et les calories quand c\'est possible.</string>
     <string name="diving_cns_toxicity">Toxicité pour le SNC</string>
     <string name="diving_nitrogen_load">Charge en azote</string>
     <string name="diving_surface_interval">Intervalle en surface</string>
@@ -4447,7 +4447,7 @@
     <string name="ak102_pref_audio_auto_connect_summary">Reconnecter la montre en tant que casque à chaque fois qu\'elle se connecte. Ce lien est nécessaire pour les appels, les contacts et la liste des appels.</string>
     <string name="ak102_pref_audio_unpair_title">Désappairage du son des appels</string>
     <string name="ak102_pref_audio_unpair_summary">Supprimer l\'appairage Bluetooth avec la montre</string>
-    <string name="ak102_audio_pairing_started">Appairage du son des appels, accepter la demande d\'appairage sur le téléphone et vérifiez le statut</string>
+    <string name="ak102_audio_pairing_started">Appairage du son des appels, acceptez la demande d\'appairage sur le téléphone et vérifiez le statut</string>
     <string name="ak102_pref_audio_pair_title">Appairage pour le son des appels</string>
     <string name="ak102_prefs_audio_header">Bluetooth pour le son des appels</string>
     <string name="ak102_pref_audio_auto_connect_title">Auto-connecter le son des appels</string>
@@ -4554,4 +4554,21 @@
     <string name="casio_interval_timer_empty">Aucun minuteur. Touchez + pour en ajouter un.</string>
     <string name="casio_interval_timer_limit_reached">Limite de 50 minuteurs atteinte</string>
     <string name="casio_interval_timer_active">Actif sur la montre</string>
+    <string name="casio_interval_timer_default_label">Minuteur %1$d</string>
+    <string name="hrv_status_last_night_legend">Dernière nuit (ms)</string>
+    <string name="hrv_status_nightly_avg">Moyenne par nuit</string>
+    <string name="hrv_status_nightly_avg_legend">Moyenne par nuit (ms)</string>
+    <string name="hrv_status_highest_nightly_avg">Moyenne par nuit maximum</string>
+    <string name="generic_metric_chart_label_with_unit">%1$s (%2$s)</string>
+    <string name="metric_garmin_endurance_score">Score d\'endurance</string>
+    <string name="metric_generic_resting_metabolic_rate">Métabolisme au repos</string>
+    <string name="menuitem_sos_flashlight">Lampe SOS</string>
+    <string name="permission_navigation_comaps">%1$s a besoin d\'une autorisation pour lire les données de CoMaps. Appuyez sur \"%2$s\" pour aller aux réglages système et activer cette autorisation, puis revenez ici pour actionner cette option à nouveau.</string>
+    <string name="unit_inch">pouces</string>
+    <string name="activity_detail_export_fit">Partager fichier FIT</string>
+    <string name="activity_detail_export_fit_failed">Échec d\'export du fichier FIT</string>
+    <string name="sony_equalizer_bluetooth">Égaliseur (Bluetooth)</string>
+    <string name="sony_equalizer_mp3">Égaliseur (MP3)</string>
+    <string name="soundbrenner_pref_metronome_toggle_title">Démarrer/Arrêter</string>
+    <string name="soundbrenner_pref_metronome_toggle_summary">Démarrer ou arrêter le métronome</string>
 </resources>
