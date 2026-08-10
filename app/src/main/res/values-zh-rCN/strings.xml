@@ -4845,4 +4845,6 @@
     <string name="pref_sleepasandroid_spo2_autofetch_interval">获取间隔（秒）</string>
     <string name="feature_exploresync_title">ExploreSync 协议</string>
     <string name="feature_exploresync_summary">使用 ExploreSync 协议同步活动 GPS 轨迹。应只在设备不提供 FIT 文件时使用。</string>
+    <string name="huawei_app_install_failed">手表拒绝安装该应用</string>
+    <string name="huawei_app_uninstall_failed">手表无法移除该应用</string>
 </resources>
