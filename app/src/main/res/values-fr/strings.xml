@@ -1442,7 +1442,7 @@
     <string name="sony_anc_optimizer_status_wearing_condition">Mesure des conditions actuelles…</string>
     <string name="menuitem_nothing">Rien</string>
     <string name="pref_title_opentracks_packagename">Nom du logiciel OpenTracks</string>
-    <string name="pref_summary_opentracks_packagename">Utilisé pour démarrer/arrêter l\'enregistrement GPS dans une app. de fitness externe.</string>
+    <string name="pref_summary_opentracks_packagename">Utilisé pour démarrer/arrêter l\'enregistrement GPS dans une appli de fitness externe.</string>
     <string name="pref_device_action_fitness_app_control_start">Démarrage de l\'enregistrement dans l\'app Fitness</string>
     <string name="pref_device_action_fitness_app_control_stop">Arrêt de l\'enregistrement dans l\'app Fitness</string>
     <string name="pref_title_notifications_generic_settings">Configuration notifications Android</string>
@@ -1460,7 +1460,7 @@
 \nEn raison des règles du Google Play Store, nous ne pouvons pas mettre de lien de don directement dans l\'application, mais si vous appréciez cette application, pensez à faire un don via la page web de Gadgetbridge ci-dessous.</string>
     <string name="about_activity_title_main_nightly">À propos de Gatgetbridge Nightly</string>
     <string name="about_activity_title_main_nopebble">À propos de Gadgetbridge Nightly sans Pebble</string>
-    <string name="about_description_main_nightly">Remplaçant sans connexion au cloud, en copyleft et sous licence libre pour remplacer les applications propriétaires des fabricants. Versions Nightly de Gadgetbridge. Ne peut pas être installé si vous avez déja Gadgetbridge ou Pebble d\'installé, en raison d\'un conflit avec l\'application Pebble.</string>
+    <string name="about_description_main_nightly">Remplaçant sans connexion au cloud, en copyleft et sous licence libre pour remplacer les applications propriétaires des fabricants. Versions Nightly de Gadgetbridge. Ne peut pas être installé si vous avez déja Gadgetbridge ou Pebble d\'installé, en raison d\'un conflit avec le fournisseur Pebble.</string>
     <string name="application_name_main_nopebble">Gadgetbridage (Nightly, pas defournisseur Pebble)</string>
     <string name="title_activity_controlcenter_main_nopebble">Gadgetbridge Nightly Sans Pebble</string>
     <string name="gadgetbridge_running_main_nightly">GB Nightly en fonctionnement</string>
@@ -2344,7 +2344,7 @@
     <string name="pref_summary_osmand_packagename">Utilisé pour sélectionner la version d\'OsmAnd à laquelle se connecter</string>
     <string name="wake_up_time">Réveil</string>
     <string name="menuitem_stats">Stats</string>
-    <string name="pref_summary_preview_message_in_title">Afficher un aperçu du message dans le titre de la notification selon ce que permet l\'appareil</string>
+    <string name="pref_summary_preview_message_in_title">Afficher un aperçu du message dans le titre de la notification, selon ce que permet l\'appareil</string>
     <string name="pref_title_osmand_packagename">nom du paquet OsmAnd</string>
     <string name="pref_navigation_app_osmand">OsmAnd(+)</string>
     <string name="pref_sleep_mode_schedule_summary">Envoyer un rappel et se mettre en veille à l\'heure du coucher. A l\'heure prévue de réveil, l\'alarme de réveil sonnera.</string>
@@ -4548,4 +4548,10 @@
     <string name="select_at_least_option">Veuillez sélectionner au moins l’option %1$d</string>
     <string name="activity_summary_set_header_photo_title">Définir photo d’en-tête</string>
     <string name="activity_summary_remove_header_photo_title">Retirer photo d’en-tête</string>
+    <string name="feature_exploresync_summary">Synchroniser les tracés GPS d\'activité via le protocole ExploreSync. À utiliser uniquement si l\'appareil ne fournit pas de fichiers FIT.</string>
+    <string name="pref_casio_interval_timer_title">Minuteur d\'intervalle</string>
+    <string name="casio_interval_timer_add">Ajouter minuteur</string>
+    <string name="casio_interval_timer_empty">Aucun minuteur. Touchez + pour en ajouter un.</string>
+    <string name="casio_interval_timer_limit_reached">Limite de 50 minuteurs atteinte</string>
+    <string name="casio_interval_timer_active">Actif sur la montre</string>
 </resources>
