@@ -33,6 +33,7 @@
 * Endurain: Upload workout photos
 * FIT Export: Add local timestamp, distance, elevation, step length
 * Fix crash when opening map view
+* Fix non-zero step counts at midnight after time zone change
 * Garmin HRM Pro+: Improved connection support
 * Garmin: Add point winds support
 * Garmin: Display notification on OAuth expiration

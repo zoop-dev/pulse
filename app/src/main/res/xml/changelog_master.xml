@@ -32,6 +32,7 @@
       <change>Endurain: Upload workout photos</change>
       <change>FIT Export: Add local timestamp, distance, elevation, step length</change>
       <change>Fix crash when opening map view</change>
+      <change>Fix non-zero step counts at midnight after time zone change</change>
       <change>Garmin HRM Pro+: Improved connection support</change>
       <change>Garmin: Add point winds support</change>
       <change>Garmin: Display notification on OAuth expiration</change>
