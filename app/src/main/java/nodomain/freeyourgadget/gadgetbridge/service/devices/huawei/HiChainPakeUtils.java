@@ -161,7 +161,7 @@ public class HiChainPakeUtils {
             return hashToCurve25519(passwordKey);
         }
         BigInteger pw = new BigInteger(1, passwordKey);
-        return fixedLength(pw.modPow(BigInteger.TWO, mod).toByteArray(),
+        return fixedLength(pw.modPow(BigInteger.valueOf(2), mod).toByteArray(),
                 mod.bitLength() / 8 + (mod.bitLength() % 8 == 0 ? 0 : 1));
     }
 
@@ -500,7 +500,7 @@ public class HiChainPakeUtils {
             tmp = z2; z2 = z3; z3 = tmp;
         }
 
-        BigInteger z2inv = z2.modPow(CURVE25519_P.subtract(BigInteger.TWO), CURVE25519_P);
+        BigInteger z2inv = z2.modPow(CURVE25519_P.subtract(BigInteger.valueOf(2)), CURVE25519_P);
         BigInteger result = x2.multiply(z2inv).mod(CURVE25519_P);
 
         // encodeUCoordinate: little-endian 32 bytes
@@ -559,7 +559,7 @@ public class HiChainPakeUtils {
 
         BigInteger p = CURVE25519_P;
         BigInteger A = CURVE25519_A;
-        BigInteger u = BigInteger.TWO;
+        BigInteger u = BigInteger.valueOf(2);
 
         BigInteger denom = BigInteger.ONE.add(u.multiply(r.multiply(r).mod(p))).mod(p);
         BigInteger b = A.negate().mod(p).multiply(denom.modInverse(p)).mod(p);
@@ -664,7 +664,7 @@ public class HiChainPakeUtils {
     }
 
     private static final BigInteger ED_SQRTM1 =
-            BigInteger.TWO.modPow(CURVE25519_P.subtract(BigInteger.ONE).shiftRight(2), CURVE25519_P);
+            BigInteger.valueOf(2).modPow(CURVE25519_P.subtract(BigInteger.ONE).shiftRight(2), CURVE25519_P);
 
     private static BigInteger[] edDecompress(byte[] comp) {
         byte[] c = comp.clone();
@@ -730,15 +730,15 @@ public class HiChainPakeUtils {
     }
 
     private static BigInteger edInv(BigInteger x) {
-        return x.modPow(CURVE25519_P.subtract(BigInteger.TWO), CURVE25519_P);
+        return x.modPow(CURVE25519_P.subtract(BigInteger.valueOf(2)), CURVE25519_P);
     }
 
     // Extended (X, Y, Z, T) coordinates on the Edwards curve.
     private static BigInteger[] edAdd(BigInteger[] p, BigInteger[] q) {
         BigInteger a = p[1].subtract(p[0]).multiply(q[1].subtract(q[0])).mod(CURVE25519_P);
         BigInteger b = p[1].add(p[0]).multiply(q[1].add(q[0])).mod(CURVE25519_P);
-        BigInteger c = BigInteger.TWO.multiply(p[3]).multiply(q[3]).multiply(ED_D).mod(CURVE25519_P);
-        BigInteger d = BigInteger.TWO.multiply(p[2]).multiply(q[2]).mod(CURVE25519_P);
+        BigInteger c = BigInteger.valueOf(2).multiply(p[3]).multiply(q[3]).multiply(ED_D).mod(CURVE25519_P);
+        BigInteger d = BigInteger.valueOf(2).multiply(p[2]).multiply(q[2]).mod(CURVE25519_P);
         BigInteger e = b.subtract(a), f = d.subtract(c), g = d.add(c), hh = b.add(a);
         return new BigInteger[]{
                 e.multiply(f).mod(CURVE25519_P), g.multiply(hh).mod(CURVE25519_P),
