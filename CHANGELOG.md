@@ -1,6 +1,6 @@
 ### Changelog
 
-#### Next release (WIP)
+#### 0.93.0
 
 * Initial support for AK75 Pro, AK86, AK102 (TopStep / FitCloud)
 * Initial support for DM58 (GloryFit Pro)
@@ -22,7 +22,6 @@
 * Add Quick Settings tiles for some device (AAWireless, Sinilink, Shokz, Sony Headphones)
 * Amazfit Active 3 Premium: Fix map upload via Bluetooth
 * Bangle.js: Support notification actions
-* Casio GBD-200: Add world time / world clocks support
 * Casio GBD-200: Add world time / world clocks support
 * Casio GBD-200: Improve activity session sync
 * Casio: Fix notifications with long unicode text

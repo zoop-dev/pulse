@@ -1,5 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
+    <release version="0.93.0" versioncode="252">
+      <change>Initial support for AK75 Pro, AK86, AK102 (TopStep / FitCloud)</change>
+      <change>Initial support for DM58 (GloryFit Pro)</change>
+      <change>Initial support for Garmin Fenix 6S / Forerunner 170 Music</change>
+      <change>Initial support for Haylou S35 ANC</change>
+      <change>Initial support for Honor Watch 5 / 5 Pro / 6</change>
+      <change>Initial support for HUAWEI FreeClip 2</change>
+      <change>Initial support for iGPSPORT BiNavi / BiNavi Air / BSC 500</change>
+      <change>Initial support for MoYoung L70</change>
+      <change>Initial support for Ollee Watch One</change>
+      <change>Initial support for Soundcore Life Tune XR</change>
+      <change>Initial support for UNA Watch</change>
+      <change>Experimental support for Amazfit Balance 3, Balance Ultra, Bip Max, Cheetah 2 Ultra</change>
+      <change>Experimental support for BM6 Battery Monitor</change>
+      <change>Experimental support for Garmin CIRQA, Fenix 5S Plus</change>
+      <change>Experimental support for Honor Band 7, 9, 10</change>
+      <change>Experimental support for Xiaomi Scooter 5 Max</change>
+      <change>Add cumulative calories daily chart</change>
+      <change>Add Quick Settings tiles for some device (AAWireless, Sinilink, Shokz, Sony Headphones)</change>
+      <change>Amazfit Active 3 Premium: Fix map upload via Bluetooth</change>
+      <change>Bangle.js: Support notification actions</change>
+      <change>Casio GBD-200: Add world time / world clocks support</change>
+      <change>Casio GBD-200: Improve activity session sync</change>
+      <change>Casio: Fix notifications with long unicode text</change>
+      <change>Charts: Add battery voltage, current, power, temperature</change>
+      <change>Charts: Respect unit preferences</change>
+      <change>Charts: Use activity-specific units for charts</change>
+      <change>CoMaps: Add support for navigation instructions</change>
+      <change>Debug: Randomize test weather</change>
+      <change>Endurain: Upload workout photos</change>
+      <change>FIT Export: Add local timestamp, distance, elevation, step length</change>
+      <change>Fix crash when opening map view</change>
+      <change>Garmin HRM Pro+: Improved connection support</change>
+      <change>Garmin: Add point winds support</change>
+      <change>Garmin: Display notification on OAuth expiration</change>
+      <change>Garmin: Fix activity sync signal</change>
+      <change>Garmin: Fix crash on number parsing</change>
+      <change>Garmin: Fix crash when Bluetooth is disconnected</change>
+      <change>Garmin: Fix duplicated activities on some devices</change>
+      <change>Garmin: Fix race condition on some devices</change>
+      <change>Garmin: Fix realtime settings debug menu</change>
+      <change>Garmin: Improve activity sync on new sync protocol</change>
+      <change>Garmin: Improve recovery when service connection drops</change>
+      <change>Garmin: Move performance condition chart to standalone group</change>
+      <change>Gpx: Export and import power</change>
+      <change>H59: Add alarm support</change>
+      <change>Health Connect: Fix sleep sessions written with truncated stages</change>
+      <change>Health Connect: Fix sleep sync being cut off on some devices</change>
+      <change>Health Connect: Fix sync of GPS route for some devices</change>
+      <change>Health Connect: Fix sync of very long GPS routes</change>
+      <change>HUAWEI FreeClip 2: Add adaptive volume, extra media volume</change>
+      <change>HUAWEI FreeClip 2: Add find headphones</change>
+      <change>HUAWEI FreeClip 2: Add low Latency mode</change>
+      <change>Huawei: Add per-sample workout metrics (HR, speed, cadence, altitude) into activity track</change>
+      <change>Huawei: Avoid out-of-memory crash when uploading large music files</change>
+      <change>Huawei: Basic support for offline maps</change>
+      <change>Huawei: Fix activity sync on some recent watches</change>
+      <change>Huawei: GPS track uploading</change>
+      <change>Huawei: Improved calendar sync</change>
+      <change>InfiniTime: Add navigation competion percentage and more icons</change>
+      <change>Internet Helper: Improved error feedback</change>
+      <change>Mi Band 9 Active: Fix activity summary parsing</change>
+      <change>Pebble: Add support for Weather Land and Love Weather watchfaces</change>
+      <change>Prevent multiple find phone activities from being opened</change>
+      <change>Recognize "Google Messages" as SMS app</change>
+      <change>Sleep as Android: Add support for Huami (pre-Zepp-OS), Garmin and Xiaomi-protobuf devices</change>
+      <change>Sleep as Android: Add SpO2 support for Huami devices</change>
+      <change>SoFlow: Update icon and device kind to scooter</change>
+      <change>Sony WF-1000XM4: Add voice notifications</change>
+      <change>Sony WH-ULT900N: Enable more features</change>
+      <change>Soundcore Sport X20: Extend functionality</change>
+      <change>Victron SmartShunt: Persist battery power and current</change>
+      <change>Withings: Improved connection flow control</change>
+      <change>Workouts: Add function to set header photo</change>
+      <change>Xiaomi-protobuf: Add dynamic vibration pattern configuration screen</change>
+      <change>Xiaomi-protobuf: Fix cloudy weather icon</change>
+      <change>Xiaomi-protobuf: Improve daily summary parsing</change>
+      <change>Xiaomi-protobuf: Improve workout summary parsing</change>
+      <change>Xiaomi-protobuf: Parse workout details</change>
+      <change>Yawell Rings: Fix temperature sync to Health Connect</change>
+      <change>Zepp OS: Fix temperature and distance units</change>
+    </release>
     <release version="0.92.2" versioncode="251">
         <change>Charts: Avoid empty charts if no charts are enabled</change>
         <change>Garmin: Fix regression in ExploreSync historical-catalog sync</change>

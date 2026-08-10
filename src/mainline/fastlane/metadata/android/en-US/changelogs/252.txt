@@ -1,0 +1,9 @@
+• Support for 29 new devices (3 bike computers / 3 headphones / 1 scooter / 21 watches / 1 battery monitor)
+• CoMaps: Forward navigation instructions
+• Endurain: Upload workout photos
+• Huawei: Per-sample activity track workout metrics
+• Health Connect: Multiple stability fixes
+• Quick Settings tiles for some devices
+• Various other bug fixes for Casio GBD-200, Garmin, Huawei, Xiaomi, and others
+
+Read the full changelog in the project repository.
