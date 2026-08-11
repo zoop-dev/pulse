@@ -195,7 +195,8 @@ public class ActivityListingChartFragment extends AbstractActivityChartFragment<
     }
 
     private void showOngoingActivitySnackbar(ActivitySession ongoingSession) {
-        if (!isAdded() || getView() == null) {
+        final View view = getView();
+        if (!isAdded() || view == null || !view.isAttachedToWindow()) {
             return;
         }
 
@@ -206,12 +207,12 @@ public class ActivityListingChartFragment extends AbstractActivityChartFragment<
         String activityName = ongoingSession.getActivityKind().getLabel(requireContext());
 
         String text = String.format("%s:\u00A0%s, %s:\u00A0%s, %s:\u00A0%s, %s:\u00A0%s", activityName, durationLabel, getString(R.string.heart_rate), hrLabel, getString(R.string.steps), stepLabel, getString(R.string.distance), distanceLabel);
-        final Snackbar snackbar = Snackbar.make(getView(), text, 1000 * 8);
+        final Snackbar snackbar = Snackbar.make(view, text, 1000 * 8);
 
         View snackbarView = snackbar.getView();
         snackbarView.setBackgroundColor(requireContext().getResources().getColor(R.color.accent));
         snackbar.setActionTextColor(Color.WHITE);
-        snackbar.setAction(getString(R.string.dialog_hide).toUpperCase(), view -> snackbar.dismiss());
+        snackbar.setAction(getString(R.string.dialog_hide).toUpperCase(), snackbarActionView -> snackbar.dismiss());
         snackbar.show();
     }
 
