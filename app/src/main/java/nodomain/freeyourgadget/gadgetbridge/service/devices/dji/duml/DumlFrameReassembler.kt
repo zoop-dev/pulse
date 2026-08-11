@@ -1,5 +1,6 @@
 package nodomain.freeyourgadget.gadgetbridge.service.devices.dji.duml
 
+import nodomain.freeyourgadget.gadgetbridge.service.devices.dji.DecodeResult
 import org.slf4j.LoggerFactory
 
 /**
@@ -19,25 +20,23 @@ class DumlFrameReassembler(private val maxBufferSize: Int = 4096) {
 
         while (offset < buffer.size) {
             when (val result = DumlCodec.decodeOne(buffer, offset)) {
-                is DumlDecodeResult.Success -> {
-                    packets.add(result.packet)
+                is DecodeResult.Success -> {
+                    packets.add(result.content)
                     offset += result.bytesConsumed
                 }
-                is DumlDecodeResult.Invalid -> {
+                is DecodeResult.Invalid -> {
                     // Resynchronize by dropping one byte, rather than getting
                     // stuck forever on corruption/garbage.
                     offset += 1
                 }
-                DumlDecodeResult.NeedMoreData -> break
+                DecodeResult.NeedMoreData -> break
             }
         }
 
         buffer = if (offset > 0) buffer.copyOfRange(offset, buffer.size) else buffer
 
         if (buffer.size > maxBufferSize) {
-            // Safety valve - a frame that never completes shouldn't grow
-            // this buffer forever.
-            LOG.error("Buffer grew too large, resetting");
+            LOG.error("DUML frame buffer overflow, resetting")
             buffer = ByteArray(0)
         }
 

@@ -1,4 +1,4 @@
-package nodomain.freeyourgadget.gadgetbridge.service.devices.dji
+package nodomain.freeyourgadget.gadgetbridge.service.devices.dji.ble
 
 import android.bluetooth.BluetoothGatt
 import android.bluetooth.BluetoothGattCharacteristic
@@ -8,6 +8,7 @@ import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventUpdateDevi
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder
+import nodomain.freeyourgadget.gadgetbridge.service.devices.dji.DjiPrefs
 import nodomain.freeyourgadget.gadgetbridge.service.devices.dji.duml.DumlAck
 import nodomain.freeyourgadget.gadgetbridge.service.devices.dji.duml.DumlAddress
 import nodomain.freeyourgadget.gadgetbridge.service.devices.dji.duml.DumlCodec
@@ -21,8 +22,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.dji.duml.messages.to
 import org.slf4j.LoggerFactory
 import java.util.UUID
 
-
-class DjiSupport : AbstractBTLESingleDeviceSupport(LOG) {
+class DjiBleSupport : AbstractBTLESingleDeviceSupport(LOG) {
     private val reassembler = DumlFrameReassembler()
     private var nextSeq: Int = 0
 
@@ -171,7 +171,7 @@ class DjiSupport : AbstractBTLESingleDeviceSupport(LOG) {
     }
 
     companion object {
-        private val LOG = LoggerFactory.getLogger(DjiSupport::class.java)
+        private val LOG = LoggerFactory.getLogger(DjiBleSupport::class.java)
 
         private val UUID_SERVICE_DJI: UUID = UUID.fromString("0000fff0-0000-1000-8000-00805f9b34fb")
         private val UUID_CHARACTERISTIC_DJI_FFF4: UUID = UUID.fromString("0000fff4-0000-1000-8000-00805f9b34fb")

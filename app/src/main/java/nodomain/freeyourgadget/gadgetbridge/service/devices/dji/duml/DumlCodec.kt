@@ -1,9 +1,9 @@
 package nodomain.freeyourgadget.gadgetbridge.service.devices.dji.duml
 
+import nodomain.freeyourgadget.gadgetbridge.service.devices.dji.DecodeResult
+
 /**
- * Pure encode/decode logic for a single DUML v1 frame. Reassembling frames that
- * arrive split across multiple notifications is [DumlFrameReassembler]'s
- * job, built on top of [decodeOne] here.
+ * Pure encode/decode logic for a single DUML v1 frame.
  *
  * Frame layout:
  *   0        magic, always 0x55
@@ -11,9 +11,7 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.dji.duml
  *   3        header CRC8 (over bytes 0-2)
  *   4        sender:   bits 0-4 = module type, bits 5-7 = index
  *   5        receiver: bits 0-4 = module type, bits 5-7 = index
- *   6-7      sequence counter (big-endian - see class-level note on this
- *            in DjiSupport/wherever this is used; this is the one field
- *            that plausibly differs from other DUML transports/generations)
+ *   6-7      sequence counter (LE)
  *   8        bits 0-2 = encryption, bits 5-6 = ack, bit 7 = packet type
  *   9        command set
  *   10       command
@@ -23,20 +21,20 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.dji.duml
 object DumlCodec {
     const val MAGIC: Byte = 0x55.toByte()
     const val PROTOCOL_VERSION = 1
-    const val MIN_FRAME_SIZE = 13 // everything except payload
+    const val MIN_FRAME_SIZE = 13 // empty payload
 
     /**
      * Tries to decode exactly one frame starting at [offset] in [data].
      * Does not assume [data] contains only one frame - only bytes up to
      * the decoded frame's own length field are consumed/considered.
      */
-    fun decodeOne(data: ByteArray, offset: Int = 0): DumlDecodeResult {
+    fun decodeOne(data: ByteArray, offset: Int = 0): DecodeResult<DumlPacket> {
         val available = data.size - offset
-        if (available < 1) return DumlDecodeResult.NeedMoreData
+        if (available < 1) return DecodeResult.NeedMoreData
         if (data[offset] != MAGIC) {
-            return DumlDecodeResult.Invalid("bad magic byte 0x%02x".format(data[offset]))
+            return DecodeResult.Invalid("bad magic byte 0x%02x".format(data[offset]))
         }
-        if (available < 3) return DumlDecodeResult.NeedMoreData
+        if (available < 3) return DecodeResult.NeedMoreData
 
         val lengthAndVersion = (data[offset + 1].toInt() and 0xFF) or
                 ((data[offset + 2].toInt() and 0xFF) shl 8)
@@ -44,17 +42,17 @@ object DumlCodec {
         val version = (lengthAndVersion shr 10) and 0x3F
 
         if (frameLength < MIN_FRAME_SIZE) {
-            return DumlDecodeResult.Invalid("implausible frame length $frameLength")
+            return DecodeResult.Invalid("implausible frame length $frameLength")
         }
         if (version != PROTOCOL_VERSION) {
-            return DumlDecodeResult.Invalid("unsupported DUML version $version")
+            return DecodeResult.Invalid("unsupported DUML version $version")
         }
-        if (available < frameLength) return DumlDecodeResult.NeedMoreData
+        if (available < frameLength) return DecodeResult.NeedMoreData
 
         val headerCrcGot = data[offset + 3].toInt() and 0xFF
         val headerCrcCalc = crc8(data, offset, 3)
         if (headerCrcGot != headerCrcCalc) {
-            return DumlDecodeResult.Invalid(
+            return DecodeResult.Invalid(
                 "header CRC8 mismatch (got 0x%02x, expected 0x%02x)".format(headerCrcGot, headerCrcCalc)
             )
         }
@@ -63,15 +61,14 @@ object DumlCodec {
                 ((data[offset + frameLength - 1].toInt() and 0xFF) shl 8)
         val crc16Calc = crc16(data, offset, frameLength - 2)
         if (crc16Got != crc16Calc) {
-            return DumlDecodeResult.Invalid(
-                "CRC16 mismatch (got 0x%04x, expected 0x%04x)".format(crc16Got, crc16Calc)
+            return DecodeResult.Invalid(
+                "frame CRC16 mismatch (got 0x%04x, expected 0x%04x)".format(crc16Got, crc16Calc)
             )
         }
 
         val sender = DumlAddress.fromByte(data[offset + 4])
         val receiver = DumlAddress.fromByte(data[offset + 5])
-        // seq is 16-bit BE - the only BE field in the frame
-        val seq = ((data[offset + 6].toInt() and 0xFF) shl 8) or (data[offset + 7].toInt() and 0xFF)
+        val seq = (data[offset + 6].toInt() and 0xFF) or ((data[offset + 7].toInt() and 0xFF) shl 8)
 
         val flags = data[offset + 8].toInt() and 0xFF
         val encryption = DumlEncryption.fromValue(flags and 0x07)
@@ -83,16 +80,7 @@ object DumlCodec {
         val payload = data.copyOfRange(offset + 11, offset + frameLength - 2)
 
         val packet = DumlPacket(sender, receiver, seq, encryption, ack, packetType, cmdSet, cmd, payload)
-        return DumlDecodeResult.Success(packet, frameLength)
-    }
-
-    /** Convenience one-shot decode for a buffer expected to hold exactly one complete frame. */
-    fun decode(data: ByteArray): DumlPacket {
-        return when (val result = decodeOne(data, 0)) {
-            is DumlDecodeResult.Success -> result.packet
-            DumlDecodeResult.NeedMoreData -> throw IllegalArgumentException("Incomplete DUML frame")
-            is DumlDecodeResult.Invalid -> throw IllegalArgumentException("Invalid DUML frame: ${result.reason}")
-        }
+        return DecodeResult.Success(packet, frameLength)
     }
 
     fun encode(packet: DumlPacket): ByteArray {
@@ -107,9 +95,8 @@ object DumlCodec {
 
         buf[4] = packet.sender.toByte()
         buf[5] = packet.receiver.toByte()
-        // seq is 16-bit BE - the only BE field in the frame
-        buf[6] = ((packet.seq shr 8) and 0xFF).toByte()
-        buf[7] = (packet.seq and 0xFF).toByte()
+        buf[6] = (packet.seq and 0xFF).toByte()
+        buf[7] = ((packet.seq shr 8) and 0xFF).toByte()
 
         val flags = (packet.encryption.value and 0x07) or
                 ((packet.ack.value and 0x03) shl 5) or
@@ -146,10 +133,4 @@ object DumlCodec {
         }
         return crc and 0xFFFF
     }
-}
-
-sealed class DumlDecodeResult {
-    data class Success(val packet: DumlPacket, val bytesConsumed: Int) : DumlDecodeResult()
-    data object NeedMoreData : DumlDecodeResult()
-    data class Invalid(val reason: String) : DumlDecodeResult()
 }

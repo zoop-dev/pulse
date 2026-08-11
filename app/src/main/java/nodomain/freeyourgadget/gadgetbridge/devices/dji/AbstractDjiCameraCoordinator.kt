@@ -7,7 +7,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLEDeviceCoordinator
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport
-import nodomain.freeyourgadget.gadgetbridge.service.devices.dji.DjiSupport
+import nodomain.freeyourgadget.gadgetbridge.service.devices.dji.ble.DjiBleSupport
 
 abstract class AbstractDjiCameraCoordinator : AbstractBLEDeviceCoordinator() {
     override fun getManufacturer(): String {
@@ -15,7 +15,7 @@ abstract class AbstractDjiCameraCoordinator : AbstractBLEDeviceCoordinator() {
     }
 
     override fun getDeviceSupportClass(device: GBDevice): Class<out DeviceSupport> {
-        return DjiSupport::class.java
+        return DjiBleSupport::class.java
     }
 
     override fun suggestUnbindBeforePair(): Boolean {
