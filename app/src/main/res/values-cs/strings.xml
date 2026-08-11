@@ -4851,4 +4851,6 @@
     <string name="pref_sleepasandroid_spo2_autofetch_interval">Interval zjišťování (sekundy)</string>
     <string name="feature_exploresync_title">Protokol ExploreSync</string>
     <string name="feature_exploresync_summary">Synchronizovat stopy GPS aktivit pomocí protokolu ExploreSync. Mělo by být použito pouze, když zařízení neposkytuje soubory FIT.</string>
+    <string name="huawei_app_install_failed">Hodinky odmítly nainstalovat aplikaci</string>
+    <string name="huawei_app_uninstall_failed">Nepodařilo se odinstalovat aplikaci na hodinkách</string>
 </resources>
