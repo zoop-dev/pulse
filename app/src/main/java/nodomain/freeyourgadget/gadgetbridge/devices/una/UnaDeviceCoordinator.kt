@@ -71,9 +71,15 @@ class UnaDeviceCoordinator : AbstractBLEDeviceCoordinator() {
 
     override fun supportsRecordedActivities(device: GBDevice): Boolean = true
 
-    // Daily steps/active-minutes/heart-rate totals, from the watch's own CCS DailyHealth
-    // request -- one synthetic sample burst per day, not a real per-minute stream.
+    // One aggregate sample per day for steps and floors, which have no per-minute source on this
+    // firmware, plus a real per-minute heart rate timeline.
     override fun supportsActivityTracking(device: GBDevice): Boolean = true
+
+    override fun supportsHeartRateMeasurement(device: GBDevice): Boolean = true
+
+    // No command exists to take a reading on demand, so the manual measurement UI would be a dead
+    // button. Stated explicitly because it otherwise follows supportsHeartRateMeasurement.
+    override fun supportsManualHeartRateMeasurement(device: GBDevice): Boolean = false
 
     override fun getSampleProvider(device: GBDevice, session: DaoSession): SampleProvider<out AbstractActivitySample> =
         UnaDailySampleProvider(device, session)

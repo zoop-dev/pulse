@@ -24,7 +24,7 @@ import org.junit.Test
 class UnaDailyHealthProtocolTest {
     @Test
     fun buildRequest_realCapturedRequest() {
-        // Real captured request for 2026-08-02.
+        // Real captured request.
         val expected = UnaFtsProtocolTest.hexToByteArray("1000ea070802")
         assertArrayEquals(expected, UnaDailyHealthProtocol.buildRequest(year = 2026, month = 8, day = 2))
     }
@@ -43,7 +43,7 @@ class UnaDailyHealthProtocolTest {
 
     @Test
     fun parseResponse_realCapturedResponse_yesterday() {
-        // Real captured 0x11 response for 2026-08-01: steps=2072, floors=1, act=4, RHR=70, AHR=80.
+        // Real captured 0x11 response: steps=2072, floors=1, act=4, RHR=70, AHR=80.
         val raw = UnaFtsProtocolTest.hexToByteArray("10011808000001000000040000004600000050000000")
         val health = UnaDailyHealthProtocol.parseResponse(raw)
         assertEquals(2072, health?.steps)

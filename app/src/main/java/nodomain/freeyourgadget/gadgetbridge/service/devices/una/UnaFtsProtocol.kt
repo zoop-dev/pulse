@@ -29,8 +29,8 @@ data class UnaFtsListEntry(val index: Int, val total: Int, val attr: Int, val na
 data class UnaFtsReadChunk(val offset: Int, val total: Int, val payload: ByteArray)
 
 /**
- * Pure request/response encoding for the FTS wire protocol -- no BLE or Android dependencies,
- * so this is unit-testable directly against captured bytes.
+ * Wire encoding for FTS. No BLE or Android dependencies, so it is testable directly against
+ * captured bytes. Protocol reference: UNA's Docs/BLE-File-Transfer-Service.md.
  */
 object UnaFtsProtocol {
     private const val LIST_ENTRY_HEADER_SIZE = 28
@@ -98,10 +98,8 @@ object UnaFtsProtocol {
         val offset = BLETypeConversions.toUint32(data, 4)
         val total = BLETypeConversions.toUint32(data, 8)
         val chunkLen = BLETypeConversions.toUint32(data, 12)
-        // chunkLen is an untrusted, wire-supplied u32 read into a signed Int -- comparing/adding
-        // it directly against data.size (as `HEADER + chunkLen`) can wrap negative for a
-        // corrupted or hostile value, silently defeating this truncation check. Masking to its
-        // real unsigned value in a Long before comparing closes that hole.
+        // chunkLen is an untrusted wire-supplied u32 in a signed Int, so `HEADER + chunkLen` can
+        // wrap negative and defeat this check. Compare as unsigned in a Long instead.
         val chunkLenUnsigned = chunkLen.toLong() and 0xFFFFFFFFL
         if (data.size.toLong() < READ_CHUNK_HEADER_SIZE + chunkLenUnsigned) return null
         val payload = data.copyOfRange(READ_CHUNK_HEADER_SIZE, READ_CHUNK_HEADER_SIZE + chunkLen)

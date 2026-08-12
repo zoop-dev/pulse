@@ -29,13 +29,13 @@ data class UnaDailyHealth(
 )
 
 /**
- * Pure request/response encoding for the CCS DailyHealth command -- no BLE or Android
- * dependencies, so this is unit-testable directly against captured bytes.
+ * Wire encoding for the CCS daily health command. No BLE or Android dependencies, so it is
+ * testable directly against captured bytes.
  */
 object UnaDailyHealthProtocol {
     // Five consecutive u32LE fields starting right after the 2-byte opcode/marker header, each
-    // FIELD_SIZE past the last -- expressed as offsets-from-each-other so the layout can't drift
-    // out of sync if a field is ever inserted or resized.
+    // FIELD_SIZE past the last, expressed relative to each other so the layout cannot drift if a
+    // field is inserted or resized.
     private const val FIELD_SIZE = 4
     private const val STEPS_OFFSET = 2
     private const val FLOORS_OFFSET = STEPS_OFFSET + FIELD_SIZE
@@ -52,14 +52,13 @@ object UnaDailyHealthProtocol {
     }
 
     /**
-     * Parses a daily-health response: `10 01 <5 x u32LE>` -- the same leading opcode byte as the
-     * request, with a `01` response marker in byte 1 (unlike FTS, this isn't a separate
-     * incremented opcode byte). Null if too short or the wrong opcode/marker.
+     * Parses `10 01 <5 x u32LE>`. The opcode is echoed from the request, with status in byte 1.
+     * Null if short, wrong opcode, or a non-OK status.
      */
     fun parseResponse(data: ByteArray): UnaDailyHealth? {
         if (data.size < RESPONSE_SIZE ||
             (data[0].toInt() and 0xFF) != UnaConstants.CMD_DAILY_HEALTH ||
-            (data[1].toInt() and 0xFF) != UnaConstants.RESP_DAILY_HEALTH
+            (data[1].toInt() and 0xFF) != UnaConstants.RESP_STATUS_OK
         ) return null
         return UnaDailyHealth(
             steps = BLETypeConversions.toUint32(data, STEPS_OFFSET),

@@ -92,8 +92,8 @@ class UnaFtsProtocolTest {
     }
 
     @Test
-    fun readChunkSizeFor_isCappedAtTheVerifiedMaximum() {
-        // A large MTU could carry more, but only 200 has been verified against a watch.
+    fun readChunkSizeFor_isCappedAtTheMaximum() {
+        // A large MTU could carry more, but the cap is the largest chunk this supports.
         assertEquals(UnaConstants.MAX_READ_CHUNK_SIZE, UnaFtsProtocol.readChunkSizeFor(517))
         assertEquals(UnaConstants.MAX_READ_CHUNK_SIZE, UnaFtsProtocol.readChunkSizeFor(220))
     }
