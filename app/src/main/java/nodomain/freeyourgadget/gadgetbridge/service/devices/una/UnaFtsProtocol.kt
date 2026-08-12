@@ -34,7 +34,30 @@ data class UnaFtsReadChunk(val offset: Int, val total: Int, val payload: ByteArr
  */
 object UnaFtsProtocol {
     private const val LIST_ENTRY_HEADER_SIZE = 28
-    private const val READ_CHUNK_HEADER_SIZE = 16
+    /** Bytes of `0x11` header before the payload, which a chunk size must leave room for. */
+    const val READ_CHUNK_HEADER_SIZE = 16
+
+    /** ATT's own per-notification overhead, which the MTU has to cover alongside the payload. */
+    private const val ATT_NOTIFICATION_OVERHEAD = 3
+
+    /**
+     * Largest chunk one notification can carry at [mtu]. The firmware returns the requested bytes
+     * behind a 16-byte header in a single notification, so the frame must fit the MTU less ATT's
+     * three bytes.
+     *
+     * `mtu - 19` is the real limit, not a safety margin. Above it the firmware replies with a
+     * header advertising more bytes than the notification carries and never sends the remainder,
+     * so a client that believes the header waits forever
+     * (https://github.com/UNAWatch/una-sdk/issues/272).
+     *
+     * Clamping is therefore one-directional: [UnaConstants.MAX_READ_CHUNK_SIZE] may lower the
+     * result but nothing may raise it, since anything above capacity hangs. A link too small to
+     * carry a useful chunk reads slowly rather than incorrectly.
+     */
+    fun readChunkSizeFor(mtu: Int): Int =
+        (mtu - ATT_NOTIFICATION_OVERHEAD - READ_CHUNK_HEADER_SIZE)
+            .coerceAtMost(UnaConstants.MAX_READ_CHUNK_SIZE)
+            .coerceAtLeast(1)
 
     /** 0x50 00 <path_len:u16LE> <path>. */
     fun buildListRequest(path: String): ByteArray {
@@ -45,7 +68,7 @@ object UnaFtsProtocol {
     }
 
     /** 0x10 00 <path_len:u16LE> <offset:u32LE> <chunk_len:u32LE> <path>, one request per chunk. */
-    fun buildReadRequest(path: String, offset: Int, chunkLen: Int = UnaConstants.READ_CHUNK_SIZE): ByteArray {
+    fun buildReadRequest(path: String, offset: Int, chunkLen: Int): ByteArray {
         val pathBytes = path.toByteArray(Charsets.US_ASCII)
         return byteArrayOf(UnaConstants.CMD_READ.toByte(), 0) +
             BLETypeConversions.fromUint16(pathBytes.size) +

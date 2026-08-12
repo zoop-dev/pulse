@@ -17,6 +17,7 @@
 package nodomain.freeyourgadget.gadgetbridge.service.devices.una
 
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions
+import nodomain.freeyourgadget.gadgetbridge.devices.una.UnaConstants
 import org.junit.Assert.assertArrayEquals
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -74,6 +75,32 @@ class UnaFtsProtocolTest {
     @Test
     fun parseListEntry_rejectsTruncatedHeader() {
         assertNull(UnaFtsProtocol.parseListEntry(hexToByteArray("5101")))
+    }
+
+    @Test
+    fun readChunkSizeFor_usesEveryByteTheLinkCanCarry() {
+        // 16-byte FTS header plus ATT's 3, so capacity is mtu - 19.
+        assertEquals(81, UnaFtsProtocol.readChunkSizeFor(100))
+        assertEquals(181, UnaFtsProtocol.readChunkSizeFor(200))
+    }
+
+    @Test
+    fun readChunkSizeFor_neverExceedsCapacityAtTheMinimumMtu() {
+        // The BLE minimum of 23 leaves 4 bytes. Asking for more advertises data the notification
+        // cannot carry and hangs the read, so nothing may raise the result above capacity.
+        assertEquals(4, UnaFtsProtocol.readChunkSizeFor(23))
+    }
+
+    @Test
+    fun readChunkSizeFor_isCappedAtTheVerifiedMaximum() {
+        // A large MTU could carry more, but only 200 has been verified against a watch.
+        assertEquals(UnaConstants.MAX_READ_CHUNK_SIZE, UnaFtsProtocol.readChunkSizeFor(517))
+        assertEquals(UnaConstants.MAX_READ_CHUNK_SIZE, UnaFtsProtocol.readChunkSizeFor(220))
+    }
+
+    @Test
+    fun readChunkSizeFor_staysPositiveForNonsensicalInput() {
+        assertEquals(1, UnaFtsProtocol.readChunkSizeFor(0))
     }
 
     @Test

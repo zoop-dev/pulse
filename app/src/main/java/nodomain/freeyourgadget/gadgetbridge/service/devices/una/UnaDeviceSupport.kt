@@ -125,6 +125,9 @@ class UnaDeviceSupport : AbstractBTLESingleDeviceSupport(LOG) {
 
         builder.setDeviceState(GBDevice.State.INITIALIZING)
 
+        // See UnaFtsProtocol.readChunkSizeFor(); the granted value bounds every read.
+        builder.requestMtu(UnaConstants.MTU_REQUEST)
+
         deviceInfoProfile.requestDeviceInfo(builder)
 
         batteryInfoProfile.requestBatteryInfo(builder)
@@ -214,7 +217,10 @@ class UnaDeviceSupport : AbstractBTLESingleDeviceSupport(LOG) {
 
     private fun requestChunk(path: String, offset: Int) {
         val builder = createTransactionBuilder("read $path @ $offset")
-        builder.write(UnaConstants.UUID_CHARACTERISTIC_FTS, *UnaFtsProtocol.buildReadRequest(path, offset))
+        builder.write(
+            UnaConstants.UUID_CHARACTERISTIC_FTS,
+            *UnaFtsProtocol.buildReadRequest(path, offset, UnaFtsProtocol.readChunkSizeFor(mtu)),
+        )
         builder.queue()
     }
 

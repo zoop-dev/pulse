@@ -37,7 +37,12 @@ object UnaConstants {
     const val CMD_READ: Int = 0x10
     const val RESP_READ_CHUNK: Int = 0x11
 
-    const val READ_CHUNK_SIZE: Int = 128
+    // Largest chunk to request, verified against a watch at MTU 220. The usable size depends on
+    // the negotiated MTU, so UnaDeviceSupport derives it per connection.
+    const val MAX_READ_CHUNK_SIZE: Int = 200
+
+    // Without this the link can sit on the 23-byte default, roughly tenfold more round trips.
+    const val MTU_REQUEST: Int = 247
 
     // CCS (Custom Command Service): a grab-bag of small phone<->watch commands, multiplexed by
     // leading opcode byte on one characteristic, same pattern as FTS. Only the daily-health request
