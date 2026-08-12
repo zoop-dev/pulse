@@ -700,7 +700,7 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
         sendOutgoingMessage(taskName, protocolBufferHandler.prepareProtobufRequest(payload));
     }
 
-    private void sendOutgoingMessage(final String taskName, final GFDIMessage message) {
+    void sendOutgoingMessage(final String taskName, final GFDIMessage message) {
         if (message == null)
             return;
         byte[] out = message.getOutgoingMessage();

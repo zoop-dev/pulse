@@ -19,11 +19,15 @@ public class CreateFileMessage extends GFDIMessage {
     }
 
     public CreateFileMessage(int fileSize, FileType.FILETYPE filetype) {
+        this(fileSize, filetype, true);
+    }
+
+    public CreateFileMessage(int fileSize, FileType.FILETYPE filetype, boolean sendOutgoing) {
         this.garminMessage = GarminMessage.CREATE_FILE;
         this.fileSize = fileSize;
         this.filetype = filetype;
         this.statusMessage = this.getStatusMessage();
-        this.generateOutgoing = true;
+        this.generateOutgoing = sendOutgoing;
     }
 
     public static CreateFileMessage parseIncoming(MessageReader reader, GarminMessage garminMessage) {
