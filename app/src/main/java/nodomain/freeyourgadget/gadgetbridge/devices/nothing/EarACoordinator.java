@@ -23,7 +23,7 @@ import nodomain.freeyourgadget.gadgetbridge.R;
 public class EarACoordinator extends AbstractEarCoordinator {
     @Override
     protected Pattern getSupportedDeviceName() {
-        return Pattern.compile("Nothing ear (a)", Pattern.LITERAL);
+        return Pattern.compile("Nothing ear (a)", Pattern.LITERAL | Pattern.CASE_INSENSITIVE);
     }
 
     @Override

@@ -151,6 +151,8 @@ public class BluetoothNameTest extends TestBase {
             put("Venu", DeviceType.GARMIN_VENU); // #4003
             put(".bohemic", DeviceType.BOHEMIC_SMART_BRACELET); // #3190
             put("IMP-2027", DeviceType.VIVITAR_HR_BP_MONITOR_ACTIVITY_TRACKER); // #3925
+            put("Nothing ear (a)", DeviceType.NOTHING_EAR_A); // #3994
+            put("Nothing Ear (a)", DeviceType.NOTHING_EAR_A); // #3994
             put("CMF Buds Pro 2", DeviceType.NOTHING_CMF_BUDS_PRO_2); // #3924
             put("CMF Watch Pro 2-0DCA", DeviceType.NOTHING_CMF_WATCH_PRO_2); // #3899
             put("CMF Watch 3 Pro-D286", DeviceType.NOTHING_CMF_WATCH_PRO_3); // #5596
