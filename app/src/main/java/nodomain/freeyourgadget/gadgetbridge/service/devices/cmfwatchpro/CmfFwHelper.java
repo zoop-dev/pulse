@@ -25,6 +25,8 @@ import org.slf4j.LoggerFactory;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 
 import nodomain.freeyourgadget.gadgetbridge.util.ArrayUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
@@ -34,7 +36,8 @@ import nodomain.freeyourgadget.gadgetbridge.util.UriHelper;
 public class CmfFwHelper {
     private static final Logger LOG = LoggerFactory.getLogger(CmfFwHelper.class);
 
-    private static final byte[] HEADER_WATCHFACE = new byte[]{0x01, 0x00, 0x00, 0x02};
+    private static final int HEADER_FOOTER_SIZE = 36;
+
     private static final byte[] HEADER_FIRMWARE = new byte[]{'A', 'O', 'T', 'A'};
     private static final byte[] HEADER_AGPS = new byte[]{0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x31, 0x30, 0x30, 0x30, 0x30};
 
@@ -128,9 +131,27 @@ public class CmfFwHelper {
     }
 
     private boolean parseAsWatchface() {
-        if (!ArrayUtils.equals(fw, HEADER_WATCHFACE, 4)) {
+        if (fw.length < HEADER_FOOTER_SIZE * 2 + 3) {
+            LOG.warn("File too small to be a watchface");
+            return false;
+        }
+
+        // Magic: 01 00 00 (00|02) - the last byte varies by watch generation
+        // (00 seen on Watch Pro 2 / Watch 3 Pro faces, 02 on original Watch Pro faces)
+        if (fw[4] != 0x01 || fw[5] != 0x00 || fw[6] != 0x00 || (fw[7] != 0x00 && fw[7] != 0x02)) {
             LOG.warn("File header not a watchface");
             return false;
+        }
+
+        final int fileLen = fw.length;
+        final int footerStart = fileLen - HEADER_FOOTER_SIZE;
+
+        // Footer must be a byte-identical copy of the header
+        for (int i = 0; i < HEADER_FOOTER_SIZE; i++) {
+            if (fw[i] != fw[footerStart + i]) {
+                LOG.warn("Watchface footer does not match header");
+                return false;
+            }
         }
 
         final String nameHeader = StringUtils.untilNullTerminator(fw, 8);
@@ -139,21 +160,68 @@ public class CmfFwHelper {
             return false;
         }
 
-        // Confirm it's a watchface by finding the same name at the end
-        final String nameTrailer = StringUtils.untilNullTerminator(fw, fw.length - 28);
-        if (nameTrailer == null) {
-            LOG.warn("watchface name not found at the end of {}", uri);
+        final ByteBuffer headerBuf = ByteBuffer.wrap(fw, 0, HEADER_FOOTER_SIZE).order(ByteOrder.LITTLE_ENDIAN);
+        final long crcHeaderField = headerBuf.getInt(0x00) & 0xFFFFFFFFL;
+        final long bodyLen = headerBuf.getInt(0x18) & 0xFFFFFFFFL;
+        final long resLen = headerBuf.getInt(0x1c) & 0xFFFFFFFFL;
+        final long crcResField = headerBuf.getInt(0x20) & 0xFFFFFFFFL;
+
+        // bodyLen is the absolute offset (from file start) where the footer begins
+        if (bodyLen != (long) (fileLen - HEADER_FOOTER_SIZE)) {
+            LOG.warn("Watchface body length field does not match actual file size");
             return false;
         }
 
-        if (!nameHeader.equals(nameTrailer)) {
-            LOG.warn("Names in header and trailer do not match");
+        // Body: [0x20 root tag][u16 LE tree length][tree bytes], then resources
+        if ((fw[HEADER_FOOTER_SIZE] & 0xFF) != 0x20) {
+            LOG.warn("Watchface body does not start with the expected root tag");
+            return false;
+        }
+
+        final int treeLen = (fw[HEADER_FOOTER_SIZE + 1] & 0xFF) | ((fw[HEADER_FOOTER_SIZE + 2] & 0xFF) << 8);
+        final int treeSectionLen = 1 + 2 + treeLen; // tag + len + tree bytes
+        final int resourcesStart = HEADER_FOOTER_SIZE + treeSectionLen;
+
+        if (resourcesStart < 0 || resLen < 0 || resourcesStart + resLen != footerStart) {
+            LOG.warn("Watchface resources section does not line up with the footer");
+            return false;
+        }
+
+        // header[4:36] + tree section are contiguous in the file, so this is one slice
+        final long computedHeaderCrc = crc32Raw(fw, 4, (HEADER_FOOTER_SIZE - 4) + treeSectionLen);
+        if (computedHeaderCrc != crcHeaderField) {
+            LOG.warn("Watchface header CRC mismatch");
+            return false;
+        }
+
+        final long computedResCrc = crc32Raw(fw, resourcesStart, (int) resLen);
+        if (computedResCrc != crcResField) {
+            LOG.warn("Watchface resources CRC mismatch");
             return false;
         }
 
         name = nameHeader;
 
         return true;
+    }
+
+    /**
+     * Raw CRC32: reflected IEEE polynomial 0xEDB88320, init = 0, no final XOR.
+     * NOT the same as java.util.zip.CRC32 (which uses init/final XOR of 0xFFFFFFFF).
+     */
+    private static long crc32Raw(final byte[] data, final int offset, final int length) {
+        int crc = 0;
+        for (int i = offset; i < offset + length; i++) {
+            crc ^= (data[i] & 0xFF);
+            for (int j = 0; j < 8; j++) {
+                if ((crc & 1) != 0) {
+                    crc = (crc >>> 1) ^ 0xEDB88320;
+                } else {
+                    crc >>>= 1;
+                }
+            }
+        }
+        return crc & 0xFFFFFFFFL;
     }
 
     private boolean parseAsFirmware() {
