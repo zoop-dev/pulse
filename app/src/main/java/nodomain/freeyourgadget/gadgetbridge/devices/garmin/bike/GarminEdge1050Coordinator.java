@@ -5,15 +5,15 @@ import java.util.regex.Pattern;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
-public class GarminEdge1040Coordinator extends GarminBikeComputerCoordinator {
+public class GarminEdge1050Coordinator extends GarminBikeComputerCoordinator {
     @Override
     protected Pattern getSupportedDeviceName() {
-        return Pattern.compile("^Edge 1040$");
+        return Pattern.compile("^Edge 1050$");
     }
 
     @Override
     public int getDeviceNameResource() {
-        return R.string.devicetype_garmin_edge_1040;
+        return R.string.devicetype_garmin_edge_1050;
     }
 
     @Override

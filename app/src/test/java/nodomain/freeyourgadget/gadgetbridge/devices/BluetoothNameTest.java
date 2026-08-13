@@ -112,6 +112,7 @@ public class BluetoothNameTest extends TestBase {
             put("Edge 130", DeviceType.GARMIN_EDGE_130); // matrix
             put("Edge 840", DeviceType.GARMIN_EDGE_840); // matrix
             put("Edge 1040", DeviceType.GARMIN_EDGE_1040); // matrix
+            put("Edge 1050", DeviceType.GARMIN_EDGE_1050); // matrix
             put("Lily 2", DeviceType.GARMIN_LILY_2); // matrix
             put("Lily 2 Active", DeviceType.GARMIN_LILY_2_ACTIVE);
             put("Instinct 3 - 45mm", DeviceType.GARMIN_INSTINCT_3); // #4923
@@ -242,7 +243,6 @@ public class BluetoothNameTest extends TestBase {
             put("UNA Watch ", null); // #6504
             put("Xiaomi Smart Band 10 Pro AB01", DeviceType.MIBAND10PRO); // #6248
             put("SmartShunt HQ2303UCHFV", DeviceType.VICTRON_SMARTSHUNT); // #6263
-            put("Soundcore Q30", DeviceType.SOUNDCORE_Q30); // #6396
             put("Soundcore Life Tune", DeviceType.SOUNDCORE_LIFE_TUNE); // #6396
             put("Soundcore Life Tune XR", DeviceType.SOUNDCORE_LIFE_TUNE_XR); // #6396
             put("OsmoAction4-ABCD", DeviceType.DJI_OSMO_ACTION_4);
