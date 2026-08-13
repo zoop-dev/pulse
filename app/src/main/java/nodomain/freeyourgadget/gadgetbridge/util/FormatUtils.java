@@ -19,6 +19,7 @@ package nodomain.freeyourgadget.gadgetbridge.util;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.util.Locale;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
@@ -57,5 +58,24 @@ public class FormatUtils {
         final DecimalFormat df = new DecimalFormat(formatString, symbols);
 
         return df.format(distanceFormatted) + unit;
+    }
+
+    public static String formatBytes(final long bytes) {
+        if (bytes < 1024) {
+            return bytes + " B";
+        }
+
+        double size = bytes;
+        final String[] units = {"KB", "MB", "GB", "TB", "PB"};
+
+        for (String unit : units) {
+            size /= 1024;
+
+            if (size < 1024 || unit.equals("PB")) {
+                return String.format(Locale.ROOT, "%.1f %s", size, unit);
+            }
+        }
+
+        return bytes + " B";
     }
 }

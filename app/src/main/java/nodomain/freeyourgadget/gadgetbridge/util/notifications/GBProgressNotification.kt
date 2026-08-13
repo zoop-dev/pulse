@@ -57,19 +57,24 @@ class GBProgressNotification(
     private var totalSize: Long = 0
     private var chunkProgress: Long = 0
 
+    private var progressFormatter: ((Long, Long) -> String)? = null
+
     /**
      * Starts the transfer notification, resetting all progress and size to zero.
      */
+    @JvmOverloads
     fun start(
         @StringRes titleRes: Int,
         @StringRes textRes: Int,
-        totalSize: Long = 0
+        totalSize: Long = 0,
+        progressFormatter: ((Long, Long) -> String)? = null,
     ) {
         this.titleRes = titleRes
         this.textRes = textRes
         this.chunkProgress = 0
         this.totalProgress = 0
         this.totalSize = totalSize
+        this.progressFormatter = progressFormatter
 
         LOG.debug(
             "Started notification id={}, title={}",
@@ -167,9 +172,11 @@ class GBProgressNotification(
         val text = if (textRes != 0) {
             context.getString(textRes)
         } else if (totalSize != 0L) {
+            val formattedProgress = progressFormatter?.invoke(totalProgress + chunkProgress, totalSize)
+                ?: context.getString(R.string.busy_task_progress_int, totalProgress + chunkProgress, totalSize)
             context.getString(
                 R.string.work_info_running_percentage,
-                context.getString(R.string.busy_task_progress_int, totalProgress + chunkProgress, totalSize),
+                formattedProgress,
                 percentage
             )
         } else {
@@ -230,7 +237,7 @@ class GBProgressNotification(
                 .setStyle(NotificationCompat.BigTextStyle().bigText(text))
                 .setContentText(text)
                 .setContentIntent(pendingIntent)
-                .setOnlyAlertOnce(percentage > 0 && percentage < 100)
+                .setOnlyAlertOnce(percentage in 1..<100)
                 .setOngoing(ongoing)
 
             if (ongoing) {

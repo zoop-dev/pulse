@@ -142,6 +142,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.stat
 import nodomain.freeyourgadget.gadgetbridge.util.ArrayUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.CompressionUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
+import nodomain.freeyourgadget.gadgetbridge.util.FormatUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.MediaManager;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
@@ -910,7 +911,12 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
                 transferNotification.start(
                         R.string.busy_task_fetch_activity_data,
                         0,
-                        filesToDownload.stream().mapToLong(FileToDownload::getSize).sum()
+                        filesToDownload.stream().mapToLong(FileToDownload::getSize).sum(),
+                        (progress, total) -> getContext().getString(
+                                R.string.busy_task_progress_str,
+                                FormatUtils.formatBytes(progress),
+                                FormatUtils.formatBytes(total)
+                        )
                 );
                 getDevice().setBusyTask(R.string.busy_task_fetch_activity_data, getContext());
                 getDevice().sendDeviceUpdateIntent(getContext());
