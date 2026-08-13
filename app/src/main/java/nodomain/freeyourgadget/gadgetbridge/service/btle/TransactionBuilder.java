@@ -387,6 +387,12 @@ public class TransactionBuilder {
         }
         mQueued = true;
         BtLEQueue queue = mDeviceSupport.getQueue(mDeviceIdx);
+        if (queue == null) {
+            // The device support was disposed concurrently with this call (eg. a retransmission
+            // or other async callback racing a disconnect). There is nothing to queue to anymore.
+            LOG.error("Not queuing '{}', device support has no queue (disposed?)", getTaskName());
+            return;
+        }
         queue.add(mTransaction);
     }
 
