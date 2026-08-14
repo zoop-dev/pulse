@@ -4847,4 +4847,5 @@
     <string name="feature_exploresync_summary">使用 ExploreSync 协议同步活动 GPS 轨迹。应只在设备不提供 FIT 文件时使用。</string>
     <string name="huawei_app_install_failed">手表拒绝安装该应用</string>
     <string name="huawei_app_uninstall_failed">手表无法移除该应用</string>
+    <string name="busy_task_progress_str">第 %1$s 个，共 %2$s 个</string>
 </resources>
