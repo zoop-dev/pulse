@@ -1250,12 +1250,12 @@ public class GoogleMapsNotificationHandler {
             }
             final NavigationInfoSpec navInfo = new NavigationInfoSpec();
             if (matchedIcon >= 0)
-                navInfo.nextAction = matchedIcon;
-            navInfo.instruction = instruction;
+                navInfo.setNextAction(matchedIcon);
+            navInfo.setInstruction(instruction);
             if (!distance.isBlank())
-                navInfo.distanceToTurn = distance;
+                navInfo.setDistanceToTurn(distance);
             if (navLines[2].contains("ETA"))
-                navInfo.ETA = navLines[2].replace("ETA", "").trim();
+                navInfo.setETA(navLines[2].replace("ETA", "").trim());
 
             LOG.info("Parsed navigation: {}", navInfo);
 

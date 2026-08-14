@@ -3257,7 +3257,7 @@ public class HuaweiSupportProvider {
         LOG.info("navigation: {}", navigationInfoSpec);
         HuaweiP2PDirection nav = HuaweiP2PDirection.getRegisteredInstance(huaweiP2PManager);
         if (nav != null) {
-            nav.updateInstruction(navigationInfoSpec.distanceToTurn, HuaweiP2PDirection.actionToIconId(navigationInfoSpec.nextAction), navigationInfoSpec.instruction);
+            nav.updateInstruction(navigationInfoSpec.getDistanceToTurn(), HuaweiP2PDirection.actionToIconId(navigationInfoSpec.getNextAction()), navigationInfoSpec.getInstruction());
         }
     }
 

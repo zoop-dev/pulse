@@ -283,11 +283,12 @@ public class DeviceActionHandler {
                 break;
             case ACTION_SETNAVIGATIONINFO:
                 final NavigationInfoSpec navigationInfoSpec = new NavigationInfoSpec();
-                navigationInfoSpec.instruction = intentCopy.getStringExtra(EXTRA_NAVIGATION_INSTRUCTION);
-                navigationInfoSpec.nextAction = intentCopy.getIntExtra(EXTRA_NAVIGATION_NEXT_ACTION, 0);
-                navigationInfoSpec.distanceToTurn = intentCopy.getStringExtra(EXTRA_NAVIGATION_DISTANCE_TO_TURN);
-                navigationInfoSpec.ETA = intentCopy.getStringExtra(EXTRA_NAVIGATION_ETA);
-                navigationInfoSpec.completionPercent = intentCopy.getIntExtra(EXTRA_NAVIGATION_COMPLETION_PERCENT, 0);
+                navigationInfoSpec.setInstruction(intentCopy.getStringExtra(EXTRA_NAVIGATION_INSTRUCTION));
+                navigationInfoSpec.setNextAction(intentCopy.getIntExtra(EXTRA_NAVIGATION_NEXT_ACTION, 0));
+                navigationInfoSpec.setDistanceToTurn(intentCopy.getStringExtra(EXTRA_NAVIGATION_DISTANCE_TO_TURN));
+                navigationInfoSpec.setDistanceToTarget(intentCopy.getStringExtra(EXTRA_NAVIGATION_DISTANCE_TO_TARGET));
+                navigationInfoSpec.setETA(intentCopy.getStringExtra(EXTRA_NAVIGATION_ETA));
+                navigationInfoSpec.setCompletionPercent(intentCopy.getIntExtra(EXTRA_NAVIGATION_COMPLETION_PERCENT, 0));
                 deviceSupport.onSetNavigationInfo(navigationInfoSpec);
                 break;
             case ACTION_REQUEST_APPINFO:

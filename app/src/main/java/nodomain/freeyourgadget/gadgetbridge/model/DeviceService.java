@@ -140,6 +140,7 @@ public interface DeviceService extends EventHandler {
     String EXTRA_PHONE_RINGER_MODE = "ringer_mode";
     String EXTRA_NAVIGATION_INSTRUCTION = "navigation_instruction";
     String EXTRA_NAVIGATION_DISTANCE_TO_TURN = "navigation_distance_to_turn";
+    String EXTRA_NAVIGATION_DISTANCE_TO_TARGET = "navigation_distance_to_target";
     String EXTRA_NAVIGATION_NEXT_ACTION = "navigation_next_action";
     String EXTRA_NAVIGATION_ETA = "navigation_eta";
     String EXTRA_NAVIGATION_COMPLETION_PERCENT = "navigation_completion_percent";

@@ -324,11 +324,12 @@ public class GBDeviceService implements DeviceService {
     @Override
     public void onSetNavigationInfo(@NonNull NavigationInfoSpec navigationInfoSpec) {
         Intent intent = createIntent().setAction(ACTION_SETNAVIGATIONINFO)
-                .putExtra(EXTRA_NAVIGATION_INSTRUCTION, navigationInfoSpec.instruction)
-                .putExtra(EXTRA_NAVIGATION_NEXT_ACTION, navigationInfoSpec.nextAction)
-                .putExtra(EXTRA_NAVIGATION_DISTANCE_TO_TURN, navigationInfoSpec.distanceToTurn)
-                .putExtra(EXTRA_NAVIGATION_ETA, navigationInfoSpec.ETA)
-                .putExtra(EXTRA_NAVIGATION_COMPLETION_PERCENT, navigationInfoSpec.completionPercent);
+                .putExtra(EXTRA_NAVIGATION_INSTRUCTION, navigationInfoSpec.getInstruction())
+                .putExtra(EXTRA_NAVIGATION_NEXT_ACTION, navigationInfoSpec.getNextAction())
+                .putExtra(EXTRA_NAVIGATION_DISTANCE_TO_TURN, navigationInfoSpec.getDistanceToTurn())
+                .putExtra(EXTRA_NAVIGATION_DISTANCE_TO_TARGET, navigationInfoSpec.getDistanceToTarget())
+                .putExtra(EXTRA_NAVIGATION_ETA, navigationInfoSpec.getETA())
+                .putExtra(EXTRA_NAVIGATION_COMPLETION_PERCENT, navigationInfoSpec.getCompletionPercent());
         invokeService(intent);
     }
 

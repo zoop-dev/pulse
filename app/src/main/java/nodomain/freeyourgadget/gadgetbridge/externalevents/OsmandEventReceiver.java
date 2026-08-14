@@ -75,8 +75,8 @@ public class OsmandEventReceiver {
 
         @Override
         public void updateNavigationInfo(ADirectionInfo directionInfo) {
-            navigationInfoSpec.nextAction = directionInfo.getTurnType();
-            navigationInfoSpec.distanceToTurn = directionInfo.getDistanceTo()+"m";
+            navigationInfoSpec.setNextAction(directionInfo.getTurnType());
+            navigationInfoSpec.setDistanceToTurn(directionInfo.getDistanceTo() + "m");
 
             if (NavigationUtils.shouldSendNavigation(app, "osmand")) {
                 GBApplication.deviceService().onSetNavigationInfo(navigationInfoSpec);
@@ -93,7 +93,7 @@ public class OsmandEventReceiver {
         public void onVoiceRouterNotify(OnVoiceNavigationParams params) {
             List<String> played = params.getPlayed();
             for (String instruction : played) {
-                navigationInfoSpec.instruction = instruction;
+                navigationInfoSpec.setInstruction(instruction);
                 LOG.debug("instruction: {}", instruction);
                 // only first one for now
                 break;

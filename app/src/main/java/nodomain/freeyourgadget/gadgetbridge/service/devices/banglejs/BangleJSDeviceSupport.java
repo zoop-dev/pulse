@@ -2384,17 +2384,17 @@ public class BangleJSDeviceSupport extends AbstractBTLESingleDeviceSupport {
         try {
             JSONObject o = new JSONObject();
             o.put("t", "nav");
-            if (navigationInfoSpec.instruction!=null)
-                o.put("instr", navigationInfoSpec.instruction);
-            o.put("distance", navigationInfoSpec.distanceToTurn);
+            if (navigationInfoSpec.getInstruction() !=null)
+                o.put("instr", navigationInfoSpec.getInstruction());
+            o.put("distance", navigationInfoSpec.getDistanceToTurn());
             String[] navActions = {
                     "","continue", "left", "left_slight", "left_sharp",  "right", "right_slight",
                     "right_sharp", "keep_left", "keep_right", "uturn_left", "uturn_right",
                     "offroute", "roundabout_right", "roundabout_left", "roundabout_straight", "roundabout_uturn", "finish"};
-            if (navigationInfoSpec.nextAction>0 && navigationInfoSpec.nextAction<navActions.length)
-                o.put("action", navActions[navigationInfoSpec.nextAction]);
-            if (navigationInfoSpec.ETA!=null)
-                o.put("eta", navigationInfoSpec.ETA);
+            if (navigationInfoSpec.getNextAction() >0 && navigationInfoSpec.getNextAction() <navActions.length)
+                o.put("action", navActions[navigationInfoSpec.getNextAction()]);
+            if (navigationInfoSpec.getETA() !=null)
+                o.put("eta", navigationInfoSpec.getETA());
             uartTxJSON("onSetNavigationInfo", o);
         } catch (JSONException e) {
             LOG.info("JSONException: " + e.getLocalizedMessage());
