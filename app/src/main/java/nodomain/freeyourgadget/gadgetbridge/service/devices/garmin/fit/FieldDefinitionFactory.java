@@ -39,7 +39,7 @@ public class FieldDefinitionFactory {
             case ARRAY -> new FieldDefinitionArray(localNumber, size, baseType, name, scale, offset);
             case BOOLEAN -> new FieldDefinitionBoolean(localNumber, size, baseType, name);
             case DAY_OF_WEEK -> new FieldDefinitionDayOfWeek(localNumber, size, baseType, name);
-            case EXERCISE_CATEGORY -> new FieldDefinitionExerciseCategory(localNumber, size, baseType, name);
+            case EXERCISE_CATEGORY -> new FieldDefinitionExerciseCategory(localNumber, size, baseType, name, scale, offset);
             case FILE_TYPE -> new FieldDefinitionFileType(localNumber, size, baseType, name);
             case HR_TIME_IN_ZONE -> new FieldDefinitionHrTimeInZone(localNumber, size, baseType, name);
             case HR_ZONE_HIGH_BOUNDARY -> new FieldDefinitionHrZoneHighBoundary(localNumber, size, baseType, name);
