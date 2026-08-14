@@ -1,4 +1,4 @@
-/*  Copyright (C) 2025-2026 José Rebelo, Thomas Kuehne
+/*  Copyright (C) 2025-2026 JosÃ© Rebelo, Thomas Kuehne
 
     This file is part of Gadgetbridge.
 

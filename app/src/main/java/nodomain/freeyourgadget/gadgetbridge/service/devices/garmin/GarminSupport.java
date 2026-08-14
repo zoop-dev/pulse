@@ -123,10 +123,10 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitImport
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitLocalMessageBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.GpxRouteFileConverter;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordData;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionAlarmLabel;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.enums.AlarmLabel;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.enums.WeatherReport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionWeatherAqi;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionWeatherCondition;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionWeatherReport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitAlarmSettings;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitDeviceSettings;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitFileId;
@@ -751,7 +751,7 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
         final FitLocalMessageBuilder weatherLocalMessage = new FitLocalMessageBuilder();
 
         final FitWeather.Builder today = new FitWeather.Builder();
-        today.setWeatherReport(FieldDefinitionWeatherReport.Type.current);
+        today.setWeatherReport(WeatherReport.current);
         today.setTimestamp((long) weather.getTimestamp());
         today.setObservedAtTime((long) weather.getTimestamp());
         today.setTemperature(weather.getCurrentTemp());
@@ -778,7 +778,7 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
             if (hour < weather.getHourly().size()) {
                 WeatherSpec.Hourly hourly = weather.getHourly().get(hour);
                 final FitWeather.Builder weatherHourlyForecast = new FitWeather.Builder();
-                weatherHourlyForecast.setWeatherReport(FieldDefinitionWeatherReport.Type.hourly_forecast);
+                weatherHourlyForecast.setWeatherReport(WeatherReport.hourly_forecast);
                 weatherHourlyForecast.setTimestamp((long) hourly.getTimestamp());
                 weatherHourlyForecast.setTemperature(hourly.getTemp());
                 weatherHourlyForecast.setCondition(FieldDefinitionWeatherCondition.openWeatherCodeToFitWeatherStatus(hourly.getConditionCode()));
@@ -797,7 +797,7 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
         final int dailyMessageType = weatherLocalMessage.getNextAvailableLocalMessageType();
 
         final FitWeather.Builder todayDailyForecast = new FitWeather.Builder();
-        todayDailyForecast.setWeatherReport(FieldDefinitionWeatherReport.Type.daily_forecast);
+        todayDailyForecast.setWeatherReport(WeatherReport.daily_forecast);
         todayDailyForecast.setTimestamp((long) weather.getTimestamp());
         todayDailyForecast.setLowTemperature(weather.getTodayMinTemp());
         todayDailyForecast.setHighTemperature(weather.getTodayMaxTemp());
@@ -816,7 +816,7 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
                 WeatherSpec.Daily daily = weather.getForecasts().get(day);
                 int ts = weather.getTimestamp() + (day + 1) * 24 * 60 * 60;
                 final FitWeather.Builder weatherDailyForecast = new FitWeather.Builder();
-                weatherDailyForecast.setWeatherReport(FieldDefinitionWeatherReport.Type.daily_forecast);
+                weatherDailyForecast.setWeatherReport(WeatherReport.daily_forecast);
                 weatherDailyForecast.setTimestamp((long) weather.getTimestamp());
                 weatherDailyForecast.setLowTemperature(daily.getMinTemp());
                 weatherDailyForecast.setHighTemperature(daily.getMaxTemp());
@@ -1223,18 +1223,18 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
                 case VIBRATION -> 2;
                 case UNSET, TONE_AND_VIBRATION -> 3;
             };
-            final FieldDefinitionAlarmLabel.Label label;
+            final AlarmLabel label;
 
             final String alarmTitle = alarm.getTitle();
             if (StringUtils.isBlank(alarmTitle)) {
-                label = FieldDefinitionAlarmLabel.Label.NONE;
+                label = AlarmLabel.NONE;
             } else {
-                FieldDefinitionAlarmLabel.Label alarmLabel;
+                AlarmLabel alarmLabel;
                 try {
-                    alarmLabel = FieldDefinitionAlarmLabel.Label.valueOf(alarmTitle);
+                    alarmLabel = AlarmLabel.valueOf(alarmTitle);
                 } catch (final Exception e) {
                     LOG.error("Invalid alarm label {}", alarmTitle, e);
-                    alarmLabel = FieldDefinitionAlarmLabel.Label.NONE;
+                    alarmLabel = AlarmLabel.NONE;
                 }
                 label = alarmLabel;
             }

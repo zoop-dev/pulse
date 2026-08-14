@@ -6,35 +6,47 @@ import java.nio.ByteBuffer;
 
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FieldDefinition;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.baseTypes.BaseType;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.enums.WeatherCondition;
 
 public class FieldDefinitionWeatherCondition extends FieldDefinition {
 
-    public FieldDefinitionWeatherCondition(int localNumber, int size, BaseType baseType, String name) {
-        super(localNumber, size, baseType, name, 1, 0);
+    public FieldDefinitionWeatherCondition(int localNumber, int size, BaseType baseType, String name, int scale, int offset) {
+        super(localNumber, size, baseType, name, scale, offset);
     }
 
+    @Nullable
+    public static WeatherCondition fromId(final int id) {
+        for (final WeatherCondition candidate : WeatherCondition.values()) {
+            if (id == candidate.id) {
+                return candidate;
+            }
+        }
+        return null;
+    }
+
+    @Nullable
     @Override
-    public Object decode(ByteBuffer byteBuffer) {
+    public WeatherCondition decode(ByteBuffer byteBuffer) {
         final Object rawObj = baseType.decode(byteBuffer, scale, offset);
-        if (rawObj != null) {
-            final int raw = (int) rawObj;
-            return Condition.values()[raw];
+        if (rawObj instanceof final Number raw) {
+            int id = raw.intValue();
+            return fromId(id);
         }
         return null;
     }
 
     @Override
     public void encode(ByteBuffer byteBuffer, Object o) {
-        if (o instanceof Condition) {
-            baseType.encode(byteBuffer, ((Condition) o).ordinal(), scale, offset);
+        if (o instanceof final WeatherCondition weatherCondition) {
+            baseType.encode(byteBuffer, weatherCondition.id, scale, offset);
             return;
         }
-        final Condition condition = openWeatherCodeToFitWeatherStatus((int) o);
-        baseType.encode(byteBuffer, condition != null ? condition.ordinal() : 255, scale, offset);
+        final WeatherCondition condition = openWeatherCodeToFitWeatherStatus((int) o);
+        baseType.encode(byteBuffer, condition != null ? condition.id : 255, scale, offset);
     }
 
     @Nullable
-    public static Condition openWeatherCodeToFitWeatherStatus(int openWeatherCode) {
+    public static WeatherCondition openWeatherCodeToFitWeatherStatus(int openWeatherCode) {
         switch (openWeatherCode) {
 //Group 2xx: Thunderstorm
             case 200:  //thunderstorm with light rain:  //11d
@@ -46,56 +58,56 @@ public class FieldDefinitionWeatherCondition extends FieldDefinition {
             case 230:  //thunderstorm with light drizzle:  //11d
             case 231:  //thunderstorm with drizzle:  //11d
             case 232:  //thunderstorm with heavy drizzle:  //11d
-                return Condition.THUNDERSTORMS;
+                return WeatherCondition.THUNDERSTORMS;
             case 221:  //ragged thunderstorm:  //11d
-                return Condition.SCATTERED_THUNDERSTORMS;
+                return WeatherCondition.SCATTERED_THUNDERSTORMS;
 //Group 3xx: Drizzle
             case 300:  //light intensity drizzle:  //09d
             case 310:  //light intensity drizzle rain:  //09d
             case 313:  //shower rain and drizzle:  //09d
-                return Condition.LIGHT_RAIN;
+                return WeatherCondition.LIGHT_RAIN;
             case 301:  //drizzle:  //09d
             case 311:  //drizzle rain:  //09d
-                return Condition.RAIN;
+                return WeatherCondition.RAIN;
             case 302:  //heavy intensity drizzle:  //09d
             case 312:  //heavy intensity drizzle rain:  //09d
             case 314:  //heavy shower rain and drizzle:  //09d
-                return Condition.HEAVY_RAIN;
+                return WeatherCondition.HEAVY_RAIN;
             case 321:  //shower drizzle:  //09d
-                return Condition.SCATTERED_SHOWERS;
+                return WeatherCondition.SCATTERED_SHOWERS;
 //Group 5xx: Rain
             case 500:  //light rain:  //10d
             case 520:  //light intensity shower rain:  //09d
             case 521:  //shower rain:  //09d
-                return Condition.LIGHT_RAIN;
+                return WeatherCondition.LIGHT_RAIN;
             case 501:  //moderate rain:  //10d
             case 531:  //ragged shower rain:  //09d
-                return Condition.RAIN;
+                return WeatherCondition.RAIN;
             case 502:  //heavy intensity rain:  //10d
             case 503:  //very heavy rain:  //10d
             case 504:  //extreme rain:  //10d
             case 522:  //heavy intensity shower rain:  //09d
-                return Condition.HEAVY_RAIN;
+                return WeatherCondition.HEAVY_RAIN;
             case 511:  //freezing rain:  //13d
-                return Condition.UNKNOWN_PRECIPITATION;
+                return WeatherCondition.UNKNOWN_PRECIPITATION;
 //Group 6xx: Snow
             case 600:  //light snow:  //[[file:13d.png]]
-                return Condition.LIGHT_SNOW;
+                return WeatherCondition.LIGHT_SNOW;
             case 601:  //snow:  //[[file:13d.png]]
             case 620:  //light shower snow:  //[[file:13d.png]]
             case 621:  //shower snow:  //[[file:13d.png]]
-                return Condition.SNOW;
+                return WeatherCondition.SNOW;
             case 602:  //heavy snow:  //[[file:13d.png]]
             case 622:  //heavy shower snow:  //[[file:13d.png]]
-                return Condition.HEAVY_SNOW;
+                return WeatherCondition.HEAVY_SNOW;
             case 611:  //sleet:  //[[file:13d.png]]
             case 612:  //light shower sleet:  //[[file:13d.png]]
             case 613:  //shower sleet:  //[[file:13d.png]]
-                return Condition.WINTRY_MIX;
+                return WeatherCondition.WINTRY_MIX;
             case 615:  //light rain and snow:  //[[file:13d.png]]
-                return Condition.LIGHT_RAIN_SNOW;
+                return WeatherCondition.LIGHT_RAIN_SNOW;
             case 616:  //rain and snow:  //[[file:13d.png]]
-                return Condition.HEAVY_RAIN_SNOW;
+                return WeatherCondition.HEAVY_RAIN_SNOW;
 
 //Group 7xx: Atmosphere
             case 701:  //mist:  //[[file:50d.png]]
@@ -105,29 +117,29 @@ public class FieldDefinitionWeatherCondition extends FieldDefinition {
             case 751:  //sand:  //[[file:50d.png]]
             case 761:  //dust:  //[[file:50d.png]]
             case 762:  //volcanic ash:  //[[file:50d.png]]
-                return Condition.HAZY;
+                return WeatherCondition.HAZY;
             case 741:  //fog:  //[[file:50d.png]]
-                return Condition.FOG;
+                return WeatherCondition.FOG;
             case 771:  //squalls:  //[[file:50d.png]]
             case 781:  //tornado:  //[[file:50d.png]]
-                return Condition.WINDY;
+                return WeatherCondition.WINDY;
 //Group 800: Clear
             case 800:  //clear sky:  //[[file:01d.png]] [[file:01n.png]]
-                return Condition.CLEAR;
+                return WeatherCondition.CLEAR;
 
 //Group 80x: Clouds
             case 801:  //few clouds:  //[[file:02d.png]] [[file:02n.png]]
             case 802:  //scattered clouds:  //[[file:03d.png]] [[file:03d.png]]
-                return Condition.PARTLY_CLOUDY;
+                return WeatherCondition.PARTLY_CLOUDY;
             case 803:  //broken clouds:  //[[file:04d.png]] [[file:03d.png]]
-                return Condition.MOSTLY_CLOUDY;
+                return WeatherCondition.MOSTLY_CLOUDY;
             case 804:  //overcast clouds:  //[[file:04d.png]] [[file:04d.png]]
-                return Condition.CLOUDY;
+                return WeatherCondition.CLOUDY;
 //Group 90x: Extreme
             case 901:  //tropical storm
-                return Condition.THUNDERSTORMS;
+                return WeatherCondition.THUNDERSTORMS;
             case 906:  //hail
-                return Condition.HAIL;
+                return WeatherCondition.HAIL;
             case 903:  //cold
             case 904:  //hot
             case 905:  //windy
@@ -150,30 +162,4 @@ public class FieldDefinitionWeatherCondition extends FieldDefinition {
         }
     }
 
-    public enum Condition {
-        CLEAR,
-        PARTLY_CLOUDY,
-        MOSTLY_CLOUDY,
-        RAIN,
-        SNOW,
-        WINDY,
-        THUNDERSTORMS,
-        WINTRY_MIX,
-        FOG,
-        UNK9,
-        UNK10,
-        HAZY,
-        HAIL,
-        SCATTERED_SHOWERS,
-        SCATTERED_THUNDERSTORMS,
-        UNKNOWN_PRECIPITATION,
-        LIGHT_RAIN,
-        HEAVY_RAIN,
-        LIGHT_SNOW,
-        HEAVY_SNOW,
-        LIGHT_RAIN_SNOW,
-        HEAVY_RAIN_SNOW,
-        CLOUDY,
-        ;
-    }
 }

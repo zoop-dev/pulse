@@ -1,3 +1,20 @@
+/*  Copyright (C) 2024-2026 Daniele Gobbetti, José Rebelo, punchdeerflyscorpion, Thomas Kuehne, Gideon Zenz
+
+    This file is part of Gadgetbridge.
+
+    Gadgetbridge is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published
+    by the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Gadgetbridge is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>. */
+
 package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit;
 
 import androidx.annotation.NonNull;
@@ -8,8 +25,6 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.event.Level;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -176,12 +191,12 @@ public class NativeFITMessage {
         final int number;
         final BaseType baseType;
         final String name;
-        final FieldDefinitionFactory.FIELD type;
+        final FitFieldType type;
         final int scale;
         final int offset;
         final int size;
 
-        FieldDefinitionPrimitive(int number, BaseType baseType, int size, String name, FieldDefinitionFactory.FIELD type, int scale, int offset) {
+        FieldDefinitionPrimitive(int number, BaseType baseType, int size, String name, FitFieldType type, int scale, int offset) {
             this.number = number;
             this.baseType = baseType;
             this.size = size;
@@ -191,11 +206,11 @@ public class NativeFITMessage {
             this.offset = offset;
         }
 
-        FieldDefinitionPrimitive(int number, BaseType baseType, String name, FieldDefinitionFactory.FIELD type, int scale, int offset) {
+        FieldDefinitionPrimitive(int number, BaseType baseType, String name, FitFieldType type, int scale, int offset) {
             this(number, baseType, baseType.getSize(), name, type, scale, offset);
         }
 
-        FieldDefinitionPrimitive(int number, BaseType baseType, String name, FieldDefinitionFactory.FIELD type) {
+        FieldDefinitionPrimitive(int number, BaseType baseType, String name, FitFieldType type) {
             this(number, baseType, baseType.getSize(), name, type, 1, 0);
         }
 
@@ -223,7 +238,7 @@ public class NativeFITMessage {
             return name;
         }
 
-        public FieldDefinitionFactory.FIELD getType() {
+        public FitFieldType getType() {
             return type;
         }
 

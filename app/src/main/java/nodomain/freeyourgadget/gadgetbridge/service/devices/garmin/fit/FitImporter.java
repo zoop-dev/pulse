@@ -16,8 +16,6 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit;
 
-import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.MAXIMUM_OXYGEN_UPTAKE;
-
 import android.content.Context;
 import android.widget.Toast;
 
@@ -68,7 +66,6 @@ import nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminWorkoutParser;
 import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummary;
 import nodomain.freeyourgadget.gadgetbridge.entities.BatteryLevel;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
-import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.entities.GarminActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.entities.GarminBodyEnergySample;
 import nodomain.freeyourgadget.gadgetbridge.entities.GarminEventSample;
@@ -87,13 +84,11 @@ import nodomain.freeyourgadget.gadgetbridge.entities.GarminStressSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.GenericMetricSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.GenericTrainingLoadAcuteSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.GenericTrainingLoadChronicSample;
-import nodomain.freeyourgadget.gadgetbridge.entities.User;
 import nodomain.freeyourgadget.gadgetbridge.export.AutoFitExporter;
 import nodomain.freeyourgadget.gadgetbridge.export.AutoGpxExporter;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
-import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryData;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryParser;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityTrack;
 import nodomain.freeyourgadget.gadgetbridge.model.FitActivityTrackProvider;
@@ -101,9 +96,9 @@ import nodomain.freeyourgadget.gadgetbridge.model.MetricSample;
 import nodomain.freeyourgadget.gadgetbridge.model.Spo2Sample;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.FileType;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.GarminUtils;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.enums.HrvStatus;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.enums.SleepStage;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.exception.FitParseException;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionHrvStatus;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionSleepStage;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitDeviceStatus;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitEnduranceScore;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitEvent;
@@ -251,14 +246,14 @@ public class FitImporter {
                 sample.setSleepScore(score);
                 sleepStatsSamples.add(sample);
             } else if (record instanceof FitSleepStage fitSleepStage) {
-                final FieldDefinitionSleepStage.SleepStage stage = fitSleepStage.getSleepStage();
+                final SleepStage stage = fitSleepStage.getSleepStage();
                 if (stage == null) {
                     continue;
                 }
                 LOG.trace("Sleep stage at {}: {}", ts, fitSleepStage);
                 final GarminSleepStageSample sample = new GarminSleepStageSample();
                 sample.setTimestamp(ts * 1000L);
-                sample.setStage(stage.getId());
+                sample.setStage(stage.id);
                 sleepStageSamples.add(sample);
             } else if (record instanceof FitNap nap) {
                 if (nap.getStartTimestamp() == null || nap.getEndTimestamp() == null) {
@@ -367,9 +362,9 @@ public class FitImporter {
                 if (hrvSummary.getBaselineBalancedUpper() != null) {
                     sample.setBaselineBalancedUpper(Math.round(hrvSummary.getBaselineBalancedUpper()));
                 }
-                final FieldDefinitionHrvStatus.HrvStatus status = hrvSummary.getStatus();
+                final HrvStatus status = hrvSummary.getStatus();
                 if (status != null) {
-                    sample.setStatusNum(status.getId());
+                    sample.setStatusNum(status.id);
                 }
                 hrvSummarySamples.add(sample);
             } else if (record instanceof FitHrvValue hrvValue) {

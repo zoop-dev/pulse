@@ -33,7 +33,6 @@ import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -48,16 +47,16 @@ import java.util.regex.Pattern;
 public enum FitCodeGen {
     ;
 
-    // messages definitions directly accessed repeatedly
+    // message definitions repeatedly directly accessed
     // put everything else in functions to avoid "code to large" for the class constructor
-    static final int[] DIRECT_ACCESS_MESSAGES = {0, 1, 206};
+    private static final int[] DIRECT_ACCESS_MESSAGES = {0, 1, 206};
 
     private static final String NATIVE_HEADER =
             """                        
                     package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit;
                     
                     import static nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.baseTypes.BaseType.*;
-                    import static nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FieldDefinitionFactory.FIELD.*;
+                    import static nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitFieldType.*;
                     import static nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.NativeFITMessage.FieldDefinitionPrimitive;
                     
                     import java.util.List;
@@ -541,46 +540,17 @@ public enum FitCodeGen {
                 case "BOOLEAN" -> new FieldClass(Boolean.class);
                 case "DAY_OF_WEEK" -> new FieldClass(DayOfWeek.class);
                 case "EXERCISE_CATEGORY" ->
-                        new FieldClass("nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionExerciseCategory.ExerciseCategory[]", true);
-                case "ALARM_LABEL" ->
-                        new FieldClass("nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionAlarmLabel.Label");
+                        new FieldClass("nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.enums.ExerciseCategory[]", true);
                 case "FILE_TYPE" ->
                         new FieldClass("nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.FileType.FILETYPE");
-                case "GOAL_SOURCE" ->
-                        new FieldClass("nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionGoalSource.Source");
-                case "GOAL_TYPE" ->
-                        new FieldClass("nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionGoalType.Type");
-                case "HRV_STATUS" ->
-                        new FieldClass("nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionHrvStatus.HrvStatus");
                 case "HR_TIME_IN_ZONE" -> new FieldClass(Double[].class);
                 case "HR_ZONE_HIGH_BOUNDARY" -> new FieldClass(Integer[].class);
-                case "MEASUREMENT_SYSTEM" ->
-                        new FieldClass("nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionMeasurementSystem.Type");
                 case "TEMPERATURE" -> new FieldClass(Integer.class);
                 case "TIMESTAMP" -> new FieldClass(Long.class);
-                case "WEATHER_CONDITION" ->
-                        new FieldClass("nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionWeatherCondition.Condition");
-                case "LANGUAGE" ->
-                        new FieldClass("nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionLanguage.Language");
-                case "SLEEP_STAGE" ->
-                        new FieldClass("nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionSleepStage.SleepStage");
-                case "WEATHER_AQI" ->
-                        new FieldClass("nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionWeatherAqi.AQI_LEVELS");
                 case "COORDINATE" -> new FieldClass(Double.class);
-                case "SWIM_STYLE" ->
-                        new FieldClass("nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionSwimStyle.SwimStyle");
-                case "LOCATION_SYMBOL" ->
-                        new FieldClass("nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionLocationSymbol.LocationSymbol");
-                case "COURSE_POINT" ->
-                        new FieldClass("nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionCoursePoint.CoursePoint");
-                case "WEATHER_REPORT" ->
-                        new FieldClass("nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionWeatherReport.Type");
-                case "BATTERY_STATUS" ->
-                        new FieldClass("nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionBatteryStatus.BatteryStatus");
-                case "WATER_TYPE" ->
-                        new FieldClass("nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionWaterType.WaterType");
                 default ->
-                        throw new RuntimeException("getFieldType doesn't support: " + primitive.type);
+                        new FieldClass("nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.enums."
+                                + primitive.getType());
             };
         }
 

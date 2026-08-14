@@ -519,19 +519,19 @@
         "5": {
           "num": 5,
           "name": "language",
-          "type": "LANGUAGE",
+          "type": "Language",
           "baseType": "ENUM"
         },
         "6": {
           "num": 6,
           "name": "elev_setting",
-          "type": "MEASUREMENT_SYSTEM",
+          "type": "MeasurementSystem",
           "baseType": "ENUM"
         },
         "7": {
           "num": 7,
           "name": "weight_setting",
-          "type": "MEASUREMENT_SYSTEM",
+          "type": "MeasurementSystem",
           "baseType": "ENUM"
         },
         "8": {
@@ -566,13 +566,13 @@
         "13": {
           "num": 13,
           "name": "speed_setting",
-          "type": "MEASUREMENT_SYSTEM",
+          "type": "MeasurementSystem",
           "baseType": "ENUM"
         },
         "14": {
           "num": 14,
           "name": "dist_setting",
-          "type": "MEASUREMENT_SYSTEM",
+          "type": "MeasurementSystem",
           "baseType": "ENUM"
         },
         "16": {
@@ -593,7 +593,7 @@
         "21": {
           "num": 21,
           "name": "temperature_setting",
-          "type": "MEASUREMENT_SYSTEM",
+          "type": "MeasurementSystem",
           "baseType": "ENUM"
         },
         "22": {
@@ -626,7 +626,7 @@
         "30": {
           "num": 30,
           "name": "height_setting",
-          "type": "MEASUREMENT_SYSTEM",
+          "type": "MeasurementSystem",
           "baseType": "ENUM"
         },
         "31": {
@@ -664,7 +664,7 @@
         "47": {
           "num": 47,
           "name": "depth_setting",
-          "type": "MEASUREMENT_SYSTEM",
+          "type": "MeasurementSystem",
           "baseType": "ENUM"
         },
         "49": {
@@ -1525,7 +1525,7 @@
         "4": {
           "num": 4,
           "name": "type",
-          "type": "GOAL_TYPE",
+          "type": "GoalType",
           "baseType": "ENUM"
         },
         "5": {
@@ -1561,7 +1561,7 @@
         "11": {
           "num": 11,
           "name": "source",
-          "type": "GOAL_SOURCE",
+          "type": "GoalSource",
           "baseType": "ENUM"
         },
         "254": {
@@ -3081,7 +3081,7 @@
         "38": {
           "num": 38,
           "name": "swim_style",
-          "type": "SWIM_STYLE",
+          "type": "SwimStyle",
           "baseType": "ENUM"
         },
         "39": {
@@ -4625,7 +4625,7 @@
         "11": {
           "num": 11,
           "name": "battery_status",
-          "type": "BATTERY_STATUS",
+          "type": "BatteryStatus",
           "baseType": "UINT8"
         },
         "18": {
@@ -4963,7 +4963,7 @@
         "3": {
           "num": 3,
           "name": "symbol",
-          "type": "LOCATION_SYMBOL",
+          "type": "LocationSymbol",
           "baseType": "UINT16"
         },
         "4": {
@@ -5155,7 +5155,7 @@
         "5": {
           "num": 5,
           "name": "type",
-          "type": "COURSE_POINT",
+          "type": "CoursePoint",
           "baseType": "ENUM"
         },
         "6": {
@@ -6634,7 +6634,7 @@
         "0": {
           "num": 0,
           "name": "weather_report",
-          "type": "WEATHER_REPORT",
+          "type": "WeatherReport",
           "baseType": "ENUM"
         },
         "1": {
@@ -6647,7 +6647,7 @@
         "2": {
           "num": 2,
           "name": "condition",
-          "type": "WEATHER_CONDITION",
+          "type": "WeatherCondition",
           "baseType": "ENUM"
         },
         "3": {
@@ -6739,7 +6739,7 @@
         "17": {
           "num": 17,
           "name": "air_quality",
-          "type": "WEATHER_AQI",
+          "type": "WeatherAqi",
           "baseType": "ENUM"
         },
         "18": {
@@ -9815,7 +9815,7 @@
         "8": {
           "num": 8,
           "name": "label",
-          "type": "ALARM_LABEL",
+          "type": "AlarmLabel",
           "baseType": "ENUM"
         },
         "11": {
@@ -10067,7 +10067,7 @@
         "4": {
           "num": 4,
           "name": "water_type",
-          "type": "WATER_TYPE",
+          "type": "WaterType",
           "baseType": "ENUM"
         },
         "5": {
@@ -10707,7 +10707,7 @@
         "0": {
           "num": 0,
           "name": "sleep_stage",
-          "type": "SLEEP_STAGE",
+          "type": "SleepStage",
           "baseType": "ENUM"
         },
         "253": {
@@ -12790,7 +12790,7 @@
         "6": {
           "num": 6,
           "name": "status",
-          "type": "HRV_STATUS",
+          "type": "HrvStatus",
           "baseType": "ENUM"
         },
         "253": {
