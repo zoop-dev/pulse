@@ -422,9 +422,14 @@ public class ProtocolBufferHandler implements MessageHandler {
 
         if (coreService.hasGetLocationRequest()) {
             LOG.info("Got location request");
-            final Location location = new CurrentPosition().getLastKnownLocation();
+            final CurrentPosition currentPosition = new CurrentPosition();
+            final Location location = currentPosition.getLastKnownLocation();
             final GdiCore.CoreService.GetLocationResponse.Builder response = GdiCore.CoreService.GetLocationResponse.newBuilder();
             if (location.getLatitude() == 0 && location.getLongitude() == 0) {
+                response.setStatus(GdiCore.CoreService.GetLocationResponse.Status.NO_VALID_LOCATION);
+            } else if (currentPosition.isFromPreferences() &&
+                    GBApplication.getPrefs().getBoolean("use_updated_location_if_available", false)) {
+                LOG.warn("No fresh location available, replying with NO_VALID_LOCATION");
                 response.setStatus(GdiCore.CoreService.GetLocationResponse.Status.NO_VALID_LOCATION);
             } else {
                 response.setStatus(GdiCore.CoreService.GetLocationResponse.Status.OK)
