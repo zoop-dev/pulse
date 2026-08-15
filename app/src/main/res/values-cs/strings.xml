@@ -4854,4 +4854,15 @@
     <string name="huawei_app_install_failed">Hodinky odmítly nainstalovat aplikaci</string>
     <string name="huawei_app_uninstall_failed">Nepodařilo se odinstalovat aplikaci na hodinkách</string>
     <string name="busy_task_progress_str">%1$s z %2$s</string>
+    <string name="appmanager_app_store">Obchod s aplikacemi</string>
+    <string name="refresh">Obnovit</string>
+    <string name="pref_title_notifications_ignore_other_users">Ignorovat ostatní uživatelské profily</string>
+    <string name="pref_summary_notifications_ignore_other_users">Neposílat oznámení z ostatních uživatelských profilů na hodinkách</string>
+    <string name="create_watchface">Vytvořit ciferník</string>
+    <string name="add_reminder">Přidat připomínku</string>
+    <string name="add_contact">Přidat kontakt</string>
+    <string name="add_world_clock">Přidat světové hodiny</string>
+    <string name="upload_music">Nahrát hudbu</string>
+    <string name="six_months">6 měsíců</string>
+    <string name="add_widget_screen">Přidat obrazovku widgetu</string>
 </resources>
