@@ -131,6 +131,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitDeviceSettings;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitFileId;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitWeather;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.CurrentTimeRequestMessage;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.DownloadRequestMessage;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.GFDIMessage;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.MusicControlEntityUpdateMessage;
@@ -153,6 +154,7 @@ import static nodomain.freeyourgadget.gadgetbridge.GBApplication.ACTION_APP_IS_I
 import static nodomain.freeyourgadget.gadgetbridge.GBApplication.ACTION_APP_IS_IN_FOREGROUND;
 import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_ALLOW_HIGH_MTU;
 import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_SEND_APP_NOTIFICATIONS;
+import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_TIME_SYNC;
 
 
 public class GarminSupport extends AbstractBTLESingleDeviceSupport implements ICommunicator.Callback {
@@ -379,6 +381,11 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
         if (null == parsedMessage) {
             LOG.error("GFDIMessage is null - this should never happen");
             return; //message cannot be handled
+        }
+
+        if (parsedMessage instanceof CurrentTimeRequestMessage && !getDevicePrefs().getBoolean(PREF_TIME_SYNC, true)) {
+            LOG.warn("Ignoring current time request - time sync is disabled");
+            return;
         }
 
         LOG.debug("INCOMING message: {}/{}: {}", parsedMessage, parsedMessage.getGarminMessage(), GB.hexdump(message));
@@ -843,7 +850,7 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
         sendOutgoingMessage("request supported file types", new SupportedFileTypesMessage());
         sendDeviceSettings();
 
-        if (GBApplication.getPrefs().syncTime()) {
+        if (GBApplication.getPrefs().syncTime() && getDevicePrefs().getBoolean(PREF_TIME_SYNC, true)) {
             onSetTime();
         }
         //following is needed for vivomove style

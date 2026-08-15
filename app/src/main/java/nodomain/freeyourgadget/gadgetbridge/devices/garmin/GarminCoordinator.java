@@ -328,6 +328,9 @@ public abstract class GarminCoordinator extends AbstractBLEDeviceCoordinator {
             location.add(R.xml.devicesettings_garmin_agps);
         }
 
+        final List<Integer> dateTime = deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.DATE_TIME);
+        dateTime.add(R.xml.devicesettings_time_sync);
+
         final List<Integer> connection = deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.CONNECTION);
         connection.add(R.xml.devicesettings_high_mtu);
 
