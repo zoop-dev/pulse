@@ -4848,4 +4848,15 @@
     <string name="huawei_app_install_failed">手表拒绝安装该应用</string>
     <string name="huawei_app_uninstall_failed">手表无法移除该应用</string>
     <string name="busy_task_progress_str">第 %1$s 个，共 %2$s 个</string>
+    <string name="appmanager_app_store">应用商店</string>
+    <string name="refresh">刷新</string>
+    <string name="pref_title_notifications_ignore_other_users">忽略其他用户配置文件</string>
+    <string name="pref_summary_notifications_ignore_other_users">不发送手表上其他用户配置文件的通知</string>
+    <string name="create_watchface">创建表盘</string>
+    <string name="add_reminder">添加提醒</string>
+    <string name="add_contact">添加联系人</string>
+    <string name="add_world_clock">添加世界时钟</string>
+    <string name="upload_music">上传音乐</string>
+    <string name="six_months">6 个月</string>
+    <string name="add_widget_screen">添加小部件屏幕</string>
 </resources>
