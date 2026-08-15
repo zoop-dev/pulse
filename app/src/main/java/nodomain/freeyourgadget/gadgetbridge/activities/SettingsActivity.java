@@ -332,6 +332,18 @@ public class SettingsActivity extends AbstractSettingsActivityV2 implements Acti
                 });
             }
 
+            pref = findPreference("use_updated_location_if_available");
+            if (pref != null) {
+                pref.setOnPreferenceChangeListener((preference, newVal) -> {
+                    if (Boolean.TRUE.equals(newVal) &&
+                            ActivityCompat.checkSelfPermission(requireContext().getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                        ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 0);
+                        GB.toast(requireContext(), getString(R.string.toast_location_permission_required), 5000, 0);
+                    }
+                    return true;
+                });
+            }
+
             pref = findPreference("weather_city");
             if (pref != null) {
                 pref.setOnPreferenceChangeListener((preference, newVal) -> {

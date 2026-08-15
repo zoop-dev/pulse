@@ -54,6 +54,14 @@ public class CurrentPosition {
         return lastKnownLocation;
     }
 
+    /**
+     * Whether the position came from the static location preferences, as opposed to an
+     * actual location from a location provider.
+     */
+    public boolean isFromPreferences() {
+        return "preferences".equals(lastKnownLocation.getProvider());
+    }
+
     public CurrentPosition() {
         Prefs prefs = GBApplication.getPrefs();
         this.latitude = prefs.getFloat("location_latitude", 0);
@@ -63,32 +71,39 @@ public class CurrentPosition {
         lastKnownLocation.setLatitude(this.latitude);
         lastKnownLocation.setLongitude(this.longitude);
 
-        LOG.info("got longitude/latitude from preferences: {}/{}", latitude, longitude);
-
         this.timestamp = System.currentTimeMillis() - 86400000; //let accessor know this value is really old
 
-        if (ActivityCompat.checkSelfPermission(GBApplication.getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
-                prefs.getBoolean("use_updated_location_if_available", false)) {
-            LocationManager locationManager = (LocationManager) GBApplication.getContext().getSystemService(Context.LOCATION_SERVICE);
-            Criteria criteria = new Criteria();
-            String provider = null;
-            if (locationManager != null) {
-                provider = locationManager.getBestProvider(criteria, false);
-            }
-            if (provider != null) {
-                Location lastKnownLocation = locationManager.getLastKnownLocation(provider);
-                if (lastKnownLocation != null) {
-                    this.lastKnownLocation = lastKnownLocation;
-                    this.timestamp = lastKnownLocation.getTime();
-                    this.timestamp = System.currentTimeMillis() - 1000; //TODO: request updating the location and don't fake its age
-
-                    this.latitude = (float) lastKnownLocation.getLatitude();
-                    this.longitude = (float) lastKnownLocation.getLongitude();
-                    this.accuracy = lastKnownLocation.getAccuracy();
-                    this.altitude = (float) lastKnownLocation.getAltitude();
-                    this.speed = lastKnownLocation.getSpeed();
+        if (prefs.getBoolean("use_updated_location_if_available", false)) {
+            if (ActivityCompat.checkSelfPermission(GBApplication.getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                LocationManager locationManager = (LocationManager) GBApplication.getContext().getSystemService(Context.LOCATION_SERVICE);
+                Criteria criteria = new Criteria();
+                String provider = null;
+                if (locationManager != null) {
+                    provider = locationManager.getBestProvider(criteria, false);
                 }
+                if (provider != null) {
+                    Location lastKnownLocation = locationManager.getLastKnownLocation(provider);
+                    if (lastKnownLocation != null) {
+                        this.lastKnownLocation = lastKnownLocation;
+                        this.timestamp = lastKnownLocation.getTime();
+                        this.timestamp = System.currentTimeMillis() - 1000; //TODO: request updating the location and don't fake its age
+
+                        this.latitude = (float) lastKnownLocation.getLatitude();
+                        this.longitude = (float) lastKnownLocation.getLongitude();
+                        this.accuracy = lastKnownLocation.getAccuracy();
+                        this.altitude = (float) lastKnownLocation.getAltitude();
+                        this.speed = lastKnownLocation.getSpeed();
+                    }
+                }
+            } else {
+                LOG.warn("use_updated_location_if_available is enabled, but location permission is not granted - falling back to the static location from preferences");
             }
+        }
+
+        if (isFromPreferences()) {
+            LOG.info("got latitude/longitude from preferences: {}/{}", latitude, longitude);
+        } else {
+            LOG.info("got latitude/longitude from last known location: {}/{}", latitude, longitude);
         }
     }
 }

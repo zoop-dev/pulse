@@ -183,20 +183,23 @@ public class GBPrefs extends Prefs {
     public float[] getLongLat(Context context) {
         float latitude = getFloat("location_latitude", 0);
         float longitude = getFloat("location_longitude", 0);
-        LOG.info("got longitude/latitude from preferences: {}/{}", latitude, longitude);
+        LOG.info("got latitude/longitude from preferences: {}/{}", latitude, longitude);
 
-        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
-                getBoolean("use_updated_location_if_available", false)) {
-            LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-            Criteria criteria = new Criteria();
-            String provider = locationManager.getBestProvider(criteria, false);
-            if (provider != null) {
-                Location lastKnownLocation = locationManager.getLastKnownLocation(provider);
-                if (lastKnownLocation != null) {
-                    latitude = (float) lastKnownLocation.getLatitude();
-                    longitude = (float) lastKnownLocation.getLongitude();
-                    LOG.info("got longitude/latitude from last known location: {}/{}", latitude, longitude);
+        if (getBoolean("use_updated_location_if_available", false)) {
+            if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+                Criteria criteria = new Criteria();
+                String provider = locationManager.getBestProvider(criteria, false);
+                if (provider != null) {
+                    Location lastKnownLocation = locationManager.getLastKnownLocation(provider);
+                    if (lastKnownLocation != null) {
+                        latitude = (float) lastKnownLocation.getLatitude();
+                        longitude = (float) lastKnownLocation.getLongitude();
+                        LOG.info("got latitude/longitude from last known location: {}/{}", latitude, longitude);
+                    }
                 }
+            } else {
+                LOG.warn("use_updated_location_if_available is enabled, but location permission is not granted - falling back to the static location from preferences");
             }
         }
         return new float[]{longitude, latitude};
