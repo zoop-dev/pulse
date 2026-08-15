@@ -17,7 +17,7 @@ public class FieldDefinitionWeatherCondition extends FieldDefinition {
     @Nullable
     public static WeatherCondition fromId(final int id) {
         for (final WeatherCondition candidate : WeatherCondition.values()) {
-            if (id == candidate.id) {
+            if (id == candidate.num) {
                 return candidate;
             }
         }
@@ -38,11 +38,11 @@ public class FieldDefinitionWeatherCondition extends FieldDefinition {
     @Override
     public void encode(ByteBuffer byteBuffer, Object o) {
         if (o instanceof final WeatherCondition weatherCondition) {
-            baseType.encode(byteBuffer, weatherCondition.id, scale, offset);
+            baseType.encode(byteBuffer, weatherCondition.num, scale, offset);
             return;
         }
         final WeatherCondition condition = openWeatherCodeToFitWeatherStatus((int) o);
-        baseType.encode(byteBuffer, condition != null ? condition.id : 255, scale, offset);
+        baseType.encode(byteBuffer, condition != null ? condition.num : 255, scale, offset);
     }
 
     @Nullable

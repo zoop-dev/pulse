@@ -30,6 +30,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.baseTypes.BaseType;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitions;
 
 /**
  * @noinspection DuplicateStringLiteralInspection, WeakerAccess
@@ -191,12 +192,12 @@ public class NativeFITMessage {
         final int number;
         final BaseType baseType;
         final String name;
-        final FitFieldType type;
+        final FieldDefinitions type;
         final int scale;
         final int offset;
         final int size;
 
-        FieldDefinitionPrimitive(int number, BaseType baseType, int size, String name, FitFieldType type, int scale, int offset) {
+        FieldDefinitionPrimitive(int number, BaseType baseType, int size, String name, FieldDefinitions type, int scale, int offset) {
             this.number = number;
             this.baseType = baseType;
             this.size = size;
@@ -206,11 +207,11 @@ public class NativeFITMessage {
             this.offset = offset;
         }
 
-        FieldDefinitionPrimitive(int number, BaseType baseType, String name, FitFieldType type, int scale, int offset) {
+        FieldDefinitionPrimitive(int number, BaseType baseType, String name, FieldDefinitions type, int scale, int offset) {
             this(number, baseType, baseType.getSize(), name, type, scale, offset);
         }
 
-        FieldDefinitionPrimitive(int number, BaseType baseType, String name, FitFieldType type) {
+        FieldDefinitionPrimitive(int number, BaseType baseType, String name, FieldDefinitions type) {
             this(number, baseType, baseType.getSize(), name, type, 1, 0);
         }
 
@@ -238,7 +239,7 @@ public class NativeFITMessage {
             return name;
         }
 
-        public FitFieldType getType() {
+        public FieldDefinitions getType() {
             return type;
         }
 

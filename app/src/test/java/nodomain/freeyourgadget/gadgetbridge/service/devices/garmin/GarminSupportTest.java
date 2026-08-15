@@ -140,7 +140,7 @@ public class GarminSupportTest extends TestBase {
             switch (baseType.name()) {
                 case "ENUM":
                 case "UINT8":
-                case "BASE_TYPE_BYTE":
+                case "BYTE":
                     startVal = 0;
                     test.setFieldByName(baseType.name(), startVal);
                     endVal = test.getFieldByName(baseType.name());

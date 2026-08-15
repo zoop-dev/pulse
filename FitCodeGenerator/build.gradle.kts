@@ -16,6 +16,7 @@ application {
 
 dependencies {
     implementation(libs.json)
+    implementation(libs.gson)
 }
 
 tasks.register<JavaExec>("genFit") {

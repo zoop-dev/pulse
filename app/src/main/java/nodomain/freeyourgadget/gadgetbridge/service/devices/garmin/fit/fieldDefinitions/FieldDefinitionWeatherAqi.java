@@ -17,7 +17,7 @@ public class FieldDefinitionWeatherAqi extends FieldDefinition {
     @Nullable
     public static WeatherAqi fromId(final int id) {
         for (final WeatherAqi candidate : WeatherAqi.values()) {
-            if (id == candidate.id) {
+            if (id == candidate.num) {
                 return candidate;
             }
         }
@@ -38,7 +38,7 @@ public class FieldDefinitionWeatherAqi extends FieldDefinition {
     @Override
     public void encode(ByteBuffer byteBuffer, Object o) {
         if (o instanceof final WeatherAqi aqi) {
-            baseType.encode(byteBuffer, aqi.id, scale, offset);
+            baseType.encode(byteBuffer, aqi.num, scale, offset);
             return;
         }
 
@@ -49,7 +49,7 @@ public class FieldDefinitionWeatherAqi extends FieldDefinition {
         } else {
             aqiLevel = null;
         }
-        baseType.encode(byteBuffer, aqiLevel != null ? aqiLevel.id : o, scale, offset);
+        baseType.encode(byteBuffer, aqiLevel != null ? aqiLevel.num : o, scale, offset);
     }
 
     public static WeatherAqi aqiAbsoluteValueToEnum(int rawValue) { //see https://github.com/breezy-weather/breezy-weather/blob/main/app/src/main/java/org/breezyweather/domain/weather/index/PollutantIndex.kt#L38
