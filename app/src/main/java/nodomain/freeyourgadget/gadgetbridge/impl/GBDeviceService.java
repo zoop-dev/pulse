@@ -33,12 +33,14 @@ import android.provider.ContactsContract;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.UUID;
+import java.util.concurrent.Executor;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
@@ -85,6 +87,10 @@ public class GBDeviceService implements DeviceService {
             EXTRA_CALENDAREVENT_LOCATION,
             EXTRA_CALENDAREVENT_CALNAME,
     };
+    private final Executor mainExecutor = ContextCompat.getMainExecutor(GBApplication.getContext());
+
+    private final ConflatingDispatcher<NavigationInfoSpec> navigationDispatcher =
+            new ConflatingDispatcher<>(mainExecutor, this::forwardNavigationInfo);
     private static final Logger LOG = LoggerFactory.getLogger(GBDeviceService.class);
 
     public GBDeviceService(@NonNull Context context) {
@@ -323,6 +329,10 @@ public class GBDeviceService implements DeviceService {
 
     @Override
     public void onSetNavigationInfo(@NonNull NavigationInfoSpec navigationInfoSpec) {
+        navigationDispatcher.offer(navigationInfoSpec);
+    }
+
+    private void forwardNavigationInfo(NavigationInfoSpec navigationInfoSpec) {
         Intent intent = createIntent().setAction(ACTION_SETNAVIGATIONINFO)
                 .putExtra(EXTRA_NAVIGATION_INSTRUCTION, navigationInfoSpec.getInstruction())
                 .putExtra(EXTRA_NAVIGATION_NEXT_ACTION, navigationInfoSpec.getNextAction())
