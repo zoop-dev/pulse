@@ -1,3 +1,0 @@
-* Amazfit Bip: Allow flashing watchfaces
-* Amazfit Cor: Fix flashing new .res files
-* Mi Band 2/HRX/Bip/Cor: Try to fix stuck activity sync
