@@ -13,14 +13,14 @@ RepoType: git
 Repo: https://github.com/zoop-dev/pulse.git
 
 Builds:
-  - versionName: 0.97.0
-    versionCode: 256
-    commit: 669a38510543aeaa8ec4f300b38ae1ca8a670e96
+  - versionName: 0.98.0
+    versionCode: 257
+    commit: 258fb699a
     subdir: app
     gradle:
       - mainline
 
 AutoUpdateMode: Version
 UpdateCheckMode: Tags ^[0-9.]+$
-CurrentVersion: 0.97.0
-CurrentVersionCode: 256
+CurrentVersion: 0.98.0
+CurrentVersionCode: 257
