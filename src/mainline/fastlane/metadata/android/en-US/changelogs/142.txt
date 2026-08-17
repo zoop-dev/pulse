@@ -1,1 +1,0 @@
-* Pebble: Fix crash with DISMISS and OPEN actions

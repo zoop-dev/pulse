@@ -1,9 +1,0 @@
-* Initial Amazfit Bip support (WIP)
-* Various themeing fixes
-* Add workaround for blacklist not properly persisting
-* Handle resetting language to default properly
-* Pebble: Pass booleans from Javascript Appmessage correctly
-* Pebble: Make local configuration pages work on most recent webview implementation
-* Pebble: Allow to blacklist calendars
-* Add Greek and German transliteration support
-* Various visual improvements to charts

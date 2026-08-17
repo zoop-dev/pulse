@@ -1,4 +1,0 @@
-* Huawei: Improve activity parsing
-* Huawei Watch GT: Fix connection failure
-* Withings: Fix crash on connection
-* Improve Armenian transliterator for mixed-case words
