@@ -1426,4 +1426,7 @@
     <string name="pref_gps_mode_preset">GPS-režiim</string>
     <string name="pref_header_other">Muud</string>
     <string name="pref_title_notification_delay_calls">Viivitus kõneteavitusel</string>
+    <string name="appmanager_app_store">Rakendustepood</string>
+    <string name="open_fw_installer_getting_files_title">Laadin püsivara/rakenduse faili</string>
+    <string name="refresh">Laadi uuesti</string>
 </resources>
