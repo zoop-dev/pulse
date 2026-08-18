@@ -513,7 +513,7 @@ public enum FitCodeGen {
                 }
 
                 if (null != field.UOM) {
-                    printer.print(" // ");
+                    printer.print(" // UNIT_");
                     printer.print(field.UOM);
                 }
 
@@ -710,7 +710,7 @@ public enum FitCodeGen {
             }
 
             if (primitive.UOM != null) {
-                sb.append("    /// " + primitive.UOM);
+                sb.append("    /// UNIT_" + primitive.UOM);
             }
             sb.append(
                     accessorTemplate
@@ -741,7 +741,7 @@ public enum FitCodeGen {
             final String fieldTypeName = fieldType.getSimpleName();
 
             if (primitive.UOM != null) {
-                sb.append("        /// " + primitive.UOM);
+                sb.append("        /// UNIT_" + primitive.UOM);
             }
             sb.append("""
                     
@@ -880,7 +880,7 @@ public enum FitCodeGen {
     }
 
     private static void modifyProfile(final SortedSet<FitMessage> messages, final SortedSet<FitEnum> enumerations) throws Exception {
-        for (final FitMessage message : messages) {
+        /*for (final FitMessage message : messages) {
             for (final FitField field : message.fields) {
                 if ("TIMESTAMP".equals(field.type)) {
                     field.UOM = "UNIT_SECONDS";
@@ -889,7 +889,7 @@ public enum FitCodeGen {
                     field.UOM = "UNIT_SECONDS";
                 }
             }
-        }
+        }*/
     }
 
     private static void writeJSon(final Writer writer, final SortedSet<FitMessage> messages, final SortedSet<FitEnum> enums) throws IOException {
