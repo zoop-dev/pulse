@@ -190,7 +190,7 @@ public enum FitCodeGen {
             readJson(reader, messages, enumerations, devices);
         }
 
-        if (true) {
+        if (false) {
             // only used for mass updates to fit_profile.json
             //modifyProfile(messages, enumerations);
             try (Writer writer = new FileWriter(jsonFile, StandardCharsets.UTF_8)) {
@@ -937,6 +937,7 @@ public enum FitCodeGen {
                 o.beginArray();
                 for (final FitEnumEntry fitEnumEntry : fitEnum.entries) {
                     o.beginObject();
+                    o.setFormattingStyle(FormattingStyle.COMPACT);
                     o.name("num").value(fitEnumEntry.num);
                     o.name("name").value(fitEnumEntry.name);
                     if (fitEnumEntry.label != null) {
@@ -946,6 +947,7 @@ public enum FitCodeGen {
                         o.name("text").value(fitEnumEntry.text);
                     }
                     o.endObject();
+                    o.setFormattingStyle(FormattingStyle.PRETTY);
                 }
                 o.endArray();
                 o.endObject();
@@ -971,11 +973,9 @@ public enum FitCodeGen {
 
     private static void printJSon(final FitField f, final JsonWriter o) throws IOException {
         o.beginObject();
+        o.setFormattingStyle(FormattingStyle.COMPACT);
         o.name("num").value(f.num);
         o.name("name").value(f.name);
-        if (f.type != null && !"ARRAY".contentEquals(f.type)) {
-            o.name("type").value(f.type);
-        }
         o.name("base").value(f.base);
         if (1 != f.scale) {
             o.name("scale");
@@ -985,6 +985,9 @@ public enum FitCodeGen {
             } else {
                 o.value(f.scale);
             }
+        }
+        if (f.type != null && !"ARRAY".contentEquals(f.type)) {
+            o.name("type").value(f.type);
         }
         if (0 != f.offset) {
             o.name("offset");
@@ -1005,6 +1008,7 @@ public enum FitCodeGen {
             o.name("UOM").value(f.UOM);
         }
         o.endObject();
+        o.setFormattingStyle(FormattingStyle.PRETTY);
     }
 
     static class FitField implements Comparable<FitField> {
