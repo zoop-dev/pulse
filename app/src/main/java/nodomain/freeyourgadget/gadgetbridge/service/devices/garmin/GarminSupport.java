@@ -139,6 +139,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.SetD
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.SetFileFlagsMessage;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.SupportedFileTypesMessage;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.SystemEventMessage;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.status.GenericStatusMessage;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.status.NotificationSubscriptionStatusMessage;
 import nodomain.freeyourgadget.gadgetbridge.util.ArrayUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.CompressionUtils;
@@ -384,7 +385,8 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
         }
 
         if (parsedMessage instanceof CurrentTimeRequestMessage && !getDevicePrefs().getBoolean(PREF_TIME_SYNC, true)) {
-            LOG.warn("Ignoring current time request - time sync is disabled");
+            LOG.warn("Replying UNSUPPORTED to current time request - time sync is disabled");
+            sendOutgoingMessage("send status", new GenericStatusMessage(parsedMessage.getGarminMessage(), GFDIMessage.Status.UNSUPPORTED));
             return;
         }
 
