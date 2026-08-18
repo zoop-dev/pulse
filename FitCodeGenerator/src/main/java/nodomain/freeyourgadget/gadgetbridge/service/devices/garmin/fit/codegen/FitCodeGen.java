@@ -17,6 +17,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.codegen;
 
+import com.google.gson.FormattingStyle;
 import com.google.gson.stream.JsonWriter;
 
 import org.json.JSONArray;
@@ -184,15 +185,16 @@ public enum FitCodeGen {
 
         final SortedSet<FitMessage> messages = new TreeSet<>();
         final SortedSet<FitEnum> enumerations = new TreeSet<>();
+        final SortedSet<FitDevice> devices = new TreeSet<>();
         try (final FileReader reader = new FileReader(jsonFile, StandardCharsets.UTF_8)) {
-            readJson(reader, messages, enumerations);
+            readJson(reader, messages, enumerations, devices);
         }
 
-        if (false) {
+        if (true) {
             // only used for mass updates to fit_profile.json
-            modifyProfile(messages, enumerations);
+            //modifyProfile(messages, enumerations);
             try (Writer writer = new FileWriter(jsonFile, StandardCharsets.UTF_8)) {
-                writeJSon(writer, messages, enumerations);
+                writeJSon(writer, messages, enumerations, devices);
             }
         }
 
@@ -386,7 +388,7 @@ public enum FitCodeGen {
         fileWritten(nativeFile);
     }
 
-    private static void readJson(final Reader reader, final Collection<FitMessage> messages, final Collection<FitEnum> enumerations) {
+    private static void readJson(final Reader reader, final Collection<FitMessage> messages, final Collection<FitEnum> enumerations, SortedSet<FitDevice> devices) {
         final JSONTokener tokenizer = new JSONTokener(reader);
         final JSONObject root = new JSONObject(tokenizer);
 
@@ -442,6 +444,17 @@ public enum FitCodeGen {
                 enumFit.entries.add(entryFit);
             }
             enumerations.add(enumFit);
+        }
+
+        final JSONArray devicesJson = root.getJSONArray("devices");
+        for (int deviceIndex = 0; deviceIndex < devicesJson.length(); deviceIndex++) {
+            final JSONObject deviceJson = devicesJson.getJSONObject(deviceIndex);
+            final FitDevice device = new FitDevice(
+                    deviceJson.getInt("manufacturer"),
+                    deviceJson.getInt("product"),
+                    deviceJson.getString("name")
+            );
+            devices.add(device);
         }
     }
 
@@ -892,7 +905,8 @@ public enum FitCodeGen {
         }*/
     }
 
-    private static void writeJSon(final Writer writer, final SortedSet<FitMessage> messages, final SortedSet<FitEnum> enums) throws IOException {
+    private static void writeJSon(final Writer writer, final SortedSet<FitMessage> messages,
+                                  final SortedSet<FitEnum> enums, final SortedSet<FitDevice> devices) throws IOException {
         try (JsonWriter o = new JsonWriter(writer)) {
             o.setSerializeNulls(true);
             o.setIndent("  ");
@@ -935,6 +949,19 @@ public enum FitCodeGen {
                 }
                 o.endArray();
                 o.endObject();
+            }
+            o.endArray();
+
+            o.name("devices");
+            o.beginArray();
+            for (final FitDevice fitDevice : devices) {
+                o.beginObject();
+                o.setFormattingStyle(FormattingStyle.COMPACT);
+                o.name("manufacturer").value(fitDevice.manufacturer);
+                o.name("product").value(fitDevice.product);
+                o.name("name").value(fitDevice.name);
+                o.endObject();
+                o.setFormattingStyle(FormattingStyle.PRETTY);
             }
             o.endArray();
 
@@ -1095,6 +1122,21 @@ public enum FitCodeGen {
         String getSimpleName() {
             int index = CanonicalName.lastIndexOf('.');
             return CanonicalName.substring(index + 1);
+        }
+    }
+
+    record FitDevice(int manufacturer, int product, String name) implements Comparable<FitDevice> {
+        @Override
+        public int compareTo(FitDevice o) {
+            int cmp = Integer.compare(manufacturer, o.manufacturer);
+            if (cmp != 0) {
+                return cmp;
+            }
+            cmp = Integer.compare(product, o.product);
+            if (cmp != 0) {
+                return cmp;
+            }
+            return name.compareTo(o.name);
         }
     }
 }
