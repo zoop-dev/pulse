@@ -17,26 +17,37 @@
 
 package nodomain.freeyourgadget.gadgetbridge.model;
 
+import androidx.annotation.DrawableRes;
+import androidx.annotation.StringRes;
+
 import java.util.Objects;
 
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
 public class BatteryConfig {
     private final int batteryIndex;
+    @DrawableRes
     private final int batteryIcon;
+    @StringRes
     private final int batteryLabel;
     private final int defaultLowThreshold;
     private final int defaultFullThreshold;
 
-    public BatteryConfig(int batteryIndex) {
+    public BatteryConfig(final int batteryIndex) {
         this(batteryIndex, GBDevice.BATTERY_ICON_DEFAULT, GBDevice.BATTERY_LABEL_DEFAULT);
     }
 
-    public BatteryConfig(int batteryIndex, int batteryIcon, int batteryLabel) {
+    public BatteryConfig(final int batteryIndex,
+                         @DrawableRes final int batteryIcon,
+                         @StringRes final int batteryLabel) {
         this(batteryIndex, batteryIcon, batteryLabel, 10, 100);
     }
 
-    public BatteryConfig(final int batteryIndex, final int batteryIcon, final int batteryLabel, final int defaultLowThreshold, final int defaultFullThreshold) {
+    public BatteryConfig(final int batteryIndex,
+                         @DrawableRes final int batteryIcon,
+                         @StringRes final int batteryLabel,
+                         final int defaultLowThreshold,
+                         final int defaultFullThreshold) {
         this.batteryIndex = batteryIndex;
         this.batteryIcon = batteryIcon;
         this.batteryLabel = batteryLabel;
@@ -48,10 +59,12 @@ public class BatteryConfig {
         return batteryIndex;
     }
 
+    @DrawableRes
     public int getBatteryIcon() {
         return batteryIcon;
     }
 
+    @StringRes
     public int getBatteryLabel() {
         return batteryLabel;
     }
@@ -67,8 +80,7 @@ public class BatteryConfig {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof BatteryConfig)) return false;
-        BatteryConfig that = (BatteryConfig) o;
+        if (!(o instanceof BatteryConfig that)) return false;
         return getBatteryIndex() == that.getBatteryIndex() &&
                 getBatteryIcon() == that.getBatteryIcon() &&
                 getBatteryLabel() == that.getBatteryLabel() &&

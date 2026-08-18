@@ -57,6 +57,7 @@ public interface ActivitySummaryParser {
         );
     }
 
+    @NonNull
     static BaseActivitySummary findOrCreateBaseActivitySummary(final DaoSession session,
                                                                final GBDevice gbDevice,
                                                                final long timestampSeconds) {

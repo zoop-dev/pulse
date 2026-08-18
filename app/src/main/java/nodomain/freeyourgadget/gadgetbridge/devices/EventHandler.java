@@ -156,7 +156,7 @@ public interface EventHandler {
 
     void onPowerOff();
 
-    void onSetGpsLocation(Location location);
+    void onSetGpsLocation(@NonNull Location location);
 
     void onSleepAsAndroidAction(String action, Bundle extras);
 

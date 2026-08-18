@@ -1,4 +1,4 @@
-package nodomain.freeyourgadget.gadgetbridge.devices.dji
+package nodomain.freeyourgadget.gadgetbridge.devices.dji.cameras
 
 import nodomain.freeyourgadget.gadgetbridge.R
 import java.util.regex.Pattern

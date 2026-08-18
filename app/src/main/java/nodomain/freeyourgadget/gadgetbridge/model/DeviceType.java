@@ -53,7 +53,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.coospo.CoospoHW807Coordinato
 import nodomain.freeyourgadget.gadgetbridge.devices.coospo.CoospoHW9Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.cycling_sensor.coordinator.CyclingSensorCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.divoom.PixooCoordinator;
-import nodomain.freeyourgadget.gadgetbridge.devices.dji.DjiOsmoAction4Coordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.dji.cameras.DjiOsmoAction4Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.domyos.DomyosT540Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.earfun.EarFunAirPro4Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.earfun.EarFunFreePro3Coordinator;
