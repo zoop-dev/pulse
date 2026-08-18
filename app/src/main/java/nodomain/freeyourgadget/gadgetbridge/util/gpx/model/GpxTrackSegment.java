@@ -21,20 +21,32 @@ import java.util.List;
 
 public class GpxTrackSegment {
     private final List<GpxTrackPoint> trackPoints;
+    private final List<GpxNavigationPoint> navigationPoints;
 
-    public GpxTrackSegment(final List<GpxTrackPoint> trackPoints) {
+    public GpxTrackSegment(final List<GpxTrackPoint> trackPoints, final List<GpxNavigationPoint> navigationPoints) {
         this.trackPoints = trackPoints;
+        this.navigationPoints = navigationPoints;
     }
 
     public List<GpxTrackPoint> getTrackPoints() {
         return trackPoints;
     }
 
+    public List<GpxNavigationPoint> getNavigationPoints() {
+        return navigationPoints;
+    }
+
     public static class Builder {
         private final List<GpxTrackPoint> trackPoints = new ArrayList<>();
+        private final List<GpxNavigationPoint> navigationPoints = new ArrayList<>();
 
         public Builder withTrackPoint(final GpxTrackPoint trackPoint) {
             trackPoints.add(trackPoint);
+            return this;
+        }
+
+        public Builder withNavigationPoint(final GpxNavigationPoint navigationPoint) {
+            navigationPoints.add(navigationPoint);
             return this;
         }
 
@@ -43,7 +55,15 @@ public class GpxTrackSegment {
         }
 
         public GpxTrackSegment build() {
-            return new GpxTrackSegment(trackPoints);
+            return new GpxTrackSegment(trackPoints, navigationPoints);
+        }
+
+        public GpxTrackPoint getTrackPointAtIndex(final int index) {
+            return trackPoints.get(index);
+        }
+
+        public List<GpxTrackPoint> getTrackPoints() {
+            return trackPoints;
         }
     }
 }

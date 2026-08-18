@@ -5341,4 +5341,7 @@
     <string name="usb_connect_permission_denied">Permission to use the USB device was denied.</string>
     <string name="usb_connect_select_device_type">Select device type</string>
     <string name="discovery_connect_usb">Connect to USB</string>
+    <string name="gpx_include_navigation">Include turn-by-turn navigation</string>
+    <string name="gpx_include_navigation_straight">Include \'Continue straight\' instructions</string>
+    <string name="gpx_roundabout_exit">Exit %1$d</string>
 </resources>

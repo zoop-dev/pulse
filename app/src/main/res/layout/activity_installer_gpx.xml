@@ -85,11 +85,29 @@
                 android:inputType="textNoSuggestions" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <TextView
-            android:id="@+id/installProgressText"
+        <com.google.android.material.materialswitch.MaterialSwitch
+            android:id="@+id/tbt_toggle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/track_name_input_layout"
+            android:layout_marginTop="10dp"
+            android:checked="true"
+            android:text="@string/gpx_include_navigation"/>
+
+        <com.google.android.material.materialswitch.MaterialSwitch
+            android:id="@+id/tbt_straight_toggle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tbt_toggle"
+            android:layout_marginTop="10dp"
+            android:checked="false"
+            android:text="@string/gpx_include_navigation_straight"/>
+
+        <TextView
+            android:id="@+id/installProgressText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tbt_straight_toggle"
             android:layout_gravity="start"
             android:visibility="gone" />
 

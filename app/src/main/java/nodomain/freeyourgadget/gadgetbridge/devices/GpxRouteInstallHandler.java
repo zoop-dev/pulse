@@ -30,6 +30,8 @@ public abstract class GpxRouteInstallHandler implements InstallHandler {
     private static final Logger LOG = LoggerFactory.getLogger(GpxRouteInstallHandler.class);
 
     public static final String EXTRA_TRACK_NAME = "gpx_track_name";
+    public static final String EXTRA_NAVIGATION_ENABLED = "gpx_navigation_enabled";
+    public static final String EXTRA_STRAIGHT_NAVIGATION_ENABLED = "gpx_straight_navigation_enabled";
 
     private static final int MAX_EXPECTED_SIZE = 10 * 1024 * 1024; // 10MB
 

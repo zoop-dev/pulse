@@ -1526,10 +1526,14 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
         final GarminGpxRouteInstallHandler garminGpxRouteInstallHandler = new GarminGpxRouteInstallHandler(uri, getContext());
         if (garminGpxRouteInstallHandler.isValid()) {
             final String trackName = options.getString(GarminGpxRouteInstallHandler.EXTRA_TRACK_NAME);
+            final boolean includeNavigation = options.getBoolean(GarminGpxRouteInstallHandler.EXTRA_NAVIGATION_ENABLED);
+            final boolean includeStraightNavigation = options.getBoolean(GarminGpxRouteInstallHandler.EXTRA_STRAIGHT_NAVIGATION_ENABLED);
             final GpxRouteFileConverter gpxRouteFileConverter = new GpxRouteFileConverter(
                     garminGpxRouteInstallHandler.getGpxFile(),
-                    trackName, null
+                    trackName, includeNavigation, includeStraightNavigation, null
             );
+
+
             final FitFile convertedFile = gpxRouteFileConverter.getConvertedFile();
             final FileType.FILETYPE fileType = convertedFile.getFileType();
             communicator.sendMessage(

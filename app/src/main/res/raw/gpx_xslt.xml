@@ -4,12 +4,13 @@
     xmlns:g3="http://www.garmin.com/xmlschemas/GpxExtensions/v3"
     xmlns:gpx="http://www.topografix.com/GPX/1/1"
     xmlns:gpxOld="http://www.topografix.com/GPX/1/0"
+    xmlns:osmand="https://osmand.net/docs/technical/osmand-file-formats/osmand-gpx"
     xmlns:pwr="http://www.garmin.com/xmlschemas/PowerExtension/v1"
     xmlns:tx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1"
     xmlns:tx2="http://www.garmin.com/xmlschemas/TrackPointExtension/v2"
     xmlns:w1="http://www.garmin.com/xmlschemas/WaypointExtension/v1"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    exclude-result-prefixes="ax g3 gpx pwr tx tx2 w1 gpxOld"
+    exclude-result-prefixes="ax g3 gpx pwr tx tx2 w1 gpxOld osmand"
     version="1.0">
     <!--
     This pre-processes GPX v1.0 and v1.1 and common extension for import by
@@ -83,6 +84,7 @@
     <xsl:template match="gpx:trkseg | gpxOld:trkseg">
         <trkseg>
             <xsl:apply-templates select="gpx:trkpt | gpxOld:trkpt" />
+            <xsl:apply-templates select="gpx:extensions | gpxOld:extensions" />
         </trkseg>
     </xsl:template>
 
@@ -96,7 +98,7 @@
         </trkpt>
     </xsl:template>
 
-    <xsl:template match="gpx:extensions | gpxOld:extensions">
+    <xsl:template match="gpx:trkpt/gpx:extensions | gpxOld:trkpt/gpxOld:extensions">
         <xsl:choose>
             <xsl:when test="tx2:TrackPointExtension/tx2:atemp">
                 <xsl:attribute name="temperature"><xsl:value-of select="normalize-space(tx2:TrackPointExtension/tx2:atemp)" /></xsl:attribute>
@@ -151,6 +153,42 @@
                 <xsl:attribute name="power"><xsl:value-of select="normalize-space(pwr:PowerInWatts)" /></xsl:attribute>
             </xsl:when>
         </xsl:choose>
+    </xsl:template>
+
+    <xsl:template match="gpx:trkseg/gpx:extensions | gpxOld:trkseg/gpxOld:extensions">
+        <extensions>
+            <xsl:apply-templates select="osmand:route" />
+        </extensions>
+    </xsl:template>
+
+    <xsl:template match="osmand:route">
+        <osmand_instructions>
+            <xsl:apply-templates select="gpx:segment" />
+        </osmand_instructions>
+    </xsl:template>
+
+    <xsl:template match="osmand:route/gpx:segment">
+        <segment>
+            <xsl:attribute name="startTrkptIdx">
+                <xsl:value-of select="@startTrkptIdx" />
+            </xsl:attribute>
+
+            <xsl:attribute name="segmentTime">
+                <xsl:value-of select="@segmentTime" />
+            </xsl:attribute>
+
+            <xsl:if test="@turnType">
+                <xsl:attribute name="turnType">
+                    <xsl:value-of select="@turnType" />
+                </xsl:attribute>
+            </xsl:if>
+
+            <xsl:if test="@skipTurn">
+                <xsl:attribute name="skipTurn">
+                    <xsl:value-of select="@skipTurn" />
+                </xsl:attribute>
+            </xsl:if>
+        </segment>
     </xsl:template>
 
     <xsl:template name="point">

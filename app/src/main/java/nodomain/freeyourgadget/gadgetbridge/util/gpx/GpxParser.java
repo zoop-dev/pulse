@@ -32,7 +32,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.ParsePosition;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
@@ -42,8 +44,10 @@ import javax.xml.transform.stream.StreamSource;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.model.NavigationInfoSpec;
 import nodomain.freeyourgadget.gadgetbridge.util.ArrayUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.gpx.model.GpxFile;
+import nodomain.freeyourgadget.gadgetbridge.util.gpx.model.GpxNavigationPoint;
 import nodomain.freeyourgadget.gadgetbridge.util.gpx.model.GpxTrack;
 import nodomain.freeyourgadget.gadgetbridge.util.gpx.model.GpxTrackPoint;
 import nodomain.freeyourgadget.gadgetbridge.util.gpx.model.GpxTrackSegment;
@@ -201,6 +205,15 @@ public class GpxParser {
         }
     }
 
+    private boolean getBoolean(String attribute, boolean defaultBoolean) {
+        final String text = parser.getAttributeValue(null, attribute);
+        if (text == null || text.length() < 1) {
+            return defaultBoolean;
+        }
+
+        return "true".equalsIgnoreCase(text);
+    }
+
     private void parseGpx() throws Exception {
         for (eventType = parser.getEventType(); eventType != XmlPullParser.END_DOCUMENT; eventType = parser.next()) {
             if (eventType == XmlPullParser.START_TAG) {
@@ -289,6 +302,9 @@ public class GpxParser {
                         );
                         segmentBuilder.withTrackPoint(trackPoint);
                         break;
+                    case "extensions":
+                        parseTrackSegmentExtensions(segmentBuilder);
+                        break;
                 }
             }
 
@@ -296,5 +312,97 @@ public class GpxParser {
         }
 
         return segmentBuilder.build();
+    }
+
+    private void parseTrackSegmentExtensions(GpxTrackSegment.Builder trackSegmentBuilder) throws Exception {
+        while (eventType != XmlPullParser.END_TAG || !parser.getName().equals("extensions")) {
+            if (eventType == XmlPullParser.START_TAG) {
+                switch(parser.getName()) {
+                    case "osmand_instructions":
+                        parseExtensionsOsmAndInstructions(trackSegmentBuilder);
+                        break;
+                }
+            }
+
+            eventType = parser.next();
+        }
+    }
+
+    private void parseExtensionsOsmAndInstructions(GpxTrackSegment.Builder trackSegmentBuilder) throws Exception {
+        GpxTrackPoint startPoint = trackSegmentBuilder.getTrackPointAtIndex(0);
+        GpxTrackPoint prevPoint = startPoint;
+
+        List<Double> distancesCumulative = new ArrayList<>();
+        double totalDistance = 0.0;
+        for (GpxTrackPoint point : trackSegmentBuilder.getTrackPoints()) {
+            totalDistance += point.getDistance(prevPoint);
+            distancesCumulative.add(totalDistance);
+            prevPoint = point;
+        }
+
+        Date referenceTime = (startPoint.getTime() != null) ? startPoint.getTime() : new Date();
+
+        while (eventType != XmlPullParser.END_TAG || !parser.getName().equals("osmand_instructions")) {
+            if (eventType == XmlPullParser.START_TAG && parser.getName().equals("segment")) {
+                final int trackPointIndex = getInt("startTrkptIdx", -1);
+                final String turnType = parser.getAttributeValue(null, "turnType");
+                final GpxTrackPoint referencePoint = trackSegmentBuilder.getTrackPointAtIndex(trackPointIndex);
+                referenceTime = Date.from(referenceTime.toInstant().plusSeconds((int) getDouble("segmentTime", -1)));
+
+                if (!getBoolean("skipTurn", false) && turnType != null) {
+                    int parsedTurnType = switch (turnType) {
+                        case "C" -> NavigationInfoSpec.ACTION_CONTINUE;
+                        case "TL" -> NavigationInfoSpec.ACTION_TURN_LEFT;
+                        case "TSLL" -> NavigationInfoSpec.ACTION_TURN_LEFT_SLIGHTLY;
+                        case "TSHL" -> NavigationInfoSpec.ACTION_TURN_LEFT_SHARPLY;
+                        case "TR" -> NavigationInfoSpec.ACTION_TURN_RIGHT;
+                        case "TSLR" -> NavigationInfoSpec.ACTION_TURN_RIGHT_SLIGHTLY;
+                        case "TSHR" -> NavigationInfoSpec.ACTION_TURN_RIGHT_SHARPLY;
+                        case "KL" -> NavigationInfoSpec.ACTION_KEEP_LEFT;
+                        case "KR" -> NavigationInfoSpec.ACTION_KEEP_RIGHT;
+                        case "TU" -> NavigationInfoSpec.ACTION_UTURN_LEFT;
+                        case "TRU" -> NavigationInfoSpec.ACTION_UTURN_RIGHT;
+                        case "OFFR" -> NavigationInfoSpec.ACTION_OFFROUTE;
+                        default -> -1;
+                    };
+
+                    // osmand includes the exit to take at the end of the string
+                    String roundaboutInstruction = null;
+                    int exitNumber = -1;
+                    if (turnType.startsWith("RNLB")) {
+                        parsedTurnType = NavigationInfoSpec.ACTION_ROUNDABOUT_LEFT;
+                        exitNumber = Integer.parseInt(turnType.substring(4));
+                        roundaboutInstruction = GBApplication.getContext().getString(
+                                R.string.gpx_roundabout_exit,
+                                exitNumber
+                        );
+                    } else if (turnType.startsWith("RNDB")) {
+                        parsedTurnType = NavigationInfoSpec.ACTION_ROUNDABOUT_RIGHT;
+                        exitNumber = Integer.parseInt(turnType.substring(4));
+                        roundaboutInstruction = GBApplication.getContext().getString(
+                                R.string.gpx_roundabout_exit,
+                                exitNumber
+                        );
+                    }
+
+                    if (parsedTurnType == -1) {
+                        LOG.debug("Unknown OsmAnd navigation instruction found: {}", turnType);
+                    }
+
+                    GpxNavigationPoint navigationPoint = new GpxNavigationPoint(
+                            referencePoint.getLongitude(),
+                            referencePoint.getLatitude(),
+                            distancesCumulative.get(trackPointIndex),
+                            referenceTime, parsedTurnType,
+                            roundaboutInstruction,
+                            exitNumber
+                    );
+
+                    trackSegmentBuilder.withNavigationPoint(navigationPoint);
+                }
+            }
+
+            eventType = parser.next();
+        }
     }
 }

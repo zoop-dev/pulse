@@ -21,6 +21,7 @@ import nodomain.freeyourgadget.gadgetbridge.activities.AbstractGBActivity
 import nodomain.freeyourgadget.gadgetbridge.adapter.ItemWithDetailsAdapter
 import nodomain.freeyourgadget.gadgetbridge.databinding.ActivityInstallerGpxBinding
 import nodomain.freeyourgadget.gadgetbridge.devices.GpxRouteInstallHandler
+import nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminGpxRouteInstallHandler
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice
 import nodomain.freeyourgadget.gadgetbridge.model.GenericItem
 import nodomain.freeyourgadget.gadgetbridge.model.ItemWithDetails
@@ -50,6 +51,9 @@ class GpxRouteInstallerActivity : AbstractGBActivity(), InstallActivity {
 
     private var details: ArrayList<ItemWithDetails> = ArrayList()
     private lateinit var detailsAdapter: ItemWithDetailsAdapter
+
+    private val supportsTurnByTurnNavigation: Boolean
+        get() = installHandler is GarminGpxRouteInstallHandler
 
     private val receiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
@@ -250,6 +254,15 @@ class GpxRouteInstallerActivity : AbstractGBActivity(), InstallActivity {
 
         binding.trackNameEditText.setText(gpxRouteInstallHandler.name)
 
+        binding.tbtToggle.visibility = if (supportsTurnByTurnNavigation) View.VISIBLE else View.GONE
+        binding.tbtStraightToggle.visibility =
+            if (binding.tbtToggle.isChecked && supportsTurnByTurnNavigation) View.VISIBLE else View.GONE
+
+        binding.tbtToggle.setOnCheckedChangeListener { _, isChecked ->
+            binding.tbtStraightToggle.visibility =
+                if (isChecked) View.VISIBLE else View.GONE
+        }
+
         binding.installButton.setOnClickListener {
             val trackName = binding.trackNameEditText.text?.toString()?.trim() ?: ""
             if (trackName.isEmpty()) {
@@ -259,11 +272,16 @@ class GpxRouteInstallerActivity : AbstractGBActivity(), InstallActivity {
                 binding.trackNameInputLayout.error = null
             }
 
+            val includeNavigation = binding.tbtToggle.isChecked;
+            val includeStraightNavigation = binding.tbtStraightToggle.isChecked;
+
             setInstallEnabled(false)
             installHandler.onStartInstall(device)
 
             val bundle = Bundle().apply {
                 putString(GpxRouteInstallHandler.EXTRA_TRACK_NAME, trackName)
+                putBoolean(GpxRouteInstallHandler.EXTRA_NAVIGATION_ENABLED, includeNavigation)
+                putBoolean(GpxRouteInstallHandler.EXTRA_STRAIGHT_NAVIGATION_ENABLED, includeStraightNavigation)
             }
             GBApplication.deviceService(device)?.onInstallApp(currentUri, bundle)
         }
@@ -330,6 +348,8 @@ class GpxRouteInstallerActivity : AbstractGBActivity(), InstallActivity {
         binding.installButton.visibility = if (isEnabled) View.VISIBLE else View.GONE
         binding.gpxMapView.visibility = if (isEnabled) View.VISIBLE else View.GONE
         binding.trackNameInputLayout.visibility = if (isEnabled) View.VISIBLE else View.GONE
+        binding.tbtToggle.visibility = if (isEnabled && supportsTurnByTurnNavigation) View.VISIBLE else View.GONE
+        binding.tbtStraightToggle.visibility = if (isEnabled && supportsTurnByTurnNavigation && binding.tbtToggle.isChecked) View.VISIBLE else View.GONE
         if (isEnabled) {
             setCloseEnabled(false)
         }
