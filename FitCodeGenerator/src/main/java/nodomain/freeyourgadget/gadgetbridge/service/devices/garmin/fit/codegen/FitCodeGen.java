@@ -409,7 +409,7 @@ public enum FitCodeGen {
                 fieldFit.arrayLen = fieldJson.has("arrayLen") ? fieldJson.getInt("arrayLen") : -1;
                 fieldFit.stringLen = fieldJson.has("stringLen") ? fieldJson.getInt("stringLen") : -1;
                 fieldFit.UOM = fieldJson.has("UOM") ? fieldJson.getString("UOM") : null;
-                fieldFit.baseType = fieldJson.getString("baseType");
+                fieldFit.base = fieldJson.getString("base");
                 if (fieldFit.arrayLen < 0) {
                     fieldFit.arrayLen = -1;
                 } else {
@@ -418,7 +418,7 @@ public enum FitCodeGen {
                 if (fieldFit.stringLen <= 0) {
                     fieldFit.stringLen = -1;
                 }
-                if (fieldFit.baseType != null && fieldFit.type != null && fieldFit.baseType.contentEquals(fieldFit.type)) {
+                if (fieldFit.base != null && fieldFit.type != null && fieldFit.base.contentEquals(fieldFit.type)) {
                     fieldFit.type = null;
                 }
                 messageFit.fields.add(fieldFit);
@@ -486,7 +486,7 @@ public enum FitCodeGen {
                 if (size > 0) {
                     printer.print("\t\t\tnew FieldDefinitionPrimitive(" +
                             field.num + ", "
-                            + field.baseType + ", "
+                            + field.base + ", "
                             + size + ", \""
                             + field.name + "\", "
                             + (field.type == null ? "null" : field.type) + ", "
@@ -496,7 +496,7 @@ public enum FitCodeGen {
                 } else if (field.offset != 0 || field.scale != 1 || field.type != null || field.UOM != null) {
                     printer.print("\t\t\tnew FieldDefinitionPrimitive(" +
                             field.num + ", "
-                            + field.baseType + ", \""
+                            + field.base + ", \""
                             + field.name + "\", "
                             + (field.type == null ? "null" : field.type) + ", "
                             + scale + ", "
@@ -504,7 +504,7 @@ public enum FitCodeGen {
                     );
                 } else {
                     printer.print("\t\t\tnew FieldDefinitionPrimitive(" +
-                            field.num + ", " + field.baseType + ", \"" + field.name + "\")");
+                            field.num + ", " + field.base + ", \"" + field.name + "\")");
                 }
 
                 final boolean isLast = i + 1 >= fields.length;
@@ -785,7 +785,7 @@ public enum FitCodeGen {
             return switch (primitive.getType()) {
                 case "ALARM" -> new FieldClass(LocalTime.class);
                 case "ARRAY" ->
-                        primitive.getBaseType().contentEquals("STRING") ? new FieldClass(String[].class) : new FieldClass(Number[].class);
+                        primitive.getBase().contentEquals("STRING") ? new FieldClass(String[].class) : new FieldClass(Number[].class);
                 case "BOOLEAN" -> new FieldClass(Boolean.class);
                 case "DAY_OF_WEEK" -> new FieldClass(DayOfWeek.class);
                 case "ExerciseCategory" ->
@@ -803,7 +803,7 @@ public enum FitCodeGen {
             };
         }
 
-        switch (primitive.getBaseType()) {
+        switch (primitive.getBase()) {
             case "ENUM":
             case "SINT8":
             case "UINT8":
@@ -836,7 +836,7 @@ public enum FitCodeGen {
                 return new FieldClass(Double.class);
         }
 
-        throw new RuntimeException("Unknown base type " + primitive.getBaseType());
+        throw new RuntimeException("Unknown base type " + primitive.getBase());
     }
 
     private static String toCamelCase(final String str) {
@@ -949,7 +949,7 @@ public enum FitCodeGen {
         if (f.type != null && !"ARRAY".contentEquals(f.type)) {
             o.name("type").value(f.type);
         }
-        o.name("baseType").value(f.baseType);
+        o.name("base").value(f.base);
         if (1 != f.scale) {
             o.name("scale");
             long l = Math.round(f.scale);
@@ -984,7 +984,7 @@ public enum FitCodeGen {
         int num;
         String name;
         String type;
-        String baseType;
+        String base;
         double scale;
         double offset;
         int arrayLen;
@@ -1011,8 +1011,8 @@ public enum FitCodeGen {
             return type;
         }
 
-        String getBaseType() {
-            return baseType;
+        String getBase() {
+            return base;
         }
 
         int getNumber() {
