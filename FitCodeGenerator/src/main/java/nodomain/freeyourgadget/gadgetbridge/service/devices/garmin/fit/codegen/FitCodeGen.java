@@ -295,7 +295,7 @@ public enum FitCodeGen {
 
             final FitEnumEntry cannary = enumeration.entries.first();
 
-            if (null != cannary.labelResId) {
+            if (null != cannary.label) {
                 // enum with StringRes
                 printer.println("import androidx.annotation.StringRes;");
                 printer.println();
@@ -305,7 +305,7 @@ public enum FitCodeGen {
                 printer.format(Locale.ROOT, "public enum %s {", enumeration.name).println();
                 for (final FitEnumEntry entry : enumeration.entries) {
                     printer.format(Locale.ROOT, "    %s(%d, %s),",
-                            entry.name, entry.num, entry.labelResId);
+                            entry.name, entry.num, entry.label);
                     printer.println();
                 }
                 printer.println("    ;");
@@ -313,16 +313,16 @@ public enum FitCodeGen {
                 printer.println("    public final int num;");
                 printer.println();
                 printer.println("    @StringRes");
-                printer.println("    public final int labelResId;");
+                printer.println("    public final int label;");
                 printer.println();
                 printer.format(Locale.ROOT, "    %s(final int n, @StringRes final int l) {", enumeration.name).println();
                 printer.println("        num = n;");
-                printer.println("        labelResId = l;");
+                printer.println("        label = l;");
                 printer.println("    }");
                 printer.println();
                 printer.println("    @Override");
                 printer.println("    public String toString() {");
-                printer.println("        return EnumHelper.getString(labelResId, this);");
+                printer.println("        return EnumHelper.getString(label, this);");
                 printer.println("    }");
                 printer.println("}");
             } else if (cannary.text != null) {
@@ -437,7 +437,7 @@ public enum FitCodeGen {
                 final FitEnumEntry entryFit = new FitEnumEntry();
                 entryFit.num = entryJson.getInt("num");
                 entryFit.name = entryJson.getString("name");
-                entryFit.labelResId = entryJson.has("labelResId") ? entryJson.getString("labelResId") : null;
+                entryFit.label = entryJson.has("label") ? entryJson.getString("label") : null;
                 entryFit.text = entryJson.has("text") ? entryJson.getString("text") : null;
                 enumFit.entries.add(entryFit);
             }
@@ -925,8 +925,8 @@ public enum FitCodeGen {
                     o.beginObject();
                     o.name("num").value(fitEnumEntry.num);
                     o.name("name").value(fitEnumEntry.name);
-                    if (fitEnumEntry.labelResId != null) {
-                        o.name("labelResId").value(fitEnumEntry.labelResId);
+                    if (fitEnumEntry.label != null) {
+                        o.name("label").value(fitEnumEntry.label);
                     }
                     if (fitEnumEntry.text != null) {
                         o.name("text").value(fitEnumEntry.text);
@@ -1043,13 +1043,13 @@ public enum FitCodeGen {
         int num;
         String name;
         String text;
-        String labelResId;
+        String label;
 
         FitEnumEntry() {
             num = -1;
             name = null;
             text = null;
-            labelResId = null;
+            label = null;
         }
 
         @Override

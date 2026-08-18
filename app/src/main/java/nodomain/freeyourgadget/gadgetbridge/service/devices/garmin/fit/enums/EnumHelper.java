@@ -27,11 +27,11 @@ import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 public enum EnumHelper {
     ;
 
-    public static String getString(@StringRes final int stringResId, @NonNull final Enum<?> fallback) {
-        if (0 != stringResId) {
+    public static String getString(@StringRes final int label, @NonNull final Enum<?> fallback) {
+        if (0 != label) {
             try {
                 Context context = GBApplication.getContext();
-                return context.getString(stringResId);
+                return context.getString(label);
             } catch (final Throwable ignored) {
             }
         }

@@ -14023,37 +14023,37 @@
         {
           "num": 1,
           "name": "New",
-          "labelResId": "R.string.battery_status_new"
+          "label": "R.string.battery_status_new"
         },
         {
           "num": 2,
           "name": "Good",
-          "labelResId": "R.string.battery_status_good"
+          "label": "R.string.battery_status_good"
         },
         {
           "num": 3,
           "name": "Ok",
-          "labelResId": "R.string.battery_status_ok"
+          "label": "R.string.battery_status_ok"
         },
         {
           "num": 4,
           "name": "Low",
-          "labelResId": "R.string.battery_status_low"
+          "label": "R.string.battery_status_low"
         },
         {
           "num": 5,
           "name": "Critical",
-          "labelResId": "R.string.battery_status_critical"
+          "label": "R.string.battery_status_critical"
         },
         {
           "num": 6,
           "name": "Charging",
-          "labelResId": "R.string.battery_status_charging"
+          "label": "R.string.battery_status_charging"
         },
         {
           "num": 7,
           "name": "Unknown",
-          "labelResId": "R.string.battery_status_unknown"
+          "label": "R.string.battery_status_unknown"
         }
       ]
     },
@@ -14333,172 +14333,172 @@
         {
           "num": 0,
           "name": "CATEGORY_BENCH_PRESS",
-          "labelResId": "R.string.exercise_category_bench_press"
+          "label": "R.string.exercise_category_bench_press"
         },
         {
           "num": 1,
           "name": "CATEGORY_CALF_RAISE",
-          "labelResId": "R.string.exercise_category_calf_raise"
+          "label": "R.string.exercise_category_calf_raise"
         },
         {
           "num": 2,
           "name": "CATEGORY_CARDIO",
-          "labelResId": "R.string.activity_type_cardio"
+          "label": "R.string.activity_type_cardio"
         },
         {
           "num": 3,
           "name": "CATEGORY_CARRY",
-          "labelResId": "R.string.exercise_category_carry"
+          "label": "R.string.exercise_category_carry"
         },
         {
           "num": 4,
           "name": "CATEGORY_CHOP",
-          "labelResId": "R.string.exercise_category_chop"
+          "label": "R.string.exercise_category_chop"
         },
         {
           "num": 5,
           "name": "CATEGORY_CORE",
-          "labelResId": "R.string.exercise_category_core"
+          "label": "R.string.exercise_category_core"
         },
         {
           "num": 6,
           "name": "CATEGORY_CRUNCH",
-          "labelResId": "R.string.exercise_category_crunch"
+          "label": "R.string.exercise_category_crunch"
         },
         {
           "num": 7,
           "name": "CATEGORY_CURL",
-          "labelResId": "R.string.activity_type_curling"
+          "label": "R.string.activity_type_curling"
         },
         {
           "num": 8,
           "name": "CATEGORY_DEADLIFT",
-          "labelResId": "R.string.activity_type_deadlift"
+          "label": "R.string.activity_type_deadlift"
         },
         {
           "num": 9,
           "name": "CATEGORY_FLYE",
-          "labelResId": "R.string.exercise_category_flye"
+          "label": "R.string.exercise_category_flye"
         },
         {
           "num": 10,
           "name": "CATEGORY_HIP_RAISE",
-          "labelResId": "R.string.exercise_category_hip_raise"
+          "label": "R.string.exercise_category_hip_raise"
         },
         {
           "num": 11,
           "name": "CATEGORY_HIP_STABILITY",
-          "labelResId": "R.string.exercise_category_hip_stability"
+          "label": "R.string.exercise_category_hip_stability"
         },
         {
           "num": 12,
           "name": "CATEGORY_HIP_SWING",
-          "labelResId": "R.string.exercise_category_hip_swing"
+          "label": "R.string.exercise_category_hip_swing"
         },
         {
           "num": 13,
           "name": "CATEGORY_HYPEREXTENSION",
-          "labelResId": "R.string.exercise_category_hyperextension"
+          "label": "R.string.exercise_category_hyperextension"
         },
         {
           "num": 14,
           "name": "CATEGORY_LATERAL_RAISE",
-          "labelResId": "R.string.exercise_category_lateral_raise"
+          "label": "R.string.exercise_category_lateral_raise"
         },
         {
           "num": 15,
           "name": "CATEGORY_LEG_CURL",
-          "labelResId": "R.string.exercise_category_leg_curl"
+          "label": "R.string.exercise_category_leg_curl"
         },
         {
           "num": 16,
           "name": "CATEGORY_LEG_RAISE",
-          "labelResId": "R.string.exercise_category_leg_raise"
+          "label": "R.string.exercise_category_leg_raise"
         },
         {
           "num": 17,
           "name": "CATEGORY_LUNGE",
-          "labelResId": "R.string.exercise_category_lunge"
+          "label": "R.string.exercise_category_lunge"
         },
         {
           "num": 18,
           "name": "CATEGORY_OLYMPIC_LIFT",
-          "labelResId": "R.string.exercise_category_olympic_lift"
+          "label": "R.string.exercise_category_olympic_lift"
         },
         {
           "num": 19,
           "name": "CATEGORY_PLANK",
-          "labelResId": "R.string.activity_type_plank"
+          "label": "R.string.activity_type_plank"
         },
         {
           "num": 20,
           "name": "CATEGORY_PLYO",
-          "labelResId": "R.string.exercise_category_plyo"
+          "label": "R.string.exercise_category_plyo"
         },
         {
           "num": 21,
           "name": "CATEGORY_PULL_UP",
-          "labelResId": "R.string.activity_type_pull_ups"
+          "label": "R.string.activity_type_pull_ups"
         },
         {
           "num": 22,
           "name": "CATEGORY_PUSH_UP",
-          "labelResId": "R.string.activity_type_push_ups"
+          "label": "R.string.activity_type_push_ups"
         },
         {
           "num": 23,
           "name": "CATEGORY_ROW",
-          "labelResId": "R.string.activity_type_rowing"
+          "label": "R.string.activity_type_rowing"
         },
         {
           "num": 24,
           "name": "CATEGORY_SHOULDER_PRESS",
-          "labelResId": "R.string.exercise_category_shoulder_press"
+          "label": "R.string.exercise_category_shoulder_press"
         },
         {
           "num": 25,
           "name": "CATEGORY_SHOULDER_STABILITY",
-          "labelResId": "R.string.exercise_category_shoulder_stability"
+          "label": "R.string.exercise_category_shoulder_stability"
         },
         {
           "num": 26,
           "name": "CATEGORY_SHRUG",
-          "labelResId": "R.string.exercise_category_shrug"
+          "label": "R.string.exercise_category_shrug"
         },
         {
           "num": 27,
           "name": "CATEGORY_SIT_UP",
-          "labelResId": "R.string.activity_type_sit_ups"
+          "label": "R.string.activity_type_sit_ups"
         },
         {
           "num": 28,
           "name": "CATEGORY_SQUAT",
-          "labelResId": "R.string.exercise_category_squat"
+          "label": "R.string.exercise_category_squat"
         },
         {
           "num": 29,
           "name": "CATEGORY_TOTAL_BODY",
-          "labelResId": "R.string.exercise_category_total_body"
+          "label": "R.string.exercise_category_total_body"
         },
         {
           "num": 30,
           "name": "CATEGORY_TRICEPS_EXTENSION",
-          "labelResId": "R.string.exercise_category_triceps_extension"
+          "label": "R.string.exercise_category_triceps_extension"
         },
         {
           "num": 31,
           "name": "CATEGORY_WARM_UP",
-          "labelResId": "R.string.hrZoneWarmUp"
+          "label": "R.string.hrZoneWarmUp"
         },
         {
           "num": 32,
           "name": "CATEGORY_RUN",
-          "labelResId": "R.string.activity_type_running"
+          "label": "R.string.activity_type_running"
         },
         {
           "num": 250,
           "name": "CATEGORY_UNKNOWN",
-          "labelResId": "R.string.unknown"
+          "label": "R.string.unknown"
         }
       ]
     },
@@ -15488,32 +15488,32 @@
         {
           "num": 0,
           "name": "FREESTYLE",
-          "labelResId": "R.string.freestyle"
+          "label": "R.string.freestyle"
         },
         {
           "num": 1,
           "name": "BACKSTROKE",
-          "labelResId": "R.string.backstroke"
+          "label": "R.string.backstroke"
         },
         {
           "num": 2,
           "name": "BREASTSTROKE",
-          "labelResId": "R.string.breaststroke"
+          "label": "R.string.breaststroke"
         },
         {
           "num": 3,
           "name": "BUTTERFLY",
-          "labelResId": "R.string.swim_style_butterfly"
+          "label": "R.string.swim_style_butterfly"
         },
         {
           "num": 4,
           "name": "DRILL",
-          "labelResId": "R.string.swim_style_drill"
+          "label": "R.string.swim_style_drill"
         },
         {
           "num": 5,
           "name": "MIXED",
-          "labelResId": "R.string.swim_style_mixed"
+          "label": "R.string.swim_style_mixed"
         }
       ]
     },
@@ -15523,22 +15523,22 @@
         {
           "num": 0,
           "name": "Fresh",
-          "labelResId": "R.string.water_type_fresh"
+          "label": "R.string.water_type_fresh"
         },
         {
           "num": 1,
           "name": "Salt",
-          "labelResId": "R.string.water_type_salt"
+          "label": "R.string.water_type_salt"
         },
         {
           "num": 2,
           "name": "En13319",
-          "labelResId": "R.string.water_type_en13319"
+          "label": "R.string.water_type_en13319"
         },
         {
           "num": 3,
           "name": "Custom",
-          "labelResId": "R.string.water_type_custom"
+          "label": "R.string.water_type_custom"
         }
       ]
     },
