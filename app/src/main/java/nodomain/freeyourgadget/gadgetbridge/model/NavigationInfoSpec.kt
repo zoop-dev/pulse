@@ -17,6 +17,7 @@
 package nodomain.freeyourgadget.gadgetbridge.model
 
 import nodomain.freeyourgadget.gadgetbridge.util.GBToStringBuilder
+import java.time.LocalTime
 
 class NavigationInfoSpec {
     // Next instruction
@@ -37,6 +38,16 @@ class NavigationInfoSpec {
 
     // One of the ACTION_ constants
     var nextAction: Int = 0
+
+    // Total time (duration in seconds) to the destination.
+    // Receivers working with this information should set this instead of ETA. It will be set automatically
+    var totalTimeToDestination: Int? = null
+        set(value) {
+            field = value
+            if (value == null) return
+            val target = LocalTime.now().plusSeconds(value.toLong())
+            ETA = "%02d:%02d".format(target.hour, target.minute)
+        }
 
     // Estimated time of arrival
     var ETA: String? = null
@@ -66,6 +77,7 @@ class NavigationInfoSpec {
         tsb.append("distanceToTargetMeters", distanceToTargetMeters)
         tsb.append("nextAction", nextAction)
         tsb.append("ETA", ETA)
+        tsb.append("totalTimeToDestination", totalTimeToDestination)
         tsb.append("completionPercent", completionPercent)
         return tsb.toString()
     }

@@ -6,6 +6,7 @@ import android.database.ContentObserver;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Handler;
+import android.os.SystemClock;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,9 +21,16 @@ public final class CoMapsNavigationReceiver extends ContentObserver {
 
     private static final Logger LOG = LoggerFactory.getLogger(CoMapsNavigationReceiver.class);
 
-    private final Application app;
+    private static final long THROTTLE_MS = 300L;
 
+    private final Application app;
     private final Uri dataUri;
+
+    private final Handler handler;
+
+    private long lastQueryTime = 0L;
+
+    private final Runnable pendingQuery = this::queryNavigationData;
 
     private final Map<String, Integer> carDirectionToNavSpecInfo = Map.ofEntries(
             Map.entry("GO_STRAIGHT", NavigationInfoSpec.ACTION_CONTINUE),
@@ -52,6 +60,7 @@ public final class CoMapsNavigationReceiver extends ContentObserver {
 
     CoMapsNavigationReceiver(Handler handler, Application application, Uri dataUri) {
         super(handler);
+        this.handler = handler;
         this.app = application;
         this.dataUri = dataUri;
     }
@@ -64,10 +73,22 @@ public final class CoMapsNavigationReceiver extends ContentObserver {
             return;
         }
 
-        queryNavigationData();
+        final long now = SystemClock.elapsedRealtime();
+        final long elapsed = now - lastQueryTime;
+
+        handler.removeCallbacks(pendingQuery);
+
+        if (elapsed >= THROTTLE_MS) {
+            lastQueryTime = now;
+            queryNavigationData();
+        } else {
+            handler.postDelayed(pendingQuery, THROTTLE_MS - elapsed);
+        }
     }
 
     private void queryNavigationData() {
+        lastQueryTime = SystemClock.elapsedRealtime();
+
         final ContentResolver resolver = app.getContentResolver();
         try (Cursor cursor = resolver.query(dataUri, new String[]{
                 NavigationContract.Live.Columns.CAR_DIRECTION,
@@ -118,7 +139,7 @@ public final class CoMapsNavigationReceiver extends ContentObserver {
 
             final int timeLeftCol = cursor.getColumnIndex(NavigationContract.Live.Columns.TOTAL_TIME_SECONDS);
             if (timeLeftCol >= 0 && !cursor.isNull(timeLeftCol)) {
-                navInfo.setETA(cursor.getString(timeLeftCol));
+                navInfo.setTotalTimeToDestination(cursor.getInt(timeLeftCol));
             }
 
             final int completionPercentCol = cursor.getColumnIndex(NavigationContract.Live.Columns.COMPLETION_PERCENT);

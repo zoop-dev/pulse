@@ -338,8 +338,12 @@ public class GBDeviceService implements DeviceService {
                 .putExtra(EXTRA_NAVIGATION_NEXT_ACTION, navigationInfoSpec.getNextAction())
                 .putExtra(EXTRA_NAVIGATION_DISTANCE_TO_TURN, navigationInfoSpec.getDistanceToTurn())
                 .putExtra(EXTRA_NAVIGATION_DISTANCE_TO_TARGET, navigationInfoSpec.getDistanceToTarget())
-                .putExtra(EXTRA_NAVIGATION_ETA, navigationInfoSpec.getETA())
                 .putExtra(EXTRA_NAVIGATION_COMPLETION_PERCENT, navigationInfoSpec.getCompletionPercent());
+        if(navigationInfoSpec.getTotalTimeToDestination() != null) {
+            intent.putExtra(EXTRA_NAVIGATION_TIME_TO_DESTINATION, navigationInfoSpec.getTotalTimeToDestination());
+        } else {
+            intent.putExtra(EXTRA_NAVIGATION_ETA, navigationInfoSpec.getETA());
+        }
         invokeService(intent);
     }
 

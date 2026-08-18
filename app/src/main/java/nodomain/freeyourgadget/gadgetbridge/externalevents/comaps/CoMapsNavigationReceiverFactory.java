@@ -1,18 +1,12 @@
 package nodomain.freeyourgadget.gadgetbridge.externalevents.comaps;
 
-import android.Manifest;
-import android.app.Activity;
 import android.app.Application;
-import android.content.Context;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Handler;
 import android.util.Pair;
 
-import androidx.core.app.ActivityCompat;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -29,11 +23,12 @@ public class CoMapsNavigationReceiverFactory {
 
     private CoMapsNavigationReceiverFactory() { }
 
-    public static List<Pair<Uri, CoMapsNavigationReceiver>> createCoMapsNavigationReceiversForApplication(Application application) {
+    public static List<Pair<Uri, CoMapsNavigationReceiver>> createCoMapsNavigationReceiversForApplication(
+            Application application, Handler handler) {
         return discoverInstalledVersions(application.getPackageManager()).stream()
                 .map(app -> {
                     Uri uri = Uri.parse("content://" + app + AUTHORITY_SUFFIX + "/live");
-                    CoMapsNavigationReceiver receiver = new CoMapsNavigationReceiver(new Handler(), application, uri);
+                    CoMapsNavigationReceiver receiver = new CoMapsNavigationReceiver(handler, application, uri);
                     return new Pair<>(uri, receiver);
                 }).toList();
     }

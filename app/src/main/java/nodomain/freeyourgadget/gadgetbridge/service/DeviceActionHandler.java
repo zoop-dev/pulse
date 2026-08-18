@@ -287,7 +287,14 @@ public class DeviceActionHandler {
                 navigationInfoSpec.setNextAction(intentCopy.getIntExtra(EXTRA_NAVIGATION_NEXT_ACTION, 0));
                 navigationInfoSpec.setDistanceToTurn(intentCopy.getStringExtra(EXTRA_NAVIGATION_DISTANCE_TO_TURN));
                 navigationInfoSpec.setDistanceToTarget(intentCopy.getStringExtra(EXTRA_NAVIGATION_DISTANCE_TO_TARGET));
-                navigationInfoSpec.setETA(intentCopy.getStringExtra(EXTRA_NAVIGATION_ETA));
+                // Prefer the time to destination value sent by the receiver, if present, as the ETA has been converted internally
+                // in this case
+                final int timeToDest = intentCopy.getIntExtra(EXTRA_NAVIGATION_TIME_TO_DESTINATION, 0);
+                if( timeToDest != 0) {
+                    navigationInfoSpec.setTotalTimeToDestination(timeToDest);
+                } else {
+                    navigationInfoSpec.setETA(intentCopy.getStringExtra(EXTRA_NAVIGATION_ETA));
+                }
                 navigationInfoSpec.setCompletionPercent(intentCopy.getIntExtra(EXTRA_NAVIGATION_COMPLETION_PERCENT, 0));
                 deviceSupport.onSetNavigationInfo(navigationInfoSpec);
                 break;
