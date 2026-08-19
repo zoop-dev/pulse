@@ -19,6 +19,8 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.activity.imp
 import android.content.Context;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,6 +47,14 @@ public class ManualSamplesParser extends XiaomiActivityParser {
 
     @Override
     public boolean parse(final Context context, final GBDevice gbDevice, final XiaomiActivityFileId fileId, final byte[] bytes) {
+        if (fileId.getVersion() == 1) {
+            final List<XiaomiManualSample> samples = decodeVersion1(fileId, bytes);
+            if (samples == null) {
+                return false;
+            }
+            return persistSamples(context, gbDevice, samples);
+        }
+
         if (fileId.getVersion() != 2) {
             LOG.warn("Unknown manual samples version {}", fileId.getVersion());
             return false;
@@ -106,6 +116,87 @@ public class ManualSamplesParser extends XiaomiActivityParser {
 
             samples.add(sample);
         }
+
+        return persistSamples(context, gbDevice, samples);
+    }
+
+    @Nullable
+    static List<XiaomiManualSample> decodeVersion1(final XiaomiActivityFileId fileId, final byte[] bytes) {
+        if (fileId.getVersion() != 1) {
+            LOG.warn("Expected manual samples version 1, got {}", fileId.getVersion());
+            return null;
+        }
+
+        // Mi Band 9 Active files contain 7 file-id bytes, one padding byte, a 0xff
+        // header, one or more 6-byte samples, and a final 4-byte CRC. Each sample is
+        // a little-endian timestamp followed by a type and an unsigned byte value.
+        if (bytes.length < 19) {
+            LOG.warn("Manual samples v1 packet too short: {}", bytes.length);
+            return null;
+        }
+
+        final ByteBuffer buf = ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN);
+        buf.limit(buf.limit() - 4); // discard crc at the end
+        buf.get(new byte[7]); // skip fileId bytes
+
+        final byte fileIdPadding = buf.get();
+        if (fileIdPadding != 0) {
+            LOG.warn("Expected 0 padding after v1 fileId, got {}", fileIdPadding);
+            return null;
+        }
+
+        final int header = buf.get() & 0xff;
+        if (header != 0xff) {
+            LOG.warn("Unexpected manual samples v1 header {}", header);
+            return null;
+        }
+
+        if (buf.remaining() == 0 || buf.remaining() % 6 != 0) {
+            LOG.warn("Unexpected manual samples v1 payload length {}", buf.remaining());
+            return null;
+        }
+
+        final List<XiaomiManualSample> samples = new ArrayList<>();
+
+        while (buf.hasRemaining()) {
+            final int timestamp = buf.getInt();
+            final int typeV1 = buf.get() & 0xff;
+            final int value = buf.get() & 0xff;
+
+            final int type;
+            switch (typeV1) {
+                case 0x02:
+                    type = XiaomiManualSampleProvider.TYPE_SPO2;
+                    break;
+                case 0x03:
+                    type = XiaomiManualSampleProvider.TYPE_STRESS;
+                    break;
+                default:
+                    LOG.warn("Unknown manual samples v1 type {}", typeV1);
+                    return null;
+            }
+
+            if (value == 0 || value > 100) {
+                LOG.warn("Invalid manual samples v1 value {} for type {}", value, typeV1);
+                return null;
+            }
+
+            LOG.debug("Got manual v1 sample: ts={} type={} value={}", timestamp, type, value);
+
+            final XiaomiManualSample sample = new XiaomiManualSample();
+            sample.setTimestamp(timestamp * 1000L);
+            sample.setType(type);
+            sample.setValue(value);
+            samples.add(sample);
+        }
+
+        return samples;
+    }
+
+    private boolean persistSamples(
+            final Context context,
+            final GBDevice gbDevice,
+            final List<XiaomiManualSample> samples) {
 
         try (DBHandler handler = GBApplication.acquireDB()) {
             final DaoSession session = handler.getDaoSession();
