@@ -4854,4 +4854,5 @@
     <string name="soundbrenner_pref_beat_1_title">Akcent na 1 uderzenie</string>
     <string name="soundbrenner_pref_beat_2_title">Akcent na 2 uderzenie</string>
     <string name="soundbrenner_pref_beat_3_title">Akcent na 3 uderzenie</string>
+    <string name="soundbrenner_pref_beat_4_title">Akcent na 4 uderzenie</string>
 </resources>
