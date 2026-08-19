@@ -4166,4 +4166,12 @@
     <string name="casio_interval_timer_add">Legg til timer</string>
     <string name="casio_interval_timer_empty">Ingen intervalltimere ennå. Trykk på + for å legge til en.</string>
     <string name="casio_interval_timer_limit_reached">aksgrense på 50 timere er nådd</string>
+    <string name="appmanager_app_store">App store</string>
+    <string name="refresh">Oppdater</string>
+    <string name="pref_title_notifications_ignore_other_users">Ignorer andre brukerprofiler</string>
+    <string name="pref_summary_notifications_ignore_other_users">Ikke send varsler fra andre brukerprofiler til klokken</string>
+    <string name="casio_interval_timer_active">Aktiv på klokken</string>
+    <string name="casio_interval_timer_skip">Hopp over</string>
+    <string name="casio_interval_timer_total">Totalt: %1$s × %2$d = %3$s</string>
+    <string name="pref_export_directory">Eksporter katalog</string>
 </resources>
