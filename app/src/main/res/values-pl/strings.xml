@@ -4851,4 +4851,6 @@
     <string name="huawei_adaptive_volume_title">Głośność adaptacyjna</string>
     <string name="feature_exploresync_title">Protokół ExploreSync</string>
     <string name="feature_exploresync_summary">Synchronizuj trasy GPS za pomocą protokołu ExploreSync. Funkcji tej należy używać wyłącznie wtedy, gdy urządzenie nie udostępnia plików FIT.</string>
+    <string name="soundbrenner_pref_beat_1_title">Akcent na 1 uderzenie</string>
+    <string name="soundbrenner_pref_beat_2_title">Akcent na 2 uderzenie</string>
 </resources>
