@@ -431,7 +431,7 @@
     <string name="pref_title_location_keep_uptodate">Keep location updated</string>
     <string name="pref_summary_location_keep_uptodate">Try to get the current location at runtime, use the stored location as fallback</string>
     <string name="toast_enable_networklocationprovider">Please enable network location</string>
-    <string name="toast_location_permission_required">Location permission is required for this feature. For updates while Gadgetbridge is in the background, set the location permission to \"Allow all the time\" in the system settings.</string>
+    <string name="location_permission_required">Location permission is required for this feature. To allow updates while Gadgetbridge is running in the background, open Permissions > Location on the next screen and select \"Allow all the time\".</string>
     <string name="toast_aqurired_networklocation">location acquired</string>
     <string name="pref_title_pebble_forceprotocol">Force notification protocol</string>
     <string name="pref_summary_pebble_forceprotocol">This option forces using the latest notification protocol depending on the firmware version. KNOW WHAT YOU ARE DOING!</string>
