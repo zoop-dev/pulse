@@ -351,6 +351,9 @@ public class LiveActivityFragment extends AbstractActivityChartFragment<ChartsDa
      * Called in the UI thread.
      */
     private void pulse() {
+        if (!isResumed()) {
+            return;
+        }
         addEntries(translateTimestamp(System.currentTimeMillis()));
 
         LineData historyData = (LineData) mStepsPerMinuteHistoryChart.getData();
