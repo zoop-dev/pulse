@@ -211,8 +211,9 @@ public class GarminFitFileInstallHandler implements InstallHandler {
                 break;
             case LOCATION:
                 kindName = mContext.getString(R.string.kind_waypoints);
-                supported = coordinator.supports(device, GarminCapability.EXPLORE_SYNC)
-                        || coordinator.supports(device, GarminCapability.WAYPOINT_TRANSFER);
+                // #6583 - some devices such as the Venu 3 and Vivoactive 3 support them, but do not list
+                // either EXPLORE_SYNC or WAYPOINT_TRANSFER capabilities
+                supported = true;
                 long count = fitFile.getRecords().stream()
                         .filter(r -> r instanceof FitLocation)
                         .count();
