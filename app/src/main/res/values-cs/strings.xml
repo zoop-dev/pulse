@@ -4865,4 +4865,8 @@
     <string name="upload_music">Nahrát hudbu</string>
     <string name="six_months">6 měsíců</string>
     <string name="add_widget_screen">Přidat obrazovku widgetu</string>
+    <string name="pref_title_general_prefs_key_sort_by_last_connected_ts">Seřadit podle data posledního připojení</string>
+    <string name="pref_summary_general_prefs_key_sort_by_last_connected_ts">Seřadit odpojená zařízení podle toho, kdy byla naposledy připojena, namísto abecedního řazení</string>
+    <string name="menuitem_zepp_os_wake_hybridcharge">Wake HybridCharge</string>
+    <string name="menuitem_training_calendar">Tréninkový kalendář</string>
 </resources>
