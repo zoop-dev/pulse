@@ -60,6 +60,14 @@
             android:title="@string/pref_title_general_reconnectonlytoconnected"
             android:icon="@drawable/ic_bluetooth_connected" />
 
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="general_prefs_key_sort_by_last_connected_ts"
+            android:layout="@layout/preference_checkbox"
+            android:summary="@string/pref_summary_general_prefs_key_sort_by_last_connected_ts"
+            android:title="@string/pref_title_general_prefs_key_sort_by_last_connected_ts"
+            android:icon="@drawable/ic_calendar_month" />
+
         <PreferenceCategory
             android:key="language_category"
             android:title="@string/language_and_region_prefs">

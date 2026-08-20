@@ -260,6 +260,11 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
                 GBDevice.DeviceUpdateSubject subject = (GBDevice.DeviceUpdateSubject) intent.getSerializableExtra(GBDevice.EXTRA_UPDATE_SUBJECT);
 
                 if (subject == GBDevice.DeviceUpdateSubject.DEVICE_STATE && device.isInitialized()) {
+                    //Store the time the device was initialized for optional sorting in Control Center
+                    GBApplication.getDeviceSpecificSharedPrefs(device.getAddress())
+                            .edit()
+                            .putLong(GBPrefs.LAST_CONNECTED_TS, System.currentTimeMillis())
+                            .apply();
                     sendDeviceConnectedBroadcast(device.getAddress());
                     sendCachedNotifications(device);
                 } else if (subject == GBDevice.DeviceUpdateSubject.DEVICE_STATE && (device.getState() == GBDevice.State.SCANNED)) {

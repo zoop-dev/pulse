@@ -43,6 +43,7 @@ import nodomain.freeyourgadget.gadgetbridge.database.DBHelper;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.util.DeviceHelper;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
+import nodomain.freeyourgadget.gadgetbridge.util.GBPrefs;
 
 /**
  * Provides access to the list of devices managed by Gadgetbridge.
@@ -164,10 +165,22 @@ public class DeviceManager {
         Collections.sort(deviceList, new Comparator<GBDevice>() {
             @Override
             public int compare(GBDevice lhs, GBDevice rhs) {
-                if (rhs.getStateOrdinal() - lhs.getStateOrdinal() == 0) {
-                    return Collator.getInstance().compare(lhs.getAliasOrName(), rhs.getAliasOrName());
+                int stateDiff = rhs.getStateOrdinal() - lhs.getStateOrdinal();
+                if (stateDiff != 0) {
+                    return stateDiff;
                 }
-                return (rhs.getStateOrdinal() - lhs.getStateOrdinal());
+
+                if(GBApplication.getPrefs().getSortByLastConnectedTs()) {
+                    long lhsLastConnected = GBApplication.getDeviceSpecificSharedPrefs(lhs.getAddress())
+                            .getLong(GBPrefs.LAST_CONNECTED_TS, 0L);
+                    long rhsLastConnected = GBApplication.getDeviceSpecificSharedPrefs(rhs.getAddress())
+                            .getLong(GBPrefs.LAST_CONNECTED_TS, 0L);
+                    int lastConnDiff = Long.compare(rhsLastConnected, lhsLastConnected); // più recente prima
+                    if (lastConnDiff != 0) {
+                        return lastConnDiff;
+                    }
+                }
+                return Collator.getInstance().compare(lhs.getAliasOrName(), rhs.getAliasOrName());
             }
         });
         notifyDevicesChanged();

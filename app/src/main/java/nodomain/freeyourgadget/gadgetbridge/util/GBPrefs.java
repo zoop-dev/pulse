@@ -112,6 +112,8 @@ public class GBPrefs extends Prefs {
     public static final String CHART_MIN_HEART_RATE = "chart_min_heart_rate";
 
     public static final String LAST_DEVICE_ADDRESSES = "last_device_addresses";
+    public static final String LAST_CONNECTED_TS = "last_connected_ts";
+    public static final String SORT_BY_LAST_CONNECTED_TS_KEY = "general_prefs_key_sort_by_last_connected_ts";
     public static final String RECONNECT_ONLY_TO_CONNECTED = "general_reconnectonlytoconnected";
     public static final String BLOCK_SCREENSHOTS = "block_screenshots";
 
@@ -146,6 +148,10 @@ public class GBPrefs extends Prefs {
 
     public boolean getAutoReconnectByScan() {
         return getBoolean(RECONNECT_SCAN_KEY, RECONNECT_SCAN_DEFAULT);
+    }
+
+    public boolean getSortByLastConnectedTs() {
+        return getBoolean(SORT_BY_LAST_CONNECTED_TS_KEY, false);
     }
 
     public boolean getAutoStart() {

@@ -228,6 +228,8 @@
     <string name="pref_title_general_autoconnectonbluetooth">Connect to Gadgetbridge device(s) when Bluetooth is turned on</string>
     <string name="pref_title_general_reconnectonlytoconnected">Reconnect only to connected devices</string>
     <string name="pref_summary_general_reconnectonlytoconnected">Reconnect only to connected devices, instead of reconnecting to all devices</string>
+    <string name="pref_title_general_prefs_key_sort_by_last_connected_ts">Sort by last connection date</string>
+    <string name="pref_summary_general_prefs_key_sort_by_last_connected_ts">Order disconnected devices by when they last connected, instead of alphabetically</string>
     <string name="pref_title_general_autostartonboot">Start automatically</string>
     <string name="pref_title_general_autoreconnect">Reconnect automatically</string>
     <string name="pref_title_mb_intents">Broadcast Media Button Intents Directly</string>
