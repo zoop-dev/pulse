@@ -173,6 +173,8 @@ public class GenericWeatherReceiver extends BroadcastReceiver {
                 forecast.setMoonRise(safelyGet(forecastJson, Integer.class, "moonRise", 0));
                 forecast.setMoonSet(safelyGet(forecastJson, Integer.class, "moonSet", 0));
                 forecast.setMoonPhase(safelyGet(forecastJson, Integer.class, "moonPhase", 0));
+                forecast.setPressure(safelyGet(forecastJson, Number.class, "pressure", 0.0f).floatValue());
+                forecast.setCloudCover(safelyGet(forecastJson, Number.class, "cloudCover", 0).intValue());
 
                 if (forecastJson.has("airQuality")) {
                     forecast.setAirQuality(toAirQuality(forecastJson.getJSONObject("airQuality")));
@@ -199,6 +201,9 @@ public class GenericWeatherReceiver extends BroadcastReceiver {
                 forecast.setWindDirection(safelyGet(forecastJson, Integer.class, "windDirection", 0));
                 forecast.setUvIndex(safelyGet(forecastJson, Number.class, "uvIndex", 0d).floatValue());
                 forecast.setPrecipProbability(safelyGet(forecastJson, Integer.class, "precipProbability", 0));
+                forecast.setDewPoint(safelyGet(forecastJson, Number.class, "dewPoint", 0).intValue());
+                forecast.setPressure(safelyGet(forecastJson, Number.class, "pressure", 0.0f).floatValue());
+                forecast.setCloudCover(safelyGet(forecastJson, Number.class, "cloudCover", 0).intValue());
 
                 weatherSpec.getHourly().add(forecast);
             }

@@ -494,10 +494,12 @@ class WeatherSpec() : Parcelable {
         var moonSet: Int = 0
         var moonPhase: Int = 0
         var airQuality: AirQuality? = null
+        var pressure: Float = 0f // mbar
+        var cloudCover: Int = 0 // %
 
 
         internal constructor(parcel: Parcel) : this() {
-            parcel.readInt() // version
+            val version = parcel.readInt()
             minTemp = parcel.readInt()
             maxTemp = parcel.readInt()
             conditionCode = parcel.readInt()
@@ -514,6 +516,10 @@ class WeatherSpec() : Parcelable {
             airQuality = parcel.readParcelable(
                 AirQuality::class.java.classLoader
             )
+            if (version >= 2) {
+                pressure = parcel.readFloat()
+                cloudCover = parcel.readInt()
+            }
         }
 
         override fun describeContents(): Int = 0
@@ -534,6 +540,8 @@ class WeatherSpec() : Parcelable {
             dest.writeInt(moonSet)
             dest.writeInt(moonPhase)
             dest.writeParcelable(airQuality, 0)
+            dest.writeFloat(pressure)
+            dest.writeInt(cloudCover)
         }
 
         fun windSpeedAsBeaufort(): Int {
@@ -564,6 +572,8 @@ class WeatherSpec() : Parcelable {
             if (moonSet != other.moonSet) return false
             if (moonPhase != other.moonPhase) return false
             if (airQuality != other.airQuality) return false
+            if (pressure != other.pressure) return false
+            if (cloudCover != other.cloudCover) return false
 
             return true
         }
@@ -583,11 +593,13 @@ class WeatherSpec() : Parcelable {
             result = 31 * result + moonSet
             result = 31 * result + moonPhase
             result = 31 * result + (airQuality?.hashCode() ?: 0)
+            result = 31 * result + pressure.hashCode()
+            result = 31 * result + cloudCover
             return result
         }
 
         companion object {
-            const val VERSION = 1
+            const val VERSION = 2
 
             @JvmField
             val CREATOR: Parcelable.Creator<Daily> = object : Parcelable.Creator<Daily> {
@@ -606,10 +618,13 @@ class WeatherSpec() : Parcelable {
         var windDirection: Int = 0 // deg
         var uvIndex: Float = 0f // 0.0 to 15.0
         var precipProbability: Int = 0 // %
+        var dewPoint: Int = 0 // Kelvin
+        var pressure: Float = 0f // millibar
+        var cloudCover: Int = 0 // percent
 
 
         internal constructor(parcel: Parcel) : this() {
-            parcel.readInt() // version
+            val version = parcel.readInt()
             timestamp = parcel.readInt()
             temp = parcel.readInt()
             conditionCode = parcel.readInt()
@@ -618,6 +633,11 @@ class WeatherSpec() : Parcelable {
             windDirection = parcel.readInt()
             uvIndex = parcel.readFloat()
             precipProbability = parcel.readInt()
+            if (version >= 2) {
+                dewPoint = parcel.readInt()
+                pressure = parcel.readFloat()
+                cloudCover = parcel.readInt()
+            }
         }
 
         override fun describeContents(): Int = 0
@@ -632,6 +652,9 @@ class WeatherSpec() : Parcelable {
             dest.writeInt(windDirection)
             dest.writeFloat(uvIndex)
             dest.writeInt(precipProbability)
+            dest.writeInt(dewPoint)
+            dest.writeFloat(pressure)
+            dest.writeInt(cloudCover)
         }
 
         fun windSpeedAsBeaufort(): Int {
@@ -652,6 +675,9 @@ class WeatherSpec() : Parcelable {
             if (windDirection != other.windDirection) return false
             if (uvIndex != other.uvIndex) return false
             if (precipProbability != other.precipProbability) return false
+            if (dewPoint != other.dewPoint) return false
+            if (pressure != other.pressure) return false
+            if (cloudCover != other.cloudCover) return false
 
             return true
         }
@@ -665,11 +691,14 @@ class WeatherSpec() : Parcelable {
             result = 31 * result + windDirection
             result = 31 * result + uvIndex.hashCode()
             result = 31 * result + precipProbability
+            result = 31 * result + dewPoint
+            result = 31 * result + cloudCover
+            result = 31 * result + pressure.hashCode()
             return result
         }
 
         companion object {
-            const val VERSION = 1
+            const val VERSION = 2
 
             @JvmField
             val CREATOR: Parcelable.Creator<Hourly> = object : Parcelable.Creator<Hourly> {
@@ -797,6 +826,9 @@ class WeatherSpec() : Parcelable {
                 gbForecast.windSpeed = 20f + i
                 gbForecast.humidity = 10 + i
                 gbForecast.uvIndex = 2f + i
+                gbForecast.dewPoint = gbForecast.temp - Random.nextInt(5, 10)
+                gbForecast.pressure = 1010.0f + Random.nextInt(-30, 31)
+                gbForecast.cloudCover = (i + 1) * 5
 
                 weather.hourly.add(gbForecast)
 
@@ -816,6 +848,8 @@ class WeatherSpec() : Parcelable {
                 val airQualityDaily = AirQuality()
                 airQualityDaily.aqi = 120 + i
                 gbForecast.airQuality = airQualityDaily
+                gbForecast.pressure = 1010.0f + Random.nextInt(-30, 31)
+                gbForecast.cloudCover = (i + 1) * 10
                 weather.forecasts.add(gbForecast)
             }
 
