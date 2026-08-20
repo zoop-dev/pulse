@@ -28,6 +28,7 @@ package nodomain.freeyourgadget.gadgetbridge.util;
 
 import android.Manifest;
 import android.bluetooth.BluetoothDevice;
+import android.hardware.usb.UsbAccessory;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -138,6 +139,10 @@ public class DeviceHelper {
         return orderedDeviceTypes;
     }
 
+    public DeviceType resolveDeviceType(@NonNull final UsbAccessory accessory) {
+        return resolveDeviceType(new GBDeviceCandidate(accessory), true);
+    }
+
     public DeviceType resolveDeviceType(@NonNull final GBDeviceCandidate deviceCandidate) {
         return resolveDeviceType(deviceCandidate, true);
     }
@@ -153,15 +158,25 @@ public class DeviceHelper {
             }
 
             if (useCache) {
-                DeviceType cachedType =
-                        deviceTypeCache.get(macAddress);
+                final DeviceType cachedType = deviceTypeCache.get(macAddress);
                 if (cachedType != null) {
                     return cachedType;
                 }
             }
 
             for (DeviceType type : getOrderedDeviceTypes()) {
-                if (type.getDeviceCoordinator().supports(deviceCandidate)) {
+                final DeviceCoordinator coordinator = type.getDeviceCoordinator();
+                // Older coordinators are not prepared for a candidate with a null device, so filter those out
+                if (coordinator.getConnectionType() == DeviceCoordinator.ConnectionType.USB) {
+                    if (deviceCandidate.getAccessory() == null) {
+                        continue;
+                    }
+                } else {
+                    if (deviceCandidate.getDevice() == null) {
+                        continue;
+                    }
+                }
+                if (coordinator.supports(deviceCandidate)) {
                     deviceTypeCache.put(macAddress, type);
                     return type;
                 }

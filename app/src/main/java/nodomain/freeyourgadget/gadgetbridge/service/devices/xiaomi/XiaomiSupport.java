@@ -59,7 +59,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.Reminder;
 import nodomain.freeyourgadget.gadgetbridge.model.WorldClock;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.sleepasandroid.SleepAsAndroidAction;
 import nodomain.freeyourgadget.gadgetbridge.proto.xiaomi.XiaomiProto;
-import nodomain.freeyourgadget.gadgetbridge.service.AbstractDeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.AbstractBluetoothDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.SleepAsAndroidSender;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.services.AbstractXiaomiService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.services.XiaomiCalendarService;
@@ -77,7 +77,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.AlarmUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
-public class XiaomiSupport extends AbstractDeviceSupport {
+public class XiaomiSupport extends AbstractBluetoothDeviceSupport {
     private static final Logger LOG = LoggerFactory.getLogger(XiaomiSupport.class);
 
     private final XiaomiAuthService authService = new XiaomiAuthService(this);
@@ -138,6 +138,7 @@ public class XiaomiSupport extends AbstractDeviceSupport {
         return switch (connType) {
             case BLE, BOTH -> new XiaomiBleSupport(this);
             case BT_CLASSIC -> new XiaomiSppSupport(this);
+            default -> throw new IllegalArgumentException("Unknown connection type " + connType);
         };
 
     }

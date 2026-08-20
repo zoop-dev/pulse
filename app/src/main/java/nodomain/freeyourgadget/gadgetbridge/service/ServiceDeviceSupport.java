@@ -20,6 +20,7 @@ package nodomain.freeyourgadget.gadgetbridge.service;
 
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
+import android.hardware.usb.UsbAccessory;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
@@ -74,8 +75,17 @@ public class ServiceDeviceSupport implements DeviceSupport {
     }
 
     @Override
-    public void setContext(GBDevice gbDevice, BluetoothAdapter btAdapter, Context context) {
+    public void setContext(@NonNull final GBDevice gbDevice,
+                           @NonNull final BluetoothAdapter btAdapter,
+                           @NonNull final Context context) {
         delegate.setContext(gbDevice, btAdapter, context);
+    }
+
+    @Override
+    public void setContext(@NonNull final GBDevice gbDevice,
+                           @NonNull final UsbAccessory usbAccessory,
+                           @NonNull final Context context) {
+        delegate.setContext(gbDevice, usbAccessory, context);
     }
 
     @Override
@@ -126,11 +136,6 @@ public class ServiceDeviceSupport implements DeviceSupport {
     @Override
     public GBDevice getDevice() {
         return delegate.getDevice();
-    }
-
-    @Override
-    public BluetoothAdapter getBluetoothAdapter() {
-        return delegate.getBluetoothAdapter();
     }
 
     @Override

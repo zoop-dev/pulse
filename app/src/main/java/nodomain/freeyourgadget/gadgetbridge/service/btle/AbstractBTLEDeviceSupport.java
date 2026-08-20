@@ -27,9 +27,9 @@ import androidx.annotation.Nullable;
 
 import java.util.UUID;
 
-import nodomain.freeyourgadget.gadgetbridge.service.AbstractDeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.AbstractBluetoothDeviceSupport;
 
-public abstract class AbstractBTLEDeviceSupport extends AbstractDeviceSupport
+public abstract class AbstractBTLEDeviceSupport extends AbstractBluetoothDeviceSupport
         implements GattCallback, GattServerCallback {
     public static final String BASE_UUID = "0000%s-0000-1000-8000-00805f9b34fb";
 

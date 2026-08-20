@@ -158,6 +158,9 @@
     <uses-feature
         android:name="android.hardware.camera"
         android:required="false" />
+    <uses-feature
+        android:name="android.hardware.usb.accessory"
+        android:required="false" />
 
     <application
         android:name=".GBApplication"
@@ -340,6 +343,10 @@
             android:name=".devices.vesc.VescControlActivity"
             android:label="@string/devicetype_vesc"
             android:parentActivityName=".activities.ControlCenterv2" />
+        <activity
+            android:name=".activities.UsbAccessoryConnectActivity"
+            android:label="@string/usb_connect_title"
+            android:launchMode="singleTop" />
         <activity
             android:name=".devices.idasen.IdasenControlActivity"
             android:label="@string/devicetype_idasen"
@@ -709,6 +716,20 @@
             <intent-filter>
                 <action android:name="nodomain.freeyourgadget.gadgetbridge.callcontrol" />
             </intent-filter>
+        </receiver>
+        <receiver
+            android:name=".externalevents.UsbAttachReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.hardware.usb.action.USB_ACCESSORY_DETACHED" />
+                <action android:name="android.hardware.usb.action.USB_ACCESSORY_ATTACHED" />
+            </intent-filter>
+            <meta-data
+                android:name="android.hardware.usb.action.USB_ACCESSORY_DETACHED"
+                android:resource="@xml/usb_accessory_filter" />
+            <meta-data
+                android:name="android.hardware.usb.action.USB_ACCESSORY_ATTACHED"
+                android:resource="@xml/usb_accessory_filter" />
         </receiver>
         <!--
             forcing the DebugActivity to portrait mode avoids crashes with the progress

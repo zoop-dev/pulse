@@ -13,10 +13,10 @@ import nodomain.freeyourgadget.gadgetbridge.externalevents.BluetoothDisconnectRe
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.CallSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
-import nodomain.freeyourgadget.gadgetbridge.service.AbstractDeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.AbstractBluetoothDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.HeadphoneHelper;
 
-public class GenericHeadphonesSupport extends AbstractDeviceSupport implements HeadphoneHelper.Callback {
+public class GenericHeadphonesSupport extends AbstractBluetoothDeviceSupport implements HeadphoneHelper.Callback {
 
     private HeadphoneHelper headphoneHelper;
     private BluetoothDisconnectReceiver mBlueToothDisconnectReceiver = null;

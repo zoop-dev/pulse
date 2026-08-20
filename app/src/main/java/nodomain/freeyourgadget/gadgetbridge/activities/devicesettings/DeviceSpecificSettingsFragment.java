@@ -1740,10 +1740,13 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
                 );
             }
 
-            deviceSpecificSettings.addRootScreen(
-                    DeviceSpecificSettingsScreen.CONNECTION,
-                    coordinator.getSupportedDeviceSpecificConnectionSettings()
-            );
+            final int[] supportedConnectionSettings = coordinator.getSupportedDeviceSpecificConnectionSettings();
+            if (supportedConnectionSettings.length > 0) {
+                deviceSpecificSettings.addRootScreen(
+                        DeviceSpecificSettingsScreen.CONNECTION,
+                        supportedConnectionSettings
+                );
+            }
 
             if (coordinator.getBatteryCount(device) > 0) {
                 deviceSpecificSettings.addRootScreen(
@@ -1764,10 +1767,13 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
                 );
             }
 
-            deviceSpecificSettings.addRootScreen(
-                    DeviceSpecificSettingsScreen.DEVELOPER,
-                    R.xml.devicesettings_device_support_can_reconnect
-            );
+            if (coordinator.getConnectionType() != DeviceCoordinator.ConnectionType.USB) {
+                // USB devices do not support it (and should not need it)
+                deviceSpecificSettings.addRootScreen(
+                        DeviceSpecificSettingsScreen.DEVELOPER,
+                        R.xml.devicesettings_device_support_can_reconnect
+                );
+            }
 
             final List<Integer> intentApiSubScreens = new ArrayList<>();
             Collections.addAll(
@@ -1801,14 +1807,16 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
             }
             if (BuildConfig.DEBUG) {
                 final int[] debugSettings = coordinator.getSupportedDebugSettings(device);
-                deviceSpecificSettings.addRootScreen(
-                        DeviceSpecificSettingsScreen.DEVELOPER,
-                        R.xml.devicesettings_header_debug
-                );
-                deviceSpecificSettings.addRootScreen(
-                        DeviceSpecificSettingsScreen.DEVELOPER,
-                        debugSettings
-                );
+                if (debugSettings.length > 0) {
+                    deviceSpecificSettings.addRootScreen(
+                            DeviceSpecificSettingsScreen.DEVELOPER,
+                            R.xml.devicesettings_header_debug
+                    );
+                    deviceSpecificSettings.addRootScreen(
+                            DeviceSpecificSettingsScreen.DEVELOPER,
+                            debugSettings
+                    );
+                }
             }
             if (GBApplication.getPrefs().experimentalSettings()) {
                 final int[] experimentalSettings = coordinator.getSupportedDeviceSpecificExperimentalSettings(device);

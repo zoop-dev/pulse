@@ -18,12 +18,14 @@
 package nodomain.freeyourgadget.gadgetbridge.impl;
 
 import android.bluetooth.BluetoothDevice;
+import android.hardware.usb.UsbAccessory;
 import android.os.Parcel;
 import android.os.ParcelUuid;
 import android.os.Parcelable;
 import android.util.SparseArray;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,12 +43,17 @@ import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.util.AndroidUtils;
 
 /**
- * A device candidate is a Bluetooth device that is not yet managed by
+ * A device candidate is a Bluetooth or USB device that is not yet managed by
  * Gadgetbridge. Only if a DeviceCoordinator steps up and confirms to
  * support this candidate, will the candidate be promoted to a GBDevice.
  */
+@SuppressWarnings("deprecation")
 public class GBDeviceCandidate implements Parcelable, Cloneable {
     private static final Logger LOG = LoggerFactory.getLogger(GBDeviceCandidate.class);
+
+    //
+    // Bluetooth
+    //
 
     private BluetoothDevice device;
     private short rssi;
@@ -57,20 +64,31 @@ public class GBDeviceCandidate implements Parcelable, Cloneable {
 
     private SparseArray<byte[]> manufacturerSpecificData;
 
-    public GBDeviceCandidate(BluetoothDevice device, short rssi, ParcelUuid[] serviceUuids,
-                             SparseArray<byte[]> manufacturerSpecificData) {
+    //
+    // USB
+    //
+
+    private UsbAccessory accessory;
+
+    public GBDeviceCandidate(final BluetoothDevice device,
+                             final short rssi,
+                             final ParcelUuid[] serviceUuids,
+                             final SparseArray<byte[]> manufacturerSpecificData) {
         this.device = device;
         this.rssi = rssi;
         this.serviceUuids = serviceUuids != null ? serviceUuids : new ParcelUuid[0];
         this.manufacturerSpecificData =
                 Objects.requireNonNullElseGet(manufacturerSpecificData, () -> new SparseArray<>(0));
+        this.accessory = null;
+    }
+
+    public GBDeviceCandidate(final UsbAccessory accessory) {
+        this.device = null;
+        this.accessory = accessory;
     }
 
     private GBDeviceCandidate(Parcel in) {
         device = in.readParcelable(getClass().getClassLoader());
-        if (device == null) {
-            throw new IllegalStateException("Unable to read state from Parcel");
-        }
         rssi = (short) in.readInt();
 
         serviceUuids = AndroidUtils.toParcelUuids(in.readParcelableArray(getClass().getClassLoader()));
@@ -82,6 +100,8 @@ public class GBDeviceCandidate implements Parcelable, Cloneable {
         }
 
         manufacturerSpecificData = in.readSparseArray(getClass().getClassLoader());
+
+        accessory = in.readParcelable(getClass().getClassLoader());
     }
 
     @Override
@@ -97,9 +117,10 @@ public class GBDeviceCandidate implements Parcelable, Cloneable {
         }
 
         dest.writeSparseArray(manufacturerSpecificData);
+        dest.writeParcelable(accessory, 0);
     }
 
-    public static final Creator<GBDeviceCandidate> CREATOR = new Creator<GBDeviceCandidate>() {
+    public static final Creator<GBDeviceCandidate> CREATOR = new Creator<>() {
         @Override
         public GBDeviceCandidate createFromParcel(Parcel in) {
             return new GBDeviceCandidate(in);
@@ -111,12 +132,28 @@ public class GBDeviceCandidate implements Parcelable, Cloneable {
         }
     };
 
+    @Nullable
     public BluetoothDevice getDevice() {
         return device;
     }
 
+    @Nullable
+    public UsbAccessory getAccessory() {
+        return accessory;
+    }
+
     public String getMacAddress() {
-        return device != null ? device.getAddress() : GBApplication.getContext().getString(R.string._unknown_);
+        if (device != null) {
+            return device.getAddress();
+        } else if (accessory != null) {
+            try {
+                return "usb:" + accessory.getSerial();
+            } catch (final Exception ignored) {
+                return "usb:unknown-serial-number";
+            }
+        }
+
+        return GBApplication.getContext().getString(R.string._unknown_);
     }
 
     private ParcelUuid[] mergeServiceUuids(ParcelUuid[] serviceUuids, ParcelUuid[] deviceUuids) {
@@ -148,6 +185,10 @@ public class GBDeviceCandidate implements Parcelable, Cloneable {
     }
 
     public boolean isBonded() {
+        if (device == null) {
+            return false;
+        }
+
         if (isBonded == null) {
             try {
                 isBonded = device.getBondState() == BluetoothDevice.BOND_BONDED;
@@ -200,31 +241,37 @@ public class GBDeviceCandidate implements Parcelable, Cloneable {
             return;
         }
 
-        if (GBApplication.isRedVelvetCakeOrLater()) {
-            try {
-                deviceName = device.getAlias();
-            } catch (final SecurityException e) {
-                // Should never happen
-                LOG.error("SecurityException on device.getAlias", e);
+        if (device != null) {
+            if (GBApplication.isRedVelvetCakeOrLater()) {
+                try {
+                    deviceName = device.getAlias();
+                } catch (final SecurityException e) {
+                    // Should never happen
+                    LOG.error("SecurityException on device.getAlias", e);
+                }
+            } else {
+                try {
+                    //noinspection JavaReflectionMemberAccess
+                    final Method method = device.getClass().getMethod("getAliasName");
+                    deviceName = (String) method.invoke(device);
+                } catch (final NoSuchMethodException ignore) {
+                    // ignored
+                } catch (final IllegalAccessException | InvocationTargetException ignore) {
+                    LOG.warn("Could not get device alias for {}", device.getAddress());
+                }
             }
+            if (deviceName == null || deviceName.isEmpty()) {
+                try {
+                    deviceName = device.getName();
+                } catch (final SecurityException e) {
+                    // Should never happen
+                    LOG.error("SecurityException on device.getName");
+                }
+            }
+        } else if (accessory != null) {
+            deviceName = accessory.getDescription();
         } else {
-            try {
-                //noinspection JavaReflectionMemberAccess
-                final Method method = device.getClass().getMethod("getAliasName");
-                deviceName = (String) method.invoke(device);
-            } catch (final NoSuchMethodException ignore) {
-                // ignored
-            } catch (final IllegalAccessException | InvocationTargetException ignore) {
-                LOG.warn("Could not get device alias for {}", device.getAddress());
-            }
-        }
-        if (deviceName == null || deviceName.isEmpty()) {
-            try {
-                deviceName = device.getName();
-            } catch (final SecurityException e) {
-                // Should never happen
-                LOG.error("SecurityException on device.getName");
-            }
+            throw new IllegalStateException("Both device and accessory are null - this should never happen!");
         }
     }
 
@@ -276,6 +323,7 @@ public class GBDeviceCandidate implements Parcelable, Cloneable {
             clone.deviceName = this.deviceName;
             clone.isBonded = this.isBonded;
             clone.manufacturerSpecificData = this.manufacturerSpecificData;
+            clone.accessory = this.accessory;
             return clone;
         } catch (final CloneNotSupportedException e) {
             throw new RuntimeException(e);

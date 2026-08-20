@@ -66,6 +66,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.ZeppOsMusicInst
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.RecordedDataTypes;
 import nodomain.freeyourgadget.gadgetbridge.model.WorldClock;
+import nodomain.freeyourgadget.gadgetbridge.service.AbstractBluetoothDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.AbstractDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.SleepAsAndroidSender;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.ZeppOsCoordinator;
@@ -143,7 +144,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 import nodomain.freeyourgadget.gadgetbridge.util.RealtimeSamplesAggregator;
 
-public class ZeppOsSupport extends AbstractDeviceSupport
+public class ZeppOsSupport extends AbstractBluetoothDeviceSupport
         implements Huami2021Handler, HuamiFetcher.HuamiFetchSupport, ZeppOsFileTransferService.DownloadCallback {
     private static final Logger LOG = LoggerFactory.getLogger(ZeppOsSupport.class);
 

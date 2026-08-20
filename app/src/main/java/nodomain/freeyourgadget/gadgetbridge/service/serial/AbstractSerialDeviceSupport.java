@@ -40,7 +40,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.MusicStateSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.Reminder;
 import nodomain.freeyourgadget.gadgetbridge.model.WorldClock;
-import nodomain.freeyourgadget.gadgetbridge.service.AbstractDeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.AbstractBluetoothDeviceSupport;
 
 /**
  * An abstract base class for devices speaking a serial protocol, like via
@@ -57,7 +57,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.AbstractDeviceSupport;
  * @deprecated Use {@link nodomain.freeyourgadget.gadgetbridge.service.btbr.AbstractBTBRDeviceSupport}
  */
 @Deprecated
-public abstract class AbstractSerialDeviceSupport extends AbstractDeviceSupport {
+public abstract class AbstractSerialDeviceSupport extends AbstractBluetoothDeviceSupport {
     private static final Logger LOG = LoggerFactory.getLogger(AbstractSerialDeviceSupport.class);
 
     /// used to guard {@link #connect()} and {@link #dispose()}

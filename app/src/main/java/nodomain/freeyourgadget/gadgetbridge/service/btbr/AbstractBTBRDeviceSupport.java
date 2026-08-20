@@ -27,7 +27,7 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
-import nodomain.freeyourgadget.gadgetbridge.service.AbstractDeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.AbstractBluetoothDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BleNamesResolver;
 
 /**
@@ -40,7 +40,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.BleNamesResolver;
  *
  * @see nodomain.freeyourgadget.gadgetbridge.service.btclassic.BtClassicIoThread
  */
-public abstract class AbstractBTBRDeviceSupport extends AbstractDeviceSupport implements SocketCallback {
+public abstract class AbstractBTBRDeviceSupport extends AbstractBluetoothDeviceSupport implements SocketCallback {
 
     /**
      * "No explicit RFCOMM channel". Matches what

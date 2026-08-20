@@ -18,6 +18,7 @@ package nodomain.freeyourgadget.gadgetbridge.service;
 
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
+import android.hardware.usb.UsbAccessory;
 
 import androidx.annotation.CallSuper;
 import androidx.annotation.NonNull;
@@ -40,7 +41,7 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
  */
 public interface DeviceSupport extends EventHandler {
     /**
-     * Sets all context information needed for the instance to operate.
+     * Sets all context information needed for the instance to operate. Only called for Bluetooth support classes.
      *
      * @param gbDevice  the device to operate with
      * @param btAdapter the bluetooth adapter to use
@@ -48,6 +49,17 @@ public interface DeviceSupport extends EventHandler {
      */
     void setContext(@NonNull GBDevice gbDevice,
                     @NonNull BluetoothAdapter btAdapter,
+                    @NonNull Context context);
+
+    /**
+     * Sets all context information needed for the instance to operate. Only called for USB support classes.
+     *
+     * @param gbDevice     the device to operate with
+     * @param usbAccessory the usb accessory to use
+     * @param context      the android context, e.g. to look up resources
+     */
+    void setContext(@NonNull GBDevice gbDevice,
+                    @NonNull UsbAccessory usbAccessory,
                     @NonNull Context context);
 
     /**
@@ -135,13 +147,6 @@ public interface DeviceSupport extends EventHandler {
      * Returns the associated device this instance communicates with.
      */
     GBDevice getDevice();
-
-    /**
-     * Returns the bluetooth adapter. When we support different transports
-     * than Bluetooth, we should use a generic type T and rename this method
-     * to getTransportAdapter()
-     */
-    BluetoothAdapter getBluetoothAdapter();
 
     /**
      * Returns the Android context to use, e.g. to look up resources.

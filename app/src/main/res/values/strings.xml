@@ -5335,4 +5335,9 @@
     <string name="qs_tile_label_10">Gadgetbridge 10</string>
     <string name="activity_summary_set_header_photo_title">Set header photo</string>
     <string name="activity_summary_remove_header_photo_title">Remove header photo</string>
+    <string name="usb_connect_title">USB device found</string>
+    <string name="usb_connect_permission_needed">Gadgetbridge needs permission to use this USB device.</string>
+    <string name="usb_connect_permission_denied">Permission to use the USB device was denied.</string>
+    <string name="usb_connect_select_device_type">Select device type</string>
+    <string name="discovery_connect_usb">Connect to USB</string>
 </resources>

@@ -26,7 +26,10 @@
 package nodomain.freeyourgadget.gadgetbridge.service;
 
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothManager;
 import android.content.Context;
+import android.hardware.usb.UsbAccessory;
+import android.hardware.usb.UsbManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -54,38 +57,40 @@ public class DeviceSupportFactory {
 
     DeviceSupportFactory(Context context) {
         mContext = context;
-        mBtAdapter = BluetoothAdapter.getDefaultAdapter();
+        final BluetoothManager bluetoothManager = (BluetoothManager) context.getSystemService(Context.BLUETOOTH_SERVICE);
+        mBtAdapter = bluetoothManager.getAdapter();
     }
 
     @Nullable
     public synchronized DeviceSupport createDeviceSupport(final @NonNull GBDevice device) throws GBException {
-        DeviceSupport deviceSupport;
-        String deviceAddress = device.getAddress();
-        int indexFirstColon = deviceAddress.indexOf(":");
+        if (device.getDeviceCoordinator().getConnectionType() == DeviceCoordinator.ConnectionType.USB) {
+            return createUsbDeviceSupport(device);
+        }
+
+        final String deviceAddress = device.getAddress();
+        final int indexFirstColon = deviceAddress.indexOf(":");
         if (indexFirstColon > 0) {
             if (indexFirstColon == deviceAddress.lastIndexOf(":")) { // only one colon
-                deviceSupport = createTCPDeviceSupport(device);
+                return createTCPDeviceSupport(device);
             } else {
                 // multiple colons -- bt?
-                deviceSupport = createBTDeviceSupport(device);
+                return createBTDeviceSupport(device);
             }
         } else {
             // no colon at all, maybe a class name?
-            deviceSupport = createClassNameDeviceSupport(device);
+            return createClassNameDeviceSupport(device);
         }
-
-        return deviceSupport;
     }
 
     @Nullable
     private DeviceSupport createClassNameDeviceSupport(GBDevice device) throws GBException {
-        String className = device.getAddress();
+        final String className = device.getAddress();
         try {
-            Class<?> deviceSupportClass = Class.forName(className);
-            Constructor<?> constructor = deviceSupportClass.getConstructor();
-            DeviceSupport support = (DeviceSupport) constructor.newInstance();
+            final Class<?> deviceSupportClass = Class.forName(className);
+            final Constructor<?> constructor = deviceSupportClass.getConstructor();
+            final DeviceSupport support = (DeviceSupport) constructor.newInstance();
             // has to create the device itself
-            support.setContext(device, null, mContext);
+            support.setContext(device, mBtAdapter, mContext);
             return support;
         } catch (ClassNotFoundException e) {
             LOG.warn("Unable to find DeviceSupport class {} for {}", className, device.getAddress());
@@ -100,7 +105,8 @@ public class DeviceSupportFactory {
         final Class<?> supportClass = coordinator.getDeviceSupportClass(device);
 
         try {
-            final DeviceSupport supportInstance = (DeviceSupport) supportClass.newInstance();
+            final Constructor<?> constructor = supportClass.getConstructor();
+            final DeviceSupport supportInstance = (DeviceSupport) constructor.newInstance();
             final EnumSet<ServiceDeviceSupport.Flags> initialFlags = coordinator.getInitialFlags();
             if (BuildConfig.DEBUG && initialFlags.contains(ServiceDeviceSupport.Flags.BUSY_CHECKING)) {
                 final DevicePrefs devicePrefs = GBApplication.getDevicePrefs(device);
@@ -136,13 +142,61 @@ public class DeviceSupportFactory {
         }
     }
 
-    private DeviceSupport createTCPDeviceSupport(GBDevice gbDevice) throws GBException {
+    private DeviceSupport createTCPDeviceSupport(final GBDevice gbDevice) throws GBException {
         try {
-            DeviceSupport deviceSupport = new ServiceDeviceSupport(new PebbleSupport(), EnumSet.of(ServiceDeviceSupport.Flags.BUSY_CHECKING));
+            final DeviceSupport deviceSupport = new ServiceDeviceSupport(new PebbleSupport(), EnumSet.of(ServiceDeviceSupport.Flags.BUSY_CHECKING));
             deviceSupport.setContext(gbDevice, mBtAdapter, mContext);
             return deviceSupport;
         } catch (Exception e) {
             throw new GBException("cannot connect to " + gbDevice, e); // FIXME: localize
         }
+    }
+
+    @Nullable
+    private DeviceSupport createUsbDeviceSupport(final GBDevice gbDevice) throws GBException {
+        final UsbManager manager = (UsbManager) mContext.getSystemService(Context.USB_SERVICE);
+        if (manager == null) {
+            LOG.warn("No UsbManager available on this device");
+            return null;
+        }
+
+        final UsbAccessory accessory = findUsbAccessory(manager, gbDevice);
+        if (accessory == null) {
+            LOG.warn("No compatible USB accessory attached for {}", gbDevice.getAddress());
+            return null;
+        }
+
+        try {
+            final DeviceSupport deviceSupport = createServiceDeviceSupport(gbDevice);
+            deviceSupport.setContext(gbDevice, accessory, mContext);
+            return deviceSupport;
+        } catch (final Exception e) {
+            throw new GBException("cannot connect to " + gbDevice, e);
+        }
+    }
+
+    @Nullable
+    private UsbAccessory findUsbAccessory(final UsbManager usbManager, final GBDevice gbDevice) {
+        final UsbAccessory[] accessoryList = usbManager.getAccessoryList();
+        if (accessoryList == null) {
+            LOG.warn("USB accessory list is null");
+            return null;
+        }
+
+        for (final UsbAccessory candidate : accessoryList) {
+            LOG.debug("Checking compatibility with {}", candidate);
+            if (!usbManager.hasPermission(candidate)) {
+                // when we get here, we must already have permission. If not, it's not this device
+                continue;
+            }
+            // We don't check if the coordinator supports it, since it might be an unsupported device
+            // that was added as a test device. Once we reach here, we must be able to match by
+            // serial number.
+            if (gbDevice.getAddress().equals("usb:" + candidate.getSerial())) {
+                return candidate;
+            }
+        }
+
+        return null;
     }
 }

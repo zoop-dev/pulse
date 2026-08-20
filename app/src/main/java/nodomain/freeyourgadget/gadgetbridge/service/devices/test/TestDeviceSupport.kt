@@ -24,14 +24,14 @@ import nodomain.freeyourgadget.gadgetbridge.capabilities.loyaltycards.LoyaltyCar
 import nodomain.freeyourgadget.gadgetbridge.devices.test.TestDeviceCoordinator
 import nodomain.freeyourgadget.gadgetbridge.devices.test.TestFeature
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice
-import nodomain.freeyourgadget.gadgetbridge.service.AbstractDeviceSupport
+import nodomain.freeyourgadget.gadgetbridge.service.AbstractBluetoothDeviceSupport
 import nodomain.freeyourgadget.gadgetbridge.util.GB
 import nodomain.freeyourgadget.gadgetbridge.util.notifications.GBProgressNotification
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.util.ArrayList
 
-open class TestDeviceSupport : AbstractDeviceSupport() {
+open class TestDeviceSupport : AbstractBluetoothDeviceSupport() {
     private lateinit var progressNotification: GBProgressNotification
     private val handler = Handler()
 

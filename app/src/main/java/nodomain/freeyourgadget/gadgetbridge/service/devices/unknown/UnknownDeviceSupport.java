@@ -19,9 +19,9 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.unknown;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import nodomain.freeyourgadget.gadgetbridge.service.AbstractDeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.AbstractBluetoothDeviceSupport;
 
-public class UnknownDeviceSupport extends AbstractDeviceSupport {
+public class UnknownDeviceSupport extends AbstractBluetoothDeviceSupport {
     private static final Logger LOG = LoggerFactory.getLogger(UnknownDeviceSupport.class);
 
     @Override
