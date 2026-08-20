@@ -17,11 +17,13 @@
 package nodomain.freeyourgadget.gadgetbridge.activities.endurain
 
 import android.content.Context
+import android.content.SharedPreferences
 import androidx.core.content.edit
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import java.security.GeneralSecurityException
 
 class EndurainTokenManager(context: Context) {
     private val LOG: Logger = LoggerFactory.getLogger(EndurainTokenManager::class.java)
@@ -29,13 +31,29 @@ class EndurainTokenManager(context: Context) {
         .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
         .build()
 
-    private val sharedPreferences = EncryptedSharedPreferences.create(
-        context,
-        "endurain_tokens",
-        masterKey,
-        EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-        EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
-    )
+    private val sharedPreferences = createPreferences(context)
+
+    private fun createPreferences(context: Context): SharedPreferences {
+        return try {
+            EncryptedSharedPreferences.create(
+                context,
+                "endurain_tokens",
+                masterKey,
+                EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+                EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+            )
+        } catch (e: GeneralSecurityException) {
+            LOG.warn("Unable to decrypt endurain token preferences, resetting them instead\n", e)
+            context.deleteSharedPreferences("endurain_tokens")
+            EncryptedSharedPreferences.create(
+                context,
+                "endurain_tokens",
+                masterKey,
+                EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+                EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+            )
+        }
+    }
 
     fun saveTokens(accessToken: String, refreshToken: String, accessTokenExpiry: Int, refreshTokenExpiry: Int) {
         val accessTokenExpiryTs = if (accessTokenExpiry < 1000000000) ((System.currentTimeMillis() / 1000) + accessTokenExpiry).toInt() else accessTokenExpiry

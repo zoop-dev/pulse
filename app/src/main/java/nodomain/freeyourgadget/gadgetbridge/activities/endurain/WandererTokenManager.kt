@@ -17,22 +17,43 @@
 package nodomain.freeyourgadget.gadgetbridge.activities.endurain
 
 import android.content.Context
+import android.content.SharedPreferences
 import androidx.core.content.edit
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
+import java.security.GeneralSecurityException
 
 class WandererTokenManager(context: Context) {
+    private val LOG: Logger = LoggerFactory.getLogger(EndurainTokenManager::class.java)
     private val masterKey = MasterKey.Builder(context)
         .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
         .build()
 
-    private val tokenPreferences = EncryptedSharedPreferences.create(
-        context,
-        "wanderer_tokens",
-        masterKey,
-        EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-        EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
-    )
+    private val tokenPreferences = createPreferences(context)
+
+    private fun createPreferences(context: Context): SharedPreferences {
+        return try {
+            EncryptedSharedPreferences.create(
+                context,
+                "wanderer_tokens",
+                masterKey,
+                EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+                EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+            )
+        } catch (e: GeneralSecurityException) {
+            LOG.warn("Unable to decrypt wanderer token preferences, resetting them instead\n", e)
+            context.deleteSharedPreferences("wanderer_tokens")
+            EncryptedSharedPreferences.create(
+                context,
+                "wanderer_tokens",
+                masterKey,
+                EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+                EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+            )
+        }
+    }
 
     fun saveToken(apiToken: String) {
         tokenPreferences.edit {
