@@ -223,6 +223,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.huawei.honorband10.HonorBand
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.honorband9.HonorBand9Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.igpsport.IGPSportBSC500Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.xiaomi.watches.MiBand10ProCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.xiaomi.watches.RedmiWatch6Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.xiaomi_scooters.XiaomiScooter5MaxCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.victron.VictronSmartShuntCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.xplora.XploraXmoveDeviceCoordinator;
@@ -618,6 +619,7 @@ public enum DeviceType {
     REDMIWATCH5(RedmiWatch5Coordinator.class),
     REDMIWATCH5ACTIVE(RedmiWatch5ActiveCoordinator.class),
     REDMIWATCH5LITE(RedmiWatch5LiteCoordinator.class),
+    REDMIWATCH6(RedmiWatch6Coordinator.class),
     REDMIWATCHMOVE(RedmiWatchMoveCoordinator.class),
     XIAOMI_WATCH_S1_ACTIVE(XiaomiWatchS1ActiveCoordinator.class),
     XIAOMI_WATCH_S1_PRO(XiaomiWatchS1ProCoordinator.class),

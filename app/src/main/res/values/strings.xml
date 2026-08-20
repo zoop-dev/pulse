@@ -2306,6 +2306,7 @@
     <string name="devicetype_redmi_smart_band_pro" translatable="false">Redmi Smart Band Pro</string>
     <string name="devicetype_redmi_watch_4" translatable="false">Redmi Watch 4</string>
     <string name="devicetype_redmi_watch_5" translatable="false">Redmi Watch 5</string>
+    <string name="devicetype_redmi_watch_6" translatable="false">Redmi Watch 6</string>
     <string name="devicetype_redmi_watch_5_active" translatable="false">Redmi Watch 5 Active</string>
     <string name="devicetype_redmi_watch_5_lite" translatable="false">Redmi Watch 5 Lite</string>
     <string name="devicetype_redmi_watch_move" translatable="false">Redmi Watch Move</string>

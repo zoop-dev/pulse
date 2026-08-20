@@ -176,6 +176,9 @@ public class BluetoothNameTest extends TestBase {
             put("Redmi Watch 3 892C", DeviceType.REDMIWATCH3); // #3581
             put("Redmi Buds 5 Pro", DeviceType.REDMIBUDS5PRO); // #3566
             put("Redmi Watch 2 C21E", DeviceType.REDMIWATCH2); // #3543
+            put("Redmi Watch 6 7660", DeviceType.REDMIWATCH6); // never seen, assumed
+            put("REDMI Watch 6 7660", DeviceType.REDMIWATCH6); // never seen, assumed
+            put("REDMI Watch 6 NFC 7660", DeviceType.REDMIWATCH6); // #6518
             put("MHO-C303", DeviceType.MIJIA_MHO_C303); // #3513
             put("Xiaomi Smart Band 8 Pro CF08", DeviceType.MIBAND8PRO); // #3471
             put("Xiaomi Smart Band 8 D3BD", DeviceType.MIBAND8); // #3146
