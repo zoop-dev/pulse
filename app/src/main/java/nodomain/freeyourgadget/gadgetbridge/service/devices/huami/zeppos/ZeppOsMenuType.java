@@ -93,6 +93,9 @@ public class ZeppOsMenuType {
         put("0010660A", "zepp_flow");
         put("0010953E", "zepp_flow2");
         put("000FFD3C", "jet_lag_manager");
+        put("00000057", "training_calendar");
+        put("00108DA2", "podcast");
+        put("0010A78D", "intervals_icu");
     }};
 
     public static final Map<String, String> shortcutsNameLookup = new HashMap<>() {{

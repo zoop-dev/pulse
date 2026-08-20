@@ -2438,6 +2438,7 @@
     <string name="menuitem_cycles">Cycle Tracking</string>
     <string name="menuitem_alarm">Alarm</string>
     <string name="menuitem_zepp_os_ask_anything_chat_bot">Ask Anything</string>
+    <string name="menuitem_zepp_os_wake_hybridcharge">Wake HybridCharge</string>
     <string name="menuitem_timer">Countdown</string>
     <string name="menuitem_compass">Compass</string>
     <string name="menuitem_settings">Settings</string>
@@ -2467,6 +2468,8 @@
     <string name="menuitem_alexa">Alexa</string>
     <string name="menuitem_zepp_flow">Zepp Flow</string>
     <string name="menuitem_jet_lag_manager">Jet Lag Manager</string>
+    <string name="menuitem_training_calendar">Training Calendar</string>
+    <string name="menuitem_intervals_icu" translatable="false">Intervals.icu</string>
     <string name="menuitem_dnd">DND</string>
     <string name="menuitem_stopwatch">Stopwatch</string>
     <string name="menuitem_goal">Activity Goal</string>
