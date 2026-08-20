@@ -306,7 +306,7 @@ public final class DeviceSettingsUtils {
         values[0] = "0";
 
         final int start = includeOff ? 1 : 0;
-        for (int i = start, value = rangeMin; value <= rangeMax - start; i++, value++) {
+        for (int i = start, value = rangeMin; value <= rangeMax; i++, value++) {
             entries[i] = handler.getContext().getString(stringRes, value);
             values[i] = String.valueOf(value);
         }
