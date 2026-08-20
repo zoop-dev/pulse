@@ -1,5 +1,32 @@
 ### Changelog
 
+#### Next version (WIP)
+
+* Initial support for Redmi Watch 6
+* Initial support for Garmin Edge 1050
+* Initial support for Garmin Forerunner 230
+* Accessibility: Label image controls for screen readers
+* Activity list: Fix occasional crash
+* Allow notifications from other users
+* Charts: Add VO2 Max 6-month and year views
+* CMF Watch 2+: Fixed watchface upload
+* Fix crash when unable to decrypt shared preferences for wanderer/endurain
+* Garmin: Add new oauth token urls
+* Garmin: Add time sync device setting
+* Garmin: Allow waypoint upload on all devices
+* Garmin: Fix crash on some older devices
+* Garmin: Fix some crashes on disconnection
+* Garmin: Make activity sync progress unit explicit
+* GloryFit: Fix crash on health settings screen
+* Nothing Ear (a): Fix bluetooth name
+* Optionally order disconnected devices by their most recent connection instead of by name
+* Rate limit the serialization of incoming CoMaps navigation messages
+* UNA Watch: Connection improvements
+* UNA Watch: Per-minute heart rate and honest daily totals
+* WeatherSpec: Add atmospheric pressure, cloud cover and dew point forecasts
+* Zepp OS: Add some missing display items and shortcut cards
+* Zepp OS: Fix download of long voice notes
+
 #### 0.93.0
 
 * Initial support for AK75 Pro, AK86, AK102 (TopStep / FitCloud)
