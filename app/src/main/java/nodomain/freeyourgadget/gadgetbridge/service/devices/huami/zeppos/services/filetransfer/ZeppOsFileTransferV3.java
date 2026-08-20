@@ -302,7 +302,7 @@ public class ZeppOsFileTransferV3 extends ZeppOsFileTransferImpl {
             final boolean firstChunk = (flags & FLAG_FIRST_CHUNK) != 0;
             currentReceiveChunkIsLast = (flags & FLAG_LAST_CHUNK) != 0;
             final byte index = buf.get();
-            currentReceiveChunkSize = buf.getShort();
+            currentReceiveChunkSize = buf.getShort() & 0xffff;
 
             if (index != currentReceiveRequest.getIndex()) {
                 LOG.warn("Unexpected V3 index {}, expected {}", index, currentReceiveRequest.getIndex());
