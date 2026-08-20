@@ -133,4 +133,11 @@
     <string name="menuitem_bluetooth">บลูทูธ</string>
     <string name="discovery_bluetooth_le_scan">อุปกรณ์บลูทูธ LE ที่พบ:</string>
     <string name="discovery_connected_devices_hint">ตั้งค่าอุปกรณ์ของคุณให้ค้นพบได้, อุปกรณ์ที่เชื่อมต่ออยู่ในปัจจุบันมักจะค้นพบไม่ค่อยได้, เปิดใช้งานตำแหน่ง(เช่น GPS)บน Android 6 ขึ้นไป, ปิดใช้งานฟีเจอร์ Privacy Guard กับ Gadgetbridge เพราะอาจจะทำให้แอปแครชแล้วรีสตาร์ทอุปกรณ์ของคุณ, หากผ่านไปสักพักแล้วไม่พบอุปกรณ์ ให้ลองใหม่อีกครั้งหลังจากรีสตาร์ทอุปกรณ์ชองคุณ</string>
+    <string name="search">ค้นหา</string>
+    <string name="phone_gps_not_available">GPS ของมือถือไม่สามารถใช้งานได้</string>
+    <string name="title_activity_appmanager">ตัวจัดการแอป</string>
+    <string name="appmanager_app_start">เริ่ม</string>
+    <string name="appmananger_app_delete">ลบ</string>
+    <string name="app_configure">ปรับแต่ง</string>
+    <string name="app_move_to_top">ย้ายไปบนสุด</string>
 </resources>
