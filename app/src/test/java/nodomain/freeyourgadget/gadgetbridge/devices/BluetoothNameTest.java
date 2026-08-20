@@ -166,6 +166,7 @@ public class BluetoothNameTest extends TestBase {
             put("Venu 4 - 45mm", DeviceType.GARMIN_VENU_4); // matrix
             put("Forerunner 265", DeviceType.GARMIN_FORERUNNER_265); // #3831
             put("EPIX PRO - 51mm", DeviceType.GARMIN_EPIX_PRO); // #3810
+            put("Forerunner 230", DeviceType.GARMIN_FORERUNNER_230); // #6573
             put("EPIX", DeviceType.GARMIN_EPIX); // matrix
             put("Amazfit GTR", DeviceType.AMAZFITGTR); // #3809 / #2442
             put("Amazfit Bip 3", DeviceType.AMAZFITBIP3); // #3627
