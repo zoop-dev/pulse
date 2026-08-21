@@ -21,6 +21,7 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.pebble;
 import android.util.Base64;
 import android.util.Pair;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -1272,11 +1273,38 @@ public class PebbleProtocol extends GBDeviceProtocol {
                 buf.putShort(dailyMin);
                 buf.put(dailyConditionCode);
             }
-            // pad the remaining - needed :(
+            // pad the remaining days, if not available to us - needed :(
             buf.position(buf.position() + (5 * (6 - forecast_days)));
-            buf.put((byte) 0);
-            buf.position(buf.position() + 24 * 2);
-            // FIXME: hourly forecast goes here
+
+            int local_hour = java.time.LocalTime.now().getHour();
+            ArrayList<WeatherSpec.@NotNull Hourly> hourlyForecasts = weatherSpec.getHourly();
+            if (hourlyForecasts.size() >= (24 - local_hour)) {
+                byte[] hourly_condition = new byte[24];
+                byte[] hourly_temperature = new byte[24];
+                buf.put((byte) 24);
+                hourly_temperature[local_hour] = (byte) currentTemp;
+                hourly_condition[local_hour] = WeatherMapper.mapToPebbleCondition(weatherSpec.getCurrentConditionCode());
+
+                for (int i = 0; i < 24; i++) {
+                    if (local_hour > i) {
+                        hourly_condition[i] = -1; // unknown past
+                        hourly_temperature[i] = (byte) currentTemp; // unknown past
+                    } else {
+                        WeatherSpec.Hourly hourlyForecast = hourlyForecasts.get(i - local_hour);
+                        hourly_condition[i] = WeatherMapper.mapToPebbleCondition(hourlyForecast.getConditionCode());
+                        if (temperatureUnit == TemperatureUnit.FAHRENHEIT) {
+                            hourly_temperature[i] = (byte) ((hourlyForecast.getTemp() - 273) * 1.8f + 32);
+                        } else {
+                            hourly_temperature[i] = (byte) (hourlyForecast.getTemp() - 273);
+                        }
+                    }
+                }
+                buf.put(hourly_condition);
+                buf.put(hourly_temperature);
+            } else {
+                buf.put((byte) 0);
+                buf.position(buf.position() + 24 * 2);
+            }
         }
         buf.putShort(attributes_length);
 
