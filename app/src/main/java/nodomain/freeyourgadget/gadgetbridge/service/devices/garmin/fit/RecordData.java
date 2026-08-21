@@ -72,7 +72,7 @@ public class RecordData {
                 } else {
                     LOG.warn("Dev field '{}' (#{}) has no base type — no matching field_description was parsed before its first record; falling back to opaque bytes",
                             fieldDef.getName(), fieldDef.getFieldDefinitionNumber());
-                    devBaseType = BaseType.BASE_TYPE_BYTE;
+                    devBaseType = BaseType.BYTE;
                 }
                 FieldDefinition temp = new FieldDefinition(fieldDef.getFieldDefinitionNumber(), fieldDef.getSize(), devBaseType, fieldDef.getName());
                 fieldDataList.add(new FieldData(temp, totalSize));

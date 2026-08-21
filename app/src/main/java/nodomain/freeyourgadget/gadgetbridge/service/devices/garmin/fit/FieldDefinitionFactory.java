@@ -22,15 +22,15 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefi
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionBoolean;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionCoordinate;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionDayOfWeek;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionExerciseCategory;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionFileType;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionHrTimeInZone;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionHrZoneHighBoundary;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionTemperature;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionTimestamp;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitions;
 
 public class FieldDefinitionFactory {
-    public static FieldDefinition create(int localNumber, int size, FitFieldType field, BaseType baseType, String name, int scale, int offset) {
+    public static FieldDefinition create(int localNumber, int size, FieldDefinitions field, BaseType baseType, String name, int scale, int offset) {
         if (null == field) {
             return new FieldDefinition(localNumber, size, baseType, name, scale, offset);
         }
@@ -39,20 +39,13 @@ public class FieldDefinitionFactory {
             case ARRAY -> new FieldDefinitionArray(localNumber, size, baseType, name, scale, offset);
             case BOOLEAN -> new FieldDefinitionBoolean(localNumber, size, baseType, name);
             case DAY_OF_WEEK -> new FieldDefinitionDayOfWeek(localNumber, size, baseType, name);
-            case EXERCISE_CATEGORY -> new FieldDefinitionExerciseCategory(localNumber, size, baseType, name, scale, offset);
             case FILE_TYPE -> new FieldDefinitionFileType(localNumber, size, baseType, name);
             case HR_TIME_IN_ZONE -> new FieldDefinitionHrTimeInZone(localNumber, size, baseType, name);
             case HR_ZONE_HIGH_BOUNDARY -> new FieldDefinitionHrZoneHighBoundary(localNumber, size, baseType, name);
             case TEMPERATURE -> new FieldDefinitionTemperature(localNumber, size, baseType, name);
             case TIMESTAMP -> new FieldDefinitionTimestamp(localNumber, size, baseType, name);
             case COORDINATE -> new FieldDefinitionCoordinate(localNumber, size, baseType, name);
-            default -> field.create(localNumber, size, baseType, name, scale, offset);
+            default -> FieldDefinitions.create(localNumber, size, field, baseType, name, scale, offset);
         };
-    }
-
-    interface FieldDefinitionCreator {
-        default FieldDefinition create(int localNumber, int size, BaseType baseType, String name, int scale, int offset) {
-            throw new UnsupportedOperationException();
-        }
     }
 }

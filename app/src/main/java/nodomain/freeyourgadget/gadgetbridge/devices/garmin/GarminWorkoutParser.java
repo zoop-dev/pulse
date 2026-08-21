@@ -863,7 +863,7 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
             } else {
                 WaterType waterType = diveSettings.getWaterType();
                 if (waterType != null) {
-                    summaryData.add(WATER_TYPE, context.getString(waterType.nameResId));
+                    summaryData.add(WATER_TYPE, context.getString(waterType.label));
                 }
             }
         }
@@ -1006,7 +1006,7 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
                 BatteryStatus rawStatus = deviceInfo.getBatteryStatus();
                 @Nullable final String status;
                 if (rawStatus != null) {
-                    status = context.getString(rawStatus.nameResId);
+                    status = context.getString(rawStatus.label);
                 } else {
                     status = null;
                 }
@@ -1094,7 +1094,7 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
                             "set_" + i,
                             Arrays.asList(
                                     new ActivitySummaryValue(i, UNIT_NONE),
-                                    new ActivitySummaryValue(category != null ? context.getString(category.nameResId) : null, UNIT_NONE),
+                                    new ActivitySummaryValue(category != null ? context.getString(category.label) : null, UNIT_NONE),
                                     new ActivitySummaryValue(set.getRepetitions() != null ? String.valueOf(set.getRepetitions()) : null),
                                     new ActivitySummaryValue(set.getWeight(), weightUnit),
                                     new ActivitySummaryValue(set.getDuration().longValue(), UNIT_SECONDS)
@@ -1186,7 +1186,7 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
 
                 row.add(new ActivitySummaryValue(i, UNIT_NONE));
                 if (anySwimmingLaps) {
-                    row.add(new ActivitySummaryValue(lap.getSwimStyle() != null ? context.getString(lap.getSwimStyle().nameResId) : null, UNIT_NONE));
+                    row.add(new ActivitySummaryValue(lap.getSwimStyle() != null ? context.getString(lap.getSwimStyle().label) : null, UNIT_NONE));
                     row.add(new ActivitySummaryValue(lap.getTotalDistance(), UNIT_METERS));
                 } else {
                     row.add(new ActivitySummaryValue(lap.getTotalDistance(), UNIT_METERS));

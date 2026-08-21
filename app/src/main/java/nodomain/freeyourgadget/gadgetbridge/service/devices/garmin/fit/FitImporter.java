@@ -253,7 +253,7 @@ public class FitImporter {
                 LOG.trace("Sleep stage at {}: {}", ts, fitSleepStage);
                 final GarminSleepStageSample sample = new GarminSleepStageSample();
                 sample.setTimestamp(ts * 1000L);
-                sample.setStage(stage.id);
+                sample.setStage(stage.num);
                 sleepStageSamples.add(sample);
             } else if (record instanceof FitNap nap) {
                 if (nap.getStartTimestamp() == null || nap.getEndTimestamp() == null) {
@@ -364,7 +364,7 @@ public class FitImporter {
                 }
                 final HrvStatus status = hrvSummary.getStatus();
                 if (status != null) {
-                    sample.setStatusNum(status.id);
+                    sample.setStatusNum(status.num);
                 }
                 hrvSummarySamples.add(sample);
             } else if (record instanceof FitHrvValue hrvValue) {

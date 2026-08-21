@@ -16,7 +16,7 @@ public class FieldDefinitionExerciseCategory extends FieldDefinition {
 
     public static ExerciseCategory fromId(final int id) {
         for (final ExerciseCategory candidate : ExerciseCategory.values()) {
-            if (id == candidate.id) {
+            if (id == candidate.num) {
                 return candidate;
             }
         }
@@ -37,7 +37,7 @@ public class FieldDefinitionExerciseCategory extends FieldDefinition {
     @Override
     public void encode(ByteBuffer byteBuffer, Object o) {
         if (o instanceof ExerciseCategory exerciseCategory) {
-            baseType.encode(byteBuffer, exerciseCategory.id, scale, offset);
+            baseType.encode(byteBuffer, exerciseCategory.num, scale, offset);
             return;
         }
         baseType.encode(byteBuffer, o, scale, offset);
