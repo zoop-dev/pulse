@@ -17,7 +17,6 @@
 package nodomain.freeyourgadget.gadgetbridge.service.devices.una
 
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions
-import nodomain.freeyourgadget.gadgetbridge.devices.una.UnaConstants
 import org.junit.Assert.assertArrayEquals
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -78,29 +77,16 @@ class UnaFtsProtocolTest {
     }
 
     @Test
-    fun readChunkSizeFor_usesEveryByteTheLinkCanCarry() {
-        // 16-byte FTS header plus ATT's 3, so capacity is mtu - 19.
-        assertEquals(81, UnaFtsProtocol.readChunkSizeFor(100))
-        assertEquals(181, UnaFtsProtocol.readChunkSizeFor(200))
-    }
+    fun buildReadPacingRequest_carriesStatusOkAndNoPath() {
+        val request = UnaFtsProtocol.buildReadPacingRequest(offset = 4096, chunkLen = 4096)
 
-    @Test
-    fun readChunkSizeFor_neverExceedsCapacityAtTheMinimumMtu() {
-        // The BLE minimum of 23 leaves 4 bytes. Asking for more advertises data the notification
-        // cannot carry and hangs the read, so nothing may raise the result above capacity.
-        assertEquals(4, UnaFtsProtocol.readChunkSizeFor(23))
-    }
-
-    @Test
-    fun readChunkSizeFor_isCappedAtTheMaximum() {
-        // A large MTU could carry more, but the cap is the largest chunk this supports.
-        assertEquals(UnaConstants.MAX_READ_CHUNK_SIZE, UnaFtsProtocol.readChunkSizeFor(517))
-        assertEquals(UnaConstants.MAX_READ_CHUNK_SIZE, UnaFtsProtocol.readChunkSizeFor(220))
-    }
-
-    @Test
-    fun readChunkSizeFor_staysPositiveForNonsensicalInput() {
-        assertEquals(1, UnaFtsProtocol.readChunkSizeFor(0))
+        assertEquals(0x12, request[0].toInt() and 0xFF)
+        assertEquals(0x01, request[1].toInt())
+        assertEquals(0, request[2].toInt())
+        assertEquals(0, request[3].toInt())
+        assertEquals(4096, BLETypeConversions.toUint32(request, 4))
+        assertEquals(4096, BLETypeConversions.toUint32(request, 8))
+        assertEquals(12, request.size)
     }
 
     @Test
@@ -119,8 +105,7 @@ class UnaFtsProtocolTest {
 
     @Test
     fun parseReadChunk_realCapturedChunkWith32BitTotal() {
-        // Real captured 0x11 response mid-transfer: offset=46080, total=177756 (a 32-bit field,
-        // not 16-bit as first assumed). chunkLen=128, no payload bytes appended here.
+        // Captured mid-transfer: offset=46080, total=177756 in a 32-bit field.
         val raw = hexToByteArray("1101000000b400005cb6020080000000") + ByteArray(128)
         val chunk = UnaFtsProtocol.parseReadChunk(raw)
         assertEquals(46080, chunk?.offset)
@@ -135,17 +120,45 @@ class UnaFtsProtocolTest {
     }
 
     @Test
-    fun parseReadChunk_rejectsShortPayload() {
-        // Header claims a 128-byte chunk but only 4 bytes follow.
-        val raw = hexToByteArray("1101000000000000800000008000000000000000")
-        assertNull(UnaFtsProtocol.parseReadChunk(raw))
+    fun parseReadChunk_keepsTheBytesDeliveredWhenTheHeaderAdvertisesMore() {
+        // Captured: header advertises 204, notification carries 201.
+        val raw = hexToByteArray("11010000" + "00000000" + "e0f70000" + "cc000000") + ByteArray(201)
+        val chunk = UnaFtsProtocol.parseReadChunk(raw)
+        assertEquals(0, chunk?.offset)
+        assertEquals(63456, chunk?.total)
+        assertEquals(201, chunk?.payload?.size)
+        assertTrue(chunk!!.deliveredLessThanAdvertised)
     }
 
     @Test
-    fun parseReadChunk_rejectsHugeChunkLenWithoutOverflowing() {
-        // chunkLen = 0xFFFFFFF0 (a corrupted/hostile value, never sent by real firmware). Naively
-        // adding this to the 16-byte header size wraps a signed 32-bit Int negative, which would
-        // defeat the truncation check below and crash copyOfRange instead of returning null.
+    fun parseReadChunk_detectsAShortfallOfASingleByte() {
+        val short = hexToByteArray("11010000" + "00000000" + "e0f70000" + "cc000000") + ByteArray(203)
+        assertTrue(UnaFtsProtocol.parseReadChunk(short)!!.deliveredLessThanAdvertised)
+        val exact = hexToByteArray("11010000" + "00000000" + "e0f70000" + "cc000000") + ByteArray(204)
+        assertFalse(UnaFtsProtocol.parseReadChunk(exact)!!.deliveredLessThanAdvertised)
+    }
+
+    @Test
+    fun parseReadChunk_acceptsAHeaderSizedToItsOwnNotification() {
+        val raw = hexToByteArray("1101000000b400005cb6020080000000") + ByteArray(128)
+        assertFalse(UnaFtsProtocol.parseReadChunk(raw)!!.deliveredLessThanAdvertised)
+    }
+
+    @Test
+    fun parseReadChunk_rejectsHeaderWithNoPayload() {
+        assertNull(UnaFtsProtocol.parseReadChunk(hexToByteArray("11010000000000008000000080000000")))
+    }
+
+    @Test
+    fun parseReadChunk_clampsAChunkLenThatOverflowsASignedInt() {
+        val raw = hexToByteArray("11 01 00 00 00 00 00 00 00 00 00 00 f0 ff ff ff") + ByteArray(4)
+        val chunk = UnaFtsProtocol.parseReadChunk(raw)
+        assertEquals(4, chunk?.payload?.size)
+        assertTrue(chunk!!.deliveredLessThanAdvertised)
+    }
+
+    @Test
+    fun parseReadChunk_rejectsAnOverflowingChunkLenWithNothingBehindIt() {
         val raw = hexToByteArray("11 01 00 00 00 00 00 00 00 00 00 00 f0 ff ff ff")
         assertNull(UnaFtsProtocol.parseReadChunk(raw))
     }

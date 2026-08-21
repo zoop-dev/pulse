@@ -98,8 +98,8 @@ class UnaDeviceSupport : AbstractBTLESingleDeviceSupport(LOG) {
     private var draining = false
     private val pendingManifestPaths = ArrayDeque<String>()
     private var currentReadPath: String? = null
-    private var currentReadChunks = mutableMapOf<Int, ByteArray>()
     private var currentReadKind = ReadKind.MANIFEST
+    private var currentReadWindow = UnaReadWindow(UnaConstants.READ_WINDOW_SIZE)
     private val pendingHealthFileDays = ArrayDeque<Calendar>()
     private var currentHealthFileDay: Calendar? = null
     private val pendingHealthDays = ArrayDeque<Calendar>()
@@ -140,8 +140,8 @@ class UnaDeviceSupport : AbstractBTLESingleDeviceSupport(LOG) {
         draining = false
         pendingManifestPaths.clear()
         currentReadPath = null
-        currentReadChunks = mutableMapOf()
         currentReadKind = ReadKind.MANIFEST
+        currentReadWindow = UnaReadWindow(UnaConstants.READ_WINDOW_SIZE)
         pendingHealthFileDays.clear()
         currentHealthFileDay = null
         pendingHealthDays.clear()
@@ -151,7 +151,6 @@ class UnaDeviceSupport : AbstractBTLESingleDeviceSupport(LOG) {
 
         builder.setDeviceState(GBDevice.State.INITIALIZING)
 
-        // See UnaFtsProtocol.readChunkSizeFor(); the granted value bounds every read.
         builder.requestMtu(UnaConstants.MTU_REQUEST)
 
         deviceInfoProfile.requestDeviceInfo(builder)
@@ -274,16 +273,21 @@ class UnaDeviceSupport : AbstractBTLESingleDeviceSupport(LOG) {
 
     private fun startReadFile(path: String, kind: ReadKind) {
         currentReadPath = path
-        currentReadChunks = mutableMapOf()
         currentReadKind = kind
-        requestChunk(path, 0)
-    }
-
-    private fun requestChunk(path: String, offset: Int) {
-        val builder = createTransactionBuilder("read $path @ $offset")
+        currentReadWindow = UnaReadWindow(UnaConstants.READ_WINDOW_SIZE)
+        val builder = createTransactionBuilder("read $path")
         builder.write(
             UnaConstants.UUID_CHARACTERISTIC_FTS,
-            *UnaFtsProtocol.buildReadRequest(path, offset, UnaFtsProtocol.readChunkSizeFor(mtu)),
+            *UnaFtsProtocol.buildReadRequest(path, 0, UnaConstants.READ_WINDOW_SIZE),
+        )
+        builder.queue()
+    }
+
+    private fun requestNextWindow(offset: Int) {
+        val builder = createTransactionBuilder("read window @ $offset")
+        builder.write(
+            UnaConstants.UUID_CHARACTERISTIC_FTS,
+            *UnaFtsProtocol.buildReadPacingRequest(offset, UnaConstants.READ_WINDOW_SIZE),
         )
         builder.queue()
     }
@@ -375,17 +379,22 @@ class UnaDeviceSupport : AbstractBTLESingleDeviceSupport(LOG) {
             LOG.warn("Got a read chunk with no pending read: offset={} total={}", chunk.offset, chunk.total)
             return
         }
-        currentReadChunks[chunk.offset] = chunk.payload
-        val nextOffset = chunk.offset + chunk.payload.size
-        if (nextOffset < chunk.total) {
-            requestChunk(path, nextOffset)
-            return
+        val window = currentReadWindow
+        when (window.accept(chunk)) {
+            UnaReadWindow.Next.WAIT -> Unit
+            UnaReadWindow.Next.REQUEST_NEXT_WINDOW -> requestNextWindow(window.firstByteNotHeld)
+            UnaReadWindow.Next.COMPLETE -> {
+                LOG.debug(
+                    "Read {} ({} bytes) in {} notifications over {} requests, shortDelivery={}",
+                    path,
+                    window.firstByteNotHeld,
+                    window.notifications,
+                    window.requests,
+                    window.sawShortDelivery,
+                )
+                onFileReadComplete(path, window.assemble())
+            }
         }
-        val bytes = ByteArray(chunk.total)
-        for ((offset, payload) in currentReadChunks) {
-            System.arraycopy(payload, 0, bytes, offset, payload.size)
-        }
-        onFileReadComplete(path, bytes)
     }
 
     private fun onFileReadComplete(path: String, bytes: ByteArray) {

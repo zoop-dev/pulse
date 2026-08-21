@@ -22,6 +22,7 @@
 * Optionally order disconnected devices by their most recent connection instead of by name
 * Rate limit the serialization of incoming CoMaps navigation messages
 * UNA Watch: Connection improvements
+* UNA Watch: Faster workout and health sync
 * UNA Watch: Per-minute heart rate and honest daily totals
 * WeatherSpec: Add atmospheric pressure, cloud cover and dew point forecasts
 * Zepp OS: Add some missing display items and shortcut cards

@@ -30,15 +30,11 @@ object UnaConstants {
     const val CMD_LIST_DIR: Int = 0x50
     const val RESP_LIST_ENTRY: Int = 0x51
 
-    // Whole-file read: 0x10 request per chunk, 0x11 response. The documented flow uses 0x12
-    // (READ_PACING) for chunks after the first, which avoids re-sending the path; repeating 0x10
-    // is what has been tested end to end here and the firmware accepts it for every chunk.
     const val CMD_READ: Int = 0x10
     const val RESP_READ_CHUNK: Int = 0x11
+    const val CMD_READ_PACING: Int = 0x12
 
-    // Upper bound on a read chunk. The usable size depends on the negotiated MTU, so
-    // UnaFtsProtocol.readChunkSizeFor() derives it per connection and this only ever lowers it.
-    const val MAX_READ_CHUNK_SIZE: Int = 200
+    const val READ_WINDOW_SIZE: Int = 4096
 
     // Without this the link can sit on the 23-byte default, roughly tenfold more round trips.
     const val MTU_REQUEST: Int = 247

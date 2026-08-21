@@ -25,8 +25,12 @@ data class UnaFtsListEntry(val index: Int, val total: Int, val attr: Int, val na
     val isDirectory: Boolean get() = (attr and 0x1) != 0
 }
 
-/** One chunk of a whole-file read (0x10/0x12 request, 0x11 response). */
-data class UnaFtsReadChunk(val offset: Int, val total: Int, val payload: ByteArray)
+data class UnaFtsReadChunk(
+    val offset: Int,
+    val total: Int,
+    val payload: ByteArray,
+    val deliveredLessThanAdvertised: Boolean,
+)
 
 /**
  * Wire encoding for FTS. No BLE or Android dependencies, so it is testable directly against
@@ -34,30 +38,11 @@ data class UnaFtsReadChunk(val offset: Int, val total: Int, val payload: ByteArr
  */
 object UnaFtsProtocol {
     private const val LIST_ENTRY_HEADER_SIZE = 28
-    /** Bytes of `0x11` header before the payload, which a chunk size must leave room for. */
     const val READ_CHUNK_HEADER_SIZE = 16
+    private const val STATUS_OK = 0x01
 
-    /** ATT's own per-notification overhead, which the MTU has to cover alongside the payload. */
-    private const val ATT_NOTIFICATION_OVERHEAD = 3
-
-    /**
-     * Largest chunk one notification can carry at [mtu]. The firmware returns the requested bytes
-     * behind a 16-byte header in a single notification, so the frame must fit the MTU less ATT's
-     * three bytes.
-     *
-     * `mtu - 19` is the real limit, not a safety margin. Above it the firmware replies with a
-     * header advertising more bytes than the notification carries and never sends the remainder,
-     * so a client that believes the header waits forever
-     * (https://github.com/UNAWatch/una-sdk/issues/272).
-     *
-     * Clamping is therefore one-directional: [UnaConstants.MAX_READ_CHUNK_SIZE] may lower the
-     * result but nothing may raise it, since anything above capacity hangs. A link too small to
-     * carry a useful chunk reads slowly rather than incorrectly.
-     */
-    fun readChunkSizeFor(mtu: Int): Int =
-        (mtu - ATT_NOTIFICATION_OVERHEAD - READ_CHUNK_HEADER_SIZE)
-            .coerceAtMost(UnaConstants.MAX_READ_CHUNK_SIZE)
-            .coerceAtLeast(1)
+    private fun uint32AsLong(data: ByteArray, offset: Int): Long =
+        BLETypeConversions.toUint32(data, offset).toLong() and 0xFFFFFFFFL
 
     /** 0x50 00 <path_len:u16LE> <path>. */
     fun buildListRequest(path: String): ByteArray {
@@ -67,7 +52,7 @@ object UnaFtsProtocol {
             pathBytes
     }
 
-    /** 0x10 00 <path_len:u16LE> <offset:u32LE> <chunk_len:u32LE> <path>, one request per chunk. */
+    /** 0x10 00 <path_len:u16LE> <offset:u32LE> <chunk_len:u32LE> <path>. */
     fun buildReadRequest(path: String, offset: Int, chunkLen: Int): ByteArray {
         val pathBytes = path.toByteArray(Charsets.US_ASCII)
         return byteArrayOf(UnaConstants.CMD_READ.toByte(), 0) +
@@ -76,6 +61,12 @@ object UnaFtsProtocol {
             BLETypeConversions.fromUint32(chunkLen) +
             pathBytes
     }
+
+    /** 0x12 01 0000 <offset:u32LE> <chunk_len:u32LE>. */
+    fun buildReadPacingRequest(offset: Int, chunkLen: Int): ByteArray =
+        byteArrayOf(UnaConstants.CMD_READ_PACING.toByte(), STATUS_OK.toByte(), 0, 0) +
+            BLETypeConversions.fromUint32(offset) +
+            BLETypeConversions.fromUint32(chunkLen)
 
     /**
      * Parses a 0x51 list-entry notification. Bytes 16-27 (mtime and/or reserved, not confirmed
@@ -92,17 +83,17 @@ object UnaFtsProtocol {
         return UnaFtsListEntry(index, total, attr, name)
     }
 
-    /** Parses a 0x11 read-chunk notification. Null if too short or the wrong opcode. */
+    /** Parses a 0x11 read-chunk notification, or null if it carries no usable payload. */
     fun parseReadChunk(data: ByteArray): UnaFtsReadChunk? {
         if (data.size < READ_CHUNK_HEADER_SIZE || (data[0].toInt() and 0xFF) != UnaConstants.RESP_READ_CHUNK) return null
         val offset = BLETypeConversions.toUint32(data, 4)
         val total = BLETypeConversions.toUint32(data, 8)
-        val chunkLen = BLETypeConversions.toUint32(data, 12)
-        // chunkLen is an untrusted wire-supplied u32 in a signed Int, so `HEADER + chunkLen` can
-        // wrap negative and defeat this check. Compare as unsigned in a Long instead.
-        val chunkLenUnsigned = chunkLen.toLong() and 0xFFFFFFFFL
-        if (data.size.toLong() < READ_CHUNK_HEADER_SIZE + chunkLenUnsigned) return null
-        val payload = data.copyOfRange(READ_CHUNK_HEADER_SIZE, READ_CHUNK_HEADER_SIZE + chunkLen)
-        return UnaFtsReadChunk(offset, total, payload)
+        val advertised = uint32AsLong(data, 12)
+        val delivered = (data.size - READ_CHUNK_HEADER_SIZE).toLong()
+        // Firmware can advertise more than it sends: https://github.com/UNAWatch/una-sdk/issues/272
+        val payloadLen = minOf(advertised, delivered).toInt()
+        if (payloadLen <= 0) return null
+        val payload = data.copyOfRange(READ_CHUNK_HEADER_SIZE, READ_CHUNK_HEADER_SIZE + payloadLen)
+        return UnaFtsReadChunk(offset, total, payload, deliveredLessThanAdvertised = advertised > payloadLen)
     }
 }
