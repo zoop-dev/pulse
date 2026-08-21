@@ -1178,7 +1178,7 @@ public class PebbleProtocol extends GBDeviceProtocol {
         short currentTemp = (short) (weatherSpec.getCurrentTemp() - 273);
 
         // for v4
-        short currentTempFeelsLike = (short) (weatherSpec.getFeelsLikeTemp());
+        short currentTempFeelsLike = (short) (weatherSpec.getFeelsLikeTemp() - 273);
         short currentUVIndex = (short) (weatherSpec.getUvIndex() * 10);
         short currentPrecipProbability = (short) weatherSpec.getPrecipProbability();
         short currentWindSpeed = (short) weatherSpec.getWindSpeed();
