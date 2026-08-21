@@ -64,6 +64,8 @@ import java.util.Locale
  * maintains, which avoids walking every app's Activity directory. Imported paths are remembered
  * locally; nothing is deleted or acknowledged on the watch.
  *
+ * A saved activity is announced on the CCS event characteristic and fetched immediately.
+ *
  * Health data is split by age, because the watch exposes the same data two ways:
  *
  *  - Past days come from `/DailyHealth/<YYYYMM>/dh_<YYYYMMDD>.json` over FTS. One read of about
@@ -164,6 +166,7 @@ class UnaDeviceSupport : AbstractBTLESingleDeviceSupport(LOG) {
 
         builder.notify(UnaConstants.UUID_CHARACTERISTIC_FTS, true)
         builder.notify(UnaConstants.UUID_CHARACTERISTIC_CCS_COMMAND, true)
+        builder.notify(UnaConstants.UUID_CHARACTERISTIC_CCS_EVENT, true)
 
         builder.setDeviceState(GBDevice.State.INITIALIZED)
         return builder
@@ -307,9 +310,22 @@ class UnaDeviceSupport : AbstractBTLESingleDeviceSupport(LOG) {
                 handleReadChunk(chunk)
             }
             UnaConstants.UUID_CHARACTERISTIC_CCS_COMMAND -> handleCcsResponse(value)
+            UnaConstants.UUID_CHARACTERISTIC_CCS_EVENT -> handleCcsEvent(value)
             else -> return super.onCharacteristicChanged(gatt, characteristic, value)
         }
         return true
+    }
+
+    /** Starts the same fetch the sync button does, unless one is already running. */
+    private fun handleCcsEvent(value: ByteArray) {
+        val saved = UnaCcsEventProtocol.parseActivitySaved(value)
+        if (saved == null) {
+            LOG.debug("Ignoring CCS event: {}", StringUtils.bytesToHex(value))
+            return
+        }
+        LOG.info("Watch saved an activity in app {}", saved.appIdHex)
+        if (draining) return
+        onFetchRecordedData(RecordedDataTypes.TYPE_ACTIVITY)
     }
 
     /**

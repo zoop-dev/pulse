@@ -44,10 +44,13 @@ object UnaConstants {
     // calendar day, and 60 per-minute heart rates for one hour. CCS also carries find-phone, reset,
     // EPO and firmware update, none of which are implemented.
     //
-    // -0001- takes commands and answers them. -0002- is notify-only, carrying watch to phone events
-    // such as activity-ended and find-phone, and is unused here.
+    // -0001- takes commands and answers them. -0002- is notify-only and carries watch to phone
+    // events.
     val UUID_SERVICE_CCS: UUID = UUID.fromString("554e4100-a2cf-4df8-0000-7e1e48595106")
     val UUID_CHARACTERISTIC_CCS_COMMAND: UUID = UUID.fromString("554e4100-a2cf-4df8-0001-7e1e48595106")
+    val UUID_CHARACTERISTIC_CCS_EVENT: UUID = UUID.fromString("554e4100-a2cf-4df8-0002-7e1e48595106")
+
+    const val EVENT_ACTIVITY_SAVED: Int = 0x01
 
     const val CMD_DAILY_HEALTH: Int = 0x10
     const val CMD_HOURLY_HR: Int = 0x14
