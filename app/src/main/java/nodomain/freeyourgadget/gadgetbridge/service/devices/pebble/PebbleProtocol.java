@@ -1178,7 +1178,6 @@ public class PebbleProtocol extends GBDeviceProtocol {
         short currentTemp = (short) (weatherSpec.getCurrentTemp() - 273);
 
         // for v4
-
         short currentTempFeelsLike = (short) (weatherSpec.getFeelsLikeTemp());
         short currentUVIndex = (short) (weatherSpec.getUvIndex() * 10);
         short currentPrecipProbability = (short) weatherSpec.getPrecipProbability();
@@ -1237,7 +1236,7 @@ public class PebbleProtocol extends GBDeviceProtocol {
         buf.putShort(tomorrowMax);
         buf.putShort(tomorrowMin);
         buf.putInt(weatherSpec.getTimestamp());
-        buf.put((byte) 0); // is_current_location FIXME: do something with it
+        buf.put((byte) (weatherSpec.isCurrentLocation() == 1 ? 1 : 0));
         if (version == 4) {
             int forecast_days = 0;
             if (!weatherSpec.getForecasts().isEmpty()) {
