@@ -4859,4 +4859,8 @@
     <string name="upload_music">上传音乐</string>
     <string name="six_months">6 个月</string>
     <string name="add_widget_screen">添加小部件屏幕</string>
+    <string name="pref_title_general_prefs_key_sort_by_last_connected_ts">按最近连接日期排序</string>
+    <string name="pref_summary_general_prefs_key_sort_by_last_connected_ts">按未连接设备最近连接时间，而非名称字母顺序对它们进行排序</string>
+    <string name="menuitem_zepp_os_wake_hybridcharge">唤醒 HybridCharge</string>
+    <string name="menuitem_training_calendar">训练日历</string>
 </resources>
