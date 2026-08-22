@@ -1,6 +1,6 @@
 /*  Copyright (C) 2016-2026 Andreas Shimokawa, Arjan Schrijver, beardhatcode,
     Carsten Pfeiffer, Daniele Gobbetti, Enrico Brambilla, José Rebelo, Taavi
-    Eomäe, Avery Sterk
+    Eomäe, Avery Sterk, Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -480,22 +480,51 @@ class WeatherSpec() : Parcelable {
     }
 
     class Daily() : Parcelable {
-        var minTemp: Int = 0 // Kelvin
-        var maxTemp: Int = 0 // Kelvin
-        var conditionCode: Int = 0 // OpenWeatherMap condition code
+        /** minimum air temperature in Kelvin */
+        var minTemp: Int = 0
+
+        /** maximum air temperature in Kelvin */
+        var maxTemp: Int = 0
+
+        /** OpenWeatherMap condition code */
+        var conditionCode: Int = 0
+
+        /** relative humidity in percent */
         var humidity: Int = 0
-        var windSpeed: Float = 0f // km per hour
-        var windDirection: Int = 0 // deg
-        var uvIndex: Float = 0f // 0.0 to 15.0
-        var precipProbability: Int = 0 // %
+
+        /** wind speed in kilometer per hour */
+        var windSpeed: Float = 0f
+
+        /** wind direction in [0 - 360[ degrees */
+        var windDirection: Int = 0
+
+        /** UV index (0-15) */
+        var uvIndex: Float = 0f
+
+        /** total precipitation probability in percent */
+        var precipProbability: Int = 0
+
+        /** sun rise in Unix epoc seconds */
         var sunRise: Int = 0
+
+        /** sun set in Unix epoc seconds */
         var sunSet: Int = 0
+
+        /** moon rise in Unix epoc seconds */
         var moonRise: Int = 0
+
+        /** moon set in Unix epoc seconds */
         var moonSet: Int = 0
+
+        /** moon phase in degree */
         var moonPhase: Int = 0
         var airQuality: AirQuality? = null
-        var pressure: Float = 0f // mbar
-        var cloudCover: Int = 0 // %
+
+        /** atmospheric air pressure in millibar */
+        var pressure: Float = 0f
+
+        /** total cloud cover in percent */
+        var cloudCover: Int = 0
 
 
         internal constructor(parcel: Parcel) : this() {
@@ -610,17 +639,38 @@ class WeatherSpec() : Parcelable {
     }
 
     class Hourly() : Parcelable {
-        var timestamp: Int = 0 // unix epoch timestamp, in seconds
-        var temp: Int = 0 // Kelvin
-        var conditionCode: Int = 0 // OpenWeatherMap condition code
+        /** Unix epoch timestamp in seconds */
+        var timestamp: Int = 0
+
+        /** air temperature in Kelvin */
+        var temp: Int = 0
+
+        /** OpenWeatherMap condition code */
+        var conditionCode: Int = 0
+
+        /** relative humididty in percent */
         var humidity: Int = 0
-        var windSpeed: Float = 0f // km per hour
-        var windDirection: Int = 0 // deg
-        var uvIndex: Float = 0f // 0.0 to 15.0
-        var precipProbability: Int = 0 // %
-        var dewPoint: Int = 0 // Kelvin
-        var pressure: Float = 0f // millibar
-        var cloudCover: Int = 0 // percent
+
+        /** wind speed in kilometer per hour */
+        var windSpeed: Float = 0f
+
+        /** wind direction in [0 - 360[ degrees */
+        var windDirection: Int = 0
+
+        /** UV index (0-15) */
+        var uvIndex: Float = 0f
+
+        /** total precipitation probability in percent */
+        var precipProbability: Int = 0
+
+        /** dew point in Kelvin */
+        var dewPoint: Int = 0
+
+        /** atmospheric air pressure in millibar */
+        var pressure: Float = 0f
+
+        /** total cloud cover in percent */
+        var cloudCover: Int = 0
 
 
         internal constructor(parcel: Parcel) : this() {
@@ -797,18 +847,21 @@ class WeatherSpec() : Parcelable {
             weather.currentConditionCode = conditionCode
             weather.currentCondition = conditionText
 
-            weather.windDirection = 12
-            weather.precipProbability = 99
-            weather.windSpeed = 10f
+            weather.windDirection = Random.nextInt(0, 359)
+            weather.precipProbability = Random.nextInt(0, 100)
+            weather.windSpeed = Random.nextInt(0, 300) / 3.0f
             weather.feelsLikeTemp = weather.currentTemp + Random.nextInt(-5, 5)
             weather.currentHumidity = Random.nextInt(20, 80)
-            weather.latitude = 38.250137f
-            weather.longitude = -122.410805f
-            weather.dewPoint = weather.currentTemp - Random.nextInt(5, 10)
+            weather.latitude = Random.nextFloat() * 360.0f - 180.0f
+            weather.longitude = Random.nextFloat() * 360.0f - 180.0f
+            weather.dewPoint = weather.currentTemp + Random.nextInt(-10, 10)
+            weather.cloudCover = Random.nextInt(0, 100)
+            weather.visibility = Random.nextInt(0, 10000).toFloat()
+            weather.uvIndex = Random.nextInt(0, 30) / 2.0f
+            weather.pressure = 1010.0f + Random.nextInt(-30, 31)
             val airQuality = AirQuality()
             airQuality.aqi = 50
             weather.airQuality = airQuality
-            weather.currentHumidity = 30
 
             weather.hourly = ArrayList()
             var hourlyTimestamp = weather.timestamp + 3600
@@ -843,6 +896,11 @@ class WeatherSpec() : Parcelable {
 
                 val (conditionCode, conditionText) = conditions.random()
                 gbForecast.conditionCode = conditionCode
+
+                gbForecast.humidity = 10 * (i + 1)
+                gbForecast.windSpeed = 5.0f * (i + 1)
+                gbForecast.windDirection = 45 * (i + 1)
+                gbForecast.uvIndex = i.toFloat()
 
                 gbForecast.precipProbability = 50 + i
                 val airQualityDaily = AirQuality()
