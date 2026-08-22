@@ -785,6 +785,9 @@ public class WorkoutSummaryParser extends XiaomiActivityParser implements Activi
             case 7:
                 headerSize = 5;
                 break;
+            case 8:
+                headerSize = 6;
+                break;
             default:
                 LOG.warn("Unable to parse rowing summary version {}", fileId.getVersion());
                 return null;
@@ -817,6 +820,13 @@ public class WorkoutSummaryParser extends XiaomiActivityParser implements Activi
         builder.addInt(HR_ZONE_AEROBIC, UNIT_SECONDS);
         builder.addInt(HR_ZONE_FAT_BURN, UNIT_SECONDS);
         builder.addInt(HR_ZONE_WARM_UP, UNIT_SECONDS);
+        if (version >= 8) {
+            // v8 inserts five bytes here. Confirmed on a rowing v8 file: without the padding
+            // the stroke fields land on nonsense (318767104 strokes), with it they read 46
+            // strokes at 18 average and 27 maximum strokes per minute, which is consistent
+            // with 46 strokes over the 147 recorded seconds.
+            builder.addUnknown(5);
+        }
         if (version >= 7) {
             // totalCal (active + basal). Decoded as 94 kcal for a workout whose
             // CALORIES_BURNT (active) = 70 kcal — diff 24 kcal over 872 s matches basal

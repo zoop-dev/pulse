@@ -64,6 +64,12 @@ public class WorkoutSummaryParserTest {
                     + "AAwEAABkBTAQAABoAAAApAAAAAAAAAAAAAAAAAAAAAd0JAADNzIw/AAAAAAAAAAAAAABN"
                     + "AAMAAAusxH0=";
 
+    /** Rowing v8, 22 Aug 2026 — 46 strokes at 18 average, 27 maximum. */
+    private static final String ROWING_V8_22AUG =
+            "JaCJaggItQD/v/+b8X8loIlquaCJapMAAAAOAIGRapqZmT4BAAAAAAAAAAAAAAAzAAAAOwA"
+                    + "AACUAAAAAAAAAABMALgAAABIAAAAbAAAAAAAAAAAAAAAAAAAAAZMAAAAAAAAAAQAAAAAAAA"
+                    + "AAAAAAAAAAAAIAAAAAAAB+WRxL";
+
     /** Freestyle v10, 17 Mar 2026 — frisbee workout, 105/93/7 throws low/medium/high. */
     private static final String FREESTYLE_V10_FRISBEE =
             "HIK5aQQKoQD+Bv7/wHccgrlpcJO5aVMRAABwAZG8WgAAAAAAAAAAgEAAACMAWgEAAEIEAAA"
@@ -168,5 +174,33 @@ public class WorkoutSummaryParserTest {
         // ActivitySummaryData; the override is verified indirectly by the workout-type
         // mapping in XiaomiWorkoutType.fromCode). Throws-force values are the parser-level
         // assertion.
+    }
+
+    /**
+     * Rowing v8 inserts five bytes after the heart rate zones compared to v7. Without that
+     * padding the stroke fields decode to nonsense, so assert the ones that can be checked
+     * against each other: the zones must add up to the active seconds, and the stroke count
+     * must be consistent with the average rate over that time.
+     */
+    @Test
+    public void rowingV8_extractsStrokesAndZones() {
+        final ActivitySummaryData data = parse(ROWING_V8_22AUG);
+
+        assertEquals(147, num(data, ActivitySummaryEntries.ACTIVE_SECONDS), 0.001);
+        assertEquals(129, num(data, ActivitySummaryEntries.HR_AVG), 0.001);
+        assertEquals(145, num(data, ActivitySummaryEntries.HR_MAX), 0.001);
+        assertEquals(106, num(data, ActivitySummaryEntries.HR_MIN), 0.001);
+
+        assertEquals(46, num(data, ActivitySummaryEntries.STROKES), 0.001);
+        assertEquals(18, num(data, ActivitySummaryEntries.STROKE_RATE_AVG), 0.001);
+        assertEquals(27, num(data, ActivitySummaryEntries.STROKE_RATE_MAX), 0.001);
+
+        final double zones = num(data, ActivitySummaryEntries.HR_ZONE_EXTREME)
+                + num(data, ActivitySummaryEntries.HR_ZONE_ANAEROBIC)
+                + num(data, ActivitySummaryEntries.HR_ZONE_AEROBIC)
+                + num(data, ActivitySummaryEntries.HR_ZONE_FAT_BURN)
+                + num(data, ActivitySummaryEntries.HR_ZONE_WARM_UP);
+        assertEquals("heart rate zones should add up to the active seconds",
+                num(data, ActivitySummaryEntries.ACTIVE_SECONDS), zones, 0.001);
     }
 }
