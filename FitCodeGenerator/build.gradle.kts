@@ -32,3 +32,15 @@ tasks.register<JavaExec>("genFit") {
         jvmArgs("-Dverbose=true")
     }
 }
+
+tasks.register<JavaExec>("formatFitProfileJson") {
+    inputs.dir("src")
+    outputs.dir("src/main/resources")
+
+    mainClass = "nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.codegen.FormatFitProfileJson"
+    args(project.file("src/main/resources/fit_profile.json").absolutePath)
+    classpath = sourceSets.main.get().runtimeClasspath
+    if (gradle.startParameter.logLevel <= LogLevel.INFO) {
+        jvmArgs("-Dverbose=true")
+    }
+}

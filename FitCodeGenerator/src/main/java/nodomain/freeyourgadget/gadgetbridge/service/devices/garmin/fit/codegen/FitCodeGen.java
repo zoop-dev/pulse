@@ -26,7 +26,6 @@ import org.json.JSONTokener;
 
 import java.io.File;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Reader;
@@ -172,11 +171,12 @@ public enum FitCodeGen {
             """;
 
     private static int FILE_WRITTEN_COUNTER = 0;
+    protected static final String DEFAULT_INPUT_PATH = "FitCodeGenerator/src/main/resources/fit_profile.json";
 
     public static void main(final String[] args) throws Exception {
         final long startTime = System.currentTimeMillis();
 
-        final String pathToJson = (args.length > 0) ? args[0] : "FitCodeGenerator/src/main/resources/fit_profile.json";
+        final String pathToJson = (args.length > 0) ? args[0] : DEFAULT_INPUT_PATH;
         final String pathToOutput = (args.length > 1) ? args[1] : "app/build/generated/sources/fit/nodomain/freeyourgadget/gadgetbridge/service/devices/garmin/fit/";
         final String pathToManual = (args.length > 2) ? args[2] : "app/src/main/java/nodomain/freeyourgadget/gadgetbridge/service/devices/garmin/fit/";
 
@@ -188,14 +188,6 @@ public enum FitCodeGen {
         final SortedSet<FitDevice> devices = new TreeSet<>();
         try (final FileReader reader = new FileReader(jsonFile, StandardCharsets.UTF_8)) {
             readJson(reader, messages, enumerations, devices);
-        }
-
-        if (false) {
-            // only used for mass updates to fit_profile.json
-            //modifyProfile(messages, enumerations);
-            try (Writer writer = new FileWriter(jsonFile, StandardCharsets.UTF_8)) {
-                writeJSon(writer, messages, enumerations, devices);
-            }
         }
 
         final File messagesTarget = new File(outputDir, "messages").getAbsoluteFile();
@@ -436,7 +428,7 @@ public enum FitCodeGen {
         fileWritten(nativeFile);
     }
 
-    private static void readJson(final Reader reader, final Collection<FitMessage> messages, final Collection<FitEnum> enumerations, SortedSet<FitDevice> devices) {
+    static void readJson(final Reader reader, final Collection<FitMessage> messages, final Collection<FitEnum> enumerations, SortedSet<FitDevice> devices) {
         final JSONTokener tokenizer = new JSONTokener(reader);
         final JSONObject root = new JSONObject(tokenizer);
 
@@ -940,21 +932,8 @@ public enum FitCodeGen {
         return Collections.emptyList();
     }
 
-    private static void modifyProfile(final SortedSet<FitMessage> messages, final SortedSet<FitEnum> enumerations) throws Exception {
-        /*for (final FitMessage message : messages) {
-            for (final FitField field : message.fields) {
-                if ("TIMESTAMP".equals(field.type)) {
-                    field.UOM = "UNIT_SECONDS";
-                } else if (field.num == 253 && field.name == "timestamp") {
-                    field.type = "TIMESTAMP";
-                    field.UOM = "UNIT_SECONDS";
-                }
-            }
-        }*/
-    }
-
-    private static void writeJSon(final Writer writer, final SortedSet<FitMessage> messages,
-                                  final SortedSet<FitEnum> enums, final SortedSet<FitDevice> devices) throws IOException {
+    static void writeJSon(final Writer writer, final SortedSet<FitMessage> messages,
+                          final SortedSet<FitEnum> enums, final SortedSet<FitDevice> devices) throws IOException {
         try (JsonWriter o = new JsonWriter(writer)) {
             o.setSerializeNulls(true);
             o.setIndent("  ");
