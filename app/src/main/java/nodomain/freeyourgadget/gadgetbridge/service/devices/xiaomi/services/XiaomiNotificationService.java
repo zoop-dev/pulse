@@ -243,11 +243,16 @@ public class XiaomiNotificationService extends AbstractXiaomiService implements 
             return;
         }
 
-        final XiaomiProto.NotificationId notificationId = XiaomiProto.NotificationId.newBuilder()
+        final XiaomiProto.NotificationId.Builder notificationId = XiaomiProto.NotificationId.newBuilder()
                 .setId(id)
-                .setPackage(mNotificationPackageName.lookup(id))
-                .setKey(mNotificationKey.lookup(id))
-                .build();
+                .setPackage(mNotificationPackageName.lookup(id));
+
+        // Only notifications posted through NotificationListener carry a key, and the field is
+        // optional on the wire
+        final String key = mNotificationKey.lookup(id);
+        if (key != null) {
+            notificationId.setKey(key);
+        }
 
         final XiaomiProto.NotificationDismiss notificationDismiss = XiaomiProto.NotificationDismiss.newBuilder()
                 .addNotificationId(notificationId)
