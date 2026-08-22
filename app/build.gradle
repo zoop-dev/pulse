@@ -249,6 +249,12 @@ android {
         // AGP 9 defaults to false, but we still use it in the androidComponents.onVariants block below
         resValues = true
     }
+    packagingOptions {
+        // Unable to strip the following libraries, packaging them as they are.
+        // https://issuetracker.google.com/issues/353554169
+        jniLibs.keepDebugSymbols.add("**/libimage_processing_util_jni.so")
+        jniLibs.keepDebugSymbols.add("**/libsurface_util_jni.so")
+    }
 }
 
 androidComponents {
