@@ -35,6 +35,7 @@ import android.widget.Toast;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.slf4j.Logger;
@@ -1246,6 +1247,18 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
     @Nullable
     public String getAuthHelp() {
         return "https://gadgetbridge.org/basics/pairing/#authentication-key";
+    }
+
+    @Override
+    @Nullable
+    public String getSecondaryAuthKeyPref() {
+        return null;
+    }
+
+    @Override
+    @StringRes
+    public int getSecondaryAuthKeyHint() {
+        return 0;
     }
 
     @Override

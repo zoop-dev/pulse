@@ -1064,6 +1064,19 @@ public interface DeviceCoordinator {
     @Nullable
     String getAuthHelp();
 
+    /**
+     * Returns the preference key of a second credential this device needs alongside the auth key,
+     * or null if the auth key is enough. When set, the pairing screen asks for it as well.
+     */
+    @Nullable
+    String getSecondaryAuthKeyPref();
+
+    /**
+     * Returns the label to show for the second credential, if there is one.
+     */
+    @StringRes
+    int getSecondaryAuthKeyHint();
+
     List<DeviceCardAction> getCustomActions();
 
     DeviceKind getDeviceKind(@NonNull final GBDevice device);
