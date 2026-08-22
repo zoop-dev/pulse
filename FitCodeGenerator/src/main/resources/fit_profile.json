@@ -82,12 +82,14 @@
         {"num":95,"name":"smart_notification_display_orientation","base":"ENUM"},
         {"num":98,"name":"wifi_enabled","base":"ENUM"},
         {"num":101,"name":"goal_notification","base":"ENUM"},
+        {"num":108,"name":"detect_max_hr","base":"ENUM"},
         {"num":116,"name":"lock_on_road","base":"ENUM"},
         {"num":117,"name":"map_show_details","base":"ENUM"},
         {"num":129,"name":"marine_chart_mode","base":"ENUM"},
         {"num":132,"name":"marine_symbols","base":"ENUM"},
         {"num":133,"name":"software_auto_update","base":"ENUM"},
         {"num":134,"name":"tap_interface","base":"ENUM"},
+        {"num":138,"name":"hourly_alert","base":"ENUM"},
         {"num":141,"name":"spo2_mode","base":"UINT8"},
         {"num":142,"name":"low_spo2_threshold","base":"UINT8","UOM":"PERCENT"},
         {"num":144,"name":"activity_true_up","base":"ENUM"},
@@ -2486,6 +2488,14 @@
       ]
     },
     {
+      "num": 284,
+      "name": "METRIC_RECOVERY",
+      "fields": [
+        {"num":0,"name":"recovery_minutes","base":"UINT16","UOM":"MINUTES"},
+        {"num":1,"name":"recovery_start","base":"UINT32","type":"TIMESTAMP","UOM":"SECONDS"}
+      ]
+    },
+    {
       "num": 285,
       "name": "JUMP",
       "fields": [
@@ -3076,7 +3086,7 @@
       "num": 382,
       "name": "SLEEP_RESTLESS_MOMENTS",
       "fields": [
-        {"num":0,"name":"unknown_0","base":"UINT32"},
+        {"num":0,"name":"sleep_start","base":"UINT32","UOM":"SECONDS"},
         {"num":1,"name":"restless_moments_count","base":"UINT8"},
         {"num":2,"name":"durations","base":"UINT8","arrayLen":0}
       ]
@@ -3087,8 +3097,15 @@
       "fields": [
         {"num":2,"name":"sleep_score","base":"UINT8","UOM":"PERCENT"},
         {"num":3,"name":"awake_duration","base":"UINT16","UOM":"MINUTES"},
+        {"num":8,"name":"local_timestamp","base":"UINT32","UOM":"SECONDS"},
+        {"num":9,"name":"sleep_start_time","base":"UINT32","type":"TIMESTAMP","UOM":"SECONDS"},
+        {"num":10,"name":"sleep_start_timezone_offset","base":"SINT16","UOM":"MINUTES"},
         {"num":11,"name":"sleep_end_time","base":"UINT32","type":"TIMESTAMP","UOM":"SECONDS"},
+        {"num":12,"name":"sleep_end_timezone_offset","base":"SINT16","UOM":"MINUTES"},
+        {"num":14,"name":"sleep_start_body_battery","base":"UINT8"},
+        {"num":16,"name":"sleep_end_body_battery","base":"UINT8"},
         {"num":22,"name":"sleep_presure","base":"SINT16"},
+        {"num":24,"name":"sleep_awake_duration","base":"UINT16","UOM":"MINUTES"},
         {"num":253,"name":"timestamp","base":"UINT32","type":"TIMESTAMP","UOM":"SECONDS"},
         {"num":254,"name":"message_index","base":"UINT16"}
       ]
@@ -3231,6 +3248,8 @@
       "fields": [
         {"num":0,"name":"normal","base":"UINT16","UOM":"MINUTES"},
         {"num":1,"name":"demand","base":"UINT16","UOM":"MINUTES"},
+        {"num":7,"name":"start","base":"UINT16","UOM":"MINUTES"},
+        {"num":8,"name":"end","base":"UINT16","UOM":"MINUTES"},
         {"num":253,"name":"timestamp","base":"UINT32","type":"TIMESTAMP","UOM":"SECONDS"}
       ]
     },
@@ -3333,6 +3352,7 @@
         {"num":0,"name":"start","base":"UINT32"},
         {"num":1,"name":"end","base":"UINT32"},
         {"num":8,"name":"hr_min","base":"UINT8","UOM":"BEATS_PER_MINUTE"},
+        {"num":10,"name":"daily_hr_min","base":"UINT8","UOM":"BEATS_PER_MINUTE"},
         {"num":253,"name":"timestamp","base":"UINT32","type":"TIMESTAMP","UOM":"SECONDS"},
         {"num":254,"name":"message_index","base":"UINT16"}
       ]
