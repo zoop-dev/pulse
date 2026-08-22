@@ -10,7 +10,7 @@ import com.google.gson.GsonBuilder;
 
 import net.e175.klaus.solarpositioning.DeltaT;
 import net.e175.klaus.solarpositioning.SPA;
-import net.e175.klaus.solarpositioning.SunriseTransitSet;
+import net.e175.klaus.solarpositioning.SunriseResult;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -224,18 +224,16 @@ public class WeatherInterceptor implements HttpInterceptor {
             } else {
                 final Location lastKnownLocation = new CurrentPosition().getLastKnownLocation();
 
-                final SunriseTransitSet sunriseTransitSet = SPA.calculateSunriseTransitSet(
+                final SunriseResult sunriseResult = SPA.calculateSunriseTransitSet(
                         date.toZonedDateTime(),
                         lastKnownLocation.getLatitude(),
                         lastKnownLocation.getLongitude(),
                         DeltaT.estimate(date.toZonedDateTime().toLocalDate())
                 );
 
-                if (sunriseTransitSet.getSunrise() != null) {
-                    epochSunrise = (int) (sunriseTransitSet.getSunrise().toInstant().getEpochSecond());
-                }
-                if (sunriseTransitSet.getSunset() != null) {
-                    epochSunset = (int) (sunriseTransitSet.getSunset().toInstant().getEpochSecond());
+                if (sunriseResult instanceof SunriseResult.RegularDay regularDay) {
+                    epochSunrise = (int) (regularDay.sunrise().toInstant().getEpochSecond());
+                    epochSunset = (int) (regularDay.sunset().toInstant().getEpochSecond());
                 }
             }
 

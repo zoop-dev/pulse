@@ -40,7 +40,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import net.e175.klaus.solarpositioning.DeltaT;
 import net.e175.klaus.solarpositioning.SPA;
-import net.e175.klaus.solarpositioning.SunriseTransitSet;
+import net.e175.klaus.solarpositioning.SunriseResult;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.slf4j.Logger;
@@ -3109,14 +3109,14 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
             if (longitude != 0 && latitude != 0) {
                 final GregorianCalendar dateTimeToday = new GregorianCalendar();
 
-                final SunriseTransitSet sunriseTransitSet = SPA.calculateSunriseTransitSet(
+                final SunriseResult sunriseResult = SPA.calculateSunriseTransitSet(
                         dateTimeToday.toZonedDateTime(),
                         latitude,
                         longitude,
                         DeltaT.estimate(dateTimeToday.toZonedDateTime().toLocalDate())
                 );
 
-                if (sunriseTransitSet.getSunrise() != null && sunriseTransitSet.getSunset() != null) {
+                if (sunriseResult instanceof SunriseResult.RegularDay regularDay) {
                     try {
                         TransactionBuilder builder;
                         builder = performInitialized("Sending sunrise/sunset");
@@ -3126,10 +3126,10 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
                         buf.put((byte) 16);
                         buf.putInt(weatherSpec.getTimestamp());
                         buf.put((byte) (tz_offset_hours * 4));
-                        buf.put((byte) sunriseTransitSet.getSunrise().getHour());
-                        buf.put((byte) sunriseTransitSet.getSunrise().getMinute());
-                        buf.put((byte) sunriseTransitSet.getSunset().getHour());
-                        buf.put((byte) sunriseTransitSet.getSunset().getMinute());
+                        buf.put((byte) regularDay.sunrise().getHour());
+                        buf.put((byte) regularDay.sunrise().getMinute());
+                        buf.put((byte) regularDay.sunset().getHour());
+                        buf.put((byte) regularDay.sunset().getMinute());
 
                         writeToChunked(builder, 1, buf.array());
                         builder.queue();

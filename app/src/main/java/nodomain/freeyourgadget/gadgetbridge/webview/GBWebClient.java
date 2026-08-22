@@ -30,7 +30,7 @@ import androidx.annotation.NonNull;
 
 import net.e175.klaus.solarpositioning.DeltaT;
 import net.e175.klaus.solarpositioning.SPA;
-import net.e175.klaus.solarpositioning.SunriseTransitSet;
+import net.e175.klaus.solarpositioning.SunriseResult;
 
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
@@ -395,17 +395,24 @@ public class GBWebClient extends WebViewClient {
 
 
     private static JSONObject sysObject(CurrentPosition currentPosition) throws JSONException {
-        final SunriseTransitSet sunriseTransitSet = SPA.calculateSunriseTransitSet(
+        final SunriseResult sunriseResult = SPA.calculateSunriseTransitSet(
                 ZonedDateTime.now(),
                 currentPosition.getLatitude(),
                 currentPosition.getLongitude(),
                 DeltaT.estimate(LocalDate.now())
         );
 
+        long epochSunrise = 0;
+        long epochSunset = 0;
+        if (sunriseResult instanceof SunriseResult.RegularDay regularDay) {
+            epochSunrise = regularDay.sunrise().toInstant().getEpochSecond();
+            epochSunset = regularDay.sunset().toInstant().getEpochSecond();
+        }
+
         JSONObject sys = new JSONObject();
         sys.put("country", "World");
-        sys.put("sunrise", sunriseTransitSet.getSunrise().toInstant().getEpochSecond());
-        sys.put("sunset", sunriseTransitSet.getSunset().toInstant().getEpochSecond());
+        sys.put("sunrise", epochSunrise);
+        sys.put("sunset", epochSunset);
 
         return sys;
     }

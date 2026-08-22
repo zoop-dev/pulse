@@ -23,7 +23,7 @@ import android.os.Parcel
 import android.os.Parcelable
 import net.e175.klaus.solarpositioning.DeltaT
 import net.e175.klaus.solarpositioning.SPA
-import net.e175.klaus.solarpositioning.SunriseTransitSet
+import net.e175.klaus.solarpositioning.SunriseResult
 import java.util.Date
 import java.util.GregorianCalendar
 import kotlin.math.floor
@@ -786,7 +786,7 @@ class WeatherSpec() : Parcelable {
             return floor((normalized / 360.0) * synodicMonth).toInt() + 1
         }
 
-        fun sunriseTransitSet(date: GregorianCalendar, location: Location): SunriseTransitSet {
+        fun sunriseTransitSet(date: GregorianCalendar, location: Location): SunriseResult {
             return SPA.calculateSunriseTransitSet(
                 date.toZonedDateTime(),
                 location.latitude,
@@ -802,7 +802,7 @@ class WeatherSpec() : Parcelable {
             if (location == null) {
                 return null
             }
-            return sunriseTransitSet(date, location).sunrise?.let {
+            return (sunriseTransitSet(date, location) as? SunriseResult.RegularDay)?.sunrise()?.let {
                 return Date.from(it.toInstant())
             }
         }
@@ -814,7 +814,7 @@ class WeatherSpec() : Parcelable {
             if (location == null) {
                 return null
             }
-            return sunriseTransitSet(date, location).sunset?.let {
+            return (sunriseTransitSet(date, location) as? SunriseResult.RegularDay)?.sunset()?.let {
                 return Date.from(it.toInstant())
             }
         }
