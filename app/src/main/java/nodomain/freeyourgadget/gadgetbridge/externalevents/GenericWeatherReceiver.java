@@ -1,4 +1,4 @@
-/*  Copyright (C) 2022-2025 Daniele Gobbetti, Enrico Brambilla, José Rebelo,
+/*  Copyright (C) 2022-2026 Daniele Gobbetti, Enrico Brambilla, José Rebelo,
     TylerWilliamson, Thomas Kuehne
 
     This file is part of Gadgetbridge.
@@ -23,6 +23,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -123,28 +125,28 @@ public class GenericWeatherReceiver extends BroadcastReceiver {
 
         weatherSpec.setTimestamp(safelyGet(weatherJson, Integer.class, "timestamp", (int) (System.currentTimeMillis() / 1000)));
         weatherSpec.setLocation(safelyGet(weatherJson, String.class, "location", ""));
-        weatherSpec.setCurrentTemp(safelyGet(weatherJson, Integer.class, "currentTemp", 0));
-        weatherSpec.setTodayMinTemp(safelyGet(weatherJson, Integer.class, "todayMinTemp", 0));
-        weatherSpec.setTodayMaxTemp(safelyGet(weatherJson, Integer.class, "todayMaxTemp", 0));
+        weatherSpec.setCurrentTemp(getInt(weatherJson, "currentTemp", 0));
+        weatherSpec.setTodayMinTemp(getInt(weatherJson, "todayMinTemp", 0));
+        weatherSpec.setTodayMaxTemp(getInt(weatherJson, "todayMaxTemp", 0));
         weatherSpec.setCurrentCondition(safelyGet(weatherJson, String.class, "currentCondition", ""));
         weatherSpec.setCurrentConditionCode(safelyGet(weatherJson, Integer.class, "currentConditionCode", 0));
-        weatherSpec.setCurrentHumidity(safelyGet(weatherJson, Integer.class, "currentHumidity", 0));
-        weatherSpec.setWindSpeed(safelyGet(weatherJson, Number.class, "windSpeed", 0d).floatValue());
-        weatherSpec.setWindDirection(safelyGet(weatherJson, Integer.class, "windDirection", 0));
-        weatherSpec.setUvIndex(safelyGet(weatherJson, Number.class, "uvIndex", 0d).floatValue());
-        weatherSpec.setPrecipProbability(safelyGet(weatherJson, Integer.class, "precipProbability", 0));
-        weatherSpec.setDewPoint(safelyGet(weatherJson, Integer.class, "dewPoint", 0));
-        weatherSpec.setPressure(safelyGet(weatherJson, Number.class, "pressure", 0).floatValue());
-        weatherSpec.setCloudCover(safelyGet(weatherJson, Integer.class, "cloudCover", 0));
-        weatherSpec.setVisibility(safelyGet(weatherJson, Number.class, "visibility", 0).floatValue());
+        weatherSpec.setCurrentHumidity(getInt(weatherJson, "currentHumidity", 0));
+        weatherSpec.setWindSpeed(getFloat(weatherJson, "windSpeed", 0.0f));
+        weatherSpec.setWindDirection(getInt(weatherJson, "windDirection", 0));
+        weatherSpec.setUvIndex(getFloat(weatherJson, "uvIndex", 0.0f));
+        weatherSpec.setPrecipProbability(getInt(weatherJson, "precipProbability", 0));
+        weatherSpec.setDewPoint(getInt(weatherJson, "dewPoint", 0));
+        weatherSpec.setPressure(getFloat(weatherJson, "pressure", 0.0f));
+        weatherSpec.setCloudCover(getInt(weatherJson, "cloudCover", 0));
+        weatherSpec.setVisibility(getFloat(weatherJson, "visibility", 0.0f));
         weatherSpec.setSunRise(safelyGet(weatherJson, Integer.class, "sunRise", 0));
         weatherSpec.setSunSet(safelyGet(weatherJson, Integer.class, "sunSet", 0));
         weatherSpec.setMoonRise(safelyGet(weatherJson, Integer.class, "moonRise", 0));
         weatherSpec.setMoonSet(safelyGet(weatherJson, Integer.class, "moonSet", 0));
         weatherSpec.setMoonPhase(safelyGet(weatherJson, Integer.class, "moonPhase", 0));
-        weatherSpec.setLatitude(safelyGet(weatherJson, Number.class, "latitude", 0).floatValue());
-        weatherSpec.setLongitude(safelyGet(weatherJson, Number.class, "longitude", 0).floatValue());
-        weatherSpec.setFeelsLikeTemp(safelyGet(weatherJson, Integer.class, "feelsLikeTemp", 0));
+        weatherSpec.setLatitude(getFloat(weatherJson, "latitude", 0.0f));
+        weatherSpec.setLongitude(getFloat(weatherJson, "longitude", 0.0f));
+        weatherSpec.setFeelsLikeTemp(getInt(weatherJson, "feelsLikeTemp", 0));
         weatherSpec.setIsCurrentLocation(safelyGet(weatherJson, Integer.class, "isCurrentLocation", -1));
 
         if (weatherJson.has("airQuality")) {
@@ -161,20 +163,20 @@ public class GenericWeatherReceiver extends BroadcastReceiver {
                 final WeatherSpec.Daily forecast = new WeatherSpec.Daily();
 
                 forecast.setConditionCode(safelyGet(forecastJson, Integer.class, "conditionCode", 0));
-                forecast.setHumidity(safelyGet(forecastJson, Integer.class, "humidity", 0));
-                forecast.setMaxTemp(safelyGet(forecastJson, Integer.class, "maxTemp", 0));
-                forecast.setMinTemp(safelyGet(forecastJson, Integer.class, "minTemp", 0));
-                forecast.setWindSpeed(safelyGet(forecastJson, Number.class, "windSpeed", 0).floatValue());
-                forecast.setWindDirection(safelyGet(forecastJson, Integer.class, "windDirection", 0));
-                forecast.setUvIndex(safelyGet(forecastJson, Number.class, "uvIndex", 0d).floatValue());
-                forecast.setPrecipProbability(safelyGet(forecastJson, Integer.class, "precipProbability", 0));
+                forecast.setHumidity(getInt(forecastJson, "humidity", 0));
+                forecast.setMaxTemp(getInt(forecastJson, "maxTemp", 0));
+                forecast.setMinTemp(getInt(forecastJson, "minTemp", 0));
+                forecast.setWindSpeed(getFloat(forecastJson, "windSpeed", 0.0f));
+                forecast.setWindDirection(getInt(forecastJson, "windDirection", 0));
+                forecast.setUvIndex(getFloat(forecastJson, "uvIndex", 0.0f));
+                forecast.setPrecipProbability(getInt(forecastJson, "precipProbability", 0));
                 forecast.setSunRise(safelyGet(forecastJson, Integer.class, "sunRise", 0));
                 forecast.setSunSet(safelyGet(forecastJson, Integer.class, "sunSet", 0));
                 forecast.setMoonRise(safelyGet(forecastJson, Integer.class, "moonRise", 0));
                 forecast.setMoonSet(safelyGet(forecastJson, Integer.class, "moonSet", 0));
                 forecast.setMoonPhase(safelyGet(forecastJson, Integer.class, "moonPhase", 0));
-                forecast.setPressure(safelyGet(forecastJson, Number.class, "pressure", 0.0f).floatValue());
-                forecast.setCloudCover(safelyGet(forecastJson, Number.class, "cloudCover", 0).intValue());
+                forecast.setPressure(getFloat(forecastJson, "pressure", 0.0f));
+                forecast.setCloudCover(getInt(forecastJson, "cloudCover", 0));
 
                 if (forecastJson.has("airQuality")) {
                     forecast.setAirQuality(toAirQuality(forecastJson.getJSONObject("airQuality")));
@@ -194,16 +196,16 @@ public class GenericWeatherReceiver extends BroadcastReceiver {
                 final WeatherSpec.Hourly forecast = new WeatherSpec.Hourly();
 
                 forecast.setTimestamp(safelyGet(forecastJson, Integer.class, "timestamp", 0));
-                forecast.setTemp(safelyGet(forecastJson, Integer.class, "temp", 0));
+                forecast.setTemp(getInt(forecastJson, "temp", 0));
                 forecast.setConditionCode(safelyGet(forecastJson, Integer.class, "conditionCode", 0));
-                forecast.setHumidity(safelyGet(forecastJson, Integer.class, "humidity", 0));
-                forecast.setWindSpeed(safelyGet(forecastJson, Number.class, "windSpeed", 0).floatValue());
-                forecast.setWindDirection(safelyGet(forecastJson, Integer.class, "windDirection", 0));
-                forecast.setUvIndex(safelyGet(forecastJson, Number.class, "uvIndex", 0d).floatValue());
-                forecast.setPrecipProbability(safelyGet(forecastJson, Integer.class, "precipProbability", 0));
-                forecast.setDewPoint(safelyGet(forecastJson, Number.class, "dewPoint", 0).intValue());
-                forecast.setPressure(safelyGet(forecastJson, Number.class, "pressure", 0.0f).floatValue());
-                forecast.setCloudCover(safelyGet(forecastJson, Number.class, "cloudCover", 0).intValue());
+                forecast.setHumidity(getInt(forecastJson, "humidity", 0));
+                forecast.setWindSpeed(getFloat(forecastJson, "windSpeed", 0.0f));
+                forecast.setWindDirection(getInt(forecastJson, "windDirection", 0));
+                forecast.setUvIndex(getFloat(forecastJson, "uvIndex", 0.0f));
+                forecast.setPrecipProbability(getInt(forecastJson, "precipProbability", 0));
+                forecast.setDewPoint(getInt(forecastJson, "dewPoint", 0));
+                forecast.setPressure(getFloat(forecastJson, "pressure", 0.0f));
+                forecast.setCloudCover(getInt(forecastJson, "cloudCover", 0));
 
                 weatherSpec.getHourly().add(forecast);
             }
@@ -215,12 +217,12 @@ public class GenericWeatherReceiver extends BroadcastReceiver {
     private WeatherSpec.AirQuality toAirQuality(final JSONObject jsonObject) {
         final WeatherSpec.AirQuality airQuality = new WeatherSpec.AirQuality();
         airQuality.setAqi(safelyGet(jsonObject, Integer.class, "aqi", -1));
-        airQuality.setCo(safelyGet(jsonObject, Number.class, "co", -1).floatValue());
-        airQuality.setNo2(safelyGet(jsonObject, Number.class, "no2", -1).floatValue());
-        airQuality.setO3(safelyGet(jsonObject, Number.class, "o3", -1).floatValue());
-        airQuality.setPm10(safelyGet(jsonObject, Number.class, "pm10", -1).floatValue());
-        airQuality.setPm25(safelyGet(jsonObject, Number.class, "pm25", -1).floatValue());
-        airQuality.setSo2(safelyGet(jsonObject, Number.class, "so2", -1).floatValue());
+        airQuality.setCo(getFloat(jsonObject, "co", -1.0f));
+        airQuality.setNo2(getFloat(jsonObject, "no2", -1.0f));
+        airQuality.setO3(getFloat(jsonObject, "o3", -1.0f));
+        airQuality.setPm10(getFloat(jsonObject, "pm10", -1.0f));
+        airQuality.setPm25(getFloat(jsonObject, "pm25", -1.0f));
+        airQuality.setSo2(getFloat(jsonObject, "so2", -1.0f));
         airQuality.setCoAqi(safelyGet(jsonObject, Integer.class, "coAqi", -1));
         airQuality.setNo2Aqi(safelyGet(jsonObject, Integer.class, "no2Aqi", -1));
         airQuality.setO3Aqi(safelyGet(jsonObject, Integer.class, "o3Aqi", -1));
@@ -241,6 +243,38 @@ public class GenericWeatherReceiver extends BroadcastReceiver {
                 }
             }
         } catch (Exception e) {
+            //
+        }
+        return defaultValue;
+    }
+
+    /**
+     * Returns the number mapped by {@code name} as a float, or {@code defaultValue} if no such mapping
+     * exists.
+     */
+    private static float getFloat(@NonNull final JSONObject jsonObject, @NonNull final String name, final float defaultValue) {
+        try {
+            final Object raw = jsonObject.opt(name);
+            if (raw instanceof final Number value) {
+                return value.floatValue();
+            }
+        } catch (final Exception ignored) {
+            //
+        }
+        return defaultValue;
+    }
+
+    /**
+     * Returns the number mapped by {@code name} as an integer, or {@code defaultValue} if no such mapping
+     * exists.
+     */
+    private static int getInt(@NonNull final JSONObject jsonObject, @NonNull final String name, final int defaultValue) {
+        try {
+            final Object raw = jsonObject.opt(name);
+            if (raw instanceof final Number value) {
+                return value.intValue();
+            }
+        } catch (final Exception ignored) {
             //
         }
         return defaultValue;
