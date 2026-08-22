@@ -670,6 +670,7 @@ public class DeviceSettingsPreferenceConst {
 
     public static final String PREF_SOUNDS = "sounds";
     public static final String PREF_AUTH_KEY = "authkey";
+    public static final String PREF_XIAOMI_DEVICE_ID = "xiaomi_device_id";
     public static final String PREF_USER_FITNESS_GOAL = "fitness_goal";
     public static final String PREF_USER_FITNESS_GOAL_NOTIFICATION = "fitness_goal_notification";
     public static final String PREF_USER_FITNESS_GOAL_SECONDARY = "fitness_goal_secondary";

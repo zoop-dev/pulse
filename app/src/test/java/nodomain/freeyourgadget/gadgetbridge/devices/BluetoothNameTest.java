@@ -87,6 +87,8 @@ public class BluetoothNameTest extends TestBase {
             put("Redmi Buds 6", DeviceType.REDMIBUDS6); // #6061
             put("Redmi Buds 6 Pro", DeviceType.REDMIBUDS6PRO);
             put("Xiaomi Watch S4 AB01", DeviceType.XIAOMI_WATCH_S4);
+            put("Xiaomi Watch 5 AB01", DeviceType.XIAOMI_WATCH_5); // #6614
+            put("Xiaomi Watch 5 belonging to Owner", DeviceType.XIAOMI_WATCH_5); // #6614, Wear OS renames it
             put("HUAWEI WATCH FIT 4 Pro-CC6", DeviceType.HUAWEIWATCHFIT4PRO);
             put("HUAWEI WATCH FIT 5-810", DeviceType.HUAWEIWATCHFIT5); // #6097
             put("Huawei Watch Fit 5 Pro-F64", DeviceType.HUAWEIWATCHFIT5PRO); // #6100

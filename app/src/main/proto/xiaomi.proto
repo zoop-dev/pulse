@@ -51,6 +51,9 @@ message Auth {
 
 message PhoneNonce {
   required bytes nonce = 1;
+  // Phone identity, required by Wear OS watches (eg. Xiaomi Watch 5) - without it they
+  // reply with a status instead of a WatchNonce. Unset elsewhere, so the wire format is unchanged.
+  optional string deviceId = 2;
 }
 
 message WatchNonce {

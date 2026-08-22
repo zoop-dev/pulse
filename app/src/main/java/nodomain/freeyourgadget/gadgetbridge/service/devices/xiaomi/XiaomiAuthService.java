@@ -16,6 +16,8 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi;
 
+import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_XIAOMI_DEVICE_ID;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -91,7 +93,8 @@ public class XiaomiAuthService extends AbstractXiaomiService {
         System.arraycopy(getSecretKey(getSupport().getDevice()), 0, secretKey, 0, 16);
         new SecureRandom().nextBytes(nonce);
 
-        getSupport().sendCommand("auth step 1", buildNonceCommand(nonce));
+        final String deviceId = getDevicePrefs().getString(PREF_XIAOMI_DEVICE_ID, "").trim();
+        getSupport().sendCommand("auth step 1", buildNonceCommand(nonce, deviceId));
     }
 
     protected void startClearTextHandshake() {
@@ -241,9 +244,14 @@ public class XiaomiAuthService extends AbstractXiaomiService {
         return cmd.setAuth(auth.build()).build();
     }
 
-    public static XiaomiProto.Command buildNonceCommand(final byte[] nonce) {
+    public static XiaomiProto.Command buildNonceCommand(final byte[] nonce, final String deviceId) {
         final XiaomiProto.PhoneNonce.Builder phoneNonce = XiaomiProto.PhoneNonce.newBuilder();
         phoneNonce.setNonce(ByteString.copyFrom(nonce));
+        // Wear OS Xiaomi watches (e.g. Watch 5) require the client identity here, or they
+        // refuse the handshake and reply with a status instead of a WatchNonce.
+        if (deviceId != null && !deviceId.isEmpty()) {
+            phoneNonce.setDeviceId(deviceId);
+        }
 
         final XiaomiProto.Auth.Builder auth = XiaomiProto.Auth.newBuilder();
         auth.setPhoneNonce(phoneNonce.build());
