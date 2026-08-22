@@ -428,6 +428,20 @@ public class WorkoutDetailsParser extends XiaomiActivityParser {
                 nrPosition = 4;
                 layoutCode = 108;
                 break;
+            case 9:
+                // SPORTS_OUTDOOR_WALKING_V2 v9: as v8 above, but the records are 25 bytes and
+                // the second byte of the data-valid bitmap is FF instead of CF, i.e. one more
+                // field group is present.
+                expectedSignature = new byte[]{
+                        (byte) 0xFF, (byte) 0xFF, (byte) 0xF8, (byte) 0xBF,
+                        (byte) 0xFB, (byte) 0xBB, (byte) 0xBF
+                };
+                segmentHeaderSize = 27;
+                recordSize = 25;
+                tsPosition = 8;
+                nrPosition = 4;
+                layoutCode = 109;
+                break;
             default:
                 LOG.warn("Unable to parse workout details version {}", version);
                 return null;
@@ -629,6 +643,20 @@ public class WorkoutDetailsParser extends XiaomiActivityParser {
                         buf.getShort();
                         buf.getShort();
                         buf.getShort();
+                        break;
+                    }
+                    case 109:
+                        // SPORTS_OUTDOOR_WALKING_V2 v9: 25-byte record sharing its first two
+                        // bytes with the v8 layout above. Verified on a real walk: summing the
+                        // step nibbles reproduces the step count the watch reports in its own
+                        // summary, and the heart rate column reproduces its minimum and maximum.
+                        // The remaining bytes are not identified - notably cadence is no longer
+                        // where v8 keeps it.
+                    {
+                        final int caloriesAndSteps = buf.get() & 0xFF;
+                        r.steps = caloriesAndSteps & 0x0F;
+                        r.hr = buf.get() & 0xFF;
+                        buf.get(new byte[23]); // 23 unidentified bytes
                         break;
                     }
                 }
