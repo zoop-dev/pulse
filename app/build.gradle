@@ -125,7 +125,7 @@ android {
 
         // Note: update toolchain.languageVersion when changing targetSdk
         //noinspection OldTargetApi
-        targetSdk = 34
+        targetSdk = 35
         // Note: update sourceCompatibility and targetCompatibility when changing minSdk
         minSdk = 23
 

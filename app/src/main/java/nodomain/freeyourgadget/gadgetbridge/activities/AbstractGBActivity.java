@@ -23,8 +23,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import java.util.Locale;
@@ -141,5 +145,29 @@ public abstract class AbstractGBActivity extends AppCompatActivity implements GB
     protected void onDestroy() {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mReceiver);
         super.onDestroy();
+    }
+
+    @Override
+    public void setContentView(final int layoutResID) {
+        super.setContentView(layoutResID);
+        applyEdgeToEdgeInsets();
+    }
+
+    @Override
+    public void setContentView(final View view) {
+        super.setContentView(view);
+        applyEdgeToEdgeInsets();
+    }
+
+    /**
+     * targetSdk 35 forces edge-to-edge, so android:fitsSystemWindows no longer pads content.
+     */
+    private void applyEdgeToEdgeInsets() {
+        final View content = findViewById(android.R.id.content);
+        ViewCompat.setOnApplyWindowInsetsListener(content, (v, windowInsets) -> {
+            final Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars() | WindowInsetsCompat.Type.displayCutout());
+            v.setPadding(insets.left, insets.top, insets.right, insets.bottom);
+            return windowInsets;
+        });
     }
 }

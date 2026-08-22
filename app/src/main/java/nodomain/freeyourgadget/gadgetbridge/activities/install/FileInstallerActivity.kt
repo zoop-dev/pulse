@@ -23,12 +23,12 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import nodomain.freeyourgadget.gadgetbridge.GBApplication
 import nodomain.freeyourgadget.gadgetbridge.R
+import nodomain.freeyourgadget.gadgetbridge.activities.AbstractGBActivity
 import nodomain.freeyourgadget.gadgetbridge.adapter.DeviceInstallAdapter
 import nodomain.freeyourgadget.gadgetbridge.databinding.ActivityFileInstallerBinding
 import nodomain.freeyourgadget.gadgetbridge.devices.InstallHandler
@@ -36,7 +36,7 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceService.EXTRA_OPTIONS
 import org.slf4j.LoggerFactory
 
-class FileInstallerActivity : AppCompatActivity() {
+class FileInstallerActivity : AbstractGBActivity() {
     private val viewModel: FileInstallerViewModel by viewModels {
         FileInstallerViewModelFactory(GBApplication.app(),
             intent.getParcelableExtra(EXTRA_OPTIONS) ?: Bundle.EMPTY

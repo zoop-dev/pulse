@@ -201,11 +201,9 @@ public class ControlCenterv2 extends AppCompatActivity
         drawerNavigationView.setNavigationItemSelectedListener(this);
 
         View navigationHeaderView = drawerNavigationView.getHeaderView(0);
-        ViewCompat.setOnApplyWindowInsetsListener(navigationHeaderView, (view, windowInsets) -> {
-            Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars() | WindowInsetsCompat.Type.displayCutout());
-            view.setPadding(view.getPaddingLeft(), insets.top, view.getPaddingRight(), view.getPaddingBottom());
-            return windowInsets;
-        });
+        final int headerPaddingLeft = navigationHeaderView.getPaddingLeft();
+        final int headerPaddingRight = navigationHeaderView.getPaddingRight();
+        final int headerPaddingBottom = navigationHeaderView.getPaddingBottom();
 
         // Initialize bottom navigation
         BottomNavigationView navigationView = findViewById(R.id.bottom_nav_bar);
@@ -226,6 +224,23 @@ public class ControlCenterv2 extends AppCompatActivity
 
         // Initialize actionbar
         MaterialToolbar toolbar = findViewById(R.id.toolbar);
+        // targetSdk 35 forces edge-to-edge. We intercept the insets on the ConstraintLayout
+        // itself (main_content) and apply them directly to the toolbar. The drawer header is
+        // padded here too.
+        final View mainContent = findViewById(R.id.main_content);
+        final int toolbarPaddingLeft = toolbar.getPaddingLeft();
+        final int toolbarPaddingRight = toolbar.getPaddingRight();
+        final int toolbarPaddingBottom = toolbar.getPaddingBottom();
+        final int bottomNavPaddingLeft = navigationView.getPaddingLeft();
+        final int bottomNavPaddingRight = navigationView.getPaddingRight();
+        final int bottomNavPaddingTop = navigationView.getPaddingTop();
+        ViewCompat.setOnApplyWindowInsetsListener(mainContent, (view, windowInsets) -> {
+            Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars() | WindowInsetsCompat.Type.displayCutout());
+            toolbar.setPadding(toolbarPaddingLeft, insets.top, toolbarPaddingRight, toolbarPaddingBottom);
+            navigationView.setPadding(bottomNavPaddingLeft, bottomNavPaddingTop, bottomNavPaddingRight, insets.bottom);
+            navigationHeaderView.setPadding(headerPaddingLeft, insets.top, headerPaddingRight, headerPaddingBottom);
+            return windowInsets;
+        });
         setSupportActionBar(toolbar);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
