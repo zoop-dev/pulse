@@ -847,18 +847,21 @@ class WeatherSpec() : Parcelable {
             weather.currentConditionCode = conditionCode
             weather.currentCondition = conditionText
 
-            weather.windDirection = 12
-            weather.precipProbability = 99
-            weather.windSpeed = 10f
+            weather.windDirection = Random.nextInt(0, 359)
+            weather.precipProbability = Random.nextInt(0, 100)
+            weather.windSpeed = Random.nextInt(0, 300) / 3.0f
             weather.feelsLikeTemp = weather.currentTemp + Random.nextInt(-5, 5)
             weather.currentHumidity = Random.nextInt(20, 80)
-            weather.latitude = 38.250137f
-            weather.longitude = -122.410805f
-            weather.dewPoint = weather.currentTemp - Random.nextInt(5, 10)
+            weather.latitude = Random.nextFloat() * 360.0f - 180.0f
+            weather.longitude = Random.nextFloat() * 360.0f - 180.0f
+            weather.dewPoint = weather.currentTemp + Random.nextInt(-10, 10)
+            weather.cloudCover = Random.nextInt(0, 100)
+            weather.visibility = Random.nextInt(0, 10000).toFloat()
+            weather.uvIndex = Random.nextInt(0, 30) / 2.0f
+            weather.pressure = 1010.0f + Random.nextInt(-30, 31)
             val airQuality = AirQuality()
             airQuality.aqi = 50
             weather.airQuality = airQuality
-            weather.currentHumidity = 30
 
             weather.hourly = ArrayList()
             var hourlyTimestamp = weather.timestamp + 3600
@@ -893,6 +896,11 @@ class WeatherSpec() : Parcelable {
 
                 val (conditionCode, conditionText) = conditions.random()
                 gbForecast.conditionCode = conditionCode
+
+                gbForecast.humidity = 10 * (i + 1)
+                gbForecast.windSpeed = 5.0f * (i + 1)
+                gbForecast.windDirection = 45 * (i + 1)
+                gbForecast.uvIndex = i.toFloat()
 
                 gbForecast.precipProbability = 50 + i
                 val airQualityDaily = AirQuality()
