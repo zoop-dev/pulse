@@ -1,6 +1,6 @@
 /*  Copyright (C) 2016-2026 Andreas Shimokawa, Arjan Schrijver, beardhatcode,
     Carsten Pfeiffer, Daniele Gobbetti, Enrico Brambilla, José Rebelo, Taavi
-    Eomäe, Avery Sterk
+    Eomäe, Avery Sterk, Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -480,22 +480,51 @@ class WeatherSpec() : Parcelable {
     }
 
     class Daily() : Parcelable {
-        var minTemp: Int = 0 // Kelvin
-        var maxTemp: Int = 0 // Kelvin
-        var conditionCode: Int = 0 // OpenWeatherMap condition code
+        /** minimum air temperature in Kelvin */
+        var minTemp: Int = 0
+
+        /** maximum air temperature in Kelvin */
+        var maxTemp: Int = 0
+
+        /** OpenWeatherMap condition code */
+        var conditionCode: Int = 0
+
+        /** relative humidity in percent */
         var humidity: Int = 0
-        var windSpeed: Float = 0f // km per hour
-        var windDirection: Int = 0 // deg
-        var uvIndex: Float = 0f // 0.0 to 15.0
-        var precipProbability: Int = 0 // %
+
+        /** wind speed in kilometer per hour */
+        var windSpeed: Float = 0f
+
+        /** wind direction in [0 - 360[ degrees */
+        var windDirection: Int = 0
+
+        /** UV index (0-15) */
+        var uvIndex: Float = 0f
+
+        /** total precipitation probability in percent */
+        var precipProbability: Int = 0
+
+        /** sun rise in Unix epoc seconds */
         var sunRise: Int = 0
+
+        /** sun set in Unix epoc seconds */
         var sunSet: Int = 0
+
+        /** moon rise in Unix epoc seconds */
         var moonRise: Int = 0
+
+        /** moon set in Unix epoc seconds */
         var moonSet: Int = 0
+
+        /** moon phase in degree */
         var moonPhase: Int = 0
         var airQuality: AirQuality? = null
-        var pressure: Float = 0f // mbar
-        var cloudCover: Int = 0 // %
+
+        /** atmospheric air pressure in millibar */
+        var pressure: Float = 0f
+
+        /** total cloud cover in percent */
+        var cloudCover: Int = 0
 
 
         internal constructor(parcel: Parcel) : this() {
@@ -610,17 +639,38 @@ class WeatherSpec() : Parcelable {
     }
 
     class Hourly() : Parcelable {
-        var timestamp: Int = 0 // unix epoch timestamp, in seconds
-        var temp: Int = 0 // Kelvin
-        var conditionCode: Int = 0 // OpenWeatherMap condition code
+        /** Unix epoch timestamp in seconds */
+        var timestamp: Int = 0
+
+        /** air temperature in Kelvin */
+        var temp: Int = 0
+
+        /** OpenWeatherMap condition code */
+        var conditionCode: Int = 0
+
+        /** relative humididty in percent */
         var humidity: Int = 0
-        var windSpeed: Float = 0f // km per hour
-        var windDirection: Int = 0 // deg
-        var uvIndex: Float = 0f // 0.0 to 15.0
-        var precipProbability: Int = 0 // %
-        var dewPoint: Int = 0 // Kelvin
-        var pressure: Float = 0f // millibar
-        var cloudCover: Int = 0 // percent
+
+        /** wind speed in kilometer per hour */
+        var windSpeed: Float = 0f
+
+        /** wind direction in [0 - 360[ degrees */
+        var windDirection: Int = 0
+
+        /** UV index (0-15) */
+        var uvIndex: Float = 0f
+
+        /** total precipitation probability in percent */
+        var precipProbability: Int = 0
+
+        /** dew point in Kelvin */
+        var dewPoint: Int = 0
+
+        /** atmospheric air pressure in millibar */
+        var pressure: Float = 0f
+
+        /** total cloud cover in percent */
+        var cloudCover: Int = 0
 
 
         internal constructor(parcel: Parcel) : this() {
