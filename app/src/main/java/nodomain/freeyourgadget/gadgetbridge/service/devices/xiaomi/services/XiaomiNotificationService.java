@@ -140,6 +140,7 @@ public class XiaomiNotificationService extends AbstractXiaomiService implements 
                 deviceEvtNotificationControl.handle = cmd.getNotification().getOpenOnPhone().getId();
                 deviceEvtNotificationControl.event = GBDeviceEventNotificationControl.Event.OPEN;
                 getSupport().evaluateGBDeviceEvent(deviceEvtNotificationControl);
+                return;
             case CMD_CANNED_MESSAGES_GET:
                 handleCannedMessages(cmd.getNotification().getCannedMessages());
                 return;
