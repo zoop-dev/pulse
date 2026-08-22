@@ -24,7 +24,6 @@ import android.os.Bundle
 import android.provider.DocumentsContract
 import android.text.InputType
 import androidx.activity.result.ActivityResult
-import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.core.content.edit
 import androidx.core.net.toUri
@@ -66,31 +65,30 @@ abstract class AbstractAutoExportSettingsFragment(
 
         val gbPrefs = GBApplication.getPrefs()
 
-        val exportLocationPicker = registerForActivityResult<Intent?, ActivityResult?>(
-            StartActivityForResult(),
-            ActivityResultCallback { result: ActivityResult? ->
-                if (result!!.resultCode != Activity.RESULT_OK) {
-                    return@ActivityResultCallback
-                }
-                val uri = result.data?.data
-                if (uri == null) {
-                    LOG.error("Got no uri")
-                    return@ActivityResultCallback
-                }
-                requireContext().contentResolver.takePersistableUriPermission(
-                    uri,
-                    Intent.FLAG_GRANT_WRITE_URI_PERMISSION
-                )
-                gbPrefs.preferences.edit {
-                    putString(prefKeyLocation, uri.toString())
-                }
-                val summary = resolveLocationSummary(
-                    requireContext(),
-                    gbPrefs.getString(prefKeyLocation, "")
-                )
-                findPreference<Preference>(prefKeyLocation)?.setSummary(summary)
+        val exportLocationPicker = registerForActivityResult(
+            StartActivityForResult()
+        ) { result: ActivityResult ->
+            if (result.resultCode != Activity.RESULT_OK) {
+                return@registerForActivityResult
             }
-        )
+            val uri = result.data?.data
+            if (uri == null) {
+                LOG.error("Got no uri")
+                return@registerForActivityResult
+            }
+            requireContext().contentResolver.takePersistableUriPermission(
+                uri,
+                Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+            )
+            gbPrefs.preferences.edit {
+                putString(prefKeyLocation, uri.toString())
+            }
+            val summary = resolveLocationSummary(
+                requireContext(),
+                gbPrefs.getString(prefKeyLocation, "")
+            )
+            findPreference<Preference>(prefKeyLocation)?.setSummary(summary)
+        }
 
         setInputTypeFor(prefKeyInterval, InputType.TYPE_CLASS_NUMBER)
 
