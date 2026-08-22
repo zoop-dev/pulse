@@ -96,8 +96,6 @@ hamcrest = { group = "org.hamcrest", name = "hamcrest-library", version.ref = "h
 json = { group = "org.json", name = "json", version.ref = "json" }
 jsoup = { group = "org.jsoup", name = "jsoup", version.ref = "jsoup" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
-kotlin-bom = { group = "org.jetbrains.kotlin", name = "kotlin-bom", version.ref = "kotlin" }
-kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib" }
 logback-android = { group = "com.github.tony19", name = "logback-android", version.ref = "logback-android" }
 mapsforge-core = { group = "com.github.mapsforge.mapsforge", name = "mapsforge-core", version.ref = "mapsforge" }
 mapsforge-map = { group = "com.github.mapsforge.mapsforge", name = "mapsforge-map", version.ref = "mapsforge" }
@@ -141,6 +139,5 @@ mapsforge = [
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "android-gradle-plugin" }
-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
 protobuf = { id = "com.google.protobuf", version.ref = "protobuf-plugin" }

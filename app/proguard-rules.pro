@@ -82,6 +82,23 @@
 -keep class nodomain.freeyourgadget.gadgetbridge.activities.automations.** extends androidx.fragment.app.Fragment { *; }
 -keep class nodomain.freeyourgadget.gadgetbridge.activities.debug.** extends androidx.fragment.app.Fragment { *; }
 
+# Keep requests instantiated by reflection
+-keep class nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.requests.Request
+-keep class * extends nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.requests.Request
+
+# Keep fields - they're read using reflection
+-keepclassmembers class nodomain.freeyourgadget.gadgetbridge.service.devices.um25.Data.MeasurementData {
+  <fields>;
+}
+
+# Keep no-arg constructors for ConfigItem/DeviceInfo subtypes instantiated by reflection
+-keepclassmembers class nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.requests.fossil.configuration.ConfigurationPutRequest$* {
+  <init>();
+}
+-keepclassmembers class nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.requests.fossil.device_info.*Info {
+  <init>();
+}
+
 # jsoup 1.22.1 introduces support for re2j, but falls back to java Regex if not available
 # Since we only use jsoup to clean the html, we do not need the extra dependency
 -dontwarn com.google.re2j.Pattern

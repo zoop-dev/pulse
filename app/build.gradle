@@ -1,10 +1,10 @@
+import com.android.build.api.variant.ResValue
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 import java.nio.file.Files
 
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.protobuf)
 }
@@ -194,13 +194,13 @@ android {
     buildTypes {
         release {
             minifyEnabled true
-            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
         }
 
         nightly {
             applicationIdSuffix ".nightly"
             versionNameSuffix "-${getGitHashShort}"
-            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
             minifyEnabled true
             debuggable false
 
@@ -214,7 +214,7 @@ android {
         nopebble {
             applicationIdSuffix ".nightly_nopebble"
             versionNameSuffix "-${getGitHashShort}"
-            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
             minifyEnabled true
             debuggable false
 
@@ -222,19 +222,6 @@ android {
                 signingConfig = signingConfigs.nightly
             } else {
                 signingConfig = signingConfigs.debug
-            }
-        }
-
-        applicationVariants.all { variant ->
-            variant.resValue "string", "applicationId", variant.applicationId
-
-            if (variant.buildType.name == 'nightly' || variant.buildType.name == 'nopebble') {
-                variant.outputs.all {
-                    setVersionCodeOverride(getVersionCode())
-                    //setVersionNameOverride(getGitHashShort())
-                    setVersionNameOverride(variant.versionName)
-                    outputFileName = "${applicationId}_${variant.versionName}.apk"
-                }
             }
         }
     }
@@ -260,6 +247,30 @@ android {
         aidl = true
         buildConfig = true
         viewBinding = true
+        // AGP 9 defaults to false, but we still use it in the androidComponents.onVariants block below
+        resValues = true
+    }
+}
+
+androidComponents {
+    onVariants(selector().all()) { variant ->
+        variant.resValues.put(
+            variant.makeResValueKey("string", "applicationId"),
+            variant.applicationId.map { new ResValue(it, null) }
+        )
+
+        if (variant.buildType == "nightly" || variant.buildType == "nopebble") {
+            variant.outputs.each { output ->
+                // nightly/nopebble builds get a monotonically increasing versionCode
+                // based on the commit count, instead of the static defaultConfig one.
+                output.versionCode.set(getVersionCode())
+                output.outputFileName.set(
+                    variant.applicationId.zip(output.versionName) { appId, versionName ->
+                        "${appId}_${versionName}.apk"
+                    }
+                )
+            }
+        }
     }
 }
 
@@ -275,8 +286,6 @@ dependencies {
     testImplementation libs.hamcrest
 
     implementation libs.androidx.core.ktx
-    implementation platform(libs.kotlin.bom)
-    implementation libs.kotlin.stdlib
 
     implementation libs.androidx.appcompat
     implementation libs.androidx.preference.ktx
