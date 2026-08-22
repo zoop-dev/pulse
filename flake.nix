@@ -3,42 +3,38 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    android-nixpkgs = {
-      url = "github:tadfisher/android-nixpkgs";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs =
     {
       self,
       nixpkgs,
-      android-nixpkgs,
     }:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
         inherit system;
         config.allowUnfree = true;
+        config.android_sdk.accept_license = true;
       };
 
-      android-composition = android-nixpkgs.sdk.${system} (
-        sdkPkgs: with sdkPkgs; [
-          cmdline-tools-latest
-          build-tools-36-0-0
-          platform-tools
-          platforms-android-36
-        ]
-      );
+      android-composition = pkgs.androidenv.composeAndroidPackages {
+        cmdLineToolsVersion = "latest";
+        platformVersions = [ "37" ];
+        buildToolsVersions = [ "36.0.0" ];
+        includeEmulator = false;
+        includeNDK = false;
+        includeSources = false;
+        includeSystemImages = false;
+      };
 
     in
     {
       devShells.${system} = {
-        # Main development environment - simple shell with Android tools
         default = pkgs.mkShell {
           buildInputs = with pkgs; [
             jdk21
-            android-composition
+            android-composition.androidsdk
             adb-sync
             scrcpy
           ];
@@ -50,16 +46,21 @@
             export JAVA_HOME=${pkgs.jdk21}/lib/openjdk
 
             # Set Android SDK path
-            export ANDROID_SDK_ROOT=${android-composition}/share/android-sdk
+            export ANDROID_SDK_ROOT=${android-composition.androidsdk}/libexec/android-sdk
             export ANDROID_HOME=$ANDROID_SDK_ROOT
 
             # Add Android tools to PATH
+            LATEST_BUILD_TOOLS=$(ls -1 $ANDROID_SDK_ROOT/build-tools/ | sort -V | tail -1)
+            if [ -z "$LATEST_BUILD_TOOLS" ]; then
+              echo "Failed to find latest build tools"
+              exit 1
+            fi
             export PATH=$PATH:$ANDROID_SDK_ROOT/platform-tools
             export PATH=$PATH:$ANDROID_SDK_ROOT/cmdline-tools/latest/bin
-            export PATH=$PATH:$ANDROID_SDK_ROOT/build-tools/36.0.0
+            export PATH=$PATH:$ANDROID_SDK_ROOT/build-tools/$LATEST_BUILD_TOOLS
 
             # Gradle configuration
-            export GRADLE_OPTS="-Dorg.gradle.daemon=false -Dorg.gradle.project.android.aapt2FromMavenOverride=$ANDROID_SDK_ROOT/build-tools/36.0.0/aapt2"
+            export GRADLE_OPTS="-Dorg.gradle.daemon=false -Dorg.gradle.project.android.aapt2FromMavenOverride=$ANDROID_SDK_ROOT/build-tools/$LATEST_BUILD_TOOLS/aapt2"
 
             echo "Java version: $(java -version 2>&1 | head -n1)"
 
