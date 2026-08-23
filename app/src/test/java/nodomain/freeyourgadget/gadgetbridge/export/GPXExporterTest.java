@@ -29,13 +29,16 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.text.ParseException;
 import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 import javax.xml.XMLConstants;
@@ -89,6 +92,61 @@ public class GPXExporterTest extends TestBase {
 
         gpxExporter.performExport(track, tempFile, null);
         validateGpxFile(tempFile);
+    }
+
+    @Test
+    public void trackTypeIsLowercase() throws Exception {
+        Assert.assertTrue(exportWith("Morning run", ActivityKind.RUNNING).contains("<type>running</type>"));
+        Assert.assertTrue(exportWith("Morning walk", ActivityKind.WALKING).contains("<type>walking</type>"));
+    }
+
+    @Test
+    public void numericTrackNameIsReplacedByLocalStartTime() throws Exception {
+        final Date startTime = Date.from(Instant.parse("2025-10-17T21:05:00Z"));
+        final String expected = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ROOT).format(startTime);
+
+        final String gpx = exportWith("123", ActivityKind.RUNNING, startTime);
+
+        Assert.assertFalse(gpx.contains("<name>123</name>"));
+        // both gpx/metadata/name and gpx/trk/name
+        Assert.assertEquals(2, countOccurrences(gpx, "<name>" + expected + "</name>"));
+    }
+
+    @Test
+    public void trackNameIsKept() throws Exception {
+        final String gpx = exportWith("Morning run", ActivityKind.RUNNING);
+        Assert.assertEquals(2, countOccurrences(gpx, "<name>Morning run</name>"));
+    }
+
+    private String exportWith(String trackName, ActivityKind activityKind) throws Exception {
+        return exportWith(trackName, activityKind, Date.from(Instant.parse("2025-10-17T21:00:00Z")));
+    }
+
+    private String exportWith(String trackName, ActivityKind activityKind, Date startTime) throws IOException, ParseException, GPXTrackEmptyException {
+        final List<ActivityPoint> points = readActivityPoints("/GPXExporterTest-SampleTracks.csv");
+
+        final GPXExporter gpxExporter = new GPXExporter();
+        gpxExporter.setCreator("Gadgetbridge Test");
+        final ActivityTrack track = createTestTrack(points, startTime);
+        track.setName(trackName);
+
+        final BaseActivitySummary summary = new BaseActivitySummary();
+        summary.setActivityKind(activityKind.getCode());
+        summary.setStartTime(startTime);
+
+        final File tempFile = File.createTempFile("gpx-exporter-test-name-type", ".gpx");
+        tempFile.deleteOnExit();
+
+        gpxExporter.performExport(track, tempFile, summary);
+        return new String(Files.readAllBytes(tempFile.toPath()), StandardCharsets.UTF_8);
+    }
+
+    private static int countOccurrences(String haystack, String needle) {
+        int count = 0;
+        for (int i = haystack.indexOf(needle); i >= 0; i = haystack.indexOf(needle, i + needle.length())) {
+            count++;
+        }
+        return count;
     }
 
     private ActivityTrack createTestTrack(List<ActivityPoint> points, Date time) {
