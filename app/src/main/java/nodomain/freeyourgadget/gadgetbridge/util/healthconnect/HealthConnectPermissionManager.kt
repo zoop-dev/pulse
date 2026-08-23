@@ -23,8 +23,9 @@ import androidx.health.connect.client.HealthConnectClient
 import androidx.health.connect.client.permission.HealthPermission
 import androidx.health.connect.client.permission.HealthPermission.Companion.PERMISSION_WRITE_EXERCISE_ROUTE
 import androidx.health.connect.client.records.*
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import nodomain.freeyourgadget.gadgetbridge.GBApplication
 import nodomain.freeyourgadget.gadgetbridge.R
@@ -45,6 +46,8 @@ data class PermissionsResultOutcome(
 object HealthConnectPermissionManager {
 
     private val LOG = LoggerFactory.getLogger(HealthConnectPermissionManager::class.java)
+
+    private val ioScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
     const val PREF_KEY_LAST_GRANTED_HC_PERMISSIONS = "health_connect_last_granted_permissions"
     const val PREF_KEY_HC_PROMPT_FOR_FULL_DAO_RESET = "health_connect_prompt_for_full_dao_reset"
@@ -259,7 +262,7 @@ object HealthConnectPermissionManager {
 
     @JvmStatic
     fun checkAndRectifyPermissions(context: Context) {
-        GlobalScope.launch(Dispatchers.IO) {
+        ioScope.launch {
             LOG.info("Proactive Health Connect permission check starting.")
             val prefs = GBApplication.getPrefs().preferences // Keep for PREF_KEY_LAST_GRANTED_HC_PERMISSIONS
             val healthConnectClient = HealthConnectClientProvider.healthConnectInit(context)
@@ -299,7 +302,7 @@ object HealthConnectPermissionManager {
 
     @JvmStatic
     fun clearAllSyncStates(context: Context) {
-        GlobalScope.launch(Dispatchers.IO) {
+        ioScope.launch {
             LOG.info("Clearing ALL HealthConnect sync states from DAO.")
             try {
                 GBApplication.acquireDB().use { db ->

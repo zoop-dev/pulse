@@ -24,11 +24,10 @@ import androidx.health.connect.client.HealthConnectClient
 import androidx.health.connect.client.records.*
 import androidx.health.connect.client.records.metadata.Device
 import androidx.health.connect.client.records.metadata.Metadata
-import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import nodomain.freeyourgadget.gadgetbridge.GBApplication
 import nodomain.freeyourgadget.gadgetbridge.R
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler
@@ -129,19 +128,17 @@ class HealthConnectUtils {
         }
     }
 
-    @OptIn(DelicateCoroutinesApi::class)
-    fun healthConnectDataSync(
+    suspend fun healthConnectDataSync(
         context: Context,
         healthConnectClient: HealthConnectClient,
         summaryCallback: BiConsumer<String, Boolean>?,
-        onFinished: Runnable?,
         worker: androidx.work.CoroutineWorker? = null,  // Optional worker to check for cancellation
         deviceAddress: String? = null  // Optional specific device address to sync
     ) {
         val mainHandler = Handler(Looper.getMainLooper())
         updateSyncStatus(context.getString(R.string.health_connect_syncing), true, summaryCallback, mainHandler)
 
-        GlobalScope.launch(Dispatchers.IO) {
+        withContext(Dispatchers.IO) {
             try {
                 val prefs = GBApplication.getPrefs()
                 val grantedPermissions = prefs.preferences.getStringSet(PREF_KEY_LAST_GRANTED_HC_PERMISSIONS, emptySet()) ?: emptySet()
@@ -212,6 +209,8 @@ class HealthConnectUtils {
                         )
                     }
                 }
+            } catch (c: CancellationException) {
+                throw c
             } catch (t: Throwable) {
                 LOG.error("Critical error during healthConnectDataSync for Health Connect", t)
                 updateSyncStatus(
@@ -221,8 +220,6 @@ class HealthConnectUtils {
                     mainHandler
                 )
                  // The overall process is considered failed if an exception occurs here
-            } finally {
-                onFinished?.run()
             }
         }
     }
