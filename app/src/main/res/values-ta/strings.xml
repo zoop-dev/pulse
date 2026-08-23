@@ -4106,5 +4106,5 @@
     <string name="health_connect_sleep_session_title">%1$s இலிருந்து உறக்க அமர்வு</string>
     <string name="health_connect_sleep_session_notes">Gadgetbridge சாதனத்திலிருந்து உறக்கத் தரவு: %1$s.</string>
     <string name="infinitime_filesystem_access_disabled">InfiniTimeல் கோப்பு முறைமை அணுகல் முடக்கப்பட்டுள்ளது</string>
-    <string name="infinitime_resource_upload_progress_status">%d இன் %d செயலைச் செய்கிறது \n%s %s</string>
+    <string name="infinitime_resource_upload_progress_status">%1$d இன் %2$d செயலைச் செய்கிறது \n%3$s %4$s</string>
 </resources>

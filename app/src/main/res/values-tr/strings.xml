@@ -3944,7 +3944,7 @@
     <string name="open_app">%s aç</string>
     <string name="install_app_fail">%s kurmak için uygulama mağazası açılamadı</string>
     <string name="loyalty_cards_app_not_installed">Sadakat kartlarını yönetmek için bir sadakat kartı uygulaması gereklidir. Lütfen aşağıda desteklenen uygulamalardan birini kurun.</string>
-    <string name="loyalty_cards_app_not_compatible">Kurulu %1s sürümü Gadgetbridge ile uyumlu değil. Lütfen en son %1s ve Gadgetbridge sürümlerine güncelleyin.</string>
+    <string name="loyalty_cards_app_not_compatible">Kurulu %1$s sürümü Gadgetbridge ile uyumlu değil. Lütfen en son %1$s ve Gadgetbridge sürümlerine güncelleyin.</string>
     <string name="internet_firewall_action">Eylem</string>
     <string name="internet_firewall_allow">İzin ver</string>
     <string name="internet_firewall_block">Engelle</string>

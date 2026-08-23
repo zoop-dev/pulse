@@ -3874,7 +3874,7 @@
     <string name="open_app">Buka %s</string>
     <string name="install_app_fail">Gagal membuka toko aplikasi untuk menginstal %s</string>
     <string name="loyalty_cards_app_not_installed">Aplikasi kartu loyalitas diperlukan untuk mengelola kartu loyalitas. Silakan instal salah satu yang didukung di bawah ini.</string>
-    <string name="loyalty_cards_app_not_compatible">Versi %1s yang terinstal tidak kompatibel dengan Gadgetbridge. Silakan perbarui %1s dan Gadgetbridge ke versi terbaru.</string>
+    <string name="loyalty_cards_app_not_compatible">Versi %1$s yang terinstal tidak kompatibel dengan Gadgetbridge. Silakan perbarui %1$s dan Gadgetbridge ke versi terbaru.</string>
     <string name="loyalty_cards_app_permissions_summary">Gadgetbridge memerlukan izin baca pada kartu %1s untuk menyinkronkannya. Ketuk tombol ini untuk memberikannya.</string>
     <string name="dual_device_mode_title">Mode dua perangkat</string>
     <string name="dual_device_mode_summary">Izinkan menghubungkan headphone ke dua perangkat secara bersamaan</string>
@@ -4532,7 +4532,7 @@
     <string name="health_connect_sleep_session_title">Sesi Tidur dari %1$s</string>
     <string name="health_connect_sleep_session_notes">Data tidur dari perangkat Gadgetbridge: %1$s.</string>
     <string name="infinitime_filesystem_access_disabled">Akses filesystem dinonaktifkan di InfiniTime</string>
-    <string name="infinitime_resource_upload_progress_status">Melakukan tindakan %d dari %d\n%s %s</string>
+    <string name="infinitime_resource_upload_progress_status">Melakukan tindakan %1$d dari %2$d\n%3$s %4$s</string>
     <string name="pref_title_qhybrid_top_button_function">Fungsi tombol atas</string>
     <string name="pref_title_qhybrid_middle_button_function">Fungsi tombol tengah</string>
     <string name="pref_title_qhybrid_bottom_button_function">Fungsi tombol bawah</string>

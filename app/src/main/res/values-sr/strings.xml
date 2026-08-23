@@ -411,7 +411,7 @@
     <string name="controlcenter_folder_name">Име омота:</string>
     <string name="error_deleting_device">Десила се грешка при брисању уређаја: %s</string>
     <string name="error_setting_parent_folder">Десила се грешка при постављању родитељског омота: %s</string>
-    <string name="controlcenter_connected_fraction">Повезан: %d/%d</string>
+    <string name="controlcenter_connected_fraction">Повезан: %1$d/%2$d</string>
     <string name="controlcenter_toggle_details">Прекидач приказа појединости</string>
     <string name="supercars_lights_blinking_label">Трептање</string>
     <string name="supercars_lights_label">Светла</string>
@@ -2204,7 +2204,7 @@
     <string name="activity_type_ice_hockey">Хокеј на леду</string>
     <string name="activity_type_cricket">Крикет</string>
     <string name="fw_upgrade_notice_amazfit_cheetah_pro">Уградићете драм %s на свој Амејзфит Чита Про.\n\nТрака ће се препокренути након уградње датотеке .zip.\n\nНАСТАВЉАТЕ НА СОПСТВЕНУ ОДГОВОРНОСТ!</string>
-    <string name="fw_upgrade_notice_zepp_os">Уградићете драм %s на свој %2$s.\n\nЧасовник ће се препокренути након уградње датотеке .zip.\n\nНАСТАВЉАТЕ НА СОПСТВЕНУ ОДГОВОРНОСТ!</string>
+    <string name="fw_upgrade_notice_zepp_os">Уградићете драм %1$s на свој %2$s.\n\nЧасовник ће се препокренути након уградње датотеке .zip.\n\nНАСТАВЉАТЕ НА СОПСТВЕНУ ОДГОВОРНОСТ!</string>
     <string name="activity_type_cross_country_running">Трчање кроз поље</string>
     <string name="activity_type_hand_cycling">Ручни точак</string>
     <string name="activity_type_rock_climbing">Пењање на камење</string>

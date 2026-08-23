@@ -4247,7 +4247,7 @@
     <string name="health_connect_prompt_full_dao_reset">Toutes les autorisations Santé Connect pour Gadgetbridge ont été révoquées. Avez-vous également effacé toutes vos données ? Si c\'est le cas, la réinitialisation de l\'historique de synchronisation permettra de re-synchrnoiser les anciennes données, si vous activez les autorisations à nouveau.</string>
     <string name="health_connect_exception">Synchronisation des données Santé Connect :</string>
     <string name="health_connect_permission_denied">Autorisation refusée : %1$s. Veuillez vérifier les autorisations Santé Connect.</string>
-    <string name="infinitime_resource_upload_progress_status">Exécution de l\'action %d sur %d\n%s %s</string>
+    <string name="infinitime_resource_upload_progress_status">Exécution de l\'action %1$d sur %2$d\n%3$s %4$s</string>
     <string name="qhybrid_button_function_stopwatch">Chronomètre</string>
     <string name="qhybrid_button_function_2nd_tz">Second fuseau horaire</string>
     <string name="qhybrid_button_function_volume_up">Augmenter le volume</string>
@@ -4301,7 +4301,7 @@
     <string name="soundcore_equalizer_preset_spoken_word">Parole</string>
     <string name="pref_summary_supported_devices">Cette fonction n\'est pas offerte par tous les appareils. Cliquez ici pour plus d\'informations.</string>
     <string name="unset">Désactiver</string>
-    <string name="loyalty_cards_app_not_compatible">La version de %1s installée n\'est pas compatible avec Gadgetbridge. Veuillez mettre à jour %1s et Gadgetbridge.</string>
+    <string name="loyalty_cards_app_not_compatible">La version de %1$s installée n\'est pas compatible avec Gadgetbridge. Veuillez mettre à jour %1$s et Gadgetbridge.</string>
     <string name="hr_settings_zones_calculation_method_hrr">HRR</string>
     <string name="hr_settings_zones_calculation_method_lthr">LTHR</string>
     <string name="internet_firewall_action">Action</string>

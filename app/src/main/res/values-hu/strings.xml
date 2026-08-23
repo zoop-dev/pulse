@@ -4084,7 +4084,7 @@
     <string name="prefs_device_alias">Eszköz álneve</string>
     <string name="set_device_type">Eszköz típusának beállítása</string>
     <string name="infinitime_filesystem_access_disabled">A fájlrendszerhez való hozzáférés le van tiltva az InfiniTime-ban</string>
-    <string name="infinitime_resource_upload_progress_status">%d / %d művelet végrehajtása\n%s %s</string>
+    <string name="infinitime_resource_upload_progress_status">%1$d / %2$d művelet végrehajtása\n%3$s %4$s</string>
     <string name="uploading_resources">Erőforrások feltöltése…</string>
     <string name="export_select_start_date">Kezdés dátuma</string>
     <string name="export_select_end_date">Befejezés dátuma</string>
@@ -4217,7 +4217,7 @@
     <string name="open_app">%s megnyitása</string>
     <string name="install_app_fail">Nem sikerült megnyitni az alkalmazásáruházat a(z) %s telepítéséhez</string>
     <string name="loyalty_cards_app_not_installed">A hűségkártyák kezeléséhez egy hűségkártya-alkalmazásra van szükség. Telepítsen egyet az alább támogatottak közül.</string>
-    <string name="loyalty_cards_app_not_compatible">A telepített %1s verzió nem kompatibilis a Gadgetbridge alkalmazással. Frissítse a(z) %1s alkalmazást és a Gadgetbridge alkalmazást a legújabb verzióra.</string>
+    <string name="loyalty_cards_app_not_compatible">A telepített %1$s verzió nem kompatibilis a Gadgetbridge alkalmazással. Frissítse a(z) %1$s alkalmazást és a Gadgetbridge alkalmazást a legújabb verzióra.</string>
     <string name="loyalty_cards_app_permissions_summary">A Gadgetbridge alkalmazásnak olvasási jogosultságra van szüksége a(z) %1s kártyákhoz a szinkronizáláshoz. Érintse meg ezt a gombot a megadásukhoz.</string>
     <string name="weight_scale_gram_format">%1$d g</string>
     <string name="internet_firewall_note_subdomain">A domaineknek tartalmazniuk kell a teljes aldomaint, protokoll nélkül. Például: „subdomain.example.org”.</string>

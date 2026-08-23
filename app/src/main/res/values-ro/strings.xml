@@ -495,7 +495,7 @@
 \n
 \nACȚIONEZI PE PROPRIU RISC!</string>
     <string name="vibration_profile_short">Scurt</string>
-    <string name="fw_upgrade_notice_zepp_os">Ești pe cale să instalezi firmware-ul %s pe %s. \n \nDupă instalarea fișierului .zip, brățara va reporni. \n \nACȚIONEZI PE PROPRIU RISC!</string>
+    <string name="fw_upgrade_notice_zepp_os">Ești pe cale să instalezi firmware-ul %1$s pe %2$s. \n \nDupă instalarea fișierului .zip, brățara va reporni. \n \nACȚIONEZI PE PROPRIU RISC!</string>
     <string name="wearmode_band">Bandă (brățară)</string>
     <string name="pref_summary_casio_alert_email">Alertă (vibrare/bip) pentru notificări prin e-mail</string>
     <string name="pref_title_casio_alert_call">Alertă pentru apeluri primite</string>
@@ -1175,7 +1175,7 @@
     <string name="dual_device_mode_summary">Permite conectarea căștilor la două dispozitive simultan</string>
     <string name="pref_description_general">Pornire, limbă, regiune, locație</string>
     <string name="pref_description_deprecated_functionalities">Setări care vor fi eliminate într-o versiune ulterioară</string>
-    <string name="fw_upgrade_notice_huawei">Urmează să instalezi firmware-ul %s pe %s.\n\nFirmware-ul actual este %s.\n\nDispozitivul tău va reporni după instalarea noului firmware.\n\nCONTINUĂ PE PROPRIA RĂSPUNDERE!</string>
+    <string name="fw_upgrade_notice_huawei">Urmează să instalezi firmware-ul %1$s pe %2$s.\n\nFirmware-ul actual este %3$s.\n\nDispozitivul tău va reporni după instalarea noului firmware.\n\nCONTINUĂ PE PROPRIA RĂSPUNDERE!</string>
     <string name="pref_description_user_interface">Tema, ecran principal</string>
     <string name="pref_description_about_you">Data nașterii, gen, înălțime, greutate, obiective</string>
     <string name="pref_title_pebble_always_ack_pebblekit">Confirmare prematură PebbleKit</string>
@@ -1193,7 +1193,7 @@
     <string name="search">Caută</string>
     <string name="pref_vibration_intensity">Intensitatea vibraţiei</string>
     <string name="pref_title_relax_firmware_checks">Activați acest lucru dacă doriți să instalați un firmware care nu este destinat dispozitivului (pe propriul risc)</string>
-    <string name="range_percentage_float">%.1f%% - %.1f%%</string>
+    <string name="range_percentage_float">%1$.1f%% - %2$.1f%%</string>
     <string name="fw_upgrade_notice_miband4">Sunteți pe cale să instalați firmware-ul %s pe Mi Band 4.\n\nAsigurați-vă că instalați fișierul .fw, iar după aceea fișierul .res. Trupa ta va reporni după instalarea fișierului .fw.\n\nNotă: Nu trebuie să instalați .res dacă este exact același cu cel instalat anterior.\n\nPROCEDATI PE PROPRIU RISC!</string>
     <string name="pref_description_dashboard">Widget-uri, dispozitive de inclus</string>
     <string name="pref_title_sync_birthdays">Sincronizați zilele de naștere</string>

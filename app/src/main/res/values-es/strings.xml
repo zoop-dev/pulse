@@ -4109,7 +4109,7 @@
     <string name="health_connect_sleep_session_title">Sesión de sueño desde %1$s</string>
     <string name="health_connect_sleep_session_notes">Datos de sueño del dispositivo Gadgetbridge: %1$s.</string>
     <string name="infinitime_filesystem_access_disabled">El acceso al sistema de archivos está desactivado en InfiniTime</string>
-    <string name="infinitime_resource_upload_progress_status">Realizando acción %d de %d\n%s %s</string>
+    <string name="infinitime_resource_upload_progress_status">Realizando acción %1$d de %2$d\n%3$s %4$s</string>
     <string name="internet_firewall_blacklisted_domains_title">Dominios bloqueados</string>
     <string name="internet_firewall_blacklisted_domains_summary">Los siguientes dominios y todos sus subdominios ignorarán la configuración anterior y siempre serán bloqueados.</string>
     <string name="pref_restart_logging_title">Iniciar el registro</string>
@@ -4228,7 +4228,7 @@
     <string name="open_app">Abrir %s</string>
     <string name="install_app_fail">No se pudo abrir la tienda de aplicaciones para instalar %s</string>
     <string name="loyalty_cards_app_not_installed">Se necesita una aplicación de tarjetas de fidelización para gestionar las tarjetas. Instala una de las compatibles que aparecen a continuación.</string>
-    <string name="loyalty_cards_app_not_compatible">La versión instalada de %1s no es compatible con Gadgetbridge. Actualiza %1s y Gadgetbridge a sus versiones más recientes.</string>
+    <string name="loyalty_cards_app_not_compatible">La versión instalada de %1$s no es compatible con Gadgetbridge. Actualiza %1$s y Gadgetbridge a sus versiones más recientes.</string>
     <string name="loyalty_cards_app_permissions_summary">Gadgetbridge necesita permisos de lectura sobre las tarjetas de %1s para poder sincronizarlas. Toca este botón para concederlos.</string>
     <string name="weight_scale_gram_format">%1$d g</string>
     <string name="internet_firewall_note_subdomain">Los dominios deben incluir el subdominio completo, sin protocolo. Por ejemplo: \"subdominio.ejemplo.org\".</string>

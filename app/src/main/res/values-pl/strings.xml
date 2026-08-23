@@ -4259,7 +4259,7 @@
     <string name="export_select_start_date">Data rozpoczęcia</string>
     <string name="export_select_end_date">Data zakończenia</string>
     <string name="infinitime_filesystem_access_disabled">Dostęp do systemu plików jest wyłączony w InfiniTime</string>
-    <string name="infinitime_resource_upload_progress_status">Wykonywanie czynności %d z %d\n%s %s</string>
+    <string name="infinitime_resource_upload_progress_status">Wykonywanie czynności %1$d z %2$d\n%3$s %4$s</string>
     <string name="info_no_devices_to_sync">Połączone urządzenia nie obsługują synchronizacji danych</string>
     <string name="internet_firewall_title">Zapora sieciowa</string>
     <string name="internet_firewall_summary">Skonfiguruj domeny, do których można uzyskiwać dostęp przez internet</string>
@@ -4378,7 +4378,7 @@
     <string name="install_app_name">Zainstaluj %s</string>
     <string name="install_app_fail">Nie udało się otworzyć sklepu z aplikacjami w celu zainstalowania %s</string>
     <string name="open_app">Otwórz %s</string>
-    <string name="loyalty_cards_app_not_compatible">Zainstalowana wersja %1s nie jest zgodna z Gadgetbridge. Proszę zaktualizować %1s i Gadgetbridge do najnowszych wersji.</string>
+    <string name="loyalty_cards_app_not_compatible">Zainstalowana wersja %1$s nie jest zgodna z Gadgetbridge. Proszę zaktualizować %1$s i Gadgetbridge do najnowszych wersji.</string>
     <string name="loyalty_cards_app_not_installed">Do zarządzania kartami lojalnościowymi potrzebna jest aplikacja do obsługi kart lojalnościowych. Proszę zainstalować jedną z poniżej obsługiwanych aplikacji.</string>
     <string name="loyalty_cards_app_permissions_summary">Aplikacja Gadgetbridge potrzebuje uprawnień do odczytu kart z %1s, aby je zsynchronizować. Naciśnij ten przycisk, aby je przyznać.</string>
     <string name="weight_scale_gram_format">%1$d g</string>

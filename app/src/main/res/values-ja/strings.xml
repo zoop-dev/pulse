@@ -970,7 +970,7 @@
 \n
 \n自己責任の下で行ってください！</string>
     <string name="pref_header_time">時間</string>
-    <string name="fw_upgrade_notice_zepp_os">%sに %s ファームウェアをインストールしようとしています。 \n \n.zipファイルをインストールすると、バンドが再起動します。 \n \n自己責任の下で行ってください！</string>
+    <string name="fw_upgrade_notice_zepp_os">%2$sに %1$s ファームウェアをインストールしようとしています。 \n \n.zipファイルをインストールすると、バンドが再起動します。 \n \n自己責任の下で行ってください！</string>
     <string name="pref_header_workout">ワークアウト</string>
     <string name="pref_title_message_privacy_mode">メッセージのプライバシー設定</string>
     <string name="pref_message_privacy_mode_off">すべての内容を表示</string>
@@ -1297,7 +1297,7 @@
     <string name="chart_no_active_data">アクティビティが検出されませんでした。</string>
     <string name="activity_list_summary_distance">距離</string>
     <string name="devicestatus_upload_starting">アップロード開始中</string>
-    <string name="firmware_update_progress">アップロード中です \n%1d%% at %.2fkbps (average %.2fkbps) \nPart %1d of %1d</string>
+    <string name="firmware_update_progress">アップロード中です \n%1$d%% at %2$.2fkbps (average %3$.2fkbps) \nPart %4$d of %5$d</string>
     <string name="updatefirmwareoperation_updateproblem_free_space">デバイスに十分な空き容量がありません</string>
     <string name="devicestatus_connected">デバイスは接続済みです</string>
     <string name="gpx_route_upload_failed">GPX ルートのアップロードに失敗しました</string>
@@ -2124,7 +2124,7 @@
 \n注意：Fossil公式アプリで設定したウォッチフェイスを使っているときに上ボタンを長押しすると、ウィジェットの表示/非表示も切り替わります。</string>
     <string name="pref_force_options_summary">一部のデバイスは、いくつかのオプションに対応していないと偽っている場合があります。この設定はそれらのオプションを強制的に有効化します。 \n自己責任で使用してください。 \n詳細は Wiki を確認してください</string>
     <string name="error_deleting_device">デバイスの削除中にエラーが発生しました: %s</string>
-    <string name="controlcenter_connected_fraction">接続済み: %d/%d</string>
+    <string name="controlcenter_connected_fraction">接続済み: %1$d/%2$d</string>
     <string name="error_setting_parent_folder">親フォルダの設定中にエラーが発生しました: %s</string>
     <string name="temperature_scale_cf_summary">デバイスが華氏と摂氏のどちらを使用するか選択します。</string>
     <string name="temperature_scale_cf">温度の単位</string>
@@ -2263,7 +2263,7 @@
     <string name="title_cycling">サイクリング</string>
     <string name="pref_summary_wheel_diameter">タイヤの直径(インチ)。一般的には26, 27, 27.5, 29などです。</string>
     <string name="pref_title_wheel_diameter">タイヤの直径</string>
-    <string name="chart_cycling_point_label_distance">今日: %.1f km \n合計: %.1f km</string>
+    <string name="chart_cycling_point_label_distance">今日: %1$.1f km \n合計: %2$.1f km</string>
     <string name="chart_cycling_point_label_speed">%.1f km/h</string>
     <string name="pref_dashboard_widgets_order_summary">有効にするウィジェットと、ダッシュボードに表示するウィジェットの順番を選択します</string>
     <string name="pref_summary_bottom_navigation_bar_off">横スワイプでメイン画面を切り替えます</string>
@@ -2487,11 +2487,11 @@
     <string name="pref_summary_sync_birthdays">連絡先の誕生日をカレンダーのイベントと同様に同期します</string>
     <string name="minutes_2">2 分</string>
     <string name="activity_prefs_date_birth">誕生日</string>
-    <string name="range_percentage_float">%.1f%% - %.1f%%</string>
+    <string name="range_percentage_float">%1$.1f%% - %2$.1f%%</string>
     <string name="hr_maximum">最大</string>
     <string name="busy_task_fetch_sleep_data">睡眠のデータを取得中</string>
     <string name="minutes_8">8 分</string>
-    <string name="fw_upgrade_notice_huawei">ファームウェア %s を %s に転送しようとしています。\n\n現在のファームウェアは %s です\n\n転送後、デバイスは再起動します.\n\n自己責任で進めてください！</string>
+    <string name="fw_upgrade_notice_huawei">ファームウェア %1$s を %2$s に転送しようとしています。\n\n現在のファームウェアは %3$s です\n\n転送後、デバイスは再起動します.\n\n自己責任で進めてください！</string>
     <string name="open_source_licenses">ライセンス</string>
     <string name="audio_recordings">オーディオ録音</string>
     <string name="dialog_close">閉じる</string>

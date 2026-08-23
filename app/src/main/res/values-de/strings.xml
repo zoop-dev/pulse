@@ -4150,7 +4150,7 @@
     <string name="health_connect_sleep_session_title">Schlaf-Sitzung von %1$s</string>
     <string name="health_connect_sleep_session_notes">Schlafdaten vom Gadgetbridge-Gerät: %1$s.</string>
     <string name="infinitime_filesystem_access_disabled">Dateisystemzugriff in InfiniTime deaktiviert</string>
-    <string name="infinitime_resource_upload_progress_status">Aktion %d von %d wird ausgeführt.\n%s %s</string>
+    <string name="infinitime_resource_upload_progress_status">Aktion %1$d von %2$d wird ausgeführt.\n%3$s %4$s</string>
     <string name="health_connect_all_granted">Health Connect aktiviert. Die Datensynchronisierung beginnt für die entsprechenden Datentypen.</string>
     <string name="health_connect_permission_changed">Berechtigungen für Health Connect geändert.</string>
     <string name="health_connect_no_devices_selected">Keine Geräte für Health Connect-Synchronisierung ausgewählt.</string>
@@ -4243,7 +4243,7 @@
     <string name="open_app">%s öffnen</string>
     <string name="install_app_fail">App Store konnte nicht geöffnet werden, um %s zu installieren</string>
     <string name="loyalty_cards_app_not_installed">Zur Verwaltung der Kundenkarten benötigst du eine entsprechende App. Bitte installiere eine der unten aufgeführten unterstützten Apps.</string>
-    <string name="loyalty_cards_app_not_compatible">Die installierte Version von %1s ist nicht mit Gadgetbridge kompatibel. Bitte aktualisiere %1s und Gadgetbridge auf die aktuelle Version.</string>
+    <string name="loyalty_cards_app_not_compatible">Die installierte Version von %1$s ist nicht mit Gadgetbridge kompatibel. Bitte aktualisiere %1$s und Gadgetbridge auf die aktuelle Version.</string>
     <string name="loyalty_cards_app_permissions_summary">Gadgetbridge benötigt Leserechte für die %1s Karten, um sie zu synchronisieren. Tippe auf diese Taste, um die Berechtigungen zu erteilen.</string>
     <string name="weight_scale_gram_format">%1$d g</string>
     <string name="qhybrid_button_function_forward">An Telefon weiterleiten</string>

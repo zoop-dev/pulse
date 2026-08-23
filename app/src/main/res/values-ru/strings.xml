@@ -4081,7 +4081,7 @@
     <string name="health_connect_sleep_session_title">Время сна %1$s</string>
     <string name="health_connect_sleep_session_notes">Данные сна из Gadgetbridge device: %1$s.</string>
     <string name="infinitime_filesystem_access_disabled">Доступ к файловой системе в InfiniTime отключен</string>
-    <string name="infinitime_resource_upload_progress_status">Выполнение действия %d из %d\n%s %s</string>
+    <string name="infinitime_resource_upload_progress_status">Выполнение действия %1$d из %2$d\n%3$s %4$s</string>
     <string name="pref_title_qhybrid_top_button_function">Функция верхней кнопки</string>
     <string name="blood_pressure_systolic">Систолическое</string>
     <string name="blood_pressure_diastolic">Диастолическое</string>
@@ -4412,7 +4412,7 @@
     <string name="open_app">Открыть %s</string>
     <string name="install_app_fail">Не удалось открыть магазин приложений для установки %s</string>
     <string name="loyalty_cards_app_not_installed">Для управления картами лояльности необходимо приложение. Пожалуйста, установите одно из поддерживаемых приложений.</string>
-    <string name="loyalty_cards_app_not_compatible">Установленная версия %1s несовместима с Gadgetbridge. Пожалуйста, обновите %1s и Gadgetbridge до последних версий.</string>
+    <string name="loyalty_cards_app_not_compatible">Установленная версия %1$s несовместима с Gadgetbridge. Пожалуйста, обновите %1$s и Gadgetbridge до последних версий.</string>
     <string name="loyalty_cards_app_permissions_summary">Для синхронизации Gadgetbridge требуются разрешения на чтение данных с карт %1s. Нажмите эту кнопку, чтобы предоставить их.</string>
     <string name="weight_scale_gram_format">%1$d g</string>
     <string name="internet_firewall_note_subdomain">Домены должны включать полный поддомен без протокола. Например: \"subdomain.example.org\".</string>

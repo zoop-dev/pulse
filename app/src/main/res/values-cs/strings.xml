@@ -4245,7 +4245,7 @@
     <string name="export_select_start_date">Datum začátku</string>
     <string name="export_select_end_date">Datum konce</string>
     <string name="infinitime_filesystem_access_disabled">Přístup k souborovému systému je zakázán v InfiniTime</string>
-    <string name="infinitime_resource_upload_progress_status">Provádím akci %d z %d\n%s %s</string>
+    <string name="infinitime_resource_upload_progress_status">Provádím akci %1$d z %2$d\n%3$s %4$s</string>
     <string name="info_no_devices_to_sync">Připojená zařízení nepodporují synchronizaci dat</string>
     <string name="internet_firewall_title">Firewall</string>
     <string name="internet_firewall_summary">Nastavte, ke kterým doménám bude možné se připojit skrze internet</string>
@@ -4374,7 +4374,7 @@
     <string name="open_app">Otevřít %s</string>
     <string name="install_app_fail">Nepodařilo se otevřít obchod s aplikacemi pro nainstalování %s</string>
     <string name="loyalty_cards_app_not_installed">Pro správu věrnostních kartiček je potřeba samostatná aplikace. Nainstalujte si prosím jednu z podorovaných níže.</string>
-    <string name="loyalty_cards_app_not_compatible">Nainstalovaná verze aplikace %1s není kompatibilní s Gadgetbridge. Aktualizujte prosím aplikacei %1s a Gadgetbridge na nejnovější verze.</string>
+    <string name="loyalty_cards_app_not_compatible">Nainstalovaná verze aplikace %1$s není kompatibilní s Gadgetbridge. Aktualizujte prosím aplikacei %1$s a Gadgetbridge na nejnovější verze.</string>
     <string name="loyalty_cards_app_permissions_summary">Gadgetbridge potřebuje oprávnění aplikace %1s ke čteníkaret pro jejich synchronizaci. Klepněte na toto tlačítko pro jejich udělení.</string>
     <string name="weight_scale_gram_format">%1$d g</string>
     <string name="internet_firewall_note_subdomain">Domény musí obsahovat celou subdoménu, bez protokolu. Například: „subdomena.example.org“.</string>

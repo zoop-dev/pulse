@@ -3401,7 +3401,7 @@
     <string name="workout_revolutions">Rivoluzioni</string>
     <string name="workout_swings">Oscillazioni</string>
     <string name="max_power_sitting">Potenza massima (seduto)</string>
-    <string name="range_percentage_float">%.1f%% – %.1f%%</string>
+    <string name="range_percentage_float">%1$.1f%% – %2$.1f%%</string>
     <string name="weather_condition_thunderstorm_with_heavy_rain">temporale con pioggia intensa</string>
     <string name="weather_condition_windy">ventoso</string>
     <string name="weather_condition_gale">burrasca</string>
