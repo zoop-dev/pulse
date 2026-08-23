@@ -919,18 +919,17 @@ public class LaxasFitDeviceSupport extends AbstractBTLESingleDeviceSupport {
     }
 
     @Override
-    public void onReset(int flags) {
-        LOG.debug("LaxasFit reset flags: " + flags);
-        byte[] command = craftData(CMD_GROUP_RESET, CMD_RESET);
-        switch (flags) {
-            case 1:
-                command = craftData(CMD_GROUP_RESET, CMD_RESET);
-                break;
-            case 2:
-                command = craftData(CMD_GROUP_BIND, CMD_UNBIND);
-                break;
-        }
+    public void onReboot() {
+        final byte[] command = craftData(CMD_GROUP_RESET, CMD_RESET);
+        getQueue().clear();
+        TransactionBuilder builder = createTransactionBuilder("rebooting");
+        builder.write(writeCharacteristic, command);
+        builder.queue();
+    }
 
+    @Override
+    public void onFactoryReset() {
+        final byte[] command = craftData(CMD_GROUP_BIND, CMD_UNBIND);
         getQueue().clear();
         TransactionBuilder builder = createTransactionBuilder("resetting");
         builder.write(writeCharacteristic, command);

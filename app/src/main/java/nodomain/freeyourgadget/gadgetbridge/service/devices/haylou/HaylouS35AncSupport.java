@@ -18,7 +18,6 @@ import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEvent;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.AbstractHeadphoneBTBRDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btbr.TransactionBuilder;
-import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol;
 
 public class HaylouS35AncSupport extends AbstractHeadphoneBTBRDeviceSupport {
     private static final Logger LOG = LoggerFactory.getLogger(HaylouS35AncSupport.class);
@@ -66,11 +65,8 @@ public class HaylouS35AncSupport extends AbstractHeadphoneBTBRDeviceSupport {
     }
 
     @Override
-    public void onReset(final int flags) {
-        if ((flags & GBDeviceProtocol.RESET_FLAGS_FACTORY_RESET) != 0) {
-            sendCommand("factory reset", protocol.encodeReset());
-            return;
-        }
+    public void onFactoryReset() {
+        sendCommand("factory reset", protocol.encodeReset());
     }
 
     public void onSendConfiguration(final String config) {

@@ -208,8 +208,14 @@ public abstract class AbstractSerialDeviceSupportV2<T extends GBDeviceProtocol> 
     }
 
     @Override
-    public void onReset(final int flags) {
-        byte[] bytes = mDeviceProtocol.encodeReset(flags);
+    public void onReboot() {
+        byte[] bytes = mDeviceProtocol.encodeReset(GBDeviceProtocol.RESET_FLAGS_REBOOT);
+        sendToDevice(bytes);
+    }
+
+    @Override
+    public void onFactoryReset() {
+        byte[] bytes = mDeviceProtocol.encodeReset(GBDeviceProtocol.RESET_FLAGS_FACTORY_RESET);
         sendToDevice(bytes);
     }
 

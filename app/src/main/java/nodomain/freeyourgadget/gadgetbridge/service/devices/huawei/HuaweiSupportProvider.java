@@ -236,7 +236,6 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetN
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetWorkModeRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.utils.HuaweiGPSTrackConverter;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.utils.HuaweiRouteTrack;
-import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol;
 import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.MediaManager;
@@ -1837,12 +1836,10 @@ public class HuaweiSupportProvider {
         });
     }
 
-    public void onReset(int flags) {
+    public void onFactoryReset() {
         try {
-            if (flags == GBDeviceProtocol.RESET_FLAGS_FACTORY_RESET) {
-                SendFactoryResetRequest sendFactoryResetReq = new SendFactoryResetRequest(this);
-                sendFactoryResetReq.doPerform();
-            }
+            SendFactoryResetRequest sendFactoryResetReq = new SendFactoryResetRequest(this);
+            sendFactoryResetReq.doPerform();
         } catch (IOException e) {
             GB.toast(context, "Factory resetting Huawei device failed", Toast.LENGTH_SHORT, GB.ERROR, e);
             LOG.error("Factory resetting Huawei device failed", e);

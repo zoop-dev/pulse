@@ -11,7 +11,6 @@ import nodomain.freeyourgadget.gadgetbridge.GBApplication
 import nodomain.freeyourgadget.gadgetbridge.R
 import nodomain.freeyourgadget.gadgetbridge.activities.files.FileManagerActivity
 import nodomain.freeyourgadget.gadgetbridge.model.RecordedDataTypes
-import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol
 import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils
 import nodomain.freeyourgadget.gadgetbridge.util.GB
 import java.util.Calendar
@@ -101,7 +100,7 @@ class OtherDebugFragment : AbstractDebugFragment() {
 
         onClick(PREF_DEBUG_REBOOT) {
             runOnDebugDevices("Reboot", true) {
-                GBApplication.deviceService(it).onReset(GBDeviceProtocol.RESET_FLAGS_REBOOT)
+                GBApplication.deviceService(it).onReboot()
             }
         }
 
@@ -112,7 +111,7 @@ class OtherDebugFragment : AbstractDebugFragment() {
                 .setMessage(R.string.debugactivity_really_factoryreset)
                 .setPositiveButton(R.string.ok) { _, _ ->
                     runOnDebugDevices(getString(R.string.factory_reset), true) {
-                        GBApplication.deviceService(it).onReset(GBDeviceProtocol.RESET_FLAGS_FACTORY_RESET)
+                        GBApplication.deviceService(it).onFactoryReset()
                     }
                 }
                 .setNegativeButton(R.string.cancel) { _, _ -> }

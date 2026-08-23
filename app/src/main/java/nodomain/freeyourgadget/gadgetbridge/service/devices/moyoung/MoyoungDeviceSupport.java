@@ -1562,7 +1562,7 @@ public class MoyoungDeviceSupport extends AbstractBTLESingleDeviceSupport {
     }
 
     @Override
-    public void onReset(int flags) {
+    public void onReboot() {
         // TODO: this shuts down the watch, rather than rebooting it
         // (reboot is not supported, btw)
 

@@ -225,8 +225,14 @@ public abstract class AbstractSerialDeviceSupport extends AbstractBluetoothDevic
     }
 
     @Override
-    public void onReset(int flags) {
-        byte[] bytes = gbDeviceProtocol.encodeReset(flags);
+    public void onReboot() {
+        byte[] bytes = gbDeviceProtocol.encodeReset(GBDeviceProtocol.RESET_FLAGS_REBOOT);
+        sendToDevice(bytes);
+    }
+
+    @Override
+    public void onFactoryReset() {
+        byte[] bytes = gbDeviceProtocol.encodeReset(GBDeviceProtocol.RESET_FLAGS_FACTORY_RESET);
         sendToDevice(bytes);
     }
 

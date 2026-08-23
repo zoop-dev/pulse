@@ -103,7 +103,6 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.IntentListener;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.deviceinfo.DeviceInfo;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.deviceinfo.DeviceInfoProfile;
-import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.notifications.GBProgressNotification;
 
@@ -234,17 +233,15 @@ public class UltrahumanDeviceSupport extends AbstractBTLESingleDeviceSupport {
     }
 
     @Override
-    public void onReset(int flags) {
-        if ((flags & GBDeviceProtocol.RESET_FLAGS_FACTORY_RESET) == GBDeviceProtocol.RESET_FLAGS_FACTORY_RESET) {
-            TransactionBuilder builder = createTransactionBuilder("onReset");
-            builder.write(UUID_COMMAND, OPERATION_RESET);
-            builder.run(this::disconnect);
-            try {
-                builder.queueConnected();
-            } catch (IOException e) {
-                LOG.error("onReset failed {}", e.getMessage(), e);
+    public void onFactoryReset() {
+        TransactionBuilder builder = createTransactionBuilder("onReset");
+        builder.write(UUID_COMMAND, OPERATION_RESET);
+        builder.run(this::disconnect);
+        try {
+            builder.queueConnected();
+        } catch (IOException e) {
+            LOG.error("onReset failed {}", e.getMessage(), e);
             }
-        }
     }
 
     @Override

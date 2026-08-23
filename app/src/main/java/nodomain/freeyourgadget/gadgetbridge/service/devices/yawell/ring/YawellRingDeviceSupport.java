@@ -67,7 +67,6 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.IntentListener;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.deviceinfo.DeviceInfo;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.deviceinfo.DeviceInfoProfile;
-import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol;
 import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
@@ -682,12 +681,10 @@ public class YawellRingDeviceSupport extends AbstractBTLESingleDeviceSupport {
     }
 
     @Override
-    public void onReset(int flags) {
-        if ((flags & GBDeviceProtocol.RESET_FLAGS_FACTORY_RESET) != 0) {
-            byte[] resetPacket = buildPacket(new byte[]{YawellRingConstants.CMD_FACTORY_RESET, 0x66, 0x66});
-            LOG.info("Factory reset request sent: {}", StringUtils.bytesToHex(resetPacket));
-            sendWrite("resetRequest", resetPacket);
-        }
+    public void onFactoryReset() {
+        byte[] resetPacket = buildPacket(new byte[]{YawellRingConstants.CMD_FACTORY_RESET, 0x66, 0x66});
+        LOG.info("Factory reset request sent: {}", StringUtils.bytesToHex(resetPacket));
+        sendWrite("resetRequest", resetPacket);
     }
 
     @Override

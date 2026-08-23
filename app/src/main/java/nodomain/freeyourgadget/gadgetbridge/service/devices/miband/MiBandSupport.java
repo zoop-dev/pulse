@@ -648,14 +648,21 @@ public class MiBandSupport extends AbstractBTLESingleDeviceSupport {
     }
 
     @Override
-    public void onReset(int flags) {
+    public void onReboot() {
+        try {
+            TransactionBuilder builder = performInitialized("reboot");
+            builder.write(MiBandService.UUID_CHARACTERISTIC_CONTROL_POINT, reboot);
+            builder.queue();
+        } catch (IOException ex) {
+            LOG.error("Unable to reset", ex);
+        }
+    }
+
+    @Override
+    public void onFactoryReset() {
         try {
             TransactionBuilder builder = performInitialized("reset");
-            if ((flags & GBDeviceProtocol.RESET_FLAGS_FACTORY_RESET) != 0) {
-                builder.write(MiBandService.UUID_CHARACTERISTIC_CONTROL_POINT, factoryReset);
-            } else {
-                builder.write(MiBandService.UUID_CHARACTERISTIC_CONTROL_POINT, reboot);
-            }
+            builder.write(MiBandService.UUID_CHARACTERISTIC_CONTROL_POINT, factoryReset);
             builder.queue();
         } catch (IOException ex) {
             LOG.error("Unable to reset", ex);

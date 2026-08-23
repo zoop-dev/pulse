@@ -102,8 +102,8 @@ public class HuaweiBRSupport extends AbstractBTBRDeviceSupport {
     }
 
     @Override
-    public void onReset(int flags) {
-        supportProvider.onReset(flags);
+    public void onFactoryReset() {
+        supportProvider.onFactoryReset();
     }
 
     @Override

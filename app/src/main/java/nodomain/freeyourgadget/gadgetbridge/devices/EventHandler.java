@@ -106,7 +106,9 @@ public interface EventHandler {
 
     void onFetchRecordedData(int dataTypes);
 
-    void onReset(int flags);
+    void onReboot();
+
+    void onFactoryReset();
 
     void onHeartRateTest();
 

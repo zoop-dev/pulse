@@ -54,7 +54,6 @@ import nodomain.freeyourgadget.gadgetbridge.model.DistanceUnit;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
-import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol;
 import nodomain.freeyourgadget.gadgetbridge.util.AlarmUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
@@ -274,18 +273,16 @@ public class TLW64Support extends AbstractBTLESingleDeviceSupport {
     }
 
     @Override
-    public void onReset(int flags) {
-        if (flags == GBDeviceProtocol.RESET_FLAGS_FACTORY_RESET) {
-            try {
-                TransactionBuilder builder = performInitialized("factoryReset");
-                byte[] msg = new byte[]{
-                        TLW64Constants.CMD_FACTORY_RESET,
-                };
-                builder.write(ctrlCharacteristic, msg);
-                builder.queue();
-            } catch (IOException e) {
-                GB.toast(getContext(), "Error during factory reset: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
-            }
+    public void onFactoryReset() {
+        try {
+            TransactionBuilder builder = performInitialized("factoryReset");
+            byte[] msg = new byte[]{
+                    TLW64Constants.CMD_FACTORY_RESET,
+            };
+            builder.write(ctrlCharacteristic, msg);
+            builder.queue();
+        } catch (IOException e) {
+            GB.toast(getContext(), "Error during factory reset: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
         }
     }
 

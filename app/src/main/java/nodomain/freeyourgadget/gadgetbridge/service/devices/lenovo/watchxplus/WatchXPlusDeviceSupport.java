@@ -842,11 +842,6 @@ public class WatchXPlusDeviceSupport extends AbstractBTLESingleDeviceSupport {
     }
 
     @Override
-    public void onReset(int flags) {
-       // testNewCommands();
-    }
-
-    @Override
     public void onHeartRateTest() {
         //requestHeartRateMeasurement();
     }

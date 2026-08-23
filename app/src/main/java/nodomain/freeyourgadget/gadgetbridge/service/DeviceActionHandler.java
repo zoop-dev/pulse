@@ -199,9 +199,12 @@ public class DeviceActionHandler {
                 deviceSupport.onDeleteCalendarEvent(type, id);
                 break;
             }
-            case ACTION_RESET: {
-                final int flags = intentCopy.getIntExtra(EXTRA_RESET_FLAGS, 0);
-                deviceSupport.onReset(flags);
+            case ACTION_REBOOT: {
+                deviceSupport.onReboot();
+                break;
+            }
+            case ACTION_FACTORY_RESET: {
+                deviceSupport.onFactoryReset();
                 break;
             }
             case ACTION_HEARTRATE_TEST: {

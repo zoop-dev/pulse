@@ -169,10 +169,7 @@ public class MiSmartScaleDeviceSupport extends AbstractBTLESingleDeviceSupport {
     }
 
     @Override
-    public void onReset(int flags) {
-        if ((flags & GBDeviceProtocol.RESET_FLAGS_FACTORY_RESET) == 0)
-            return;
-
+    public void onFactoryReset() {
         try {
             TransactionBuilder builder = performInitialized("reset");
 

@@ -236,7 +236,7 @@ public class JYouSupport extends AbstractBTLESingleDeviceSupport {
     }
 
     @Override
-    public void onReset(int flags) {
+    public void onReboot() {
         try {
             TransactionBuilder builder = performInitialized("Reboot");
             builder.write(ctrlCharacteristic, commandWithChecksum(

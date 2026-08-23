@@ -45,7 +45,7 @@ public abstract class GBDeviceProtocol {
     public static final int RESET_FLAGS_REBOOT = 1;
     public static final int RESET_FLAGS_FACTORY_RESET = 2;
 
-    private GBDevice mDevice;
+    private final GBDevice mDevice;
 
     protected GBDeviceProtocol(GBDevice device) {
         mDevice = device;

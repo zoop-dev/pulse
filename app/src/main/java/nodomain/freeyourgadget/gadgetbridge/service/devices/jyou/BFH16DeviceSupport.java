@@ -281,7 +281,7 @@ public class BFH16DeviceSupport extends AbstractBTLESingleDeviceSupport {
 
     //TODO: check
     @Override
-    public void onReset(int flags) {
+    public void onReboot() {
         try {
             TransactionBuilder builder = performInitialized("Reboot");
             builder.write(ctrlCharacteristic, commandWithChecksum(

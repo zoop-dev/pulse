@@ -81,7 +81,6 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDevic
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.webview.CurrentPosition;
-import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.MediaManager;
 
@@ -789,12 +788,8 @@ public class CmfWatchProSupport extends AbstractBTLESingleDeviceSupport implemen
     }
 
     @Override
-    public void onReset(final int flags) {
-        if ((flags & GBDeviceProtocol.RESET_FLAGS_FACTORY_RESET) != 0) {
-            sendCommand("factory reset", CmfCommand.FACTORY_RESET, A5);
-        } else {
-            LOG.warn("Unknown reset flags: {}", String.format("0x%x", flags));
-        }
+    public void onFactoryReset() {
+        sendCommand("factory reset", CmfCommand.FACTORY_RESET, A5);
     }
 
     @Override

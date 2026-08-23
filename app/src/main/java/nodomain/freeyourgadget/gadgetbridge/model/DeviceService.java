@@ -54,7 +54,8 @@ public interface DeviceService extends EventHandler {
     String ACTION_APP_CONFIG_SET = PREFIX + ".action.app_config_set";
     String ACTION_APP_REORDER = PREFIX + ".action.app_reorder";
     String ACTION_INSTALL = PREFIX + ".action.install";
-    String ACTION_RESET = PREFIX + ".action.reset";
+    String ACTION_REBOOT = PREFIX + ".action.reboot";
+    String ACTION_FACTORY_RESET = PREFIX + ".action.factory_reset";
     String ACTION_HEARTRATE_TEST = PREFIX + ".action.heartrate_test";
     String ACTION_FETCH_RECORDED_DATA = PREFIX + ".action.fetch_activity_data";
     String ACTION_DISCONNECT = PREFIX + ".action.disconnect";
@@ -164,7 +165,6 @@ public interface DeviceService extends EventHandler {
     String EXTRA_FM_FREQUENCY = "fm_frequency";
     String EXTRA_LED_COLOR = "led_color";
     String EXTRA_GPS_LOCATION = "gps_location";
-    String EXTRA_RESET_FLAGS = "reset_flags";
     String EXTRA_CAMERA_EVENT = "event";
     String EXTRA_CAMERA_FILENAME = "filename";
 

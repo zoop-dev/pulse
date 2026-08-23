@@ -74,7 +74,6 @@ import nodomain.freeyourgadget.gadgetbridge.model.DeviceService;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
-import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.preferences.DevicePrefs;
 
@@ -247,7 +246,7 @@ public class MakibesHR3DeviceSupport extends AbstractBTLESingleDeviceSupport imp
         try {
             transactionBuilder.queueConnected();
         } catch (Exception ex) {
-            LoggerFactory.getLogger(this.getClass()).error("factory reset failed");
+            LoggerFactory.getLogger(this.getClass()).error("set time failed");
         }
     }
 
@@ -322,26 +321,26 @@ public class MakibesHR3DeviceSupport extends AbstractBTLESingleDeviceSupport imp
     }
 
     @Override
-    public void onReset(int flags) {
+    public void onReboot() {
+        TransactionBuilder transactionBuilder = this.createTransactionBuilder("reboot");
+        this.reboot(transactionBuilder);
 
-        if ((flags & GBDeviceProtocol.RESET_FLAGS_FACTORY_RESET) != 0) {
-            TransactionBuilder transactionBuilder = this.createTransactionBuilder("reset");
-            this.factoryReset(transactionBuilder);
+        try {
+            transactionBuilder.queueConnected();
+        } catch (Exception ex) {
+            LoggerFactory.getLogger(this.getClass()).error("reboot failed");
+        }
+    }
 
-            try {
-                transactionBuilder.queueConnected();
-            } catch (Exception ex) {
-                LoggerFactory.getLogger(this.getClass()).error("factory reset failed");
-            }
-        } else if ((flags & GBDeviceProtocol.RESET_FLAGS_REBOOT) != 0) {
-            TransactionBuilder transactionBuilder = this.createTransactionBuilder("reboot");
-            this.reboot(transactionBuilder);
+    @Override
+    public void onFactoryReset() {
+        TransactionBuilder transactionBuilder = this.createTransactionBuilder("reset");
+        this.factoryReset(transactionBuilder);
 
-            try {
-                transactionBuilder.queueConnected();
-            } catch (Exception ex) {
-                LoggerFactory.getLogger(this.getClass()).error("factory reset failed");
-            }
+        try {
+            transactionBuilder.queueConnected();
+        } catch (Exception ex) {
+            LoggerFactory.getLogger(this.getClass()).error("factory reset failed");
         }
     }
 

@@ -470,12 +470,20 @@ public abstract class AbstractDeviceSupport implements DeviceSupport {
     }
 
     /**
-     * If a device can be reset with a command, this method can be
+     * If a device can be rebooted with a command, this method can be
      * overridden and implemented by the device support class.
-     * @param flags can be used to pass flags with the reset command
      */
     @Override
-    public void onReset(int flags) {
+    public void onReboot() {
+
+    }
+
+    /**
+     * If a device can be factory reset with a command, this method can be
+     * overridden and implemented by the device support class.
+     */
+    @Override
+    public void onFactoryReset() {
 
     }
 

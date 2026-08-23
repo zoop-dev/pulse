@@ -58,7 +58,6 @@ import nodomain.freeyourgadget.gadgetbridge.model.weather.Weather;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEMultiDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BtLEQueue;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
-import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.GBPrefs;
 import nodomain.freeyourgadget.gadgetbridge.util.calendar.CalendarEvent;
@@ -866,11 +865,9 @@ public class G1DeviceSupport extends AbstractBTLEMultiDeviceSupport {
     }
 
     @Override
-    public void onReset(int flags) {
-        if (flags == GBDeviceProtocol.RESET_FLAGS_REBOOT) {
-            leftSide.send(new G1Communications.CommandSystemRebootControl());
-            rightSide.send(new G1Communications.CommandSystemRebootControl());
-        }
+    public void onReboot() {
+        leftSide.send(new G1Communications.CommandSystemRebootControl());
+        rightSide.send(new G1Communications.CommandSystemRebootControl());
     }
 
     @Override

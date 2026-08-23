@@ -50,7 +50,6 @@ import nodomain.freeyourgadget.gadgetbridge.model.TemperatureUnit
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder
 import nodomain.freeyourgadget.gadgetbridge.service.devices.sony.wena3.protocol.packets.notification.defines.VibrationKind
-import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol
 import nodomain.freeyourgadget.gadgetbridge.util.MediaManager
 import nodomain.freeyourgadget.gadgetbridge.util.kotlin.coerceIn
 import org.apache.commons.lang3.ArrayUtils
@@ -64,7 +63,7 @@ import java.util.GregorianCalendar
 import java.util.Locale
 import java.util.UUID
 
-class GloryFitSupport() : AbstractBTLESingleDeviceSupport(LOG) {
+class GloryFitSupport : AbstractBTLESingleDeviceSupport(LOG) {
     init {
         addSupportedService(UUID_SERVICE_GLORYFIT_CMD)
         addSupportedService(UUID_SERVICE_GLORYFIT_DATA)
@@ -861,15 +860,13 @@ class GloryFitSupport() : AbstractBTLESingleDeviceSupport(LOG) {
         builder.queue()
     }
 
-    override fun onReset(flags: Int) {
-        if ((flags and GBDeviceProtocol.RESET_FLAGS_FACTORY_RESET) != 0) {
-            val builder = createTransactionBuilder("factory reset")
-            builder.write(
-                UUID_CHARACTERISTIC_GLORYFIT_CMD_WRITE,
-                CMD_FACTORY_RESET
-            )
-            builder.queue()
-        }
+    override fun onFactoryReset() {
+        val builder = createTransactionBuilder("factory reset")
+        builder.write(
+            UUID_CHARACTERISTIC_GLORYFIT_CMD_WRITE,
+            CMD_FACTORY_RESET
+        )
+        builder.queue()
     }
 
     override fun onEnableRealtimeHeartRateMeasurement(enable: Boolean) {

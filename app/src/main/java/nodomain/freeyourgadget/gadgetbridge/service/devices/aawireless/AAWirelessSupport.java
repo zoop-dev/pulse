@@ -41,7 +41,6 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.proto.aawireless.AAWirelessProto;
 import nodomain.freeyourgadget.gadgetbridge.service.btbr.AbstractBTBRDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btbr.TransactionBuilder;
-import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 public class AAWirelessSupport extends AbstractBTBRDeviceSupport {
@@ -401,10 +400,8 @@ public class AAWirelessSupport extends AbstractBTBRDeviceSupport {
     }
 
     @Override
-    public void onReset(final int flags) {
-        if ((flags & GBDeviceProtocol.RESET_FLAGS_FACTORY_RESET) != 0) {
-            sendCommand("factory reset", CMD_FACTORY_RESET_REQUEST, new byte[0]);
-        }
+    public void onFactoryReset() {
+        sendCommand("factory reset", CMD_FACTORY_RESET_REQUEST, new byte[0]);
     }
 
     private class AAWirelessCommandReceiver extends BroadcastReceiver {

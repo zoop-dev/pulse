@@ -45,7 +45,6 @@ import nodomain.freeyourgadget.gadgetbridge.devices.SolarEquipmentStatusActivity
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
-import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol;
 import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
@@ -107,10 +106,8 @@ public class MarstekB2500DeviceSupport extends AbstractBTLESingleDeviceSupport {
     }
 
     @Override
-    public void onReset(int flags) {
-        if ((flags & GBDeviceProtocol.RESET_FLAGS_REBOOT) != 0) {
-            sendCommand("reboot", COMMAND_REBOOT);
-        }
+    public void onReboot() {
+        sendCommand("reboot", COMMAND_REBOOT);
     }
 
     @Override

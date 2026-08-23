@@ -1504,14 +1504,21 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
     }
 
     @Override
-    public void onReset(int flags) {
+    public void onReboot() {
+        try {
+            TransactionBuilder builder = performInitialized("Reboot");
+            sendReboot(builder);
+            builder.queue();
+        } catch (IOException ex) {
+            LOG.error("Unable to reset", ex);
+        }
+    }
+
+    @Override
+    public void onFactoryReset() {
         try {
             TransactionBuilder builder = performInitialized("Reset");
-            if ((flags & GBDeviceProtocol.RESET_FLAGS_FACTORY_RESET) != 0) {
-                sendFactoryReset(builder);
-            } else {
-                sendReboot(builder);
-            }
+            sendFactoryReset(builder);
             builder.queue();
         } catch (IOException ex) {
             LOG.error("Unable to reset", ex);
