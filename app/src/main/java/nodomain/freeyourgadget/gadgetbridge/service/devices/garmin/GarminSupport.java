@@ -792,11 +792,11 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
                 weatherHourlyForecast.weatherDewPoint(hourly.getDewPoint());
                 weatherHourlyForecast.weatherUvIndex(hourly.getUvIndex());
                 weatherHourlyForecast.weatherAirQuality(null); // null to ensure the definition is added TODO: add once Hourly contains this information
+                weatherHourlyForecast.weatherAtmosphericPressure(hourly.getPressure());
+                // TODO: FIT encoding unclear for hourly.getCloudCover()
                 weatherLocalMessage.addRecordData(weatherHourlyForecast.build(hourlyMessageType));
             }
         }
-
-        final int dailyMessageType = weatherLocalMessage.getNextAvailableLocalMessageType();
 
         final FitWeather.Builder todayDailyForecast = new FitWeather.Builder();
         todayDailyForecast.setWeatherReport(WeatherReport.daily_forecast);
@@ -807,9 +807,15 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
         todayDailyForecast.weatherPrecipitationProbability(weather.getPrecipProbability());
         todayDailyForecast.weatherDayOfWeek(weather.getTimestamp());
         todayDailyForecast.weatherAirQuality(weather.getAirQuality());
-        weatherLocalMessage.addRecordData(todayDailyForecast.build(dailyMessageType));
+        todayDailyForecast.weatherRelativeHumidity(weather.getCurrentHumidity());
+        todayDailyForecast.weatherWindSpeed(weather.getWindSpeed());
+        todayDailyForecast.weatherWindDirection(weather.getWindDirection());
+        todayDailyForecast.weatherUvIndex(weather.getUvIndex());
+        todayDailyForecast.weatherAtmosphericPressure(weather.getPressure());
+        // TODO: FIT encoding unclear for weather.getCloudCover()
+        weatherLocalMessage.addRecordData(todayDailyForecast.build(weatherLocalMessage.getNextAvailableLocalMessageType()));
 
-
+        final int dailyMessageType = weatherLocalMessage.getNextAvailableLocalMessageType();
         for (int day = 0; day < 4; day++) {
             if (day < weather.getForecasts().size()) {
                 WeatherSpec.Daily daily = weather.getForecasts().get(day);
@@ -823,6 +829,12 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
                 weatherDailyForecast.weatherPrecipitationProbability(daily.getPrecipProbability());
                 weatherDailyForecast.weatherDayOfWeek(ts);
                 weatherDailyForecast.weatherAirQuality(daily.getAirQuality());
+                weatherDailyForecast.weatherRelativeHumidity(daily.getHumidity());
+                weatherDailyForecast.weatherWindSpeed(daily.getWindSpeed());
+                weatherDailyForecast.weatherWindDirection(daily.getWindDirection());
+                weatherDailyForecast.weatherUvIndex(daily.getUvIndex());
+                weatherDailyForecast.weatherAtmosphericPressure(daily.getPressure());
+                // TODO: FIT encoding unclear for daily.getCloudCover()
                 weatherLocalMessage.addRecordData(weatherDailyForecast.build(dailyMessageType));
             }
         }

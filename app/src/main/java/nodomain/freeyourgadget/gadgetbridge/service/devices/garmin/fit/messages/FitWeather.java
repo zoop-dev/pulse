@@ -162,5 +162,14 @@ public class FitWeather extends AbstractFitWeather {
             DayOfWeek day = date.getDayOfWeek();
             setDayOfWeek(day);
         }
+
+        public void weatherAtmosphericPressure(final float millibar) {
+            if (millibar > 0.0f) {
+                long pascal = Math.round(millibar * 100.0);
+                setAtmosphericPressure(pascal);
+            } else {
+                setAtmosphericPressure(null);
+            }
+        }
     }
 }
