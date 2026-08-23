@@ -95,6 +95,7 @@ import java.io.IOException
 import java.io.PrintWriter
 import java.io.StringWriter
 import java.nio.charset.StandardCharsets
+import java.util.Calendar
 import java.util.Locale
 import java.util.concurrent.TimeUnit
 
@@ -260,10 +261,11 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
 
         view?.let {
             // Header photo
-            if (summary.headerPhoto == null) {
+            val headerPhoto = summary.headerPhoto
+            if (headerPhoto == null) {
                 binding.headerphoto.setImageDrawable(null)
             } else {
-                binding.headerphoto.setImageURI(Uri.fromFile(File(summary.headerPhoto)))
+                binding.headerphoto.setImageURI(Uri.fromFile(File(headerPhoto)))
             }
 
             // Activity icon
@@ -280,10 +282,14 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
             // Date
             binding.activitydate.apply {
                 val timeString = if (DateTimeUtils.isSameDay(startTime, endTime)) {
+                    val endTimeCal = Calendar.getInstance().apply { time = endTime }
                     context.getString(
                         R.string.date_placeholders__start_time__end_time,
                         DateTimeUtils.formatDateTimeRelative(context, startTime),
-                        DateTimeUtils.formatTime(endTime.hours, endTime.minutes)
+                        DateTimeUtils.formatTime(
+                            endTimeCal.get(Calendar.HOUR_OF_DAY),
+                            endTimeCal.get(Calendar.MINUTE)
+                        )
                     )
                 } else {
                     context.getString(
@@ -373,13 +379,6 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
             )
         }
 
-        binding.dynamicCharts.removeAllViews()
-        for (chart in workout.charts) {
-            if (chart.group == null) {
-                addChart(binding.dynamicCharts, true, chart, workout.charts)
-            }
-        }
-
         if (workoutHasGps(workout)) {
             showGpsCanvas()
             gpsFragment?.setTrackData(workout.summary, gbDevice)
@@ -388,7 +387,7 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
         }
     }
 
-    @Suppress("KotlinConstantConditions")
+    @Suppress("KotlinConstantConditions", "SameParameterValue")
     private fun addChart(
         chartsLayout: LinearLayout,
         includeHeader: Boolean,
@@ -461,7 +460,7 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
         lineChart.axisRight.apply {
             isEnabled = false
         }
-        chart.lineChart(lineChart);
+        chart.lineChart(lineChart)
         when (lineChart) {
             is LineChart if chart.chartData is LineData -> {
                 lineChart.data = chart.chartData
@@ -572,8 +571,9 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
             }
 
             R.id.activity_action_dev_inspect_file -> {
+                val rawDetailsPath = workout.summary.rawDetailsPath ?: return true
                 val intent = Intent(requireContext(), FitViewerActivity::class.java).apply {
-                    putExtra(FitViewerActivity.EXTRA_PATH, File(workout.summary.rawDetailsPath).absolutePath)
+                    putExtra(FitViewerActivity.EXTRA_PATH, File(rawDetailsPath).absolutePath)
                 }
                 startActivity(intent)
                 true
@@ -839,8 +839,9 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
                             // Update activity type on the server
                             apiClient.editActivity(newId, activityKind, workoutName)
                             // Upload workout photo to the new activity
-                            if (workout.summary.headerPhoto != null) {
-                                apiClient.uploadActivityPhoto(newId, File(workout.summary.headerPhoto))
+                            val headerPhoto = workout.summary.headerPhoto
+                            if (headerPhoto != null) {
+                                apiClient.uploadActivityPhoto(newId, File(headerPhoto))
                             }
                         }
                         activity?.runOnUiThread {
@@ -916,7 +917,8 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
     }
 
     private fun shareRawSummary(workout: Workout) {
-        if (workout.summary.rawSummaryData == null) {
+        val rawSummaryData = workout.summary.rawSummaryData
+        if (rawSummaryData == null) {
             GB.toast(requireContext(), "No raw summary in this activity", Toast.LENGTH_LONG, GB.WARN)
             return
         }
@@ -928,7 +930,7 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
             AndroidUtils.shareBytesAsFile(
                 requireContext(),
                 filename,
-                workout.summary.rawSummaryData,
+                rawSummaryData,
                 "application/octet-stream"
             )
         } catch (e: Exception) {
@@ -943,11 +945,12 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
     }
 
     private fun shareRawDetails(workout: Workout) {
-        if (workout.summary.rawDetailsPath == null) {
+        val rawDetailsPath = workout.summary.rawDetailsPath
+        if (rawDetailsPath == null) {
             GB.toast(requireContext(), "No raw details in this activity", Toast.LENGTH_LONG, GB.WARN)
             return
         }
-        val file = FileUtils.tryFixPath(File(workout.summary.rawDetailsPath))
+        val file = FileUtils.tryFixPath(File(rawDetailsPath))
         if (file == null) {
             GB.toast(requireContext(), "No raw details in this activity", Toast.LENGTH_LONG, GB.WARN)
             return

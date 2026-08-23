@@ -138,13 +138,6 @@
 
                 </LinearLayout>
 
-                <!-- Dynamic charts, provided by the device -->
-                <LinearLayout
-                    android:id="@+id/dynamic_charts"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical" />
-
                 <!-- Map for gpx track -->
                 <FrameLayout
                     android:id="@+id/gpsFragmentHolder"

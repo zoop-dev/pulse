@@ -11,6 +11,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.content.FileProvider
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
@@ -32,10 +33,14 @@ import nodomain.freeyourgadget.gadgetbridge.model.RecordedDataTypes
 import nodomain.freeyourgadget.gadgetbridge.util.ActivitySummaryUtils
 import nodomain.freeyourgadget.gadgetbridge.util.GB
 import nodomain.freeyourgadget.gadgetbridge.util.WorkoutFilterUtils
+import nodomain.freeyourgadget.gadgetbridge.util.kotlin.getParcelableCompat
+import nodomain.freeyourgadget.gadgetbridge.util.kotlin.getSerializableCompat
 import org.slf4j.LoggerFactory
 import java.io.File
 import java.util.BitSet
 import java.util.Calendar
+import androidx.core.view.get
+import androidx.core.view.size
 
 class WorkoutListActivity : AbstractListActivity<BaseActivitySummary>() {
     private val viewModel: WorkoutListViewModel by viewModels()
@@ -52,11 +57,30 @@ class WorkoutListActivity : AbstractListActivity<BaseActivitySummary>() {
     private lateinit var swipeLayout: SwipeRefreshLayout
     private var actionMode: ActionMode? = null
 
+    private val activityDetailLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == WorkoutDetailsActivity.RESULT_WORKOUT_CHANGED) {
+            // FIXME we could try to only update the workouts that changed
+            refresh()
+        }
+    }
+
+    private val activityFilterLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        result.data?.extras?.let { bundle ->
+            activityFilter = bundle.getInt("activityFilter", 0)
+            dateFromFilter = bundle.getLong("dateFromFilter", 0)
+            dateToFilter = bundle.getLong("dateToFilter", 0)
+            deviceFilter = bundle.getLong("deviceFilter", 0)
+            nameContainsFilter = bundle.getString("nameContainsFilter")
+            itemsFilter = bundle.getSerializableCompat<ArrayList<Long>>("itemsFilter")
+            refresh()
+        }
+    }
+
     private val receiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             when (intent.action) {
                 GBDevice.ACTION_DEVICE_CHANGED -> {
-                    val device = intent.getParcelableExtra<GBDevice>(GBDevice.EXTRA_DEVICE)
+                    val device = intent.getParcelableCompat<GBDevice>(GBDevice.EXTRA_DEVICE)
                     if (device == null) {
                         LOG.error("Got device changed without device")
                         return
@@ -112,32 +136,8 @@ class WorkoutListActivity : AbstractListActivity<BaseActivitySummary>() {
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, resultData: Intent?) {
-        super.onActivityResult(requestCode, resultCode, resultData)
-        when (requestCode) {
-            ACTIVITY_FILTER -> {
-                resultData?.extras?.let { bundle ->
-                    activityFilter = bundle.getInt("activityFilter", 0)
-                    dateFromFilter = bundle.getLong("dateFromFilter", 0)
-                    dateToFilter = bundle.getLong("dateToFilter", 0)
-                    deviceFilter = bundle.getLong("deviceFilter", 0)
-                    nameContainsFilter = bundle.getString("nameContainsFilter")
-                    @Suppress("UNCHECKED_CAST")
-                    itemsFilter = bundle.getSerializable("itemsFilter") as? List<Long>
-                    refresh()
-                }
-            }
-            ACTIVITY_DETAIL -> {
-                if (resultCode == WorkoutDetailsActivity.RESULT_WORKOUT_CHANGED) {
-                    // FIXME we could try to only update the workouts that changed
-                    refresh()
-                }
-            }
-        }
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
-        gbDevice = intent.getParcelableExtra(GBDevice.EXTRA_DEVICE)
+        gbDevice = intent.getParcelableCompat<GBDevice>(GBDevice.EXTRA_DEVICE)
             ?: throw IllegalArgumentException("Must provide a device when invoking this activity")
         deviceFilter = getDeviceId(gbDevice!!)
 
@@ -284,8 +284,8 @@ class WorkoutListActivity : AbstractListActivity<BaseActivitySummary>() {
                 val typedValue = android.util.TypedValue()
                 theme.resolveAttribute(R.attr.actionmenu_icon_color, typedValue, true)
                 val iconColor = typedValue.data
-                for (i in 0 until menu.size()) {
-                    menu.getItem(i).icon?.setTint(iconColor)
+                for (i in 0 until menu.size) {
+                    menu[i].icon?.setTint(iconColor)
                 }
 
                 findViewById<View>(R.id.fab).visibility = View.INVISIBLE
@@ -308,8 +308,8 @@ class WorkoutListActivity : AbstractListActivity<BaseActivitySummary>() {
                             .setTitle(getString(R.string.sports_activity_confirm_delete_title, toDelete.size))
                             .setMessage(getString(R.string.sports_activity_confirm_delete_description, toDelete.size))
                             .setIcon(R.drawable.ic_delete_forever)
-                            .setPositiveButton(android.R.string.yes) { _, _ -> deleteItems(toDelete) }
-                            .setNegativeButton(android.R.string.no, null)
+                            .setPositiveButton(R.string.yes) { _, _ -> deleteItems(toDelete) }
+                            .setNegativeButton(R.string.no, null)
                             .show()
 
                         return true
@@ -417,7 +417,7 @@ class WorkoutListActivity : AbstractListActivity<BaseActivitySummary>() {
         items.forEach { item ->
             try {
                 item.delete()
-            } catch (e: Exception) {
+            } catch (_: Exception) {
                 // pass delete error
             }
         }
@@ -471,7 +471,7 @@ class WorkoutListActivity : AbstractListActivity<BaseActivitySummary>() {
             deviceFilter,
             itemsFilter
         )
-        startActivityForResult(intent, ACTIVITY_DETAIL)
+        activityDetailLauncher.launch(intent)
     }
 
     private fun runFilterActivity() {
@@ -485,7 +485,7 @@ class WorkoutListActivity : AbstractListActivity<BaseActivitySummary>() {
             putExtra("initial_deviceFilter", getDeviceId(gbDevice!!))
             putExtra("nameContainsFilter", nameContainsFilter)
         }
-        startActivityForResult(filterIntent, ACTIVITY_FILTER)
+        activityFilterLauncher.launch(filterIntent)
     }
 
     private fun getDeviceId(device: GBDevice): Long {
@@ -528,7 +528,5 @@ class WorkoutListActivity : AbstractListActivity<BaseActivitySummary>() {
 
     companion object {
         private val LOG = LoggerFactory.getLogger(WorkoutListActivity::class.java)
-        const val ACTIVITY_FILTER = 1
-        const val ACTIVITY_DETAIL = 11
     }
 }

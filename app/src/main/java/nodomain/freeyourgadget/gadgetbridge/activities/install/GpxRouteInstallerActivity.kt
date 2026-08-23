@@ -120,7 +120,6 @@ class GpxRouteInstallerActivity : AbstractGBActivity(), InstallActivity {
 
                 GB.ACTION_SET_FINISHED -> {
                     finished = true
-                    setProgressBarVisibility(false)
                     setInstallEnabled(false)
                     setCloseEnabled(true)
                 }

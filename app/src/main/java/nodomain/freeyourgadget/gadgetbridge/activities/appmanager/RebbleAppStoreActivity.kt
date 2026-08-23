@@ -22,6 +22,7 @@ import android.content.IntentFilter
 import android.net.Uri
 import android.os.Bundle
 import android.webkit.PermissionRequest
+import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.widget.Toast
@@ -101,7 +102,7 @@ class RebbleAppStoreActivity : AbstractGBActivity()  {
             val firstAppObject = dataArray.getJSONObject(0)
             val appUUID = firstAppObject.getString("uuid")
             // Cache appstore ID for app update checks
-            DBHelper.store(PebbleAppstoreIdEntry(appUUID, storeId, System.currentTimeMillis(), false));
+            DBHelper.store(PebbleAppstoreIdEntry(appUUID, storeId, System.currentTimeMillis(), false))
             // Find and install pbw file
             val latestRelease = firstAppObject.getJSONObject("latest_release")
             val pbwFile = latestRelease.getString("pbw_file")
@@ -163,11 +164,10 @@ class RebbleAppStoreActivity : AbstractGBActivity()  {
 
             override fun onReceivedError(
                 view: WebView,
-                errorCode: Int,
-                description: String?,
-                failingUrl: String?
+                request: WebResourceRequest,
+                error: WebResourceError,
             ) {
-                LOG.error(description)
+                LOG.error("Got webview error: {}", error.description)
                 view.loadUrl("about:blank")
             }
         }

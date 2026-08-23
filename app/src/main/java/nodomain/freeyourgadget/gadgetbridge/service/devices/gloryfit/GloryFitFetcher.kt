@@ -94,7 +94,7 @@ class GloryFitFetcher(val mSupport: GloryFitSupport) {
         if (wasFetching) {
             LOG.debug("All operations finished")
 
-            GB.updateTransferNotification(null, "", false, 100, mSupport.context)
+            GB.removeNotification(GB.NOTIFICATION_ID_TRANSFER, mSupport.context)
             GB.signalActivityDataFinish(mSupport.device)
 
             if (mSupport.device.isBusy) {

@@ -117,6 +117,8 @@ class CompanionDebugFragment : AbstractDebugFragment() {
         return addresses.map { it.uppercase(Locale.ROOT) }.toSet()
     }
 
+    // FIXME replace deprecated code
+    @Suppress("OVERRIDE_DEPRECATION", "DEPRECATION")
     @RequiresPermission(Manifest.permission.BLUETOOTH_CONNECT)
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

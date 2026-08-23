@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Handler
+import android.os.Looper
 import android.widget.Toast
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst
@@ -36,7 +37,7 @@ class ShokzSupport : AbstractHeadphoneBTBRDeviceSupport(LOG, MAX_MTU) {
     private val messageQueue: Queue<ShokzMessage> = LinkedList()
     private var pendingMessage: ShokzMessage? = null
     private var timeoutRetries = 0
-    private val timeoutHandler = Handler()
+    private val timeoutHandler = Handler(Looper.getMainLooper())
 
     init {
         addSupportedService(UUID_SERVICE_SHOKZ)
