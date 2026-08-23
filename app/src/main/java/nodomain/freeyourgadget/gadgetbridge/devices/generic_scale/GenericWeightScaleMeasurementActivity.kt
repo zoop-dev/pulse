@@ -37,6 +37,7 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice
 import nodomain.freeyourgadget.gadgetbridge.model.WeightUnit
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.weightScale.WeightScaleMeasurement
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.weightScale.WeightScaleProfile
+import nodomain.freeyourgadget.gadgetbridge.util.kotlin.getParcelableCompat
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.time.Instant
@@ -143,9 +144,9 @@ class GenericWeightScaleMeasurementActivity : AbstractGBActivity() {
         override fun onReceive(context: Context?, intent: Intent) {
             LOG.debug("received measurement")
             val data: WeightScaleMeasurement? =
-                intent.getParcelableExtra(WeightScaleProfile.EXTRA_WEIGHT_MEASUREMENT)
+                intent.getParcelableCompat<WeightScaleMeasurement>(WeightScaleProfile.EXTRA_WEIGHT_MEASUREMENT)
             val address: String? = intent.getStringExtra(WeightScaleProfile.EXTRA_ADDRESS)
-            if (device?.address?.equals(address) == true) {
+            if (device.address?.equals(address) == true) {
                 measurement = data
                 displayWeightInfo()
                 save?.setEnabled(measurement?.weightKilogram != null)

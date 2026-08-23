@@ -5,7 +5,6 @@ import android.bluetooth.BluetoothGattCharacteristic
 import androidx.core.text.isDigitsOnly
 import nodomain.freeyourgadget.gadgetbridge.GBApplication
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst
-import nodomain.freeyourgadget.gadgetbridge.capabilities.password.PasswordCapabilityImpl
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventUpdatePreferences
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventVersionInfo
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice
@@ -167,8 +166,8 @@ class SinilinkSupport : AbstractBTLESingleDeviceSupport(LOG) {
             GBDeviceEventUpdatePreferences()
                 .withPreference(DeviceSettingsPreferenceConst.PREF_VOLUME, volume)
                 .withPreference(DeviceSettingsPreferenceConst.PREF_PROMPT_TONE, promptTone)
-                .withPreference(PasswordCapabilityImpl.PREF_PASSWORD_ENABLED, passwordEnabled)
-                .withPreference(PasswordCapabilityImpl.PREF_PASSWORD, passwordTxt)
+                .withPreference(DeviceSettingsPreferenceConst.PREF_PASSWORD_ENABLED, passwordEnabled)
+                .withPreference(DeviceSettingsPreferenceConst.PREF_PASSWORD, passwordTxt)
         )
 
         gotStatus = true
@@ -312,13 +311,13 @@ class SinilinkSupport : AbstractBTLESingleDeviceSupport(LOG) {
                 sendTextCommand(CMD_NAME_SET.toByte(), value)
             }
 
-            PasswordCapabilityImpl.PREF_PASSWORD_ENABLED -> {
+            DeviceSettingsPreferenceConst.PREF_PASSWORD_ENABLED -> {
                 LOG.debug("Toggling password")
                 sendSimpleCommand(CMD_PASSWORD_TOGGLE)
             }
 
-            PasswordCapabilityImpl.PREF_PASSWORD -> {
-                val value = prefs.getString(PasswordCapabilityImpl.PREF_PASSWORD, "1234")
+            DeviceSettingsPreferenceConst.PREF_PASSWORD -> {
+                val value = prefs.getString(DeviceSettingsPreferenceConst.PREF_PASSWORD, "1234")
                 if (value.length != 4 || !value.isDigitsOnly()) {
                     LOG.warn("Invalid password: {}", value)
                     return

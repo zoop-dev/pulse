@@ -39,6 +39,7 @@ import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventAppConfig
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminPreferences
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice
 import nodomain.freeyourgadget.gadgetbridge.util.GB
+import nodomain.freeyourgadget.gadgetbridge.util.kotlin.getParcelableCompat
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.util.UUID
@@ -60,12 +61,12 @@ class DynamicAppConfigFragment : AbstractPreferenceFragment() {
 
             when (action) {
                 ACTION_APP_CONFIG_EVENT -> {
-                    val intentDevice = intent.getParcelableExtra<GBDevice?>(GBDevice.EXTRA_DEVICE)!!
+                    val intentDevice = intent.getParcelableCompat<GBDevice>(GBDevice.EXTRA_DEVICE)!!
                     if (intentDevice != device) {
                         LOG.debug("Ignoring intent for device {}, we are {}", intentDevice, device)
                         return
                     }
-                    val event = intent.getParcelableExtra<GBDeviceEventAppConfig>(GBDeviceEventAppConfig.EXTRA_EVENT)!!
+                    val event = intent.getParcelableCompat<GBDeviceEventAppConfig>(GBDeviceEventAppConfig.EXTRA_EVENT)!!
                     if (event.uuid != appId) {
                         LOG.debug("Ignoring intent for app {}, we are {}", event.uuid, appId)
                         return
@@ -112,7 +113,7 @@ class DynamicAppConfigFragment : AbstractPreferenceFragment() {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         val arguments = arguments ?: return
-        this.device = arguments.getParcelable<GBDevice?>(GBDevice.EXTRA_DEVICE)!!
+        this.device = arguments.getParcelableCompat<GBDevice>(GBDevice.EXTRA_DEVICE)!!
         this.appId = UUID.fromString(arguments.getString(EXTRA_APP_ID, null))!!
         this.appName = arguments.getString(EXTRA_APP_NAME, null)!!
 

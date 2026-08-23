@@ -44,6 +44,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.AbstractDeviceSupport.BUNDLE
 import nodomain.freeyourgadget.gadgetbridge.service.AbstractDeviceSupport.BUNDLE_EXTRA_INSTALL_TASK_NAME
 import nodomain.freeyourgadget.gadgetbridge.util.GB
 import nodomain.freeyourgadget.gadgetbridge.util.WaypointHelper
+import nodomain.freeyourgadget.gadgetbridge.util.kotlin.getParcelableCompat
 import org.slf4j.LoggerFactory
 
 class GarminSendWaypointActivity : AbstractGBActivity() {
@@ -86,7 +87,7 @@ class GarminSendWaypointActivity : AbstractGBActivity() {
         binding.waypointInfo2.setOnClickListener(copyListener)
         binding.waypointInfo3.setOnClickListener(copyListener)
 
-        device = intent.getParcelableExtra(GBDevice.EXTRA_DEVICE)
+        device = intent.getParcelableCompat<GBDevice>(GBDevice.EXTRA_DEVICE)
 
         if (savedInstanceState != null) {
             binding.waypointName.setText(savedInstanceState.getString(ITEM_NAME, ""))

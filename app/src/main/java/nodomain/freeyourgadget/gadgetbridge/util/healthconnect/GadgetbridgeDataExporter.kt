@@ -1,6 +1,5 @@
 package nodomain.freeyourgadget.gadgetbridge.util.healthconnect
 
-import android.content.Context
 import nodomain.freeyourgadget.gadgetbridge.GBApplication
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler
 import nodomain.freeyourgadget.gadgetbridge.database.DBHelper
@@ -14,7 +13,6 @@ import org.json.JSONObject
 import org.slf4j.LoggerFactory
 import java.io.File
 import java.time.Instant
-import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
@@ -22,7 +20,7 @@ object GadgetbridgeDataExporter {
     private val LOG = LoggerFactory.getLogger(GadgetbridgeDataExporter::class.java)
     private const val TAG = "[HC_SYNC]"
 
-    fun export(context: Context, gbDevice: GBDevice, startInstant: Instant, endInstant: Instant): File {
+    fun export(gbDevice: GBDevice, startInstant: Instant, endInstant: Instant): File {
         LOG.info("$TAG Export starting for device '{}', range {} to {}", gbDevice.aliasOrName, startInstant, endInstant)
 
         val result = JSONObject()
@@ -60,15 +58,15 @@ object GadgetbridgeDataExporter {
             data.put("heart_rate", exportHeartRate(activitySamples))
             data.put("sleep", exportSleep(activitySamples))
             data.put("spo2", exportTimeSamples(coordinator.getSpo2SampleProvider(gbDevice, db.daoSession), msFrom, msTo) { sample ->
-                val spo2 = (sample as? Spo2Sample)?.spo2 ?: return@exportTimeSamples null
-                if (spo2 <= 0 || spo2 > 100) return@exportTimeSamples null
+                val spo2 = sample.spo2
+                if (spo2 !in 1..100) return@exportTimeSamples null
                 JSONObject().apply {
                     put("time", Instant.ofEpochMilli(sample.timestamp).toString())
                     put("percentage", spo2.toDouble())
                 }
             })
             data.put("hrv", exportTimeSamples(coordinator.getHrvValueSampleProvider(gbDevice, db.daoSession), msFrom, msTo) { sample ->
-                val hrv = (sample as? HrvValueSample)?.value ?: return@exportTimeSamples null
+                val hrv = sample.value
                 if (hrv <= 0) return@exportTimeSamples null
                 JSONObject().apply {
                     put("time", Instant.ofEpochMilli(sample.timestamp).toString())
@@ -76,7 +74,7 @@ object GadgetbridgeDataExporter {
                 }
             })
             data.put("respiratory_rate", exportTimeSamples(coordinator.getRespiratoryRateSampleProvider(gbDevice, db.daoSession), msFrom, msTo) { sample ->
-                val rate = (sample as? RespiratoryRateSample)?.respiratoryRate ?: return@exportTimeSamples null
+                val rate = sample.respiratoryRate
                 if (rate <= 0) return@exportTimeSamples null
                 JSONObject().apply {
                     put("time", Instant.ofEpochMilli(sample.timestamp).toString())
@@ -84,7 +82,7 @@ object GadgetbridgeDataExporter {
                 }
             })
             data.put("resting_heart_rate", exportTimeSamples(coordinator.getHeartRateRestingSampleProvider(gbDevice, db.daoSession), msFrom, msTo) { sample ->
-                val bpm = (sample as? HeartRateSample)?.heartRate ?: return@exportTimeSamples null
+                val bpm = sample.heartRate
                 if (bpm <= 0) return@exportTimeSamples null
                 JSONObject().apply {
                     put("time", Instant.ofEpochMilli(sample.timestamp).toString())
@@ -92,11 +90,10 @@ object GadgetbridgeDataExporter {
                 }
             })
             data.put("temperature", exportTimeSamples(coordinator.getTemperatureSampleProvider(gbDevice, db.daoSession), msFrom, msTo) { sample ->
-                val temp = (sample as? TemperatureSample) ?: return@exportTimeSamples null
                 JSONObject().apply {
                     put("time", Instant.ofEpochMilli(sample.timestamp).toString())
-                    put("celsius", temp.temperature.toDouble())
-                    put("type", temp.temperatureType)
+                    put("celsius", sample.temperature.toDouble())
+                    put("type", sample.temperatureType)
                 }
             })
             data.put("exercise_sessions", exportWorkouts(db, gbDevice, msFrom, msTo))
@@ -178,8 +175,7 @@ object GadgetbridgeDataExporter {
         val arr = JSONArray()
         if (provider == null) return arr
         try {
-            @Suppress("UNCHECKED_CAST")
-            val samples = provider.getAllSamples(msFrom, msTo) as List<T>
+            val samples = provider.getAllSamples(msFrom, msTo)
             for (s in samples) {
                 val json = converter(s)
                 if (json != null) arr.put(json)
@@ -193,7 +189,7 @@ object GadgetbridgeDataExporter {
     private fun exportWorkouts(db: DBHandler, gbDevice: GBDevice, msFrom: Long, msTo: Long): JSONArray {
         val arr = JSONArray()
         try {
-            val deviceEntity = DBHelper.getDevice(gbDevice, db.daoSession) ?: return arr
+            val deviceEntity = DBHelper.getDevice(gbDevice, db.daoSession)
             val summaries = db.daoSession.baseActivitySummaryDao.queryBuilder()
                 .where(
                     BaseActivitySummaryDao.Properties.DeviceId.eq(deviceEntity.id),

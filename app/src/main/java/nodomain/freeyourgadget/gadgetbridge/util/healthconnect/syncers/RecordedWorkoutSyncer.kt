@@ -224,10 +224,6 @@ internal object RecordedWorkoutSyncer {
         try {
             GBApplication.acquireDbReadOnly().use { db ->
                 val device = DBHelper.getDevice(gbDevice, db.daoSession)
-                if (device == null) {
-                    LOG.warn("Device not found in database for '{}'", gbDevice.aliasOrName)
-                    return emptyList()
-                }
 
                 val startDate = Date.from(sliceStartBoundary)
                 val endDate = Date.from(sliceEndBoundary)

@@ -30,6 +30,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.battery.Batter
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.deviceinfo.DeviceInfo
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.deviceinfo.DeviceInfoProfile
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.weightScale.WeightScaleProfile
+import nodomain.freeyourgadget.gadgetbridge.util.kotlin.getParcelableCompat
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
@@ -45,11 +46,11 @@ open class GenericWeightScaleSupport(logger: Logger = LOG) :
             intent?.action?.let { action ->
                 when (action) {
                     DeviceInfoProfile.ACTION_DEVICE_INFO -> {
-                        handleDeviceInfo(intent.getParcelableExtra(DeviceInfoProfile.EXTRA_DEVICE_INFO)!!)
+                        handleDeviceInfo(intent.getParcelableCompat<DeviceInfo>(DeviceInfoProfile.EXTRA_DEVICE_INFO)!!)
                     }
 
                     BatteryInfoProfile.ACTION_BATTERY_INFO -> {
-                        handleBatteryInfo(intent.getParcelableExtra(BatteryInfoProfile.EXTRA_BATTERY_INFO)!!)
+                        handleBatteryInfo(intent.getParcelableCompat<BatteryInfo>(BatteryInfoProfile.EXTRA_BATTERY_INFO)!!)
                     }
 
                     WeightScaleProfile.ACTION_WEIGHT_MEASUREMENT -> {

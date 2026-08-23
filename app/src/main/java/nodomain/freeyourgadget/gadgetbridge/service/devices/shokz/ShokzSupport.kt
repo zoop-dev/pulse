@@ -20,6 +20,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.AbstractHeadphoneBTBRDeviceS
 import nodomain.freeyourgadget.gadgetbridge.service.btbr.TransactionBuilder
 import nodomain.freeyourgadget.gadgetbridge.util.CheckSums
 import nodomain.freeyourgadget.gadgetbridge.util.GB
+import nodomain.freeyourgadget.gadgetbridge.util.kotlin.getParcelableCompat
 import nodomain.freeyourgadget.gadgetbridge.util.kotlin.stringUntilNullTerminator
 import org.slf4j.LoggerFactory
 import java.nio.ByteBuffer
@@ -721,7 +722,7 @@ class ShokzSupport : AbstractHeadphoneBTBRDeviceSupport(LOG, MAX_MTU) {
 
     private val multipointBroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
-            val device = intent?.getParcelableExtra<GBDevice>(GBDevice.EXTRA_DEVICE)
+            val device = intent?.getParcelableCompat<GBDevice>(GBDevice.EXTRA_DEVICE)
             if (device?.address != gbDevice.address) {
                 return // not for this device
             }

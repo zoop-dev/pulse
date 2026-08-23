@@ -28,6 +28,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitFile
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordData
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitFileCreator
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitFileId
+import nodomain.freeyourgadget.gadgetbridge.util.kotlin.getParcelableCompat
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitLocation
 import java.util.Locale
 import kotlin.math.abs
@@ -90,7 +91,7 @@ data class WaypointHelper(
 
             var uri = intent.data
             if (uri == null) {
-                uri = intent.getParcelableExtra(Intent.EXTRA_STREAM)
+                uri = intent.getParcelableCompat<Uri>(Intent.EXTRA_STREAM)
             }
 
             if (uri != null) {

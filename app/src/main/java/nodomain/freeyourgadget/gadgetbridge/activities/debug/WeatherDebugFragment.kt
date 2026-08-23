@@ -14,7 +14,6 @@ import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec
 import nodomain.freeyourgadget.gadgetbridge.model.weather.Weather
 import nodomain.freeyourgadget.gadgetbridge.model.weather.WeatherCacheManager
 import nodomain.freeyourgadget.gadgetbridge.util.GB
-import java.lang.Boolean
 import kotlin.Any
 import kotlin.Int
 import kotlin.String
@@ -46,7 +45,7 @@ class WeatherDebugFragment : AbstractDebugFragment() {
         }
 
         findPreference<Preference>(CACHE_WEATHER)!!.setOnPreferenceChangeListener { _: Preference?, newVal: Any? ->
-            val doEnable = Boolean.TRUE == newVal
+            val doEnable = newVal == true
             Weather.initializeCache(WeatherCacheManager(requireContext().cacheDir, doEnable))
             true
         }

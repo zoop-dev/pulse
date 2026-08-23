@@ -21,7 +21,6 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.io.File
 import java.io.IOException
-import java.lang.Boolean
 import kotlin.Any
 import kotlin.String
 import kotlin.Suppress
@@ -43,7 +42,7 @@ class MainDebugFragment : AbstractDebugFragment() {
         val logToFilePreference = findPreference<SwitchPreferenceCompat>(LOG_TO_FILE)
         logToFilePreference?.let {
             it.setOnPreferenceChangeListener { _: Preference?, newVal: Any? ->
-                val doEnable = Boolean.TRUE == newVal
+                val doEnable = newVal == true
                 try {
                     if (doEnable) {
                         FileUtils.getExternalFilesDir() // ensures that it is created

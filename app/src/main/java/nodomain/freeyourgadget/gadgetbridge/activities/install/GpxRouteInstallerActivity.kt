@@ -26,6 +26,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.GenericItem
 import nodomain.freeyourgadget.gadgetbridge.model.ItemWithDetails
 import nodomain.freeyourgadget.gadgetbridge.util.GB
 import nodomain.freeyourgadget.gadgetbridge.util.gpx.model.GpxFile
+import nodomain.freeyourgadget.gadgetbridge.util.kotlin.getParcelableCompat
 import nodomain.freeyourgadget.gadgetbridge.util.maps.MapsManager
 import org.slf4j.LoggerFactory
 
@@ -191,7 +192,7 @@ class GpxRouteInstallerActivity : AbstractGBActivity(), InstallActivity {
             ArrayList()
         }
 
-        val intentUri = intent.data ?: intent.getParcelableExtra(Intent.EXTRA_STREAM)
+        val intentUri = intent.data ?: intent.getParcelableCompat<Uri>(Intent.EXTRA_STREAM)
         if (intentUri == null) {
             GB.toast(this, "No URI provided to GpxRouteInstallerActivity", Toast.LENGTH_LONG, GB.ERROR)
             finish()

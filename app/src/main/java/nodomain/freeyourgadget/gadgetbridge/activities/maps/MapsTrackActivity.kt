@@ -34,6 +34,8 @@ import nodomain.freeyourgadget.gadgetbridge.databinding.ActivityMapsTrackBinding
 import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummary
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice
 import nodomain.freeyourgadget.gadgetbridge.util.GB
+import nodomain.freeyourgadget.gadgetbridge.util.kotlin.getParcelableCompat
+import nodomain.freeyourgadget.gadgetbridge.util.kotlin.getSerializableCompat
 import nodomain.freeyourgadget.gadgetbridge.util.maps.MapsManager
 import org.slf4j.LoggerFactory
 
@@ -63,13 +65,13 @@ class MapsTrackActivity : AbstractGBActivity(), MenuProvider {
         mapsManager = MapsManager(this, binding.mapView)
         mapsManager.loadMaps()
 
-        val summary = intent.extras?.getSerializable("summary") as? BaseActivitySummary
+        val summary = intent.extras?.getSerializableCompat<BaseActivitySummary>("summary")
         if (summary == null) {
             GB.toast(this, "No summary provided", Toast.LENGTH_LONG, GB.ERROR)
             finish()
             return
         }
-        val gbDevice = intent.extras?.getParcelable<GBDevice>(GBDevice.EXTRA_DEVICE)
+        val gbDevice = intent.extras?.getParcelableCompat<GBDevice>(GBDevice.EXTRA_DEVICE)
         if (gbDevice == null) {
             GB.toast(this, "No device provided", Toast.LENGTH_LONG, GB.ERROR)
             finish()

@@ -47,6 +47,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.deviceinfo.Dev
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitFile
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.NativeFITMessages
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordData
+import nodomain.freeyourgadget.gadgetbridge.util.kotlin.getParcelableCompat
 import nodomain.freeyourgadget.gadgetbridge.util.GB
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs
 import nodomain.freeyourgadget.gadgetbridge.util.StringUtils
@@ -119,9 +120,9 @@ class UnaDeviceSupport : AbstractBTLESingleDeviceSupport(LOG) {
         val listener = IntentListener { intent ->
             when (intent.action) {
                 DeviceInfoProfile.ACTION_DEVICE_INFO ->
-                    handleDeviceInfo(intent.getParcelableExtra(DeviceInfoProfile.EXTRA_DEVICE_INFO)!!)
+                    handleDeviceInfo(intent.getParcelableCompat<DeviceInfo>(DeviceInfoProfile.EXTRA_DEVICE_INFO)!!)
                 BatteryInfoProfile.ACTION_BATTERY_INFO ->
-                    handleBatteryInfo(intent.getParcelableExtra(BatteryInfoProfile.EXTRA_BATTERY_INFO)!!)
+                    handleBatteryInfo(intent.getParcelableCompat<BatteryInfo>(BatteryInfoProfile.EXTRA_BATTERY_INFO)!!)
             }
         }
 

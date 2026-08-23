@@ -421,7 +421,7 @@ class GloryFitProSupport : AbstractBTLESingleDeviceSupport(LOG) {
                 0x01 -> {
                     val pos = (value[i + 3].toInt() and 0xff) - 1
                     cur = intArrayOf(0, 0, 0, 0)
-                    if (pos >= 0) parsed[pos] = cur!!
+                    if (pos >= 0) parsed[pos] = cur
                 }
                 0x02 -> cur?.set(2, value[i + 3].toInt() and 0xff)
                 0x03 -> cur?.set(3, value[i + 3].toInt() and 0xff)

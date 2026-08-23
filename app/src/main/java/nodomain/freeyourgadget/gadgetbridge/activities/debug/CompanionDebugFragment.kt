@@ -3,6 +3,7 @@ package nodomain.freeyourgadget.gadgetbridge.activities.debug
 import android.Manifest
 import android.app.Activity
 import android.bluetooth.BluetoothDevice
+import android.bluetooth.BluetoothManager
 import android.companion.AssociationInfo
 import android.companion.AssociationRequest
 import android.companion.BluetoothDeviceFilter
@@ -23,6 +24,7 @@ import nodomain.freeyourgadget.gadgetbridge.GBApplication
 import nodomain.freeyourgadget.gadgetbridge.R
 import nodomain.freeyourgadget.gadgetbridge.util.BondingUtil
 import nodomain.freeyourgadget.gadgetbridge.util.GB
+import nodomain.freeyourgadget.gadgetbridge.util.kotlin.getParcelableCompat
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.util.Locale
@@ -44,7 +46,7 @@ class CompanionDebugFragment : AbstractDebugFragment() {
         val manager = GBApplication.getContext().getSystemService(Context.COMPANION_DEVICE_SERVICE)
                 as CompanionDeviceManager
 
-        val associations: Set<String> = manager.associations.map { it.uppercase(Locale.ROOT) }.toSet()
+        val associations: Set<String> = getAssociatedAddresses(manager)
 
         val companionDevices = associations
             .map {
@@ -105,15 +107,34 @@ class CompanionDebugFragment : AbstractDebugFragment() {
 
     private data class Device(val address: String, val name: String, val icon: Int)
 
+    private fun getAssociatedAddresses(manager: CompanionDeviceManager): Set<String> {
+        val addresses = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            manager.myAssociations.mapNotNull { it.deviceMacAddress?.toString() }
+        } else {
+            @Suppress("DEPRECATION")
+            manager.associations.toList()
+        }
+        return addresses.map { it.uppercase(Locale.ROOT) }.toSet()
+    }
+
     @RequiresPermission(Manifest.permission.BLUETOOTH_CONNECT)
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == SELECT_DEVICE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            val deviceToPair = data?.getParcelableExtra<BluetoothDevice?>(CompanionDeviceManager.EXTRA_DEVICE)
+            val deviceToPair = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                val macAddress = data?.getParcelableCompat<AssociationInfo>(CompanionDeviceManager.EXTRA_ASSOCIATION)
+                    ?.deviceMacAddress?.toString()
+                val bluetoothAdapter =
+                    (requireContext().getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager).adapter
+                macAddress?.let { bluetoothAdapter?.getRemoteDevice(it) }
+            } else {
+                @Suppress("DEPRECATION")
+                data?.getParcelableCompat<BluetoothDevice>(CompanionDeviceManager.EXTRA_DEVICE)
+            }
 
             if (deviceToPair != null) {
-                if (deviceToPair.getBondState() != BluetoothDevice.BOND_BONDED) {
+                if (deviceToPair.bondState != BluetoothDevice.BOND_BONDED) {
                     GB.toast("Creating bond...", Toast.LENGTH_SHORT, GB.INFO)
                     deviceToPair.createBond()
                 } else {
@@ -134,7 +155,7 @@ class CompanionDebugFragment : AbstractDebugFragment() {
     private fun pairAsCompanion(device: Device) {
         val manager = requireActivity().getSystemService(Context.COMPANION_DEVICE_SERVICE) as CompanionDeviceManager
 
-        if (manager.associations.contains(device.address)) {
+        if (getAssociatedAddresses(manager).contains(device.address.uppercase(Locale.ROOT))) {
             GB.toast(device.name + " already paired as companion", Toast.LENGTH_LONG, GB.INFO)
             return
         }
@@ -172,12 +193,13 @@ class CompanionDebugFragment : AbstractDebugFragment() {
                 }
             }
 
-            /** 
-	         * older and deprecated name for onAssociationPending, needed for compatibility with Android 12.
-	         */
-	        override fun onDeviceFound(chooserLauncher: IntentSender) {
-	            onAssociationPending(chooserLauncher)
-	        }
+            /**
+             * older and deprecated name for onAssociationPending, needed for compatibility with Android 12.
+             */
+            @Suppress("OVERRIDE_DEPRECATION")
+            override fun onDeviceFound(chooserLauncher: IntentSender) {
+                onAssociationPending(chooserLauncher)
+            }
 
             override fun onAssociationCreated(associationInfo: AssociationInfo) {
                 GB.toast("Companion pairing success", Toast.LENGTH_SHORT, GB.INFO)

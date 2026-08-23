@@ -72,9 +72,12 @@ class WorkoutListViewModel : ViewModel() {
                 val allSummaries: MutableList<BaseActivitySummary> = mutableListOf()
 
                 val dashboardSummary = BaseActivitySummary()
+                dashboardSummary.id = Long.MIN_VALUE
                 allSummaries.add(dashboardSummary) // dashboard
                 allSummaries.addAll(summaries)
-                allSummaries.add(BaseActivitySummary()) // empty
+                val lastSummary = BaseActivitySummary()
+                lastSummary.id = Long.MAX_VALUE
+                allSummaries.add(lastSummary) // empty
 
                 _summaries.value = allSummaries
 
@@ -183,7 +186,8 @@ class WorkoutListViewModel : ViewModel() {
                 var activitySame = true
 
                 for (summary in activities) {
-                    if (summary.startTime == null) continue  // first item is empty, for dashboard
+                    // first and last items are empty, for dashboard
+                    if (summary.id == Long.MIN_VALUE || summary.id == Long.MAX_VALUE) continue
 
                     if (firstItemDate == 0L) firstItemDate = summary.startTime.time
                     lastItemDate = summary.endTime.time

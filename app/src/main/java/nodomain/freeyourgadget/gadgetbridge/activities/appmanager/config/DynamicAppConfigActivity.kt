@@ -10,6 +10,8 @@ import nodomain.freeyourgadget.gadgetbridge.activities.AbstractSettingsActivityV
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceService
 import nodomain.freeyourgadget.gadgetbridge.util.GB
+import nodomain.freeyourgadget.gadgetbridge.util.kotlin.getParcelableCompat
+import nodomain.freeyourgadget.gadgetbridge.util.kotlin.getSerializableCompat
 import java.util.UUID
 
 class DynamicAppConfigActivity : AbstractSettingsActivityV2() {
@@ -22,8 +24,8 @@ class DynamicAppConfigActivity : AbstractSettingsActivityV2() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        device = intent.getParcelableExtra<GBDevice?>(GBDevice.EXTRA_DEVICE)!!
-        appId = (intent.getSerializableExtra(DeviceService.EXTRA_APP_UUID) as UUID).toString()
+        device = intent.getParcelableCompat<GBDevice>(GBDevice.EXTRA_DEVICE)!!
+        appId = intent.getSerializableCompat<UUID>(DeviceService.EXTRA_APP_UUID)!!.toString()
         appName = intent.getStringExtra("app_name") ?: getString(R.string.unknown)
 
         super.onCreate(savedInstanceState)

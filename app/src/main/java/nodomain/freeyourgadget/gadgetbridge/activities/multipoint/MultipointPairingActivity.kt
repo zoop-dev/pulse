@@ -13,6 +13,8 @@ import nodomain.freeyourgadget.gadgetbridge.R
 import nodomain.freeyourgadget.gadgetbridge.activities.AbstractGBActivity
 import nodomain.freeyourgadget.gadgetbridge.databinding.ActivityMultipointPairingBinding
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice
+import nodomain.freeyourgadget.gadgetbridge.util.kotlin.getParcelableArrayListCompat
+import nodomain.freeyourgadget.gadgetbridge.util.kotlin.getParcelableCompat
 import org.slf4j.LoggerFactory
 
 class MultipointPairingActivity : AbstractGBActivity() {
@@ -30,7 +32,7 @@ class MultipointPairingActivity : AbstractGBActivity() {
         binding = ActivityMultipointPairingBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        gbDevice = intent.getParcelableExtra(GBDevice.EXTRA_DEVICE)
+        gbDevice = intent.getParcelableCompat<GBDevice>(GBDevice.EXTRA_DEVICE)
             ?: throw IllegalArgumentException("GBDevice must not be null")
 
         initViews()
@@ -88,7 +90,7 @@ class MultipointPairingActivity : AbstractGBActivity() {
                 return
             }
 
-            val device = intent.getParcelableExtra<GBDevice>(GBDevice.EXTRA_DEVICE)
+            val device = intent.getParcelableCompat<GBDevice>(GBDevice.EXTRA_DEVICE)
             if (device?.address != gbDevice.address) {
                 LOG.warn("Got multipoint action {} for {}, but we're {}", intent.action, device, gbDevice)
                 return // not for this device
@@ -97,7 +99,7 @@ class MultipointPairingActivity : AbstractGBActivity() {
             when (intent.action) {
                 ACTION_MULTIPOINT_DEVICE_LIST -> {
                     LOG.debug("Got multipoint device list")
-                    val deviceList = intent.getParcelableArrayListExtra<MultipointDevice>(EXTRA_DEVICE_LIST)
+                    val deviceList = intent.getParcelableArrayListCompat<MultipointDevice>(EXTRA_DEVICE_LIST)
                     if (deviceList != null) {
                         updateDeviceList(deviceList)
                     }

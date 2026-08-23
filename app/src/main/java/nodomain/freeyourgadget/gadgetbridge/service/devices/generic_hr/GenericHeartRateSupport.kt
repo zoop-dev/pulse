@@ -37,6 +37,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.deviceinfo.Dev
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.heartrate.HeartRate
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.heartrate.HeartRateProfile
 import nodomain.freeyourgadget.gadgetbridge.util.GB
+import nodomain.freeyourgadget.gadgetbridge.util.kotlin.getParcelableCompat
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
@@ -55,15 +56,15 @@ class GenericHeartRateSupport : AbstractBTLESingleDeviceSupport(LOG) {
             intent?.action?.let { action ->
                 when (action) {
                     DeviceInfoProfile.ACTION_DEVICE_INFO -> {
-                        handleDeviceInfo(intent.getParcelableExtra(DeviceInfoProfile.EXTRA_DEVICE_INFO)!!)
+                        handleDeviceInfo(intent.getParcelableCompat<DeviceInfo>(DeviceInfoProfile.EXTRA_DEVICE_INFO)!!)
                     }
 
                     BatteryInfoProfile.ACTION_BATTERY_INFO -> {
-                        handleBatteryInfo(intent.getParcelableExtra(BatteryInfoProfile.EXTRA_BATTERY_INFO)!!)
+                        handleBatteryInfo(intent.getParcelableCompat<BatteryInfo>(BatteryInfoProfile.EXTRA_BATTERY_INFO)!!)
                     }
 
                     HeartRateProfile.ACTION_HEART_RATE -> {
-                        handleHeartRate(intent.getParcelableExtra(HeartRateProfile.EXTRA_HEART_RATE)!!)
+                        handleHeartRate(intent.getParcelableCompat<HeartRate>(HeartRateProfile.EXTRA_HEART_RATE)!!)
                     }
                 }
             }

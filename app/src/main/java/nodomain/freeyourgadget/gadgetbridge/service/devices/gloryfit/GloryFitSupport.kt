@@ -796,7 +796,7 @@ class GloryFitSupport() : AbstractBTLESingleDeviceSupport(LOG) {
             return
         }
 
-        val stateByte: Byte = if (stateSpec?.state?.toInt() == MusicStateSpec.STATE_PLAYING) {
+        val stateByte: Byte = if (stateSpec.state.toInt() == MusicStateSpec.STATE_PLAYING) {
             MUSIC_STATE_PLAYING
         } else {
             MUSIC_STATE_PAUSED

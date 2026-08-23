@@ -561,10 +561,6 @@ class HealthConnectUtils {
         ): Pair<Instant, Instant>? {
             return GBApplication.acquireDbReadOnly().use { db ->
                 val deviceFromDb = DBHelper.getDevice(gbDevice, db.daoSession)
-                if (deviceFromDb == null) {
-                    CompanionLogger.error("$HC_SYNC_TAG Device not found in database for address: {}", gbDevice.address)
-                    return@use null
-                }
 
                 val syncStateDao = db.daoSession.healthConnectSyncStateDao
                 if (syncStateDao == null) {
@@ -728,7 +724,7 @@ class HealthConnectUtils {
 
         private fun loadSleepRows(gbDevice: GBDevice): List<SleepSessionRow> {
             return GBApplication.acquireDbReadOnly().use { db ->
-                val deviceFromDb = DBHelper.getDevice(gbDevice, db.daoSession) ?: return@use emptyList()
+                val deviceFromDb = DBHelper.getDevice(gbDevice, db.daoSession)
                 db.daoSession.healthConnectSleepSessionDao.queryBuilder()
                     .where(HealthConnectSleepSessionDao.Properties.DeviceId.eq(deviceFromDb.id))
                     .list()
@@ -744,7 +740,7 @@ class HealthConnectUtils {
 
         private fun persistSleepRows(gbDevice: GBDevice, rows: List<SleepSessionRow>) {
             GBApplication.acquireDB().use { db ->
-                val deviceFromDb = DBHelper.getDevice(gbDevice, db.daoSession) ?: return@use
+                val deviceFromDb = DBHelper.getDevice(gbDevice, db.daoSession)
                 val dao = db.daoSession.healthConnectSleepSessionDao
                 val entities = rows.map {
                     HealthConnectSleepSession(
@@ -781,7 +777,7 @@ class HealthConnectUtils {
                     provider.getFirstActivitySample(MIN_VALID_SAMPLE_SECONDS.toInt())?.timestamp?.takeIf { it > MIN_VALID_SAMPLE_SECONDS }?.let { Instant.ofEpochSecond(it.toLong()) }
                 }
                 is BaseActivitySummaryDao -> {
-                    val deviceEntity = DBHelper.getDevice(device, db.daoSession) ?: return null
+                    val deviceEntity = DBHelper.getDevice(device, db.daoSession)
                     db.daoSession.baseActivitySummaryDao?.queryBuilder()
                         ?.where(BaseActivitySummaryDao.Properties.DeviceId.eq(deviceEntity.id))
                         ?.orderAsc(BaseActivitySummaryDao.Properties.StartTime)
@@ -811,7 +807,7 @@ class HealthConnectUtils {
                     provider.latestActivitySample?.timestamp?.takeIf { it > 0 }?.let { Instant.ofEpochSecond(it.toLong()) }
                 }
                 is BaseActivitySummaryDao -> {
-                    val deviceEntity = DBHelper.getDevice(device, db.daoSession) ?: return null
+                    val deviceEntity = DBHelper.getDevice(device, db.daoSession)
                     return db.daoSession.baseActivitySummaryDao?.queryBuilder()
                         ?.where(BaseActivitySummaryDao.Properties.DeviceId.eq(deviceEntity.id))
                         ?.orderDesc(BaseActivitySummaryDao.Properties.EndTime)
