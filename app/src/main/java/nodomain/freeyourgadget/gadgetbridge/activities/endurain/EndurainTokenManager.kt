@@ -25,8 +25,13 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.security.GeneralSecurityException
 
+// FIXME MasterKey/EncryptedSharedPreferences is deprecated - we should move to Tink
+@Suppress("DEPRECATION")
 class EndurainTokenManager(context: Context) {
-    private val LOG: Logger = LoggerFactory.getLogger(EndurainTokenManager::class.java)
+    companion object {
+        private val LOG: Logger = LoggerFactory.getLogger(EndurainTokenManager::class.java)
+    }
+
     private val masterKey = MasterKey.Builder(context)
         .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
         .build()
@@ -44,7 +49,8 @@ class EndurainTokenManager(context: Context) {
             )
         } catch (e: GeneralSecurityException) {
             LOG.warn("Unable to decrypt endurain token preferences, resetting them instead\n", e)
-            context.deleteSharedPreferences("endurain_tokens")
+            context.getSharedPreferences("endurain_tokens", Context.MODE_PRIVATE)
+                .edit(commit = true) { clear() }
             EncryptedSharedPreferences.create(
                 context,
                 "endurain_tokens",
