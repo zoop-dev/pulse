@@ -46,9 +46,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
-import java.time.Instant;
 import java.time.LocalTime;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
@@ -125,8 +123,6 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.GpxRouteF
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordData;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.enums.AlarmLabel;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.enums.WeatherReport;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionWeatherAqi;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionWeatherCondition;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitAlarmSettings;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitDeviceSettings;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitFileId;
@@ -763,22 +759,19 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
         today.setWeatherReport(WeatherReport.current);
         today.setTimestamp((long) weather.getTimestamp());
         today.setObservedAtTime((long) weather.getTimestamp());
-        today.setTemperature(weather.getCurrentTemp());
-        today.setLowTemperature(weather.getTodayMinTemp());
-        today.setHighTemperature(weather.getTodayMaxTemp());
-        today.setCondition(FieldDefinitionWeatherCondition.openWeatherCodeToFitWeatherStatus(weather.getCurrentConditionCode()));
-        today.setWindDirection(weather.getWindDirection());
-        today.setPrecipitationProbability(weather.getPrecipProbability());
-        today.setWindSpeed(weather.getWindSpeed());
-        today.setTemperatureFeelsLike(weather.getFeelsLikeTemp());
-        today.setRelativeHumidity(weather.getCurrentHumidity());
+        today.weatherTemperature(weather.getCurrentTemp());
+        today.weatherLowTemperature(weather.getTodayMinTemp());
+        today.weatherHighTemperature(weather.getTodayMaxTemp());
+        today.weatherCondition(weather.getCurrentConditionCode());
+        today.weatherWindDirection(weather.getWindDirection());
+        today.weatherPrecipitationProbability(weather.getPrecipProbability());
+        today.weatherWindSpeed(weather.getWindSpeed());
+        today.weatherTemperatureFeelsLike(weather.getFeelsLikeTemp());
+        today.weatherRelativeHumidity(weather.getCurrentHumidity());
         today.setObservedLocationLat((double) weather.getLatitude());
         today.setObservedLocationLong((double) weather.getLongitude());
-        today.setAirQuality(null); //ensure the definition is added
-        if (null != weather.getAirQuality()) {
-            today.setAirQuality(FieldDefinitionWeatherAqi.aqiAbsoluteValueToEnum(weather.getAirQuality().getAqi()));
-        }
-        today.setDewPoint(weather.getDewPoint());
+        today.weatherAirQuality(weather.getAirQuality());
+        today.weatherDewPoint(weather.getDewPoint());
         today.setLocation(weather.getLocation());
         weatherLocalMessage.addRecordData(today.build(weatherLocalMessage.getNextAvailableLocalMessageType()));
 
@@ -789,16 +782,16 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
                 final FitWeather.Builder weatherHourlyForecast = new FitWeather.Builder();
                 weatherHourlyForecast.setWeatherReport(WeatherReport.hourly_forecast);
                 weatherHourlyForecast.setTimestamp((long) hourly.getTimestamp());
-                weatherHourlyForecast.setTemperature(hourly.getTemp());
-                weatherHourlyForecast.setCondition(FieldDefinitionWeatherCondition.openWeatherCodeToFitWeatherStatus(hourly.getConditionCode()));
-                weatherHourlyForecast.setWindDirection(hourly.getWindDirection());
-                weatherHourlyForecast.setWindSpeed(hourly.getWindSpeed());
-                weatherHourlyForecast.setPrecipitationProbability(hourly.getPrecipProbability());
-                weatherHourlyForecast.setTemperatureFeelsLike(hourly.getTemp()); //TODO: switch to actual feels like field once Hourly contains this information
-                weatherHourlyForecast.setRelativeHumidity(hourly.getHumidity());
-                weatherHourlyForecast.setDewPoint(null); // null to ensure the definition is added TODO: add once Hourly contains this information
-                weatherHourlyForecast.setUvIndex(hourly.getUvIndex());
-                weatherHourlyForecast.setAirQuality(null); // null to ensure the definition is added TODO: add once Hourly contains this information
+                weatherHourlyForecast.weatherTemperature(hourly.getTemp());
+                weatherHourlyForecast.weatherCondition(hourly.getConditionCode());
+                weatherHourlyForecast.weatherWindDirection(hourly.getWindDirection());
+                weatherHourlyForecast.weatherWindSpeed(hourly.getWindSpeed());
+                weatherHourlyForecast.weatherPrecipitationProbability(hourly.getPrecipProbability());
+                weatherHourlyForecast.weatherTemperatureFeelsLike(hourly.getTemp()); //TODO: switch to actual feels like field once Hourly contains this information
+                weatherHourlyForecast.weatherRelativeHumidity(hourly.getHumidity());
+                weatherHourlyForecast.weatherDewPoint(hourly.getDewPoint());
+                weatherHourlyForecast.weatherUvIndex(hourly.getUvIndex());
+                weatherHourlyForecast.weatherAirQuality(null); // null to ensure the definition is added TODO: add once Hourly contains this information
                 weatherLocalMessage.addRecordData(weatherHourlyForecast.build(hourlyMessageType));
             }
         }
@@ -808,15 +801,12 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
         final FitWeather.Builder todayDailyForecast = new FitWeather.Builder();
         todayDailyForecast.setWeatherReport(WeatherReport.daily_forecast);
         todayDailyForecast.setTimestamp((long) weather.getTimestamp());
-        todayDailyForecast.setLowTemperature(weather.getTodayMinTemp());
-        todayDailyForecast.setHighTemperature(weather.getTodayMaxTemp());
-        todayDailyForecast.setCondition(FieldDefinitionWeatherCondition.openWeatherCodeToFitWeatherStatus(weather.getCurrentConditionCode()));
-        todayDailyForecast.setPrecipitationProbability(weather.getPrecipProbability());
-        todayDailyForecast.setDayOfWeek(Instant.ofEpochSecond(weather.getTimestamp()).atZone(ZoneId.systemDefault()).getDayOfWeek());
-        todayDailyForecast.setAirQuality(null); //ensure the definition is added
-        if (null != weather.getAirQuality()) {
-            todayDailyForecast.setAirQuality(FieldDefinitionWeatherAqi.aqiAbsoluteValueToEnum(weather.getAirQuality().getAqi()));
-        }
+        todayDailyForecast.weatherLowTemperature(weather.getTodayMinTemp());
+        todayDailyForecast.weatherHighTemperature(weather.getTodayMaxTemp());
+        todayDailyForecast.weatherCondition(weather.getCurrentConditionCode());
+        todayDailyForecast.weatherPrecipitationProbability(weather.getPrecipProbability());
+        todayDailyForecast.weatherDayOfWeek(weather.getTimestamp());
+        todayDailyForecast.weatherAirQuality(weather.getAirQuality());
         weatherLocalMessage.addRecordData(todayDailyForecast.build(dailyMessageType));
 
 
@@ -827,15 +817,12 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
                 final FitWeather.Builder weatherDailyForecast = new FitWeather.Builder();
                 weatherDailyForecast.setWeatherReport(WeatherReport.daily_forecast);
                 weatherDailyForecast.setTimestamp((long) weather.getTimestamp());
-                weatherDailyForecast.setLowTemperature(daily.getMinTemp());
-                weatherDailyForecast.setHighTemperature(daily.getMaxTemp());
-                weatherDailyForecast.setCondition(FieldDefinitionWeatherCondition.openWeatherCodeToFitWeatherStatus(daily.getConditionCode()));
-                weatherDailyForecast.setPrecipitationProbability(daily.getPrecipProbability());
-                weatherDailyForecast.setDayOfWeek(Instant.ofEpochSecond(ts).atZone(ZoneId.systemDefault()).getDayOfWeek());
-                weatherDailyForecast.setAirQuality(null); //ensure the definition is added
-                if (null != daily.getAirQuality()) {
-                    weatherDailyForecast.setAirQuality(FieldDefinitionWeatherAqi.aqiAbsoluteValueToEnum(daily.getAirQuality().getAqi()));
-                }
+                weatherDailyForecast.weatherLowTemperature(daily.getMinTemp());
+                weatherDailyForecast.weatherHighTemperature(daily.getMaxTemp());
+                weatherDailyForecast.weatherCondition(daily.getConditionCode());
+                weatherDailyForecast.weatherPrecipitationProbability(daily.getPrecipProbability());
+                weatherDailyForecast.weatherDayOfWeek(ts);
+                weatherDailyForecast.weatherAirQuality(daily.getAirQuality());
                 weatherLocalMessage.addRecordData(weatherDailyForecast.build(dailyMessageType));
             }
         }

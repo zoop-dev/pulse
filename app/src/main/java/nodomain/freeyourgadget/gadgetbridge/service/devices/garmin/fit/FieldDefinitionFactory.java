@@ -42,7 +42,7 @@ public class FieldDefinitionFactory {
             case FILE_TYPE -> new FieldDefinitionFileType(localNumber, size, baseType, name);
             case HR_TIME_IN_ZONE -> new FieldDefinitionHrTimeInZone(localNumber, size, baseType, name);
             case HR_ZONE_HIGH_BOUNDARY -> new FieldDefinitionHrZoneHighBoundary(localNumber, size, baseType, name);
-            case TEMPERATURE -> new FieldDefinitionTemperature(localNumber, size, baseType, name);
+            case TEMPERATURE -> new FieldDefinitionTemperature(localNumber, size, baseType, name, scale, offset);
             case TIMESTAMP -> new FieldDefinitionTimestamp(localNumber, size, baseType, name);
             case COORDINATE -> new FieldDefinitionCoordinate(localNumber, size, baseType, name, scale, offset);
             default -> FieldDefinitions.create(localNumber, size, field, baseType, name, scale, offset);
