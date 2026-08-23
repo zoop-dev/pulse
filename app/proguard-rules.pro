@@ -36,6 +36,9 @@
 
 # Keep coordinators, they're only referenced from DeviceType
 -keep public class * implements nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator
+-keepclassmembers class * implements nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator {
+  <init>();
+}
 
 # Keep parseIncoming for GFDIMessage classes, as it is called by reflection in GFDIMessage#parseIncoming
 -keep public class * extends nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.GFDIMessage

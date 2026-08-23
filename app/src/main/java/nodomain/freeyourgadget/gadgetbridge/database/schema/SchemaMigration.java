@@ -24,6 +24,10 @@ import androidx.annotation.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.Objects;
+
 import nodomain.freeyourgadget.gadgetbridge.database.DBUpdateScript;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
@@ -39,13 +43,13 @@ public class SchemaMigration {
         LOG.info("ActivityDatabase: schema upgrade requested from {} to {}", oldVersion, newVersion);
         try {
             for (int i = oldVersion + 1; i <= newVersion; i++) {
-                DBUpdateScript updater = getUpdateScript(db, i);
+                DBUpdateScript updater = getUpdateScript(i);
                 if (updater != null) {
                     LOG.info("upgrading activity database to version {}", i);
                     updater.upgradeSchema(db);
                 }
             }
-            LOG.info("activity database is now at version {}", newVersion);
+            LOG.info("activity database upgraded to {}", newVersion);
         } catch (RuntimeException ex) {
             GB.toast("Error upgrading database.", Toast.LENGTH_SHORT, GB.ERROR, ex);
             throw ex; // reject upgrade
@@ -56,13 +60,13 @@ public class SchemaMigration {
         LOG.info("ActivityDatabase: schema downgrade requested from {} to {}", oldVersion, newVersion);
         try {
             for (int i = oldVersion; i >= newVersion; i--) {
-                DBUpdateScript updater = getUpdateScript(db, i);
+                DBUpdateScript updater = getUpdateScript(i);
                 if (updater != null) {
                     LOG.info("downgrading activity database to version {}", i - 1);
                     updater.downgradeSchema(db);
                 }
             }
-            LOG.info("activity database is now at version {}", newVersion);
+            LOG.info("activity database downgraded to {}", newVersion);
         } catch (RuntimeException ex) {
             GB.toast("Error downgrading database.", Toast.LENGTH_SHORT, GB.ERROR, ex);
             throw ex; // reject downgrade
@@ -70,13 +74,15 @@ public class SchemaMigration {
     }
 
     @Nullable
-    private DBUpdateScript getUpdateScript(SQLiteDatabase db, int version) {
+    private DBUpdateScript getUpdateScript(final int version) {
         try {
-            Class<?> updateClass = getClass().getClassLoader().loadClass(getClass().getPackage().getName() + "." + classNamePrefix + version);
-            return (DBUpdateScript) updateClass.newInstance();
+            final Class<?> updateClass = Objects.requireNonNull(getClass().getClassLoader())
+                    .loadClass(Objects.requireNonNull(getClass().getPackage()).getName() + "." + classNamePrefix + version);
+            final Constructor<?> constructor = updateClass.getConstructor();
+            return (DBUpdateScript) constructor.newInstance();
         } catch (ClassNotFoundException e) {
             return null;
-        } catch (NullPointerException | InstantiationException | IllegalAccessException e) {
+        } catch (NullPointerException | InvocationTargetException | NoSuchMethodException | InstantiationException | IllegalAccessException e) {
             throw new RuntimeException("Error instantiating DBUpdate class for version " + version, e);
         }
     }
