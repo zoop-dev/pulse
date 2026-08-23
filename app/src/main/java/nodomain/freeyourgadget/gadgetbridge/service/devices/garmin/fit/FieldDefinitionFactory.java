@@ -37,7 +37,7 @@ public class FieldDefinitionFactory {
         return switch (field) {
             case ALARM -> new FieldDefinitionAlarm(localNumber, size, baseType, name, scale, offset);
             case ARRAY -> new FieldDefinitionArray(localNumber, size, baseType, name, scale, offset);
-            case BOOLEAN -> new FieldDefinitionBoolean(localNumber, size, baseType, name);
+            case BOOLEAN -> new FieldDefinitionBoolean(localNumber, size, baseType, name, scale, offset);
             case DAY_OF_WEEK -> new FieldDefinitionDayOfWeek(localNumber, size, baseType, name);
             case FILE_TYPE -> new FieldDefinitionFileType(localNumber, size, baseType, name);
             case HR_TIME_IN_ZONE -> new FieldDefinitionHrTimeInZone(localNumber, size, baseType, name);
