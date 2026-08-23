@@ -16,6 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin;
 
+import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothGattCharacteristic;
 
 import com.google.protobuf.ByteString;
@@ -76,7 +77,7 @@ public class ExploreSyncHandlerTest extends TestBase {
         support = new RecordingGarminSupport();
         support.setContext(
                 new GBDevice(DEVICE_ADDRESS, "TestFenix", null, null, DeviceType.GARMIN_FENIX_7_PRO),
-                /*btAdapter*/ null,
+                (BluetoothAdapter) null,
                 org.robolectric.RuntimeEnvironment.getApplication());
         support.getDevicePrefs().getPreferences().edit()
                 .putBoolean("garmin_exploresync", true)
