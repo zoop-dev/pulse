@@ -3927,7 +3927,7 @@
     <string name="soundcore_auto_power_off_title">自动关机</string>
     <string name="soundcore_auto_power_off_summary">与手机断开连接后，设备将在指定超时时间后关机</string>
     <string name="soundcore_battery_low_tone_title">低电量提示音</string>
-    <string name="soundcore_battery_low_tone_summary">当电量低于20%和10%时听到提示音</string>
+    <string name="soundcore_battery_low_tone_summary" formatted="false">当电量低于20%和10%时听到提示音</string>
     <string name="soundcore_gaming_mode_title">游戏模式</string>
     <string name="soundcore_gaming_mode_summary">降低延迟并增强脚步声和语音。可能会降低连接稳定性。</string>
     <string name="weight_scale_jin">市斤</string>

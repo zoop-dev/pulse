@@ -3496,7 +3496,6 @@
     <string name="open_app">باز کردن %s</string>
     <string name="install_app_fail">باز کردن فروشگاه برنامه برای نصب %s ناموفق بود</string>
     <string name="loyalty_cards_app_not_installed">برای مدیریت کارت‌های وفاداری به یک برنامه کارت وفاداری نیاز است. لطفاً یکی از برنامه‌های پشتیبانی‌شده زیر را نصب کنید.</string>
-    <string name="loyalty_cards_app_not_compatible">نسخه نصب‌شده %1s با Gadgetbridge سازگار نیست. لطفاً %1s و Gadgetbridge را به آخرین نسخه به‌روزرسانی کنید.</string>
     <string name="loyalty_cards_app_permissions_summary">Gadgetbridge برای همگام‌سازی کارت‌های %1s به مجوز خواندن نیاز دارد. برای اعطای مجوز این دکمه را لمس کنید.</string>
     <string name="loyalty_cards">کارت‌های وفاداری</string>
     <string name="loyalty_cards_syncing">در حال همگام‌سازی %d کارت وفاداری با دستگاه</string>
@@ -4472,7 +4471,7 @@
     <string name="health_connect_sleep_session_title">جلسه خواب از %1$s</string>
     <string name="health_connect_sleep_session_notes">داده‌های خواب از دستگاه Gadgetbridge: %1$s.</string>
     <string name="infinitime_filesystem_access_disabled">دسترسی به سیستم فایل در InfiniTime غیرفعال است</string>
-    <string name="infinitime_resource_upload_progress_status">در حال انجام اقدام %d از %d\n%s %s</string>
+    <string name="infinitime_resource_upload_progress_status">در حال انجام اقدام %1$d از %2$d\n%3$s %4$s</string>
     <string name="pref_title_qhybrid_top_button_function">عملکرد دکمه بالا</string>
     <string name="pref_title_qhybrid_middle_button_function">عملکرد دکمه میانی</string>
     <string name="pref_title_qhybrid_bottom_button_function">عملکرد دکمه پایین</string>

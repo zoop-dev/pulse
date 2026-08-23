@@ -3817,7 +3817,7 @@
     <string name="soundcore_auto_power_off_title">ஆட்டோ பவர் ஆஃப்</string>
     <string name="soundcore_auto_power_off_summary">தொலைபேசியிலிருந்து துண்டிக்கப்படும் போது, குறிப்பிட்ட காலக்கெடுவுக்குப் பிறகு சாதனம் அணைக்கப்படும்</string>
     <string name="soundcore_battery_low_tone_title">குறைந்த பேட்டரி டோன்</string>
-    <string name="soundcore_battery_low_tone_summary">பேட்டரி நிலை 20% மற்றும் 10%க்குக் குறைவாக இருக்கும்போது, உடனடி டோனைக் கேட்கவும்</string>
+    <string name="soundcore_battery_low_tone_summary" formatted="false">பேட்டரி நிலை 20% மற்றும் 10%க்குக் குறைவாக இருக்கும்போது, உடனடி டோனைக் கேட்கவும்</string>
     <string name="soundcore_gaming_mode_title">கேமிங் பயன்முறை</string>
     <string name="soundcore_gaming_mode_summary">தாமதத்தைக் குறைத்து, அடிச்சுவடுகள் மற்றும் குரல்களின் ஒலிகளை அதிகரிக்கவும். இணைப்பு நிலைத்தன்மையைக் குறைக்கலாம்.</string>
     <string name="huawei_sleep_breath_summary">அமைதியான சூழலில் உங்கள் சுவாசத்தை மதிப்பிடுங்கள். பேட்டரி ஆயுளை பாதிக்கலாம். \nஎச்சரிக்கை: Gadgetbridge உடன் இன்னும் ஒத்திசைக்கப்படவில்லை.</string>
