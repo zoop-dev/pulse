@@ -4863,4 +4863,9 @@
     <string name="pref_summary_general_prefs_key_sort_by_last_connected_ts">按未连接设备最近连接时间，而非名称字母顺序对它们进行排序</string>
     <string name="menuitem_zepp_os_wake_hybridcharge">唤醒 HybridCharge</string>
     <string name="menuitem_training_calendar">训练日历</string>
+    <string name="usb_connect_title">找到了 USB 设备</string>
+    <string name="usb_connect_permission_needed">Gadgetbridge 需要使用这个 USB 设备的权限。</string>
+    <string name="usb_connect_permission_denied">使用这个 USB 设备的权限被拒。</string>
+    <string name="usb_connect_select_device_type">选择设备类型</string>
+    <string name="discovery_connect_usb">连接到 USB</string>
 </resources>
