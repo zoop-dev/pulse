@@ -71,6 +71,12 @@
 -keep class ch.qos.** { *; }
 -keep class org.slf4j.** { *; }
 
+# Gson uses generic type information stored in a class file's Signature
+# attribute when deserializing collections of custom objects. Without
+# this, R8 strips it, and Gson falls back to raw types, breaking zip
+# backup restore.
+-keepattributes Signature
+
 # Keep data classes
 -keepclassmembers,allowobfuscation class * {
   @com.google.gson.annotations.SerializedName <fields>;

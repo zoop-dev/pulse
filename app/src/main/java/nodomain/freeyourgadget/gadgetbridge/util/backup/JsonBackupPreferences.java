@@ -87,20 +87,14 @@ public class JsonBackupPreferences {
 
             final String valueType = valueObject.getClass().getSimpleName();
 
-            if (BOOLEAN.equals(valueType)) {
-                values.put(key, new BooleanPreferenceValue((Boolean) valueObject));
-            } else if (FLOAT.equals(valueType)) {
-                values.put(key, new FloatPreferenceValue((Float) valueObject));
-            } else if (INTEGER.equals(valueType)) {
-                values.put(key, new IntegerPreferenceValue((Integer) valueObject));
-            } else if (LONG.equals(valueType)) {
-                values.put(key, new LongPreferenceValue((Long) valueObject));
-            } else if (STRING.equals(valueType)) {
-                values.put(key, new StringPreferenceValue((String) valueObject));
-            } else if (HASHSET.equals(valueType)) {
-                values.put(key, new StringSetPreferenceValue((HashSet) valueObject));
-            } else {
-                throw new IllegalArgumentException("Unknown preference type " + valueType);
+            switch (valueType) {
+                case BOOLEAN -> values.put(key, new BooleanPreferenceValue((Boolean) valueObject));
+                case FLOAT -> values.put(key, new FloatPreferenceValue((Float) valueObject));
+                case INTEGER -> values.put(key, new IntegerPreferenceValue((Integer) valueObject));
+                case LONG -> values.put(key, new LongPreferenceValue((Long) valueObject));
+                case STRING -> values.put(key, new StringPreferenceValue((String) valueObject));
+                case HASHSET -> values.put(key, new StringSetPreferenceValue((HashSet) valueObject));
+                default -> throw new IllegalArgumentException("Unknown preference type " + valueType);
             }
         }
 
