@@ -2608,7 +2608,6 @@
     <string name="unbind_before_pair_title">Již spárováno</string>
     <string name="pref_sleepasandroid_feat_heartrate">Srdeční tep</string>
     <string name="pref_sleepasandroid_feat_oximetry">Oxymetrie</string>
-    <string name="pref_sleepasandroid_feat_spo2">SpO2</string>
     <string name="device_name_cycling_sensor">Cyklistický senzor</string>
     <string name="devicetype_cycling_sensor">Cyklistický senzor rychlosti</string>
     <string name="bottom_nav_dashboard">Nástěnka</string>

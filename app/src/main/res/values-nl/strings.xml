@@ -2679,7 +2679,6 @@
     <string name="pref_sleepasandroid_slot_title">Wekkerslot</string>
     <string name="pref_sleepasandroid_feat_movement">Bewegingssensor</string>
     <string name="pref_sleepasandroid_feat_heartrate">Hartslag</string>
-    <string name="pref_sleepasandroid_feat_spo2">SpO2</string>
     <string name="pref_sleepasandroid_enable_summary">Integratie met Sleep As Android inschakelen</string>
     <string name="alarm_slot_reset">Wekkerslot is teruggezet naar standaard</string>
     <string name="pref_sleepasandroid_feat_notifications">Meldingen</string>

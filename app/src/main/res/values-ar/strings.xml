@@ -2689,7 +2689,6 @@
     <string name="pref_sleepasandroid_feat_notifications">الإشعارات</string>
     <string name="pref_sleepasandroid_feat_movement">مقياس التسارع</string>
     <string name="pref_sleepasandroid_feat_oximetry">المقاييس</string>
-    <string name="pref_sleepasandroid_feat_spo2">SPO2</string>
     <string name="pref_title_huawei_account">حساب هواوي</string>
     <string name="pref_summary_huawei_account">حساب هواوي المستخدم في عملية الاقتران. يسمح إعداده بالاقتران دون إعادة ضبط المصنع.</string>
     <string name="serbian">الصربية</string>

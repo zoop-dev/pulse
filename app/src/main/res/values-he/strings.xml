@@ -2630,7 +2630,6 @@
     <string name="armenian">ארמנית</string>
     <string name="pref_sleepasandroid_device_title">התקן ספק</string>
     <string name="pref_sleepasandroid_features_summary">התמיכה משתנה מהתקן להתקן</string>
-    <string name="pref_sleepasandroid_feat_spo2">SpO2</string>
     <string name="pref_sleepasandroid_feat_heartrate">דופק</string>
     <string name="pref_sleepasandroid_feat_movement">מד תאוצה</string>
     <string name="pref_sleepasandroid_feat_oximetry">מדידת חמצן</string>

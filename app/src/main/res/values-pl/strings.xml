@@ -2800,7 +2800,6 @@
     <string name="bottom_nav_dashboard">Pulpit</string>
     <string name="pref_dashboard_widget_settings">Ustawienia widżetów</string>
     <string name="pref_title_bottom_navigation_bar">Dolny pasek nawigacyjny</string>
-    <string name="pref_sleepasandroid_feat_spo2">SPO2</string>
     <string name="pref_dashboard_widget_goals_chart_title">Wykres celów</string>
     <string name="pref_dashboard_widgets_order_summary">Wybierz które widżety włączyć oraz kolejność wyświetlania ich na pulpicie</string>
     <string name="pref_dashboard_all_devices_title">Wszystkie urządzenia</string>

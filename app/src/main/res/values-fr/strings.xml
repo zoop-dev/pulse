@@ -2619,7 +2619,6 @@
     <string name="swolfMax">Swolf maximum</string>
     <string name="swolfMin">Swolf minimum</string>
     <string name="degrees">degrés</string>
-    <string name="pref_sleepasandroid_feat_spo2">SpO₂</string>
     <string name="bottom_nav_devices">Appareils</string>
     <string name="pref_dashboard_widget_settings">Réglages des widgets</string>
     <string name="pref_dashboard_widget_show_legend_title">Afficher la légende</string>

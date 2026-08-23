@@ -2691,7 +2691,6 @@
     <string name="alarm_slot_reset">Alarm yuvası öntanımlı olarak ayarlandı</string>
     <string name="pref_sleepasandroid_feat_heartrate">Kalp ritmi</string>
     <string name="pref_sleepasandroid_feat_oximetry">Oksimetri</string>
-    <string name="pref_sleepasandroid_feat_spo2">SPO2</string>
     <string name="sleepasandroid_settings">Sleep As Android</string>
     <string name="pref_sleepasandroid_slot_summary">Alarmları ayarlarken hangi alarm yuvasının kullanılacağı</string>
     <string name="pref_sleepasandroid_feat_notifications">Bildirimler</string>

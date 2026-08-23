@@ -2549,7 +2549,6 @@
     <string name="pref_sleepasandroid_features_summary">Поддержка варьируется в зависимости от устройства</string>
     <string name="pref_sleepasandroid_feat_movement">Акселерометр</string>
     <string name="pref_sleepasandroid_feat_heartrate">Пульс</string>
-    <string name="pref_sleepasandroid_feat_spo2">SpO2</string>
     <string name="pref_title_bottom_navigation_bar">Нижняя панель навигации</string>
     <string name="pref_summary_bottom_navigation_bar_on">Переключаться между основными экранами через панель навигации или жестами</string>
     <string name="pref_sleepasandroid_feat_notifications">Уведомления</string>

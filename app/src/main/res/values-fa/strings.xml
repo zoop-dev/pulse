@@ -3789,7 +3789,6 @@
     <string name="pref_sleepasandroid_feat_movement">شتاب‌سنج</string>
     <string name="pref_sleepasandroid_feat_heartrate">ضربان قلب</string>
     <string name="pref_sleepasandroid_feat_oximetry">اکسیمتری</string>
-    <string name="pref_sleepasandroid_feat_spo2">SpO2</string>
     <string name="pref_title_huawei_account">حساب Huawei</string>
     <string name="pref_summary_huawei_account">حساب Huawei که در فرایند جفت‌سازی استفاده می‌شود. تنظیم آن امکان جفت‌سازی بدون بازنشانی به تنظیمات کارخانه را فراهم می‌کند.</string>
     <string name="watchface_resolution_doesnt_match">تفکیک‌پذیری صفحه ساعت با صفحه نمایش دستگاه مطابقت ندارد. صفحه ساعت %1$s و صفحه نمایش دستگاه %2$s است</string>

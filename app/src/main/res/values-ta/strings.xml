@@ -750,7 +750,6 @@
     <string name="pref_title_navigation_prefs">வழிசெலுத்தல் விருப்பத்தேர்வுகள்</string>
     <string name="bottom_nav_dashboard">முகப்புப்பெட்டி</string>
     <string name="pref_sleepasandroid_feat_oximetry">ஆக்சிமெட்ரி</string>
-    <string name="pref_sleepasandroid_feat_spo2">Spo2</string>
     <string name="backup_restore_importing_files_i_of_n">கோப்புகளை இறக்குமதி செய்தல்… %1$d %2$d</string>
     <string name="backup_restore_error_import">சிப்பிலிருந்து இறக்குமதி தோல்வியடைந்தது</string>
     <string name="pref_wear_sensor_summary">சாதனம் அணியப்படாதபோது கண்டறியவும்</string>

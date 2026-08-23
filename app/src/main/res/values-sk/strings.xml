@@ -594,7 +594,6 @@
     <string name="pref_dashboard_first_summary">Zobraziť nástenku, keď Gadgetbridge začne, namiesto obrazovky zariadení</string>
     <string name="pref_dashboard_widget_show_legend_title">Zobraziť legendu</string>
     <string name="pref_sleepasandroid_feat_notifications">Upozornenia</string>
-    <string name="pref_sleepasandroid_feat_spo2">SPO2</string>
     <string name="permission_calendar_summary">Odosielanie kalendára do gadgets</string>
     <string name="controlcenter_toggle_details">Prepnúť podrobnosti</string>
     <string name="pref_sleep_mode_sleep_screen_title">Spánková obrazovka</string>

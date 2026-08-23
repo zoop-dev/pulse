@@ -1483,7 +1483,6 @@
     <string name="pref_header_spo2">Oxigenació sanguínia</string>
     <string name="pref_sleepasandroid_feat_movement">Acceleròmetre</string>
     <string name="pref_title_huawei_account">Compte de Huawei</string>
-    <string name="pref_sleepasandroid_feat_spo2">SpO₂</string>
     <string name="pref_sleepasandroid_feat_alarms">Alarmes</string>
     <string name="min_val">Mínim: %d</string>
     <string name="max_val">Màxim: %d</string>

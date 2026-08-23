@@ -1747,7 +1747,6 @@
     <string name="pref_sleepasandroid_features_summary">O suporte difere de dispositivo para dispositivo</string>
     <string name="pref_sleepasandroid_feat_movement">Acelerômetro</string>
     <string name="pref_sleepasandroid_feat_oximetry">Oximetria</string>
-    <string name="pref_sleepasandroid_feat_spo2">SPO2</string>
     <string name="fw_upgrade_notice_amazfit_cheetah_pro">Você está prestes a instalar o firmware %s no seu Amazfit Cheetah Pro.
 \n
 \nSua pulseira será reiniciada após a instalação do arquivo .zip.

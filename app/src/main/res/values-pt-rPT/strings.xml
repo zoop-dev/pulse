@@ -1915,7 +1915,6 @@
     <string name="pref_sleepasandroid_feat_movement">Acelerômetro</string>
     <string name="pref_sleepasandroid_feat_heartrate">Frequência cardíaca</string>
     <string name="pref_sleepasandroid_feat_oximetry">Oximetria</string>
-    <string name="pref_sleepasandroid_feat_spo2">SPO2</string>
     <string name="pref_title_huawei_account">Conta da Huawei</string>
     <string name="pref_summary_huawei_account">Conta da Huawei usada no processo de emparelhamento. A sua configuração permite emparelhar sem redefinição de fábrica.</string>
     <string name="device_name_bicycle_sensor">Sensor de bicicleta</string>

@@ -3054,7 +3054,6 @@
     <string name="error_menu_companion_not_installed">„HR Menu Companion” valószínűleg nincs telepítve</string>
     <string name="prefs_wena3_notification_settings_title">Értesítési beállítások</string>
     <string name="prefs_wena3_receive_calls_hint">Ha kikapcsolja, akkor nem kap értesítést a bejövő hívásokról a Wena</string>
-    <string name="pref_sleepasandroid_feat_spo2">SPO2</string>
     <string name="pref_battery_polling_interval_format">%1$s percenként</string>
     <string name="battery_full_threshold">Teljes akkumulátor-küszöbérték</string>
     <string name="pref_header_deprecated_functionalities_warning">A következő funkciókat már nem használjuk, és hamarosan eltávolítjuk őket a szoftverből.\nHa az alábbi beállítások valamelyikét szeretné engedélyezni, mindenképpen vegye fel a kapcsolatot a projektcsapattal.</string>

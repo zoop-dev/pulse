@@ -3052,7 +3052,6 @@
     <string name="pref_sleepasandroid_enable_summary">Attiva l\'integrazione di Sleep As Android</string>
     <string name="pref_sleepasandroid_device_title">Dispositivo fornitore</string>
     <string name="pref_sleepasandroid_features_title">Caratteristiche</string>
-    <string name="pref_sleepasandroid_feat_spo2">SpO2</string>
     <string name="pref_title_huawei_account">Account Huawei</string>
     <string name="open_camera">Apri Fotocamera</string>
     <string name="toast_camera_permission_required">Per questa funzione è necessaria l\'autorizzazione della fotocamera.</string>

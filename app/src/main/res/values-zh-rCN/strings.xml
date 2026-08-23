@@ -2674,7 +2674,6 @@
     <string name="pref_sleepasandroid_feat_movement">加速计</string>
     <string name="pref_sleepasandroid_feat_heartrate">心率</string>
     <string name="pref_sleepasandroid_feat_oximetry">血氧饱和度</string>
-    <string name="pref_sleepasandroid_feat_spo2">SPO2</string>
     <string name="pref_sleepasandroid_feat_alarms">闹钟</string>
     <string name="pref_sleepasandroid_slot_summary">设置闹钟时使用哪个闹钟槽</string>
     <string name="pref_sleepasandroid_slot_title">闹钟槽</string>

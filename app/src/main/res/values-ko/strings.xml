@@ -3305,7 +3305,6 @@
     <string name="pref_sleepasandroid_feat_movement">가속도계</string>
     <string name="pref_sleepasandroid_feat_heartrate">심박수</string>
     <string name="pref_sleepasandroid_feat_oximetry">산소 측정</string>
-    <string name="pref_sleepasandroid_feat_spo2">SPO2</string>
     <string name="pref_title_huawei_account">Huawei 계정</string>
     <string name="pref_summary_huawei_account">페어링 과정에서 사용되는 Huawei 계정입니다. 설정하면 공장 초기화 없이 페어링할 수 있습니다.</string>
     <string name="watchface_resolution_doesnt_match">워치페이스 해상도가 기기 화면과 일치하지 않습니다. 워치페이스는 %1$s, 기기 화면은 %2$s입니다.</string>

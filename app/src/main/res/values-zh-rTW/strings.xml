@@ -1883,7 +1883,6 @@
     <string name="pref_sleepasandroid_feat_movement">加速度計</string>
     <string name="pref_sleepasandroid_feat_heartrate">心率</string>
     <string name="pref_sleepasandroid_feat_oximetry">血氧測定法</string>
-    <string name="pref_sleepasandroid_feat_spo2">SpO₂</string>
     <string name="pref_summary_huawei_account">在配對過程中使用的華為帳戶。設置它可以在不恢復出廠設置的情況下進行配對。</string>
     <string name="watchface_resolution_doesnt_match">錶面解析度與設備螢幕不匹配。錶面為 %1$s，設備螢幕為 %2$s</string>
     <string name="device_name_bicycle_sensor">自行車感測器</string>

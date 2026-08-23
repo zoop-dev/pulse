@@ -2570,7 +2570,6 @@
     <string name="pref_sleepasandroid_feat_notifications">Benachrichtigungen</string>
     <string name="pref_sleepasandroid_feat_movement">Beschleunigungssensor</string>
     <string name="pref_sleepasandroid_feat_heartrate">Herzfrequenz</string>
-    <string name="pref_sleepasandroid_feat_spo2">SpO2</string>
     <string name="sleepasandroid_settings">Sleep as Android</string>
     <string name="pref_sleepasandroid_enable_summary">Aktiviere die Integration von Sleep as Android</string>
     <string name="pref_sleepasandroid_features_title">Eigenschaften</string>

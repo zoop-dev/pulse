@@ -2532,7 +2532,6 @@
     <string name="pref_sleepasandroid_feat_notifications">Notificaciones</string>
     <string name="pref_sleepasandroid_feat_movement">Acelerómetro</string>
     <string name="pref_sleepasandroid_feat_heartrate">Frecuencia cardíaca</string>
-    <string name="pref_sleepasandroid_feat_spo2">SpO₂</string>
     <string name="pref_title_huawei_account">Cuenta de Huawei</string>
     <string name="pref_summary_huawei_account">Cuenta de Huawei utilizada en el proceso de emparejamiento. Configurarlo permite el emparejamiento sin restablecimiento de fábrica.</string>
     <string name="serbian">Serbio</string>

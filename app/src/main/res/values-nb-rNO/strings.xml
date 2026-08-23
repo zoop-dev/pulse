@@ -3370,7 +3370,6 @@
     <string name="pref_sleepasandroid_feat_movement">Akselerometer</string>
     <string name="pref_sleepasandroid_feat_heartrate">Hjerteslag</string>
     <string name="pref_sleepasandroid_feat_oximetry">Oksimetri</string>
-    <string name="pref_sleepasandroid_feat_spo2">SPO2</string>
     <string name="pref_title_huawei_account">Huawei-konto</string>
     <string name="pref_summary_huawei_account">Huawei-konto brukt i paringsprosessen. Å sette den tillater paring uten fabrikktilbakestilling.</string>
     <string name="watchface_resolution_doesnt_match">Urvisoppløsning matcher ikke enhetsskjerm. Urvis er %1$s enhetsskjerm er %2$s</string>

@@ -2423,7 +2423,6 @@
     <string name="bottom_nav_devices">Пристрої</string>
     <string name="pref_dashboard_select_devices_title">Виберіть пристрої…</string>
     <string name="chart_cycling_point_label_distance">Сьогодні: %1$.1f км\nУсього: %2$.1f км</string>
-    <string name="pref_sleepasandroid_feat_spo2">SPO2</string>
     <string name="pref_sleepasandroid_feat_movement">Акселерометр</string>
     <string name="folder_is_empty">Тека порожня</string>
     <string name="chart_cycling_point_label_speed">%.1f км/год</string>
