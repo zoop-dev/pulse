@@ -199,13 +199,13 @@ class AdaBleFsProfile<T : AbstractBTLESingleDeviceSupport>(support: T) : Abstrac
     }
 
     override fun onCharacteristicChanged(
-        gatt: BluetoothGatt?,
-        characteristic: BluetoothGattCharacteristic?,
-        value: ByteArray?
+        gatt: BluetoothGatt,
+        characteristic: BluetoothGattCharacteristic,
+        value: ByteArray
     ): Boolean {
-        if (characteristic?.uuid == UUID_CHARACTERISTIC_FS_TRANSFER) {
+        if (characteristic.uuid == UUID_CHARACTERISTIC_FS_TRANSFER) {
             try {
-                handleNextStatus(gatt, characteristic)
+                handleNextStatus(value)
             } catch (e: IOException) {
                 LOG.error("Error handling status: ", e)
             }
@@ -215,11 +215,9 @@ class AdaBleFsProfile<T : AbstractBTLESingleDeviceSupport>(support: T) : Abstrac
     }
 
     @Throws(IOException::class)
-    private fun handleNextStatus(gatt: BluetoothGatt?, characteristic: BluetoothGattCharacteristic) {
-        val returned = characteristic.value
-
-        if (returned == null || returned.isEmpty()) {
-            LOG.warn("Received empty BLE characteristic value for ${characteristic.uuid}")
+    private fun handleNextStatus(returned: ByteArray) {
+        if (returned.isEmpty()) {
+            LOG.warn("Received empty BLE characteristic value for $UUID_CHARACTERISTIC_FS_TRANSFER")
             return
         }
 

@@ -2,6 +2,7 @@ package nodomain.freeyourgadget.gadgetbridge.activities.debug
 
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import androidx.preference.Preference
 import nodomain.freeyourgadget.gadgetbridge.GBApplication
 import nodomain.freeyourgadget.gadgetbridge.R
@@ -11,7 +12,7 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 class LocationDebugFragment : AbstractDebugFragment() {
-    private val handler = Handler()
+    private val handler = Handler(Looper.getMainLooper())
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.debug_preferences_location, rootKey)

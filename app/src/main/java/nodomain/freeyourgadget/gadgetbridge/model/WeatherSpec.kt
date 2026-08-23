@@ -21,6 +21,8 @@ package nodomain.freeyourgadget.gadgetbridge.model
 import android.location.Location
 import android.os.Parcel
 import android.os.Parcelable
+import nodomain.freeyourgadget.gadgetbridge.util.kotlin.readListCompat
+import nodomain.freeyourgadget.gadgetbridge.util.kotlin.readParcelableCompat
 import net.e175.klaus.solarpositioning.DeltaT
 import net.e175.klaus.solarpositioning.SPA
 import net.e175.klaus.solarpositioning.SunriseResult
@@ -84,18 +86,21 @@ class WeatherSpec() : Parcelable {
             windDirection = parcel.readInt()
             if (version < 4) {
                 // Deserialize the old Forecast list and convert them to Daily
-                val oldForecasts = ArrayList<Forecast>()
-                parcel.readList(oldForecasts, Forecast::class.java.classLoader)
-                for (forecast in oldForecasts) {
-                    val d = Daily()
-                    d.minTemp = forecast.minTemp
-                    d.maxTemp = forecast.maxTemp
-                    d.conditionCode = forecast.conditionCode
-                    d.humidity = forecast.humidity
-                    forecasts.add(d)
+                @Suppress("DEPRECATION")
+                run {
+                    val oldForecasts = ArrayList<Forecast>()
+                    parcel.readListCompat<Forecast>(oldForecasts, Forecast::class.java.classLoader)
+                    for (forecast in oldForecasts) {
+                        val d = Daily()
+                        d.minTemp = forecast.minTemp
+                        d.maxTemp = forecast.maxTemp
+                        d.conditionCode = forecast.conditionCode
+                        d.humidity = forecast.humidity
+                        forecasts.add(d)
+                    }
                 }
             } else {
-                parcel.readList(forecasts, Daily::class.java.classLoader)
+                parcel.readListCompat<Daily>(forecasts, Daily::class.java.classLoader)
             }
         }
         if (version >= 3) {
@@ -116,10 +121,10 @@ class WeatherSpec() : Parcelable {
             longitude = parcel.readFloat()
             feelsLikeTemp = parcel.readInt()
             isCurrentLocation = parcel.readInt()
-            airQuality = parcel.readParcelable(
+            airQuality = parcel.readParcelableCompat<AirQuality>(
                 AirQuality::class.java.classLoader
             )
-            parcel.readList(hourly, Hourly::class.java.classLoader)
+            parcel.readListCompat<Hourly>(hourly, Hourly::class.java.classLoader)
         }
     }
 
@@ -310,6 +315,7 @@ class WeatherSpec() : Parcelable {
     }
 
     @Deprecated("Kept for backwards compatibility with old weather apps")
+    @Suppress("DEPRECATION")
     class Forecast() : Parcelable {
         var minTemp: Int = 0 // Kelvin
         var maxTemp: Int = 0 // Kelvin
@@ -542,7 +548,7 @@ class WeatherSpec() : Parcelable {
             moonRise = parcel.readInt()
             moonSet = parcel.readInt()
             moonPhase = parcel.readInt()
-            airQuality = parcel.readParcelable(
+            airQuality = parcel.readParcelableCompat<AirQuality>(
                 AirQuality::class.java.classLoader
             )
             if (version >= 2) {

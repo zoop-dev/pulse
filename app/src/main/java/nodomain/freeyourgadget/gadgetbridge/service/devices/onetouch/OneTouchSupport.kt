@@ -24,6 +24,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.IntentListener
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.deviceinfo.DeviceInfo
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.deviceinfo.DeviceInfoProfile
 import nodomain.freeyourgadget.gadgetbridge.util.GB
+import nodomain.freeyourgadget.gadgetbridge.util.kotlin.getParcelableCompat
 import nodomain.freeyourgadget.gadgetbridge.util.kotlin.withTransaction
 import nodomain.freeyourgadget.gadgetbridge.util.notifications.GBProgressNotification
 import org.slf4j.Logger
@@ -57,7 +58,7 @@ class OneTouchSupport : AbstractBTLESingleDeviceSupport(LOG) {
             intent?.action?.let { action ->
                 when (action) {
                     DeviceInfoProfile.ACTION_DEVICE_INFO -> {
-                        handleDeviceInfo(intent.getParcelableExtra(DeviceInfoProfile.EXTRA_DEVICE_INFO)!!)
+                        handleDeviceInfo(intent.getParcelableCompat<DeviceInfo>(DeviceInfoProfile.EXTRA_DEVICE_INFO)!!)
                     }
                 }
             }
