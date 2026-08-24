@@ -28,12 +28,15 @@ public class SubtitleListPreference extends ListPreference {
     public SubtitleListPreference(final Context context, final AttributeSet attrs) {
         super(context, attrs);
 
-        try (final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.SubtitleListPreference)) {
+        final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.SubtitleListPreference);
+        try {
             final int entrySubtitlesResId = a.getResourceId(R.styleable.SubtitleListPreference_entrySubtitles, 0);
             if (entrySubtitlesResId != 0) {
                 entrySubtitles = a.getResources().getTextArray(entrySubtitlesResId);
             }
             allowCustomValue = a.getBoolean(R.styleable.SubtitleListPreference_allowCustomValue, false);
+        } finally {
+            a.recycle();
         }
 
         // A dialogMessage would suppress the list view entirely, since the picker dialog is built
