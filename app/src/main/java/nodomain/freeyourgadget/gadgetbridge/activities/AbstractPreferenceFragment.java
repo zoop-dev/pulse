@@ -68,7 +68,9 @@ import nodomain.freeyourgadget.gadgetbridge.util.XTimePreferenceFragment;
 import nodomain.freeyourgadget.gadgetbridge.util.dialogs.MaterialEditTextPreferenceDialogFragment;
 import nodomain.freeyourgadget.gadgetbridge.util.dialogs.MaterialListPreferenceDialogFragment;
 import nodomain.freeyourgadget.gadgetbridge.util.dialogs.MaterialMultiSelectListPreferenceDialogFragment;
+import nodomain.freeyourgadget.gadgetbridge.util.dialogs.MaterialSubtitleListPreferenceDialogFragment;
 import nodomain.freeyourgadget.gadgetbridge.util.preferences.MinMaxTextWatcher;
+import nodomain.freeyourgadget.gadgetbridge.util.preferences.SubtitleListPreference;
 
 public abstract class AbstractPreferenceFragment extends PreferenceFragmentCompat implements MenuProvider {
     private static final Logger LOG = LoggerFactory.getLogger(AbstractPreferenceFragment.class);
@@ -165,6 +167,8 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragmentCompa
             dialogFragment = new XDatePreferenceFragment();
         } else if (preference instanceof DragSortListPreference) {
             dialogFragment = new DragSortListPreferenceFragment();
+        } else if (preference instanceof SubtitleListPreference) {
+            dialogFragment = MaterialSubtitleListPreferenceDialogFragment.newInstance(preference.getKey());
         } else if (preference instanceof EditTextPreference) {
             dialogFragment = MaterialEditTextPreferenceDialogFragment.newInstance(preference.getKey());
         } else if (preference instanceof ListPreference) {

@@ -334,6 +334,8 @@
     <string name="pref_summary_banglejs_phone_gps_update_interval">The interval for how often the GPS position is being updated, in ms</string>
     <string name="pref_title_banglejs_webview_url">App loader URL</string>
     <string name="pref_summary_banglejs_webview_url">If you want a custom app loader put your https://…/android.html URL here. Otherwise, leave blank for https://banglejs.com/apps</string>
+    <string name="url_stable">Stable</string>
+    <string name="url_development">Development</string>
     <string name="pref_title_rtl">Right-To-Left</string>
     <string name="pref_summary_rtl">Enable this if your device can not show right-to-left languages</string>
     <string name="pref_rtl_max_line_length">Right-To-Left Max Line Length</string>
@@ -3846,6 +3848,8 @@
     <string name="fossil_hr_button_config_info">Some buttons cannot be configured because their functions are hard-coded in the watch firmware.\n\nWarning: long-pressing the upper button when a watchface from the official Fossil app is installed will also toggle between showing/hiding widgets.</string>
     <string name="pref_title_opentracks_packagename">OpenTracks package name</string>
     <string name="pref_summary_opentracks_packagename">Used for starting/stopping GPS track recording in external fitness app.</string>
+    <string name="pref_summary_opentracks_packagename_not_installed">Install OpenTracks to start/stop GPS track recording from Gadgetbridge.</string>
+    <string name="subtitle_list_custom_value_required">Value cannot be empty</string>
     <string name="pref_summary_navigation_forward">Forward instructions from navigation apps to the watch</string>
     <string name="pref_title_navigation_forward">Send navigation to watch</string>
     <string name="pref_summary_supported_devices">This feature is not supported by all devices. Click here for more information.</string>

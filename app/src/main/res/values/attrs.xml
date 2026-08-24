@@ -24,4 +24,11 @@
     <attr name="deviceIconOnPrimary" format="color" />
     <attr name="deviceIconLight" format="color" />
     <attr name="deviceIconDark" format="color" />
+
+    <declare-styleable name="SubtitleListPreference">
+        <!-- One subtitle per entry, shown as a second line below each entry's title. -->
+        <attr name="entrySubtitles" format="reference" />
+        <!-- Whether to offer an extra "Custom…" entry that lets the user type a free-text value. -->
+        <attr name="allowCustomValue" format="boolean" />
+    </declare-styleable>
 </resources>

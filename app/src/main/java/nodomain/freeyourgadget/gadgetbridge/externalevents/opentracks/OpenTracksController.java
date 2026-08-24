@@ -41,11 +41,29 @@ import nodomain.freeyourgadget.gadgetbridge.export.GPXExporter;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityPoint;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityTrack;
+import nodomain.freeyourgadget.gadgetbridge.util.AndroidUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
 public class OpenTracksController extends Activity {
+    public static final List<String> KNOWN_PACKAGES = List.of(
+            "de.dennisguse.opentracks",
+            "de.dennisguse.opentracks.playstore",
+            "de.dennisguse.opentracks.debug",
+            "de.dennisguse.opentracks.nightly"
+    );
+
+    public static List<String> findInstalledPackages() {
+        final List<String> installed = new ArrayList<>();
+        for (final String knownPackage : KNOWN_PACKAGES) {
+            if (AndroidUtils.isPackageInstalled(knownPackage)) {
+                installed.add(knownPackage);
+            }
+        }
+        return installed;
+    }
+
     /*
      * A short explanation of how this integration with OpenTracks works:
      * Starting the recording from a device requires calling `startRecording()`

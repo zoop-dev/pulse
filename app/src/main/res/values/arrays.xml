@@ -4918,13 +4918,6 @@
         <item>5</item>
     </string-array>
 
-    <string-array name="fitness_tracking_apps_package_names">
-        <item>de.dennisguse.opentracks</item>
-        <item>de.dennisguse.opentracks.playstore</item>
-        <item>de.dennisguse.opentracks.debug</item>
-        <item>de.dennisguse.opentracks.nightly</item>
-    </string-array>
-
     <string-array name="osmand_package_names">
         <item>@string/automatic</item>
         <item>net.osmand.plus</item>
@@ -4936,6 +4929,15 @@
         <item>net.osmand.plus</item>
         <item>net.osmand</item>
         <item>net.osmand.dev</item>
+    </string-array>
+
+    <string-array name="banglejs_webview_url_titles">
+        <item>@string/url_stable</item>
+        <item>@string/url_development</item>
+    </string-array>
+    <string-array name="banglejs_webview_url_values">
+        <item>https://banglejs.com/apps/android.html</item>
+        <item>https://espruino.github.io/BangleApps/android.html</item>
     </string-array>
 
     <string-array name="workmode">

@@ -373,10 +373,10 @@
             </PreferenceCategory>
         </PreferenceScreen>
 
-        <Preference
+        <nodomain.freeyourgadget.gadgetbridge.util.preferences.SubtitleListPreference
+            android:defaultValue="de.dennisguse.opentracks"
             android:icon="@drawable/ic_deployed_code"
-            android:key="pref_key_opentracks_packagename"
-            android:summary="@string/pref_summary_opentracks_packagename"
+            android:key="opentracks_packagename"
             android:title="@string/pref_title_opentracks_packagename" />
 
         <Preference

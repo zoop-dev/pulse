@@ -41,7 +41,6 @@ import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.preference.ListPreference;
 import androidx.preference.MultiSelectListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceCategory;
@@ -60,7 +59,9 @@ import nodomain.freeyourgadget.gadgetbridge.capabilities.loyaltycards.CatimaCont
 import nodomain.freeyourgadget.gadgetbridge.capabilities.loyaltycards.CatimaManager;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
+import nodomain.freeyourgadget.gadgetbridge.util.NotificationUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.StringUtils;
+import nodomain.freeyourgadget.gadgetbridge.util.preferences.SubtitleListPreference;
 
 public class LoyaltyCardsSettingsFragment extends AbstractPreferenceFragment {
     private static final Logger LOG = LoggerFactory.getLogger(LoyaltyCardsSettingsFragment.class);
@@ -113,11 +114,19 @@ public class LoyaltyCardsSettingsFragment extends AbstractPreferenceFragment {
         final List<CharSequence> installedCatimaPackages = catimaManager.findInstalledCatimaPackages();
         final boolean catimaInstalled = !installedCatimaPackages.isEmpty();
 
-        final ListPreference catimaPackagePreference = findPreference(LOYALTY_CARDS_CATIMA_PACKAGE);
+        final SubtitleListPreference catimaPackagePreference = findPreference(LOYALTY_CARDS_CATIMA_PACKAGE);
 
         if (catimaPackagePreference != null) {
-            catimaPackagePreference.setEntries(installedCatimaPackages.toArray(new CharSequence[0]));
-            catimaPackagePreference.setEntryValues(installedCatimaPackages.toArray(new CharSequence[0]));
+            final CharSequence[] packageValues = installedCatimaPackages.toArray(new CharSequence[0]);
+            final CharSequence[] packageLabels = new CharSequence[packageValues.length];
+            for (int i = 0; i < packageValues.length; i++) {
+                final String packageName = packageValues[i].toString();
+                final String label = NotificationUtils.getApplicationLabel(requireContext(), packageName);
+                packageLabels[i] = label != null ? label : packageName;
+            }
+            catimaPackagePreference.setEntries(packageLabels);
+            catimaPackagePreference.setEntryValues(packageValues);
+            catimaPackagePreference.setEntrySubtitles(packageValues);
             catimaPackagePreference.setVisible(installedCatimaPackages.size() > 1);
             catimaPackagePreference.setOnPreferenceChangeListener((preference, newValue) -> {
                 LOG.info("Catima package preference changed to {}", newValue);
