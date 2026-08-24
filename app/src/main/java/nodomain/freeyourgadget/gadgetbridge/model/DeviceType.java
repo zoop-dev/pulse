@@ -203,6 +203,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.generic_scale.GenericWeightS
 import nodomain.freeyourgadget.gadgetbridge.devices.gloryfit.watches.BlackviewR3MaxCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.gloryfit.watches.D3Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.gloryfit.watches.DotnP66DCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.gloryfit.watches.GrvFc1Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.gloryfit.watches.HaylouWatch2ProCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.gloryfit.watches.ImikiFrame2Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.gloryfit.watches.KieslectCallingSmartwatchKrProCoordinator;
@@ -979,6 +980,7 @@ public enum DeviceType {
     DOTN_P66D(DotnP66DCoordinator.class),
     QECNATO_S10(QecnatoS10Coordinator.class),
     R1(R1Coordinator.class),
+    GRV_FC1(GrvFc1Coordinator.class),
     IMIKI_FRAME_2(ImikiFrame2Coordinator.class),
     KIESLECT_CALLING_SMARTWATCH_KR_PRO(KieslectCallingSmartwatchKrProCoordinator.class),
     HAYLOU_WATCH_2_PRO(HaylouWatch2ProCoordinator.class),
