@@ -536,7 +536,7 @@ public class NotificationListener extends NotificationListenerService {
         // DISMISS action
         NotificationSpec.Action dismissAction = new NotificationSpec.Action();
         dismissAction.title = getString(R.string.dismiss);
-        dismissAction.type = NotificationSpec.Action.TYPE_SYNTECTIC_DISMISS;
+        dismissAction.type = NotificationSpec.Action.TYPE_SYNTHETIC_DISMISS;
         notificationSpec.attachedActions.add(dismissAction);
 
         boolean hasWearableActions = false;
@@ -590,13 +590,13 @@ public class NotificationListener extends NotificationListenerService {
         // OPEN action
         NotificationSpec.Action openAction = new NotificationSpec.Action();
         openAction.title = getString(R.string._pebble_watch_open_on_phone);
-        openAction.type = NotificationSpec.Action.TYPE_SYNTECTIC_OPEN;
+        openAction.type = NotificationSpec.Action.TYPE_SYNTHETIC_OPEN;
         notificationSpec.attachedActions.add(openAction);
 
         // MUTE action
         NotificationSpec.Action muteAction = new NotificationSpec.Action();
         muteAction.title = getString(R.string._pebble_watch_mute);
-        muteAction.type = NotificationSpec.Action.TYPE_SYNTECTIC_MUTE;
+        muteAction.type = NotificationSpec.Action.TYPE_SYNTHETIC_MUTE;
         notificationSpec.attachedActions.add(muteAction);
 
         mNotificationHandleLookup.add(notificationSpec.getId(), sbn.getPostTime()); // for both DISMISS and OPEN

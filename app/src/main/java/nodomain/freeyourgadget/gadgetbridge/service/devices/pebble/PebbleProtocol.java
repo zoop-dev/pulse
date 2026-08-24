@@ -982,16 +982,16 @@ public class PebbleProtocol extends GBDeviceProtocol {
             for (int ai = 0; ai < attachedActions.size(); ai++) {
                 Action act = attachedActions.get(ai);
                 switch (act.type) {
-                    case Action.TYPE_SYNTECTIC_OPEN:
+                    case Action.TYPE_SYNTHETIC_OPEN:
                         buf.put((byte) 0x01);
                         break;
-                    case Action.TYPE_SYNTECTIC_DISMISS:
+                    case Action.TYPE_SYNTHETIC_DISMISS:
                         buf.put((byte) 0x02);
                         break;
-                    case Action.TYPE_SYNTECTIC_DISMISS_ALL:
+                    case Action.TYPE_SYNTHETIC_DISMISS_ALL:
                         buf.put((byte) 0x03);
                         break;
-                    case Action.TYPE_SYNTECTIC_MUTE:
+                    case Action.TYPE_SYNTHETIC_MUTE:
                         buf.put((byte) 0x04);
                         break;
                     default:
@@ -1002,7 +1002,7 @@ public class PebbleProtocol extends GBDeviceProtocol {
                     buf.put((byte) 0x03); // reply action
                     buf.put((byte) 0x02); // number attributes
                 } else {
-                    if (act.type == Action.TYPE_SYNTECTIC_DISMISS) {
+                    if (act.type == Action.TYPE_SYNTHETIC_DISMISS) {
                         buf.put(dismiss_action_type);
                     } else {
                         buf.put((byte) 0x02); // generic action

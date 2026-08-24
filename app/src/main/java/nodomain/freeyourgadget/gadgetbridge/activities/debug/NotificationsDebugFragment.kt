@@ -94,7 +94,7 @@ class NotificationsDebugFragment : AbstractDebugFragment() {
         // DISMISS action
         val dismissAction = NotificationSpec.Action()
         dismissAction.title = getString(R.string.dismiss)
-        dismissAction.type = NotificationSpec.Action.TYPE_SYNTECTIC_DISMISS
+        dismissAction.type = NotificationSpec.Action.TYPE_SYNTHETIC_DISMISS
         notificationSpec.attachedActions.add(dismissAction)
 
         if (sharedPreferences.getBoolean(PREF_DEBUG_NOTIFICATIONS_ATTACHEDACTIONS_REPLY, false)) {
@@ -102,7 +102,7 @@ class NotificationsDebugFragment : AbstractDebugFragment() {
             if (notificationSpec.type == NotificationType.GENERIC_SMS) {
                 val replyAction = NotificationSpec.Action()
                 replyAction.title = getString(R.string._pebble_watch_reply)
-                replyAction.type = NotificationSpec.Action.TYPE_SYNTECTIC_REPLY_PHONENR
+                replyAction.type = NotificationSpec.Action.TYPE_SYNTHETIC_REPLY_PHONENR
                 notificationSpec.attachedActions.add(replyAction)
             } else {
                 val replyAction = NotificationSpec.Action()

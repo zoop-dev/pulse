@@ -202,7 +202,7 @@ public class IntentApiReceiver extends BroadcastReceiver {
                     // REPLY action
                     NotificationSpec.Action replyAction = new NotificationSpec.Action();
                     replyAction.title = context.getString(R.string._pebble_watch_reply);
-                    replyAction.type = NotificationSpec.Action.TYPE_SYNTECTIC_REPLY_PHONENR;
+                    replyAction.type = NotificationSpec.Action.TYPE_SYNTHETIC_REPLY_PHONENR;
                     notificationSpec.attachedActions.add(replyAction);
                 }
 

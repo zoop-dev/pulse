@@ -452,13 +452,13 @@ public class NotificationsHandler implements MessageHandler {
                     switch (action.type) {
                         case NotificationSpec.Action.TYPE_WEARABLE_REPLY:
                         case NotificationSpec.Action.TYPE_CUSTOM_REPLY:
-                        case NotificationSpec.Action.TYPE_SYNTECTIC_REPLY_PHONENR:
+                        case NotificationSpec.Action.TYPE_SYNTHETIC_REPLY_PHONENR:
                             garminActions.add(encodeNotificationAction(NotificationAction.REPLY_MESSAGES, action.title));
                             break;
-                        case NotificationSpec.Action.TYPE_SYNTECTIC_DISMISS:
+                        case NotificationSpec.Action.TYPE_SYNTHETIC_DISMISS:
                             garminActions.add(encodeNotificationAction(NotificationAction.DISMISS_NOTIFICATION, action.title));
                             break;
-                        case NotificationSpec.Action.TYPE_SYNTECTIC_MUTE:
+                        case NotificationSpec.Action.TYPE_SYNTHETIC_MUTE:
                             garminActions.add(encodeNotificationAction(NotificationAction.BLOCK_APPLICATION, action.title));
                             break;
                         case NotificationSpec.Action.TYPE_WEARABLE_SIMPLE:

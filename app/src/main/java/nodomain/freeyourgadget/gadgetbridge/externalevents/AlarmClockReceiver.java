@@ -118,7 +118,7 @@ public class AlarmClockReceiver extends BroadcastReceiver {
             // DISMISS ALL action
             NotificationSpec.Action dismissAllAction = new NotificationSpec.Action();
             dismissAllAction.title = context.getString(R.string.notifications_dismiss_all);
-            dismissAllAction.type = NotificationSpec.Action.TYPE_SYNTECTIC_DISMISS_ALL;
+            dismissAllAction.type = NotificationSpec.Action.TYPE_SYNTHETIC_DISMISS_ALL;
             notificationSpec.attachedActions.add(dismissAllAction);
 
             GBApplication.deviceService().onNotification(notificationSpec);
