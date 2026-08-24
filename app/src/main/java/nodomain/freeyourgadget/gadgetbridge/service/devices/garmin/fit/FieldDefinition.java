@@ -1,4 +1,22 @@
+/*  Copyright (C) 2024-2026 Daniele Gobbetti, José Rebelo, Thomas Kuehne
+
+    This file is part of Gadgetbridge.
+
+    Gadgetbridge is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published
+    by the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Gadgetbridge is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit;
+
+import static nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.GarminTimeUtils.GARMIN_TIME_EPOCH;
 
 import androidx.annotation.NonNull;
 
@@ -37,6 +55,8 @@ public class FieldDefinition implements FieldInterface {
         this(number, size, baseType, name, 1, 0);
     }
 
+    private static FieldDefinitionTimestamp TIMESTAMP_253;
+
     public static FieldDefinition parseIncoming(GarminByteBufferReader garminByteBufferReader, NativeFITMessage nativeFITMessage) {
         int number = garminByteBufferReader.readByte();
         int size = garminByteBufferReader.readByte();
@@ -48,7 +68,10 @@ public class FieldDefinition implements FieldInterface {
         }
 
         if (number == 253 && size == 4 && baseType.equals(BaseType.UINT32)) {
-            return new FieldDefinitionTimestamp(number, size, baseType, "253_timestamp");
+            if (TIMESTAMP_253 == null) {
+                TIMESTAMP_253 = new FieldDefinitionTimestamp(number, size, baseType, "253_timestamp");
+            }
+            return TIMESTAMP_253;
         }
 
         if (0 != (size % baseType.getSize())) {

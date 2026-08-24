@@ -35,16 +35,16 @@ public class FieldDefinitionFactory {
             return new FieldDefinition(localNumber, size, baseType, name, scale, offset);
         }
         return switch (field) {
-            case ALARM -> new FieldDefinitionAlarm(localNumber, size, baseType, name);
+            case ALARM -> new FieldDefinitionAlarm(localNumber, size, baseType, name, scale, offset);
             case ARRAY -> new FieldDefinitionArray(localNumber, size, baseType, name, scale, offset);
-            case BOOLEAN -> new FieldDefinitionBoolean(localNumber, size, baseType, name);
-            case DAY_OF_WEEK -> new FieldDefinitionDayOfWeek(localNumber, size, baseType, name);
+            case BOOLEAN -> new FieldDefinitionBoolean(localNumber, size, baseType, name, scale, offset);
+            case DAY_OF_WEEK -> new FieldDefinitionDayOfWeek(localNumber, size, baseType, name, scale, offset);
             case FILE_TYPE -> new FieldDefinitionFileType(localNumber, size, baseType, name);
             case HR_TIME_IN_ZONE -> new FieldDefinitionHrTimeInZone(localNumber, size, baseType, name);
             case HR_ZONE_HIGH_BOUNDARY -> new FieldDefinitionHrZoneHighBoundary(localNumber, size, baseType, name);
-            case TEMPERATURE -> new FieldDefinitionTemperature(localNumber, size, baseType, name);
+            case TEMPERATURE -> new FieldDefinitionTemperature(localNumber, size, baseType, name, scale, offset);
             case TIMESTAMP -> new FieldDefinitionTimestamp(localNumber, size, baseType, name);
-            case COORDINATE -> new FieldDefinitionCoordinate(localNumber, size, baseType, name);
+            case COORDINATE -> new FieldDefinitionCoordinate(localNumber, size, baseType, name, scale, offset);
             default -> FieldDefinitions.create(localNumber, size, field, baseType, name, scale, offset);
         };
     }

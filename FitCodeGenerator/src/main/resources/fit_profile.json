@@ -54,7 +54,7 @@
         {"num":35,"name":"start_of_week","base":"ENUM"},
         {"num":36,"name":"activity_tracker_enabled","base":"ENUM"},
         {"num":38,"name":"wifi_auto_upload_enabled","base":"ENUM"},
-        {"num":39,"name":"clock_time","base":"UINT32"},
+        {"num":39,"name":"clock_time","base":"UINT32","type":"TIMESTAMP","UOM":"SECONDS"},
         {"num":40,"name":"pages_enabled","base":"UINT16","arrayLen":0},
         {"num":42,"name":"auto_max_hr","base":"ENUM"},
         {"num":45,"name":"auto_goal","base":"ENUM"},
@@ -140,7 +140,7 @@
         {"num":31,"name":"user_running_step_length","base":"UINT16"},
         {"num":32,"name":"user_walking_step_length","base":"UINT16"},
         {"num":37,"name":"lactate_threshold_speed","base":"UINT16","scale":10,"UOM":"KILOMETER_PER_HOUR"},
-        {"num":41,"name":"time_last_lthr_update","base":"UINT32"},
+        {"num":41,"name":"time_last_lthr_update","base":"UINT32","type":"TIMESTAMP","UOM":"SECONDS"},
         {"num":44,"name":"birth_day","base":"UINT8"},
         {"num":45,"name":"birth_month","base":"UINT8Z"},
         {"num":47,"name":"depth_setting","base":"ENUM","type":"MeasurementSystem"},
@@ -354,8 +354,8 @@
       "fields": [
         {"num":0,"name":"sport","base":"ENUM"},
         {"num":1,"name":"sub_sport","base":"ENUM"},
-        {"num":2,"name":"start_date","base":"UINT32"},
-        {"num":3,"name":"end_date","base":"UINT32"},
+        {"num":2,"name":"start_date","base":"UINT32","type":"TIMESTAMP","UOM":"SECONDS"},
+        {"num":3,"name":"end_date","base":"UINT32","type":"TIMESTAMP","UOM":"SECONDS"},
         {"num":4,"name":"type","base":"ENUM","type":"GoalType"},
         {"num":5,"name":"value","base":"UINT32"},
         {"num":6,"name":"repeat","base":"ENUM"},
@@ -854,7 +854,7 @@
         {"num":12,"name":"rear_gear","base":"UINT8Z"},
         {"num":13,"name":"device_index","base":"UINT8"},
         {"num":14,"name":"activity_type","base":"ENUM"},
-        {"num":15,"name":"start_timestamp","base":"UINT32","UOM":"SECONDS"},
+        {"num":15,"name":"start_timestamp","base":"UINT32","type":"TIMESTAMP","UOM":"SECONDS"},
         {"num":21,"name":"radar_threat_level_max","base":"ENUM"},
         {"num":22,"name":"radar_threat_count","base":"UINT8"},
         {"num":23,"name":"radar_threat_avg_approach_speed","base":"UINT8","scale":10,"UOM":"METER_PER_SECOND"},
@@ -959,7 +959,7 @@
         {"num":0,"name":"manufacturer","base":"UINT16"},
         {"num":1,"name":"product","base":"UINT16"},
         {"num":2,"name":"serial_number","base":"UINT32Z"},
-        {"num":3,"name":"time_created","base":"UINT32"},
+        {"num":3,"name":"time_created","base":"UINT32","type":"TIMESTAMP","UOM":"SECONDS"},
         {"num":4,"name":"completed","base":"ENUM","type":"BOOLEAN"},
         {"num":5,"name":"type","base":"ENUM"},
         {"num":6,"name":"scheduled_time","base":"UINT32"}
@@ -1221,7 +1221,7 @@
         {"num":1,"name":"manufacturer","base":"UINT16"},
         {"num":2,"name":"product","base":"UINT16"},
         {"num":3,"name":"serial_number","base":"UINT32Z"},
-        {"num":4,"name":"time_created","base":"UINT32"},
+        {"num":4,"name":"time_created","base":"UINT32","type":"TIMESTAMP","UOM":"SECONDS"},
         {"num":253,"name":"timestamp","base":"UINT32","type":"TIMESTAMP","UOM":"SECONDS"}
       ]
     },
@@ -1315,7 +1315,7 @@
       "fields": [
         {"num":0,"name":"event","base":"ENUM"},
         {"num":1,"name":"event_type","base":"ENUM"},
-        {"num":2,"name":"start_time","base":"UINT32"},
+        {"num":2,"name":"start_time","base":"UINT32","type":"TIMESTAMP","UOM":"SECONDS"},
         {"num":3,"name":"total_elapsed_time","base":"UINT32","scale":1000,"UOM":"SECONDS"},
         {"num":4,"name":"total_timer_time","base":"UINT32","scale":1000,"UOM":"SECONDS"},
         {"num":5,"name":"total_strokes","base":"UINT16","UOM":"STROKES"},
@@ -1425,7 +1425,7 @@
         {"num":1,"name":"temperature","base":"SINT8","type":"TEMPERATURE","UOM":"CELSIUS"},
         {"num":2,"name":"condition","base":"ENUM","type":"WeatherCondition"},
         {"num":3,"name":"wind_direction","base":"UINT16","UOM":"DEGREES"},
-        {"num":4,"name":"wind_speed","base":"UINT16","scale":298},
+        {"num":4,"name":"wind_speed","base":"UINT16","UOM":"MILLIMETER_PER_SECOND"},
         {"num":5,"name":"precipitation_probability","base":"UINT8"},
         {"num":6,"name":"temperature_feels_like","base":"SINT8","type":"TEMPERATURE","UOM":"CELSIUS"},
         {"num":7,"name":"relative_humidity","base":"UINT8"},
@@ -1448,8 +1448,8 @@
       "name": "WEATHER_ALERT",
       "fields": [
         {"num":0,"name":"report_id","base":"STRING"},
-        {"num":1,"name":"issue_time","base":"UINT32"},
-        {"num":2,"name":"expire_time","base":"UINT32"},
+        {"num":1,"name":"issue_time","base":"UINT32","type":"TIMESTAMP","UOM":"SECONDS"},
+        {"num":2,"name":"expire_time","base":"UINT32","type":"TIMESTAMP","UOM":"SECONDS"},
         {"num":3,"name":"severity","base":"ENUM"},
         {"num":4,"name":"type","base":"ENUM"},
         {"num":5,"name":"position_lat","base":"SINT32","type":"COORDINATE","UOM":"SEMICIRCLES"},
@@ -1530,8 +1530,8 @@
       "name": "EPO_STATUS",
       "fields": [
         {"num":0,"name":"status","base":"ENUM"},
-        {"num":1,"name":"start_time","base":"UINT32"},
-        {"num":2,"name":"end_time","base":"UINT32"},
+        {"num":1,"name":"start_time","base":"UINT32","type":"TIMESTAMP","UOM":"SECONDS"},
+        {"num":2,"name":"end_time","base":"UINT32","type":"TIMESTAMP","UOM":"SECONDS"},
         {"num":253,"name":"timestamp","base":"UINT32","type":"TIMESTAMP","UOM":"SECONDS"}
       ]
     },
@@ -1541,7 +1541,7 @@
       "fields": [
         {"num":0,"name":"event","base":"ENUM"},
         {"num":1,"name":"event_type","base":"ENUM"},
-        {"num":2,"name":"start_time","base":"UINT32"},
+        {"num":2,"name":"start_time","base":"UINT32","type":"TIMESTAMP","UOM":"SECONDS"},
         {"num":3,"name":"start_position_lat","base":"SINT32","type":"COORDINATE","UOM":"SEMICIRCLES"},
         {"num":4,"name":"start_position_long","base":"SINT32","type":"COORDINATE","UOM":"SEMICIRCLES"},
         {"num":5,"name":"end_position_lat","base":"SINT32","type":"COORDINATE","UOM":"SEMICIRCLES"},
@@ -1795,7 +1795,7 @@
         {"num":3,"name":"enhanced_altitude","base":"UINT32","scale":5,"offset":500,"UOM":"METER"},
         {"num":4,"name":"enhanced_speed","base":"UINT32","scale":1000,"UOM":"METER_PER_SECOND"},
         {"num":5,"name":"heading","base":"UINT16","scale":100,"UOM":"DEGREES"},
-        {"num":6,"name":"utc_timestamp","base":"UINT32","UOM":"SECONDS"},
+        {"num":6,"name":"utc_timestamp","base":"UINT32","type":"TIMESTAMP","UOM":"SECONDS"},
         {"num":7,"name":"velocity","base":"SINT16","scale":100,"arrayLen":3,"UOM":"METER_PER_SECOND"},
         {"num":253,"name":"timestamp","base":"UINT32","type":"TIMESTAMP","UOM":"SECONDS"}
       ]
@@ -1909,7 +1909,7 @@
         {"num":3,"name":"raw_data","base":"BYTE","arrayLen":0},
         {"num":4,"name":"pid_data_size","base":"UINT8","arrayLen":0},
         {"num":5,"name":"system_time","base":"UINT32","arrayLen":0},
-        {"num":6,"name":"start_timestamp","base":"UINT32"},
+        {"num":6,"name":"start_timestamp","base":"UINT32","type":"TIMESTAMP","UOM":"SECONDS"},
         {"num":7,"name":"start_timestamp_ms","base":"UINT16","UOM":"MILLISECONDS"},
         {"num":253,"name":"timestamp","base":"UINT32","type":"TIMESTAMP","UOM":"SECONDS"}
       ]
@@ -1973,9 +1973,9 @@
       "name": "VIDEO_CLIP",
       "fields": [
         {"num":0,"name":"clip_number","base":"UINT16"},
-        {"num":1,"name":"start_timestamp","base":"UINT32"},
+        {"num":1,"name":"start_timestamp","base":"UINT32","type":"TIMESTAMP","UOM":"SECONDS"},
         {"num":2,"name":"start_timestamp_ms","base":"UINT16"},
-        {"num":3,"name":"end_timestamp","base":"UINT32"},
+        {"num":3,"name":"end_timestamp","base":"UINT32","type":"TIMESTAMP","UOM":"SECONDS"},
         {"num":4,"name":"end_timestamp_ms","base":"UINT16"},
         {"num":6,"name":"clip_start","base":"UINT32","UOM":"MILLISECONDS"},
         {"num":7,"name":"clip_end","base":"UINT32","UOM":"MILLISECONDS"}
@@ -2211,7 +2211,7 @@
       "fields": [
         {"num":0,"name":"message_number","base":"UINT16"},
         {"num":2,"name":"field_number","base":"UINT8"},
-        {"num":253,"name":"timestamp","base":"UINT32"}
+        {"num":253,"name":"timestamp","base":"UINT32","type":"TIMESTAMP","UOM":"SECONDS"}
       ]
     },
     {
@@ -2285,7 +2285,7 @@
       "num": 243,
       "name": "MUSIC_INFO",
       "fields": [
-        {"num":0,"name":"start_time","base":"UINT32","UOM":"SECONDS"},
+        {"num":0,"name":"start_time","base":"UINT32","type":"TIMESTAMP","UOM":"SECONDS"},
         {"num":2,"name":"title","base":"STRING"},
         {"num":3,"name":"artist","base":"STRING"},
         {"num":4,"name":"genre","base":"STRING"},
@@ -2670,7 +2670,7 @@
         {"num":2,"name":"total_timer_time","base":"UINT32","scale":1000,"UOM":"SECONDS"},
         {"num":3,"name":"total_distance","base":"UINT32","scale":100,"UOM":"METER"},
         {"num":4,"name":"avg_speed","base":"UINT32","scale":1000,"UOM":"METER_PER_SECOND"},
-        {"num":9,"name":"start_time","base":"UINT32"},
+        {"num":9,"name":"start_time","base":"UINT32","type":"TIMESTAMP","UOM":"SECONDS"},
         {"num":11,"name":"sport","base":"ENUM"},
         {"num":12,"name":"sub_sport","base":"ENUM"},
         {"num":13,"name":"total_ascent","base":"UINT16","UOM":"METER"},
@@ -2683,7 +2683,7 @@
         {"num":24,"name":"end_position_long","base":"SINT32","type":"COORDINATE","UOM":"SEMICIRCLES"},
         {"num":25,"name":"max_speed","base":"UINT32","scale":1000,"UOM":"METER_PER_SECOND"},
         {"num":26,"name":"avg_vert_speed","base":"SINT32","scale":1000,"UOM":"METER_PER_SECOND"},
-        {"num":27,"name":"end_time","base":"UINT32"},
+        {"num":27,"name":"end_time","base":"UINT32","type":"TIMESTAMP","UOM":"SECONDS"},
         {"num":28,"name":"total_calories","base":"UINT32","UOM":"KCAL"},
         {"num":29,"name":"avg_cadence","base":"UINT16","scale":128,"UOM":"REVOLUTIONS_PER_MINUTE"},
         {"num":30,"name":"max_cadence","base":"UINT16","scale":128,"UOM":"REVOLUTIONS_PER_MINUTE"},
@@ -2759,7 +2759,7 @@
         {"num":73,"name":"max_stress","base":"UINT16"},
         {"num":76,"name":"split_score_card_index","base":"UINT16"},
         {"num":77,"name":"total_moving_time","base":"UINT32","scale":1000,"UOM":"SECONDS"},
-        {"num":79,"name":"start_time","base":"UINT32"},
+        {"num":79,"name":"start_time","base":"UINT32","type":"TIMESTAMP","UOM":"SECONDS"},
         {"num":253,"name":"timestamp","base":"UINT32","type":"TIMESTAMP","UOM":"SECONDS"},
         {"num":254,"name":"message_index","base":"UINT16"}
       ]
@@ -2947,7 +2947,7 @@
       "name": "RACE_EVENT",
       "fields": [
         {"num":1,"name":"event_id","base":"STRING"},
-        {"num":2,"name":"start_time","base":"UINT32"},
+        {"num":2,"name":"start_time","base":"UINT32","type":"TIMESTAMP","UOM":"SECONDS"},
         {"num":3,"name":"local_timestamp","base":"UINT32"},
         {"num":4,"name":"name","base":"STRING"},
         {"num":5,"name":"location","base":"STRING"},
@@ -3166,8 +3166,8 @@
       "name": "CPE_STATUS",
       "fields": [
         {"num":0,"name":"status","base":"ENUM"},
-        {"num":1,"name":"start_time","base":"UINT32"},
-        {"num":2,"name":"end_time","base":"UINT32"},
+        {"num":1,"name":"start_time","base":"UINT32","type":"TIMESTAMP","UOM":"SECONDS"},
+        {"num":2,"name":"end_time","base":"UINT32","type":"TIMESTAMP","UOM":"SECONDS"},
         {"num":253,"name":"timestamp","base":"UINT32","type":"TIMESTAMP","UOM":"SECONDS"}
       ]
     },
@@ -3264,9 +3264,9 @@
         {"num":4,"name":"awake_duration","base":"UINT16","UOM":"MINUTES"},
         {"num":5,"name":"unmeasurable_duration","base":"UINT16","UOM":"MINUTES"},
         {"num":7,"name":"sleep_end_timestamp_local","base":"UINT32"},
-        {"num":8,"name":"sleep_end_timestamp_utc","base":"UINT32"},
+        {"num":8,"name":"sleep_end_timestamp_utc","base":"UINT32","type":"TIMESTAMP","UOM":"SECONDS"},
         {"num":9,"name":"sleep_start_timestamp_local","base":"UINT32"},
-        {"num":10,"name":"sleep_start_timestamp_utc","base":"UINT32"},
+        {"num":10,"name":"sleep_start_timestamp_utc","base":"UINT32","type":"TIMESTAMP","UOM":"SECONDS"},
         {"num":253,"name":"timestamp","base":"UINT32","type":"TIMESTAMP","UOM":"SECONDS"},
         {"num":254,"name":"message_index","base":"UINT16"}
       ]
@@ -3349,8 +3349,8 @@
       "num": 493,
       "name": "METRIC_SUMMARY",
       "fields": [
-        {"num":0,"name":"start","base":"UINT32"},
-        {"num":1,"name":"end","base":"UINT32"},
+        {"num":0,"name":"start","base":"UINT32","type":"TIMESTAMP","UOM":"SECONDS"},
+        {"num":1,"name":"end","base":"UINT32","type":"TIMESTAMP","UOM":"SECONDS"},
         {"num":8,"name":"hr_min","base":"UINT8","UOM":"BEATS_PER_MINUTE"},
         {"num":10,"name":"daily_hr_min","base":"UINT8","UOM":"BEATS_PER_MINUTE"},
         {"num":253,"name":"timestamp","base":"UINT32","type":"TIMESTAMP","UOM":"SECONDS"},
