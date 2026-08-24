@@ -16,6 +16,12 @@
   ],
   "packageRules": [
     {
+      "groupName": "android-gradle-plugin",
+      "matchPackageNames": [
+        "com.android.application"
+      ]
+    },
+    {
       "groupName": "protobuf",
       "matchPackageNames": [
         "com.google.protobuf:*"
