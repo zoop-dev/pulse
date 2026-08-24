@@ -81,8 +81,19 @@
 -keepclassmembers,allowobfuscation class * {
   @com.google.gson.annotations.SerializedName <fields>;
 }
+
+# Keep classes that are to be (de)serialized with gson
+-keep class nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec { *; }
+-keep class nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec$* { *; }
 -keep class nodomain.freeyourgadget.gadgetbridge.service.devices.gree.messages.** {*; }
 -keep class nodomain.freeyourgadget.gadgetbridge.devices.pinetime.InfiniTimeDFU* { *; }
+-keep class nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryData { *; }
+-keep class nodomain.freeyourgadget.gadgetbridge.activities.workouts.entries.** { *; }
+-keep class nodomain.freeyourgadget.gadgetbridge.util.backup.JsonBackupPreferences { *; }
+-keep class nodomain.freeyourgadget.gadgetbridge.util.backup.JsonBackupPreferences$* { *; }
+-keep class nodomain.freeyourgadget.gadgetbridge.service.devices.casio.CasioIntervalTimerLibrary { *; }
+-keep class nodomain.freeyourgadget.gadgetbridge.service.devices.casio.CasioIntervalTimer { *; }
+-keep class nodomain.freeyourgadget.gadgetbridge.service.devices.casio.CasioIntervalTimer$* { *; }
 
 # Keep generated protobuf classes
 -keep class * extends com.google.protobuf.GeneratedMessageLite { *; }
