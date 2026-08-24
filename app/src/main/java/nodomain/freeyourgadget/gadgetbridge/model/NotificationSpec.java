@@ -83,11 +83,11 @@ public class NotificationSpec {
         static final int TYPE_UNDEFINED = -1;
         public static final int TYPE_WEARABLE_SIMPLE = 0;
         public static final int TYPE_WEARABLE_REPLY = 1;
-        public static final int TYPE_SYNTECTIC_REPLY_PHONENR = 2;
-        public static final int TYPE_SYNTECTIC_DISMISS = 3;
-        public static final int TYPE_SYNTECTIC_DISMISS_ALL = 4;
-        public static final int TYPE_SYNTECTIC_MUTE = 5;
-        public static final int TYPE_SYNTECTIC_OPEN = 6;
+        public static final int TYPE_SYNTHETIC_REPLY_PHONENR = 2;
+        public static final int TYPE_SYNTHETIC_DISMISS = 3;
+        public static final int TYPE_SYNTHETIC_DISMISS_ALL = 4;
+        public static final int TYPE_SYNTHETIC_MUTE = 5;
+        public static final int TYPE_SYNTHETIC_OPEN = 6;
         public static final int TYPE_CUSTOM_SIMPLE = 7;
         public static final int TYPE_CUSTOM_REPLY = 8;
 
@@ -96,7 +96,7 @@ public class NotificationSpec {
         public String title;
 
         public boolean isReply() {
-            return type == TYPE_WEARABLE_REPLY || type == TYPE_SYNTECTIC_REPLY_PHONENR || type == TYPE_CUSTOM_REPLY;
+            return type == TYPE_WEARABLE_REPLY || type == TYPE_SYNTHETIC_REPLY_PHONENR || type == TYPE_CUSTOM_REPLY;
         }
     }
 }

@@ -79,13 +79,13 @@ public class SMSReceiver extends BroadcastReceiver {
                         // REPLY action
                         NotificationSpec.Action replyAction = new NotificationSpec.Action();
                         replyAction.title = context.getString(R.string._pebble_watch_reply);
-                        replyAction.type = NotificationSpec.Action.TYPE_SYNTECTIC_REPLY_PHONENR;
+                        replyAction.type = NotificationSpec.Action.TYPE_SYNTHETIC_REPLY_PHONENR;
                         notificationSpec.attachedActions.add(replyAction);
 
                         // DISMISS ALL action
                         NotificationSpec.Action dismissAllAction = new NotificationSpec.Action();
                         dismissAllAction.title = context.getString(R.string.notifications_dismiss_all);
-                        dismissAllAction.type = NotificationSpec.Action.TYPE_SYNTECTIC_DISMISS_ALL;
+                        dismissAllAction.type = NotificationSpec.Action.TYPE_SYNTHETIC_DISMISS_ALL;
                         notificationSpec.attachedActions.add(dismissAllAction);
 
                         int dndSuppressed = 0;
