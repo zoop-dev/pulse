@@ -1501,6 +1501,7 @@ public class MoyoungDeviceSupport extends AbstractBTLESingleDeviceSupport {
             int steps = buffer.getInt();
             int distance = buffer.getInt();
             int calories;
+            float maxSpeed = 0;
             if (protocolVersion == 1) {
                 calories = buffer.getShort();
             } else if (protocolVersion == 2) {
@@ -1509,9 +1510,9 @@ public class MoyoungDeviceSupport extends AbstractBTLESingleDeviceSupport {
                 calories = buffer.getShort();
                 avgHR = buffer.get();
                 buffer.get(); // 0?
-                // todo last 4 bytes?
+                maxSpeed = buffer.getFloat();
             }
-            LOG.info("Training data: start={} end={} totalTimeWithoutPause={} num={} type={} steps={} avgHR={} distance={} calories={}", startTime, endTime, validTime, num, type, steps, avgHR, distance, calories);
+            LOG.info("Training data: start={} end={} totalTimeWithoutPause={} num={} type={} steps={} avgHR={} distance={} calories={} maxSpeed={}", startTime, endTime, validTime, num, type, steps, avgHR, distance, calories, maxSpeed);
 
             // NOTE: We are ignoring the step/distance/calories data here
             // If we had the phone connected, the realtime data is already stored anyway, and I'm

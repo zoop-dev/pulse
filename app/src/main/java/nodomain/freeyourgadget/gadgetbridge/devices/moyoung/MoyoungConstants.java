@@ -340,6 +340,37 @@ public class MoyoungConstants {
     public static final byte TRAINING_TYPE_INDOOR_CYCLING = 17;
     public static final byte TRAINING_TYPE_FREE_EXERCISE = 18;
     public static final byte TRAINING_TYPE_ROWING_MACHINE = 19;
+    public static final byte TRAINING_TYPE_TRAIL_RUN = 20;
+    public static final byte TRAINING_TYPE_SKIING = 21;
+    public static final byte TRAINING_TYPE_BOWLING = 22;
+    public static final byte TRAINING_TYPE_DUMBBELL = 23;
+    public static final byte TRAINING_TYPE_SIT_UPS = 24;
+    public static final byte TRAINING_TYPE_ON_FOOT = 25;
+    public static final byte TRAINING_TYPE_INDOOR_WALK = 26; // For some reason included in GPS training code
+    public static final byte TRAINING_TYPE_INDOOR_RUN = 27; // For some reason included in GPS training code
+    public static final byte TRAINING_TYPE_CRICKET = 28;
+    public static final byte TRAINING_TYPE_KABADDI = 29;
+    public static final byte TRAINING_TYPE_GPS_WALK = 30;
+    public static final byte TRAINING_TYPE_GPS_RUN = 31;
+    public static final byte TRAINING_TYPE_GPS_CYCLING = 32;
+    public static final byte TRAINING_TYPE_GPS_TRAIL_RUN = 33;
+    public static final byte TRAINING_TYPE_GPS_ON_FOOT = 34;
+    public static final byte TRAINING_TYPE_GPS_CLIMBING = (byte) 131;
+    public static final byte TRAINING_TYPE_GPS_OPEN_WATER_SWIM = (byte) 132;
+    public static final byte TRAINING_TYPE_GPS_SKATEBOARDING = (byte) 133;
+    public static final byte TRAINING_TYPE_GPS_ROLLER_SKATING = (byte) 134;
+    public static final byte TRAINING_TYPE_GPS_PARKOUR = (byte) 135;
+    public static final byte TRAINING_TYPE_GPS_ATV = (byte) 136;
+    public static final byte TRAINING_TYPE_GPS_PARAGLIDING = (byte) 137;
+    public static final byte TRAINING_TYPE_GPS_TRIATHLON = (byte) 138;
+    public static final byte TRAINING_TYPE_GPS_SNOWMOBILE = (byte) 139;
+    public static final byte TRAINING_TYPE_GPS_BOBSLEIGH = (byte) 140;
+    public static final byte TRAINING_TYPE_GPS_SLEDDING = (byte) 141;
+    public static final byte TRAINING_TYPE_GPS_SKIING = (byte) 142;
+    public static final byte TRAINING_TYPE_GPS_HORSE_RIDING = (byte) 143;
+    public static final byte TRAINING_TYPE_GPS_EQUESTRIAN_SPORTS = (byte) 144;
+    public static final byte TRAINING_TYPE_GPS_ATHLETICS = (byte) 145;
+    public static final byte TRAINING_TYPE_GPS_AUTO_RACING = (byte) 146;
 
     public static Map<Byte, ActivityKind> WORKOUT_TYPES_TO_ACTIVITY_KIND = new HashMap<Byte, ActivityKind>() {
         {
@@ -363,6 +394,37 @@ public class MoyoungConstants {
             put(TRAINING_TYPE_INDOOR_CYCLING, ActivityKind.INDOOR_CYCLING);
             put(TRAINING_TYPE_FREE_EXERCISE, ActivityKind.FREE_TRAINING);
             put(TRAINING_TYPE_ROWING_MACHINE, ActivityKind.ROWING_MACHINE);
+            put(TRAINING_TYPE_TRAIL_RUN, ActivityKind.TRAIL_RUN);
+            put(TRAINING_TYPE_SKIING, ActivityKind.SKIING);
+            put(TRAINING_TYPE_BOWLING, ActivityKind.BOWLING);
+            put(TRAINING_TYPE_DUMBBELL, ActivityKind.DUMBBELL);
+            put(TRAINING_TYPE_SIT_UPS, ActivityKind.SIT_UPS);
+            put(TRAINING_TYPE_ON_FOOT, ActivityKind.WALKING);
+            put(TRAINING_TYPE_INDOOR_WALK, ActivityKind.INDOOR_WALKING);
+            put(TRAINING_TYPE_INDOOR_RUN, ActivityKind.INDOOR_RUNNING);
+            put(TRAINING_TYPE_CRICKET, ActivityKind.CRICKET);
+            put(TRAINING_TYPE_KABADDI, ActivityKind.KABADDI);
+            put(TRAINING_TYPE_GPS_WALK, ActivityKind.WALKING);
+            put(TRAINING_TYPE_GPS_RUN, ActivityKind.RUNNING);
+            put(TRAINING_TYPE_GPS_CYCLING, ActivityKind.CYCLING);
+            put(TRAINING_TYPE_GPS_TRAIL_RUN, ActivityKind.TRAIL_RUN);
+            put(TRAINING_TYPE_GPS_ON_FOOT, ActivityKind.WALKING);
+            put(TRAINING_TYPE_GPS_CLIMBING, ActivityKind.CLIMBING);
+            put(TRAINING_TYPE_GPS_OPEN_WATER_SWIM, ActivityKind.SWIMMING_OPENWATER);
+            put(TRAINING_TYPE_GPS_SKATEBOARDING, ActivityKind.SKATEBOARDING);
+            put(TRAINING_TYPE_GPS_ROLLER_SKATING, ActivityKind.ROLLER_SKATING);
+            put(TRAINING_TYPE_GPS_PARKOUR, ActivityKind.PARKOUR);
+            put(TRAINING_TYPE_GPS_ATV, ActivityKind.ATV);
+            put(TRAINING_TYPE_GPS_PARAGLIDING, ActivityKind.PARAGLIDING);
+            put(TRAINING_TYPE_GPS_TRIATHLON, ActivityKind.TRIATHLON);
+            put(TRAINING_TYPE_GPS_SNOWMOBILE, ActivityKind.SNOWMOBILING);
+            put(TRAINING_TYPE_GPS_BOBSLEIGH, ActivityKind.BOBSLEIGH);
+            put(TRAINING_TYPE_GPS_SLEDDING, ActivityKind.SLEDDING);
+            put(TRAINING_TYPE_GPS_SKIING, ActivityKind.SKIING);
+            put(TRAINING_TYPE_GPS_HORSE_RIDING, ActivityKind.HORSE_RIDING);
+            put(TRAINING_TYPE_GPS_EQUESTRIAN_SPORTS, ActivityKind.EQUESTRIAN);
+            put(TRAINING_TYPE_GPS_ATHLETICS, ActivityKind.ATHLETICS);
+            put(TRAINING_TYPE_GPS_AUTO_RACING, ActivityKind.AUTO_RACING);
         }
     };
 
