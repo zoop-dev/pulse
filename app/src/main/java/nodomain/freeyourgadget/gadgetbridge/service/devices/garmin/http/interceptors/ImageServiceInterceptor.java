@@ -27,6 +27,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.GarminSupport
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.http.GarminHttpRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.http.GarminHttpResponse;
 import nodomain.freeyourgadget.gadgetbridge.util.NotificationUtils;
+import nodomain.freeyourgadget.gadgetbridge.util.gson.GsonSerialized;
 
 public class ImageServiceInterceptor implements HttpInterceptor {
     private static final Logger LOG = LoggerFactory.getLogger(ImageServiceInterceptor.class);
@@ -180,9 +181,11 @@ public class ImageServiceInterceptor implements HttpInterceptor {
         return buf.array();
     }
 
+    @GsonSerialized
     public record ErrorResponse(String requestId, List<Error> errors) {
     }
 
+    @GsonSerialized
     public record Error(String message, String type) {
     }
 }

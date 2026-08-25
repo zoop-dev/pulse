@@ -33,11 +33,13 @@ import nodomain.freeyourgadget.gadgetbridge.activities.workouts.entries.Activity
 import nodomain.freeyourgadget.gadgetbridge.activities.workouts.entries.ActivitySummaryProgressEntry;
 import nodomain.freeyourgadget.gadgetbridge.activities.workouts.entries.ActivitySummarySimpleEntry;
 import nodomain.freeyourgadget.gadgetbridge.activities.workouts.entries.ActivitySummaryTableRowEntry;
+import nodomain.freeyourgadget.gadgetbridge.util.gson.GsonSerialized;
 
 /**
  * A small wrapper for a JSONObject, with helper methods to add activity summary data in the format
  * Gadgetbridge expects.
  */
+@GsonSerialized
 public class ActivitySummaryData {
     private static final Gson GSON = new GsonBuilder()
             .registerTypeAdapterFactory(RuntimeTypeAdapterFactory

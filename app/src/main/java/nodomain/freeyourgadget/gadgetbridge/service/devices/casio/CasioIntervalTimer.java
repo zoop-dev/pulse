@@ -16,6 +16,9 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.casio;
 
+import nodomain.freeyourgadget.gadgetbridge.util.gson.GsonSerialized;
+
+@GsonSerialized
 public class CasioIntervalTimer {
     public static final int SLOT_COUNT = 5;
     public static final int NAME_MAX = 14;
@@ -65,6 +68,7 @@ public class CasioIntervalTimer {
         return String.format(java.util.Locale.ROOT, "%02d:%02d", m, s);
     }
 
+    @GsonSerialized
     public static final class Interval {
         public String name = "";
         public boolean skipped = false;

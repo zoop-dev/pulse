@@ -21,6 +21,7 @@ import androidx.core.net.toUri
 import com.google.gson.Gson
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind
 import nodomain.freeyourgadget.gadgetbridge.util.InternetUtils
+import nodomain.freeyourgadget.gadgetbridge.util.gson.GsonSerialized
 import org.json.JSONArray
 import org.json.JSONObject
 import org.slf4j.LoggerFactory
@@ -32,6 +33,7 @@ enum class EndurainAuthType {
     REFRESH_TOKEN
 }
 
+@GsonSerialized
 data class EndurainLoginResponse(
     val session_id: String? = null,
     val access_token: String? = null,
@@ -44,11 +46,13 @@ data class EndurainLoginResponse(
     val detail: String? = null
 )
 
+@GsonSerialized
 data class EndurainMfaVerifyRequest(
     val username: String,
     val mfa_code: String
 )
 
+@GsonSerialized
 data class EndurainTokenExchangeRequest(
     val code_verifier: String
 )

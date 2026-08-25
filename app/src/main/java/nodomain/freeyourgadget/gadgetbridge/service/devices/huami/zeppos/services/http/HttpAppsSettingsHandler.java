@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import nodomain.freeyourgadget.gadgetbridge.util.StringUtils;
+import nodomain.freeyourgadget.gadgetbridge.util.gson.GsonSerialized;
 
 public class HttpAppsSettingsHandler {
     private static final Logger LOG = LoggerFactory.getLogger(HttpAppsSettingsHandler.class);
@@ -80,6 +81,7 @@ public class HttpAppsSettingsHandler {
         };
     }
 
+    @GsonSerialized
     public record FirmwareWeatherSetting(
             FirmwareWeatherModeSetting normal,
             FirmwareWeatherModeSetting power_saving,
@@ -87,6 +89,7 @@ public class HttpAppsSettingsHandler {
     ) {
     }
 
+    @GsonSerialized
     public record FirmwareWeatherModeSetting(
             boolean trigger_on_demand_enabled,
             int trigger_default_cooldown_minutes,

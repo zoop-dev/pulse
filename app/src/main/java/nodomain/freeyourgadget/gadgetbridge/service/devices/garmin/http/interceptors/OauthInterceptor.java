@@ -31,6 +31,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.GarminSupport
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.http.GarminHttpRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.http.GarminHttpResponse;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
+import nodomain.freeyourgadget.gadgetbridge.util.gson.GsonSerialized;
 
 public class OauthInterceptor implements HttpInterceptor {
     private static final Logger LOG = LoggerFactory.getLogger(OauthInterceptor.class);
@@ -218,6 +219,7 @@ public class OauthInterceptor implements HttpInterceptor {
         GB.notify((int) (currentTime / 1000L), notification, deviceSupport.getContext());
     }
 
+    @GsonSerialized
     public static class AuthorizationResponse {
         public String accessToken;
         public String tokenType;
@@ -228,6 +230,7 @@ public class OauthInterceptor implements HttpInterceptor {
         public String customerId;
     }
 
+    @GsonSerialized
     public static class RefreshResponse {
         public String access_token;
         public String token_type;

@@ -25,6 +25,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import nodomain.freeyourgadget.gadgetbridge.util.gson.GsonSerialized;
+
+@GsonSerialized
 public class CasioIntervalTimerLibrary {
     private static final Logger LOG = LoggerFactory.getLogger(CasioIntervalTimerLibrary.class);
 

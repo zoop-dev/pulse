@@ -34,6 +34,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.http.GarminHttpRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.http.GarminHttpResponse;
+import nodomain.freeyourgadget.gadgetbridge.util.gson.GsonSerialized;
 import nodomain.freeyourgadget.gadgetbridge.webview.CurrentPosition;
 
 @SuppressWarnings("unused")
@@ -186,6 +187,7 @@ public class WeatherInterceptor implements HttpInterceptor {
         }
     }
 
+    @GsonSerialized
     public static class WeatherForecastDay {
         public int dayOfWeek; // v2: 1 monday .. 7 sunday, v1: 1 sunday
         public String description;
@@ -242,6 +244,7 @@ public class WeatherInterceptor implements HttpInterceptor {
         }
     }
 
+    @GsonSerialized
     public static class WeatherForecastHour {
         public int epochSeconds;
         public String description;
@@ -282,6 +285,7 @@ public class WeatherInterceptor implements HttpInterceptor {
         }
     }
 
+    @GsonSerialized
     public static class WeatherForecastCurrent {
         public Integer epochSeconds;
         public WeatherValue temperature;
@@ -317,6 +321,7 @@ public class WeatherInterceptor implements HttpInterceptor {
     }
 
     // /weather/v1/calibration/altimeter?lat=XXXXXXXXX&lon=-YYYYYYYY
+    @GsonSerialized
     public static class WeatherAltimeterCalibration {
         public UncertainValue temperature; // Celsius - 11.89999... / 100
         public UncertainValue pressure; // Pa - 101494.79xxx... / 100
@@ -324,11 +329,13 @@ public class WeatherInterceptor implements HttpInterceptor {
         public Long forecastIssueTime; // unix epoch seconds
     }
 
+    @GsonSerialized
     public static class UncertainValue {
         public Number value;
         public Integer uncertainty; // 100
     }
 
+    @GsonSerialized
     public static class WeatherValue {
         public Number value;
         public String units;
@@ -339,6 +346,7 @@ public class WeatherInterceptor implements HttpInterceptor {
         }
     }
 
+    @GsonSerialized
     public static class Wind {
         public WeatherValue speed;
         public String directionString;
@@ -352,6 +360,7 @@ public class WeatherInterceptor implements HttpInterceptor {
         }
     }
 
+    @GsonSerialized
     public static class PointWindsResponse {
         public final CcPointWinds CcPointWinds;
 
@@ -378,6 +387,7 @@ public class WeatherInterceptor implements HttpInterceptor {
         }
     }
 
+    @GsonSerialized
     public static class CcPointWinds {
         public int i;
         public float lat;
@@ -385,6 +395,7 @@ public class WeatherInterceptor implements HttpInterceptor {
         public List<PointWind> W;
     }
 
+    @GsonSerialized
     public static class PointWind {
         public int t;
         public float s;

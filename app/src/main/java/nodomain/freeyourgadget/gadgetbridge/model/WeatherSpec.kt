@@ -21,6 +21,7 @@ package nodomain.freeyourgadget.gadgetbridge.model
 import android.location.Location
 import android.os.Parcel
 import android.os.Parcelable
+import nodomain.freeyourgadget.gadgetbridge.util.gson.GsonSerialized
 import nodomain.freeyourgadget.gadgetbridge.util.kotlin.readListCompat
 import nodomain.freeyourgadget.gadgetbridge.util.kotlin.readParcelableCompat
 import net.e175.klaus.solarpositioning.DeltaT
@@ -36,6 +37,7 @@ import kotlin.random.Random
  * The package for this class must not change, since that is used by external apps such as
  * Tiny Weather Forecast Germany.
  */
+@GsonSerialized
 class WeatherSpec() : Parcelable {
     var timestamp: Int = 0 // unix epoch timestamp, in seconds
     var location: String? = null
@@ -316,6 +318,7 @@ class WeatherSpec() : Parcelable {
 
     @Deprecated("Kept for backwards compatibility with old weather apps")
     @Suppress("DEPRECATION")
+    @GsonSerialized
     class Forecast() : Parcelable {
         var minTemp: Int = 0 // Kelvin
         var maxTemp: Int = 0 // Kelvin
@@ -371,6 +374,7 @@ class WeatherSpec() : Parcelable {
         }
     }
 
+    @GsonSerialized
     class AirQuality : Parcelable {
         var aqi: Int =
             -1 // Air Quality Index - usually the max across all AQI values for pollutants
@@ -485,6 +489,7 @@ class WeatherSpec() : Parcelable {
         }
     }
 
+    @GsonSerialized
     class Daily() : Parcelable {
         /** minimum air temperature in Kelvin */
         var minTemp: Int = 0
@@ -644,6 +649,7 @@ class WeatherSpec() : Parcelable {
         }
     }
 
+    @GsonSerialized
     class Hourly() : Parcelable {
         /** Unix epoch timestamp in seconds */
         var timestamp: Int = 0
