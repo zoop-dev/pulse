@@ -1,20 +1,4 @@
-/*  Copyright (C) 2024 José Rebelo
-
-    This file is part of Gadgetbridge.
-
-    Gadgetbridge is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Affero General Public License as published
-    by the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    Gadgetbridge is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Affero General Public License for more details.
-
-    You should have received a copy of the GNU Affero General Public License
-    along with this program.  If not, see <https://www.gnu.org/licenses/>. */
-package nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.forerunner;
+package nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.fenix;
 
 import androidx.annotation.NonNull;
 
@@ -24,15 +8,22 @@ import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.GarminWatchCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
-public class GarminForerunner630Coordinator extends GarminWatchCoordinator {
+public class GarminFenix2Coordinator extends GarminWatchCoordinator {
+    @Override
+    public boolean isExperimental() {
+        // Not tested, and the supported device name below is unconfirmed
+        return true;
+    }
+
     @Override
     protected Pattern getSupportedDeviceName() {
-        return Pattern.compile("^Forerunner 630$");
+        // TODO: unconfirmed device name
+        return Pattern.compile("^fenix 2$");
     }
 
     @Override
     public int getDeviceNameResource() {
-        return R.string.devicetype_garmin_forerunner_630;
+        return R.string.devicetype_garmin_fenix_2;
     }
 
     @Override
@@ -43,7 +34,8 @@ public class GarminForerunner630Coordinator extends GarminWatchCoordinator {
     }
 
     @Override
-    public boolean supportsStressMeasurement(@NonNull final GBDevice device) {
+    public boolean supportsSleepMeasurement(@NonNull final GBDevice device) {
+        // No sleep tracking of any kind is documented for this device
         return false;
     }
 
@@ -63,17 +55,32 @@ public class GarminForerunner630Coordinator extends GarminWatchCoordinator {
     }
 
     @Override
-    public boolean supportsPai(@NonNull final GBDevice device) {
-        return false;
-    }
-
-    @Override
     public boolean supportsRespiratoryRate(@NonNull final GBDevice device) {
         return false;
     }
 
     @Override
+    public boolean supportsStressMeasurement(@NonNull final GBDevice device) {
+        return false;
+    }
+
+    @Override
     public boolean supportsHrvMeasurement(@NonNull final GBDevice device) {
+        return false;
+    }
+
+    @Override
+    public boolean supportsMusicInfo(@NonNull final GBDevice device) {
+        return false;
+    }
+
+    @Override
+    public boolean supportsWeather(@NonNull final GBDevice device) {
+        return false;
+    }
+
+    @Override
+    public boolean supportsPai(@NonNull final GBDevice device) {
         return false;
     }
 }

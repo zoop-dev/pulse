@@ -1,4 +1,4 @@
-package nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.epix;
+package nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.forerunner;
 
 import androidx.annotation.NonNull;
 
@@ -8,15 +8,22 @@ import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.GarminWatchCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
-public class GarminEpixCoordinator extends GarminWatchCoordinator {
+public class GarminForerunner30Coordinator extends GarminWatchCoordinator {
+    @Override
+    public boolean isExperimental() {
+        // Not tested, and the supported device name below is unconfirmed
+        return true;
+    }
+
     @Override
     protected Pattern getSupportedDeviceName() {
-        return Pattern.compile("^EPIX$");
+        // TODO: unconfirmed device name
+        return Pattern.compile("^Forerunner 30$");
     }
 
     @Override
     public int getDeviceNameResource() {
-        return R.string.devicetype_garmin_epix;
+        return R.string.devicetype_garmin_forerunner_30;
     }
 
     @Override
@@ -40,7 +47,7 @@ public class GarminEpixCoordinator extends GarminWatchCoordinator {
     }
 
     @Override
-    public boolean supportsPai(@NonNull final GBDevice device) {
+    public boolean supportsHrvMeasurement(@NonNull final GBDevice device) {
         return false;
     }
 
@@ -50,19 +57,17 @@ public class GarminEpixCoordinator extends GarminWatchCoordinator {
     }
 
     @Override
-    public boolean supportsHrvMeasurement(@NonNull final GBDevice device) {
+    public boolean supportsVO2MultiSport(@NonNull final GBDevice device) {
         return false;
     }
 
     @Override
-    public boolean supportsManualHeartRateMeasurement(@NonNull final GBDevice device) {
-        // Does not have an HR sensor. We keep supportsHeartRateMeasurement as true since
-        // it still supports pairing with HR straps.
+    public boolean supportsWeather(@NonNull final GBDevice device) {
         return false;
     }
 
     @Override
-    public boolean supportsSleepScore(@NonNull final GBDevice device) {
+    public boolean supportsMusicInfo(@NonNull final GBDevice device) {
         return false;
     }
 }

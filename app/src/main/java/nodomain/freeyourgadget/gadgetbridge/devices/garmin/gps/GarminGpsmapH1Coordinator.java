@@ -50,4 +50,14 @@ public class GarminGpsmapH1Coordinator extends GarminCoordinator {
     public boolean supportsTrainingLoad(@NonNull final GBDevice device) {
         return false;
     }
+
+    @Override
+    public boolean supportsHeartRateMeasurement(@NonNull final GBDevice device) {
+        return true;
+    }
+
+    @Override
+    public boolean supportsManualHeartRateMeasurement(@NonNull final GBDevice device) {
+        return false;
+    }
 }

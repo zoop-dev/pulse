@@ -26,17 +26,17 @@ public class GarminFenix5XPlusCoordinator extends GarminWatchCoordinator {
     }
 
     @Override
-    public boolean supportsSpo2(@NonNull final GBDevice device) {
-        return false;
-    }
-
-    @Override
     public boolean supportsBodyEnergy(@NonNull final GBDevice device) {
         return false;
     }
 
     @Override
     public boolean supportsRespiratoryRate(@NonNull final GBDevice device) {
+        return false;
+    }
+
+    @Override
+    public boolean supportsSleepScore(@NonNull final GBDevice device) {
         return false;
     }
 }

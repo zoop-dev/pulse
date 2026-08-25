@@ -78,103 +78,103 @@ public final class GarminProductNumbers {
         // mProductNumbers.put(1537, DeviceType.GARMIN_FORERUNNER_910XT_CHINA);
         // mProductNumbers.put(1551, DeviceType.GARMIN_FENIX_);
         // mProductNumbers.put(1555, DeviceType.GARMIN_EDGE_200_TAIWAN);
-        // mProductNumbers.put(1561, DeviceType.GARMIN_EDGE_510);
-        // mProductNumbers.put(1567, DeviceType.GARMIN_EDGE_810);
+        mProductNumbers.put(1561, DeviceType.GARMIN_EDGE_510);
+        mProductNumbers.put(1567, DeviceType.GARMIN_EDGE_810);
         // mProductNumbers.put(1570, DeviceType.GARMIN_TEMPE);
         // mProductNumbers.put(1600, DeviceType.GARMIN_FORERUNNER_910XT_JAPAN);
         mProductNumbers.put(1623, DeviceType.GARMIN_FORERUNNER_620);
-        // mProductNumbers.put(1632, DeviceType.GARMIN_FORERUNNER_220);
+        mProductNumbers.put(1632, DeviceType.GARMIN_FORERUNNER_220);
         // mProductNumbers.put(1664, DeviceType.GARMIN_FORERUNNER_910XT_KOREA);
         // mProductNumbers.put(1688, DeviceType.GARMIN_FORERUNNER_10_JAPAN);
-        // mProductNumbers.put(1721, DeviceType.GARMIN_EDGE_810_JAPAN);
+        mProductNumbers.put(1721, DeviceType.GARMIN_EDGE_810); // JAPAN
         // mProductNumbers.put(1735, DeviceType.GARMIN_VIRB_ELITE);
         // mProductNumbers.put(1736, DeviceType.GARMIN_EDGE_TOURING); // Also Edge Touring Plus
-        // mProductNumbers.put(1742, DeviceType.GARMIN_EDGE_510_JAPAN);
+        mProductNumbers.put(1742, DeviceType.GARMIN_EDGE_510); // JAPAN
         // mProductNumbers.put(1743, DeviceType.GARMIN_HRM_TRI); // Also HRM-Swim
         // mProductNumbers.put(1752, DeviceType.GARMIN_HRM_RUN);
         mProductNumbers.put(1765, DeviceType.GARMIN_FORERUNNER_920);
-        // mProductNumbers.put(1821, DeviceType.GARMIN_EDGE_510_ASIA);
-        // mProductNumbers.put(1822, DeviceType.GARMIN_EDGE_810_CHINA);
-        // mProductNumbers.put(1823, DeviceType.GARMIN_EDGE_810_TAIWAN);
-        // mProductNumbers.put(1836, DeviceType.GARMIN_EDGE_1000);
+        mProductNumbers.put(1821, DeviceType.GARMIN_EDGE_510); // ASIA
+        mProductNumbers.put(1822, DeviceType.GARMIN_EDGE_810); // CHINA
+        mProductNumbers.put(1823, DeviceType.GARMIN_EDGE_810); // TAIWAN
+        mProductNumbers.put(1836, DeviceType.GARMIN_EDGE_1000);
         // mProductNumbers.put(1837, DeviceType.GARMIN_VIVO_FIT);
         // mProductNumbers.put(1853, DeviceType.GARMIN_VIRB_REMOTE);
         // mProductNumbers.put(1885, DeviceType.GARMIN_VIVO_KI);
         // mProductNumbers.put(1903, DeviceType.GARMIN_FORERUNNER_15);
-        // mProductNumbers.put(1907, DeviceType.GARMIN_VIVO_ACTIVE);
-        // mProductNumbers.put(1918, DeviceType.GARMIN_EDGE_510_KOREA);
+        mProductNumbers.put(1907, DeviceType.GARMIN_VIVOACTIVE);
+        mProductNumbers.put(1918, DeviceType.GARMIN_EDGE_510); // KOREA
         mProductNumbers.put(1928, DeviceType.GARMIN_FORERUNNER_620); // JAPAN
         mProductNumbers.put(1929, DeviceType.GARMIN_FORERUNNER_620); // CHINA
-        // mProductNumbers.put(1930, DeviceType.GARMIN_FORERUNNER_220_JAPAN);
-        // mProductNumbers.put(1931, DeviceType.GARMIN_FORERUNNER_220_CHINA);
+        mProductNumbers.put(1930, DeviceType.GARMIN_FORERUNNER_220); // JAPAN
+        mProductNumbers.put(1931, DeviceType.GARMIN_FORERUNNER_220); // CHINA
         // mProductNumbers.put(1936, DeviceType.GARMIN_APPROACH_S6);
-        // mProductNumbers.put(1956, DeviceType.GARMIN_VIVO_SMART);
-        // mProductNumbers.put(1967, DeviceType.GARMIN_FENIX_2);
+        mProductNumbers.put(1956, DeviceType.GARMIN_VIVOSMART);
+        mProductNumbers.put(1967, DeviceType.GARMIN_FENIX_2);
         mProductNumbers.put(1988, DeviceType.GARMIN_EPIX);
         mProductNumbers.put(2050, DeviceType.GARMIN_FENIX_3);
-        // mProductNumbers.put(2052, DeviceType.GARMIN_EDGE_1000_TAIWAN);
-        // mProductNumbers.put(2053, DeviceType.GARMIN_EDGE_1000_JAPAN);
+        mProductNumbers.put(2052, DeviceType.GARMIN_EDGE_1000); // TAIWAN
+        mProductNumbers.put(2053, DeviceType.GARMIN_EDGE_1000); // JAPAN
         // mProductNumbers.put(2061, DeviceType.GARMIN_FORERUNNER_15_JAPAN);
-        // mProductNumbers.put(2067, DeviceType.GARMIN_EDGE_520);
-        // mProductNumbers.put(2070, DeviceType.GARMIN_EDGE_1000_CHINA);
+        mProductNumbers.put(2067, DeviceType.GARMIN_EDGE_520);
+        mProductNumbers.put(2070, DeviceType.GARMIN_EDGE_1000); // CHINA
         mProductNumbers.put(2072, DeviceType.GARMIN_FORERUNNER_620); // RUSSIA
-        // mProductNumbers.put(2073, DeviceType.GARMIN_FORERUNNER_220_RUSSIA);
+        mProductNumbers.put(2073, DeviceType.GARMIN_FORERUNNER_220); // RUSSIA
         // mProductNumbers.put(2079, DeviceType.GARMIN_VECTOR_S);
-        // mProductNumbers.put(2100, DeviceType.GARMIN_EDGE_1000_KOREA);
+        mProductNumbers.put(2100, DeviceType.GARMIN_EDGE_1000); // KOREA
         // mProductNumbers.put(2130, DeviceType.GARMIN_FORERUNNER_920XT_TAIWAN);
         // mProductNumbers.put(2131, DeviceType.GARMIN_FORERUNNER_920XT_CHINA);
         // mProductNumbers.put(2132, DeviceType.GARMIN_FORERUNNER_920XT_JAPAN);
         // mProductNumbers.put(2134, DeviceType.GARMIN_VIRBX);
-        // mProductNumbers.put(2135, DeviceType.GARMIN_VIVO_SMART_APAC);
+        mProductNumbers.put(2135, DeviceType.GARMIN_VIVOSMART); // APAC
         // mProductNumbers.put(2140, DeviceType.GARMIN_ETREX_TOUCH);
         mProductNumbers.put(2147, DeviceType.GARMIN_EDGE_25);
-        // mProductNumbers.put(2148, DeviceType.GARMIN_FORERUNNER_25);
+        mProductNumbers.put(2148, DeviceType.GARMIN_FORERUNNER_25);
         // mProductNumbers.put(2150, DeviceType.GARMIN_VIVO_FIT2);
-        // mProductNumbers.put(2153, DeviceType.GARMIN_FORERUNNER_225);
+        mProductNumbers.put(2153, DeviceType.GARMIN_FORERUNNER_225);
         mProductNumbers.put(2156, DeviceType.GARMIN_FORERUNNER_630);
         mProductNumbers.put(2157, DeviceType.GARMIN_FORERUNNER_230);
         mProductNumbers.put(2158, DeviceType.GARMIN_FORERUNNER_735XT);
-        // mProductNumbers.put(2160, DeviceType.GARMIN_VIVO_ACTIVE_APAC);
+        mProductNumbers.put(2160, DeviceType.GARMIN_VIVOACTIVE); // APAC
         // mProductNumbers.put(2161, DeviceType.GARMIN_VECTOR2);
         // mProductNumbers.put(2162, DeviceType.GARMIN_VECTOR2S);
         // mProductNumbers.put(2172, DeviceType.GARMIN_VIRBXE);
         mProductNumbers.put(2173, DeviceType.GARMIN_FORERUNNER_620); // TAIWAN
-        // mProductNumbers.put(2174, DeviceType.GARMIN_FORERUNNER_220_TAIWAN);
+        mProductNumbers.put(2174, DeviceType.GARMIN_FORERUNNER_220); // TAIWAN
         // mProductNumbers.put(2175, DeviceType.GARMIN_TRUSWING);
         // mProductNumbers.put(2187, DeviceType.GARMIN_D2AIRVENU);
         mProductNumbers.put(2188, DeviceType.GARMIN_FENIX_3); // CHINA
         mProductNumbers.put(2189, DeviceType.GARMIN_FENIX_3); // TWN
         // mProductNumbers.put(2192, DeviceType.GARMIN_VARIA_HEADLIGHT);
         // mProductNumbers.put(2193, DeviceType.GARMIN_VARIA_TAILLIGHT_OLD);
-        // mProductNumbers.put(2204, DeviceType.GARMIN_EDGE_EXPLORE1000);
-        // mProductNumbers.put(2219, DeviceType.GARMIN_FORERUNNER_225_ASIA);
+        mProductNumbers.put(2204, DeviceType.GARMIN_EDGE_EXPLORE_1000);
+        mProductNumbers.put(2219, DeviceType.GARMIN_FORERUNNER_225); // ASIA
         // mProductNumbers.put(2225, DeviceType.GARMIN_VARIA_RADAR_TAILLIGHT);
         // mProductNumbers.put(2226, DeviceType.GARMIN_VARIA_RADAR_DISPLAY);
-        // mProductNumbers.put(2238, DeviceType.GARMIN_EDGE_20);
-        // mProductNumbers.put(2260, DeviceType.GARMIN_EDGE_520_ASIA);
-        // mProductNumbers.put(2261, DeviceType.GARMIN_EDGE_520_JAPAN);
+        mProductNumbers.put(2238, DeviceType.GARMIN_EDGE_25); // Edge 2x
+        mProductNumbers.put(2260, DeviceType.GARMIN_EDGE_520); // ASIA
+        mProductNumbers.put(2261, DeviceType.GARMIN_EDGE_520); // JAPAN
         // mProductNumbers.put(2262, DeviceType.GARMIN_D2_BRAVO);
         // mProductNumbers.put(2266, DeviceType.GARMIN_APPROACH_S20);
-        // mProductNumbers.put(2271, DeviceType.GARMIN_VIVO_SMART2);
-        // mProductNumbers.put(2274, DeviceType.GARMIN_EDGE_1000_THAI);
+        mProductNumbers.put(2271, DeviceType.GARMIN_VIVOSMART); // VIVO_SMART2 - hardware revision 2? not a separate model
+        mProductNumbers.put(2274, DeviceType.GARMIN_EDGE_1000); // THAI
         // mProductNumbers.put(2276, DeviceType.GARMIN_VARIA_REMOTE);
         mProductNumbers.put(2288, DeviceType.GARMIN_EDGE_25); // ASIA
         mProductNumbers.put(2289, DeviceType.GARMIN_EDGE_25); // JPN
-        // mProductNumbers.put(2290, DeviceType.GARMIN_EDGE_20_ASIA);
+        mProductNumbers.put(2290, DeviceType.GARMIN_EDGE_25); // Edge 2x, ASIA
         // mProductNumbers.put(2292, DeviceType.GARMIN_APPROACH_X40);
         mProductNumbers.put(2293, DeviceType.GARMIN_FENIX_3); // JAPAN
-        // mProductNumbers.put(2294, DeviceType.GARMIN_VIVO_SMART_EMEA);
+        mProductNumbers.put(2294, DeviceType.GARMIN_VIVOSMART); // EMEA
         mProductNumbers.put(2310, DeviceType.GARMIN_FORERUNNER_630); // ASIA
         mProductNumbers.put(2311, DeviceType.GARMIN_FORERUNNER_630); // JPN
         mProductNumbers.put(2313, DeviceType.GARMIN_FORERUNNER_230); // JPN
         // mProductNumbers.put(2327, DeviceType.GARMIN_HRM4_RUN);
-        // mProductNumbers.put(2332, DeviceType.GARMIN_EPIX_JAPAN);
+        mProductNumbers.put(2332, DeviceType.GARMIN_EPIX); // JAPAN
         mProductNumbers.put(2337, DeviceType.GARMIN_VIVOACTIVE_HR);
-        // mProductNumbers.put(2347, DeviceType.GARMIN_VIVO_SMART_GPS_HR);
-        // mProductNumbers.put(2348, DeviceType.GARMIN_VIVO_SMART_HR);
-        // mProductNumbers.put(2361, DeviceType.GARMIN_VIVO_SMART_HR_ASIA);
-        // mProductNumbers.put(2362, DeviceType.GARMIN_VIVO_SMART_GPS_HR_ASIA);
-        // mProductNumbers.put(2368, DeviceType.GARMIN_VIVO_MOVE);
+        mProductNumbers.put(2347, DeviceType.GARMIN_VIVOSMART_HR_PLUS); // GPS_HR
+        mProductNumbers.put(2348, DeviceType.GARMIN_VIVOSMART_HR);
+        mProductNumbers.put(2361, DeviceType.GARMIN_VIVOSMART_HR); // ASIA
+        mProductNumbers.put(2362, DeviceType.GARMIN_VIVOSMART_HR_PLUS); // GPS_HR_ASIA
+        mProductNumbers.put(2368, DeviceType.GARMIN_VIVOMOVE);
         // mProductNumbers.put(2379, DeviceType.GARMIN_VARIA_TAILLIGHT);
         mProductNumbers.put(2396, DeviceType.GARMIN_FORERUNNER_235); // ASIA
         mProductNumbers.put(2397, DeviceType.GARMIN_FORERUNNER_235); // JAPAN
@@ -186,10 +186,10 @@ public final class GarminProductNumbers {
         // mProductNumbers.put(2417, DeviceType.GARMIN_VIRB_ULTRA30);
         // mProductNumbers.put(2429, DeviceType.GARMIN_INDEX_SMART_SCALE);
         mProductNumbers.put(2431, DeviceType.GARMIN_FORERUNNER_235);
-        // mProductNumbers.put(2432, DeviceType.GARMIN_FENIX_3_CHRONOS);
+        mProductNumbers.put(2432, DeviceType.GARMIN_FENIX_3_CHRONOS);
         // mProductNumbers.put(2441, DeviceType.GARMIN_OREGON7XX);
         // mProductNumbers.put(2444, DeviceType.GARMIN_RINO7XX);
-        // mProductNumbers.put(2457, DeviceType.GARMIN_EPIX_KOREA);
+        mProductNumbers.put(2457, DeviceType.GARMIN_EPIX); // KOREA
         mProductNumbers.put(2473, DeviceType.GARMIN_FENIX_3_HR); // CHN
         mProductNumbers.put(2474, DeviceType.GARMIN_FENIX_3_HR); // TWN
         mProductNumbers.put(2475, DeviceType.GARMIN_FENIX_3_HR); // JPN
@@ -199,28 +199,28 @@ public final class GarminProductNumbers {
         mProductNumbers.put(2497, DeviceType.GARMIN_VIVOACTIVE_HR); // APAC
         mProductNumbers.put(2503, DeviceType.GARMIN_FORERUNNER_35);
         // mProductNumbers.put(2512, DeviceType.GARMIN_OREGON7XX_WW);
-        // mProductNumbers.put(2530, DeviceType.GARMIN_EDGE_820);
-        // mProductNumbers.put(2531, DeviceType.GARMIN_EDGE_EXPLORE820);
+        mProductNumbers.put(2530, DeviceType.GARMIN_EDGE_820);
+        mProductNumbers.put(2531, DeviceType.GARMIN_EDGE_EXPLORE_820);
         mProductNumbers.put(2533, DeviceType.GARMIN_FORERUNNER_735XT); // APAC
         mProductNumbers.put(2534, DeviceType.GARMIN_FORERUNNER_735XT); // JAPAN
         mProductNumbers.put(2544, DeviceType.GARMIN_FENIX_5S);
         // mProductNumbers.put(2547, DeviceType.GARMIN_D2_BRAVO_TITANIUM);
         // mProductNumbers.put(2567, DeviceType.GARMIN_VARIA_UT800); // Varia UT 800 SW
         // mProductNumbers.put(2593, DeviceType.GARMIN_RUNNING_DYNAMICS_POD);
-        // mProductNumbers.put(2599, DeviceType.GARMIN_EDGE_820_CHINA);
-        // mProductNumbers.put(2600, DeviceType.GARMIN_EDGE_820_JAPAN);
-        // mProductNumbers.put(2604, DeviceType.GARMIN_FENIX_5X);
+        mProductNumbers.put(2599, DeviceType.GARMIN_EDGE_820); // CHINA
+        mProductNumbers.put(2600, DeviceType.GARMIN_EDGE_820); // JAPAN
+        mProductNumbers.put(2604, DeviceType.GARMIN_FENIX_5X);
         // mProductNumbers.put(2606, DeviceType.GARMIN_VIVO_FIT_JR);
         mProductNumbers.put(2622, DeviceType.GARMIN_VIVOSMART_3);
         mProductNumbers.put(2623, DeviceType.GARMIN_VIVOSPORT);
-        // mProductNumbers.put(2628, DeviceType.GARMIN_EDGE_820_TAIWAN);
-        // mProductNumbers.put(2629, DeviceType.GARMIN_EDGE_820_KOREA);
-        // mProductNumbers.put(2630, DeviceType.GARMIN_EDGE_820_SEA);
+        mProductNumbers.put(2628, DeviceType.GARMIN_EDGE_820); // TAIWAN
+        mProductNumbers.put(2629, DeviceType.GARMIN_EDGE_820); // KOREA
+        mProductNumbers.put(2630, DeviceType.GARMIN_EDGE_820); // SEA
         mProductNumbers.put(2650, DeviceType.GARMIN_FORERUNNER_35); // HEBREW
         // mProductNumbers.put(2656, DeviceType.GARMIN_APPROACH_S60);
         mProductNumbers.put(2667, DeviceType.GARMIN_FORERUNNER_35); // APAC
         mProductNumbers.put(2668, DeviceType.GARMIN_FORERUNNER_35); // JAPAN
-        // mProductNumbers.put(2675, DeviceType.GARMIN_FENIX_3_CHRONOS_ASIA);
+        mProductNumbers.put(2675, DeviceType.GARMIN_FENIX_3_CHRONOS); // ASIA
         // mProductNumbers.put(2687, DeviceType.GARMIN_VIRB360);
         mProductNumbers.put(2691, DeviceType.GARMIN_FORERUNNER_935);
         mProductNumbers.put(2697, DeviceType.GARMIN_FENIX_5);
@@ -228,12 +228,12 @@ public final class GarminProductNumbers {
         mProductNumbers.put(2733, DeviceType.GARMIN_FORERUNNER_235); // CHINA_NFC
         // mProductNumbers.put(2769, DeviceType.GARMIN_FORETREX601701);
         mProductNumbers.put(2772, DeviceType.VIVOMOVE_HR);
-        // mProductNumbers.put(2713, DeviceType.GARMIN_EDGE_1030);
+        mProductNumbers.put(2713, DeviceType.GARMIN_EDGE_1030);
         mProductNumbers.put(2727, DeviceType.GARMIN_FORERUNNER_35); // SEA
         // mProductNumbers.put(2787, DeviceType.GARMIN_VECTOR3);
         mProductNumbers.put(2796, DeviceType.GARMIN_FENIX_5); // ASIA
         mProductNumbers.put(2797, DeviceType.GARMIN_FENIX_5S); // ASIA
-        // mProductNumbers.put(2798, DeviceType.GARMIN_FENIX_5X_ASIA);
+        mProductNumbers.put(2798, DeviceType.GARMIN_FENIX_5X); // ASIA
         // mProductNumbers.put(2806, DeviceType.GARMIN_APPROACH_Z80);
         mProductNumbers.put(2814, DeviceType.GARMIN_FORERUNNER_35); // KOREA
         // mProductNumbers.put(2819, DeviceType.GARMIN_D2CHARLIE);
@@ -242,18 +242,18 @@ public final class GarminProductNumbers {
         mProductNumbers.put(2833, DeviceType.GARMIN_FORERUNNER_935); // ASIA
         // mProductNumbers.put(2859, DeviceType.GARMIN_DESCENT);
         // mProductNumbers.put(2878, DeviceType.GARMIN_VIVO_FIT4);
-        // mProductNumbers.put(2886, DeviceType.GARMIN_FORERUNNER_645);
+        mProductNumbers.put(2886, DeviceType.GARMIN_FORERUNNER_645);
         mProductNumbers.put(2888, DeviceType.GARMIN_FORERUNNER_645_MUSIC);
-        // mProductNumbers.put(2891, DeviceType.GARMIN_FORERUNNER_30);
+        mProductNumbers.put(2891, DeviceType.GARMIN_FORERUNNER_30);
         mProductNumbers.put(2900, DeviceType.GARMIN_FENIX_5S_PLUS);
         mProductNumbers.put(2909, DeviceType.GARMIN_EDGE_130);
-        // mProductNumbers.put(2924, DeviceType.GARMIN_EDGE_1030_ASIA);
+        mProductNumbers.put(2924, DeviceType.GARMIN_EDGE_1030); // ASIA
         mProductNumbers.put(2927, DeviceType.GARMIN_VIVOSMART_4);
         mProductNumbers.put(2945, DeviceType.VIVOMOVE_HR); // ASIA
         // mProductNumbers.put(2962, DeviceType.GARMIN_APPROACH_X10);
-        // mProductNumbers.put(2977, DeviceType.GARMIN_FORERUNNER_30_ASIA);
+        mProductNumbers.put(2977, DeviceType.GARMIN_FORERUNNER_30); // ASIA
         mProductNumbers.put(2988, DeviceType.GARMIN_VIVOACTIVE_3_MUSIC); // W
-        // mProductNumbers.put(3003, DeviceType.GARMIN_FORERUNNER_645_ASIA);
+        mProductNumbers.put(3003, DeviceType.GARMIN_FORERUNNER_645); // ASIA
         mProductNumbers.put(3004, DeviceType.GARMIN_FORERUNNER_645_MUSIC); // ASIA
         mProductNumbers.put(3011, DeviceType.GARMIN_EDGE_EXPLORE);
         // mProductNumbers.put(3028, DeviceType.GARMIN_GPSMAP66);
@@ -263,17 +263,17 @@ public final class GarminProductNumbers {
         mProductNumbers.put(3077, DeviceType.GARMIN_FORERUNNER_245_MUSIC);
         // mProductNumbers.put(3085, DeviceType.GARMIN_APPROACH_G80);
         mProductNumbers.put(3092, DeviceType.GARMIN_EDGE_130); // ASIA
-        // mProductNumbers.put(3095, DeviceType.GARMIN_EDGE_1030_BONTRAGER);
+        mProductNumbers.put(3095, DeviceType.GARMIN_EDGE_1030); // BONTRAGER
         mProductNumbers.put(3110, DeviceType.GARMIN_FENIX_5_PLUS);
         mProductNumbers.put(3111, DeviceType.GARMIN_FENIX_5X_PLUS);
-        // mProductNumbers.put(3112, DeviceType.GARMIN_EDGE_520_PLUS);
+        mProductNumbers.put(3112, DeviceType.GARMIN_EDGE_520_PLUS);
         mProductNumbers.put(3113, DeviceType.GARMIN_FORERUNNER_945);
-        // mProductNumbers.put(3121, DeviceType.GARMIN_EDGE_530);
-        // mProductNumbers.put(3122, DeviceType.GARMIN_EDGE_830);
+        mProductNumbers.put(3121, DeviceType.GARMIN_EDGE_530);
+        mProductNumbers.put(3122, DeviceType.GARMIN_EDGE_830);
         mProductNumbers.put(3126, DeviceType.GARMIN_INSTINCT); // ESPORTS
         mProductNumbers.put(3134, DeviceType.GARMIN_FENIX_5S_PLUS); // APAC
         mProductNumbers.put(3135, DeviceType.GARMIN_FENIX_5X_PLUS); // APAC
-        // mProductNumbers.put(3142, DeviceType.GARMIN_EDGE_520_PLUS_APAC);
+        mProductNumbers.put(3142, DeviceType.GARMIN_EDGE_520_PLUS); // APAC
         // mProductNumbers.put(3143, DeviceType.GARMIN_DESCENT_T1);
         mProductNumbers.put(3144, DeviceType.GARMIN_FORERUNNER_235); // L_ASIA
         mProductNumbers.put(3145, DeviceType.GARMIN_FORERUNNER_245); // ASIA
@@ -293,9 +293,9 @@ public final class GarminProductNumbers {
         // mProductNumbers.put(3258, DeviceType.GARMIN_DESCENT_MK2);
         mProductNumbers.put(3282, DeviceType.GARMIN_FORERUNNER_45);
         // mProductNumbers.put(3284, DeviceType.GARMIN_GPSMAP66I);
-        // mProductNumbers.put(3287, DeviceType.GARMIN_FENIX_6S_SPORT);
+        mProductNumbers.put(3287, DeviceType.GARMIN_FENIX_6S_SPORT);
         mProductNumbers.put(3288, DeviceType.GARMIN_FENIX_6S);
-        // mProductNumbers.put(3289, DeviceType.GARMIN_FENIX_6_SPORT);
+        mProductNumbers.put(3289, DeviceType.GARMIN_FENIX_6_SPORT);
         mProductNumbers.put(3290, DeviceType.GARMIN_FENIX_6);
         // mProductNumbers.put(3291, DeviceType.GARMIN_FENIX_6X);
         // mProductNumbers.put(3299, DeviceType.GARMIN_HRM_DUAL); // HRM-Dual
@@ -303,8 +303,8 @@ public final class GarminProductNumbers {
         // mProductNumbers.put(3308, DeviceType.GARMIN_VIVO_MOVE3_PREMIUM);
         // mProductNumbers.put(3314, DeviceType.GARMIN_APPROACH_S40);
         mProductNumbers.put(3321, DeviceType.GARMIN_FORERUNNER_245_MUSIC); // ASIA
-        // mProductNumbers.put(3349, DeviceType.GARMIN_EDGE_530_APAC);
-        // mProductNumbers.put(3350, DeviceType.GARMIN_EDGE_830_APAC);
+        mProductNumbers.put(3349, DeviceType.GARMIN_EDGE_530); // APAC
+        mProductNumbers.put(3350, DeviceType.GARMIN_EDGE_830); // APAC
         // mProductNumbers.put(3378, DeviceType.GARMIN_VIVO_MOVE3);
         mProductNumbers.put(3387, DeviceType.GARMIN_VIVOACTIVE_4S); // ASIA
         mProductNumbers.put(3388, DeviceType.GARMIN_VIVOACTIVE_4); // LARGE_ASIA
@@ -327,9 +327,9 @@ public final class GarminProductNumbers {
         // mProductNumbers.put(3499, DeviceType.GARMIN_LEGACY_DARTH_VADER);
         // mProductNumbers.put(3500, DeviceType.GARMIN_LEGACY_CAPTAIN_MARVEL);
         // mProductNumbers.put(3501, DeviceType.GARMIN_LEGACY_FIRST_AVENGER);
-        // mProductNumbers.put(3512, DeviceType.GARMIN_FENIX_6S_SPORT_ASIA);
+        mProductNumbers.put(3512, DeviceType.GARMIN_FENIX_6S_SPORT); // ASIA
         mProductNumbers.put(3513, DeviceType.GARMIN_FENIX_6S); // ASIA
-        // mProductNumbers.put(3514, DeviceType.GARMIN_FENIX_6_SPORT_ASIA);
+        mProductNumbers.put(3514, DeviceType.GARMIN_FENIX_6_SPORT); // ASIA
         mProductNumbers.put(3515, DeviceType.GARMIN_FENIX_6); // ASIA
         // mProductNumbers.put(3516, DeviceType.GARMIN_FENIX_6X_ASIA);
         // mProductNumbers.put(3535, DeviceType.GARMIN_LEGACY_CAPTAIN_MARVEL_ASIA);
@@ -338,13 +338,13 @@ public final class GarminProductNumbers {
         // mProductNumbers.put(3538, DeviceType.GARMIN_LEGACY_DARTH_VADER_ASIA);
         // mProductNumbers.put(3542, DeviceType.GARMIN_DESCENT_MK2S);
         mProductNumbers.put(3558, DeviceType.GARMIN_EDGE_130_PLUS);
-        // mProductNumbers.put(3570, DeviceType.GARMIN_EDGE_1030_PLUS);
+        mProductNumbers.put(3570, DeviceType.GARMIN_EDGE_1030_PLUS);
         // mProductNumbers.put(3578, DeviceType.GARMIN_RALLY200); // Rally 100/200 Power Meter Series
         mProductNumbers.put(3589, DeviceType.GARMIN_FORERUNNER_745);
-        // mProductNumbers.put(3596, DeviceType.GARMIN_VENU_SQ_MUSIC);
-        // mProductNumbers.put(3599, DeviceType.GARMIN_VENU_SQ_MUSIC_V2);
+        mProductNumbers.put(3596, DeviceType.GARMIN_VENU_SQ_MUSIC);
+        mProductNumbers.put(3599, DeviceType.GARMIN_VENU_SQ_MUSIC); // V2 (hardware revision?)
         mProductNumbers.put(3600, DeviceType.GARMIN_VENU_SQ);
-        // mProductNumbers.put(3615, DeviceType.GARMIN_LILY);
+        mProductNumbers.put(3615, DeviceType.GARMIN_LILY);
         // mProductNumbers.put(3624, DeviceType.GARMIN_MARQ_ADVENTURER);
         mProductNumbers.put(3638, DeviceType.GARMIN_ENDURO);
         mProductNumbers.put(3639, DeviceType.GARMIN_SWIM_2);
@@ -358,8 +358,8 @@ public final class GarminProductNumbers {
         mProductNumbers.put(3740, DeviceType.GARMIN_VENU); // DAIMLER
         mProductNumbers.put(3794, DeviceType.GARMIN_FORERUNNER_745); // ASIA
         // mProductNumbers.put(3808, DeviceType.GARMIN_VARIA_RCT715);
-        // mProductNumbers.put(3809, DeviceType.GARMIN_LILY_ASIA);
-        // mProductNumbers.put(3812, DeviceType.GARMIN_EDGE_1030_PLUS_ASIA);
+        mProductNumbers.put(3809, DeviceType.GARMIN_LILY); // ASIA
+        mProductNumbers.put(3812, DeviceType.GARMIN_EDGE_1030_PLUS); // ASIA
         mProductNumbers.put(3813, DeviceType.GARMIN_EDGE_130_PLUS); // ASIA
         // mProductNumbers.put(3823, DeviceType.GARMIN_APPROACH_S12);
         mProductNumbers.put(3872, DeviceType.GARMIN_ENDURO); // ASIA
@@ -380,8 +380,8 @@ public final class GarminProductNumbers {
         // mProductNumbers.put(3927, DeviceType.GARMIN_APPROACH_G12);
         // mProductNumbers.put(3930, DeviceType.GARMIN_DESCENT_MK2S_ASIA);
         // mProductNumbers.put(3934, DeviceType.GARMIN_APPROACH_S42);
-        // mProductNumbers.put(3943, DeviceType.GARMIN_EPIX_GEN2);
-        // mProductNumbers.put(3944, DeviceType.GARMIN_EPIX_GEN2_APAC);
+        mProductNumbers.put(3943, DeviceType.GARMIN_EPIX_GEN2);
+        mProductNumbers.put(3944, DeviceType.GARMIN_EPIX_GEN2); // APAC
         mProductNumbers.put(3949, DeviceType.GARMIN_VENU_2S); // ASIA
         mProductNumbers.put(3950, DeviceType.GARMIN_VENU_2); // ASIA
         // mProductNumbers.put(3978, DeviceType.GARMIN_FORERUNNER_945_LTE); // ASIA
@@ -404,7 +404,7 @@ public final class GarminProductNumbers {
         mProductNumbers.put(4071, DeviceType.GARMIN_INSTINCT_2); // ASIA
         // mProductNumbers.put(4105, DeviceType.GARMIN_MARQ_GEN2); // Adventurer, Athlete, Captain, Golfer
         mProductNumbers.put(4115, DeviceType.GARMIN_VENU_SQ_2);
-        // mProductNumbers.put(4116, DeviceType.GARMIN_VENU_SQ_2_MUSIC);
+        mProductNumbers.put(4116, DeviceType.GARMIN_VENU_SQ_2_MUSIC);
         // mProductNumbers.put(4124, DeviceType.GARMIN_MARQ_GEN2_AVIATOR);
         // mProductNumbers.put(4125, DeviceType.GARMIN_D2_AIR_X10);
         mProductNumbers.put(4130, DeviceType.GARMIN_HRM_PRO_PLUS);
@@ -413,7 +413,7 @@ public final class GarminProductNumbers {
         mProductNumbers.put(4155, DeviceType.GARMIN_INSTINCT_CROSSOVER);
         mProductNumbers.put(4169, DeviceType.GARMIN_EDGE_EXPLORE_2);
         mProductNumbers.put(4222, DeviceType.GARMIN_DESCENT_MK3);
-        // mProductNumbers.put(4223, DeviceType.GARMIN_DESCENT_MK3I);
+        mProductNumbers.put(4223, DeviceType.GARMIN_DESCENT_MK3I);
         // mProductNumbers.put(4233, DeviceType.GARMIN_APPROACH_S70);
         mProductNumbers.put(4257, DeviceType.GARMIN_FORERUNNER_265); // LARGE
         mProductNumbers.put(4258, DeviceType.GARMIN_FORERUNNER_265S);
@@ -436,10 +436,10 @@ public final class GarminProductNumbers {
         mProductNumbers.put(4313, DeviceType.GARMIN_EPIX_PRO); // 47
         mProductNumbers.put(4314, DeviceType.GARMIN_EPIX_PRO); // 51
         mProductNumbers.put(4315, DeviceType.GARMIN_FORERUNNER_965);
-        // mProductNumbers.put(4341, DeviceType.GARMIN_ENDURO2);
-        // mProductNumbers.put(4374, DeviceType.GARMIN_FENIX_7S_PRO_SOLAR);
-        // mProductNumbers.put(4375, DeviceType.GARMIN_FENIX_7_PRO_SOLAR);
-        // mProductNumbers.put(4376, DeviceType.GARMIN_FENIX_7X_PRO_SOLAR);
+        mProductNumbers.put(4341, DeviceType.GARMIN_ENDURO_2);
+        mProductNumbers.put(4374, DeviceType.GARMIN_FENIX_7S_PRO_SOLAR);
+        mProductNumbers.put(4375, DeviceType.GARMIN_FENIX_7_PRO_SOLAR);
+        mProductNumbers.put(4376, DeviceType.GARMIN_FENIX_7X_PRO_SOLAR);
         mProductNumbers.put(4380, DeviceType.GARMIN_LILY_2);
         // mProductNumbers.put(4394, DeviceType.GARMIN_INSTINCT_2X);
         mProductNumbers.put(4426, DeviceType.GARMIN_VIVOACTIVE_5);
@@ -451,35 +451,35 @@ public final class GarminProductNumbers {
         // mProductNumbers.put(4472, DeviceType.GARMIN_MARQ_GEN2_COMMANDER);
         mProductNumbers.put(4477, DeviceType.GARMIN_LILY_2_ACTIVE); // LILY_ATHLETE
         // mProductNumbers.put(4525, DeviceType.GARMIN_RALLY_X10); // Rally 110/210
-        // mProductNumbers.put(4532, DeviceType.GARMIN_FENIX_8_SOLAR);
-        // mProductNumbers.put(4533, DeviceType.GARMIN_FENIX_8_SOLAR); // LARGE
-        // mProductNumbers.put(4534, DeviceType.GARMIN_FENIX_8S);
+        mProductNumbers.put(4532, DeviceType.GARMIN_FENIX_8_SOLAR);
+        mProductNumbers.put(4533, DeviceType.GARMIN_FENIX_8_SOLAR); // LARGE
+        mProductNumbers.put(4534, DeviceType.GARMIN_FENIX_8); // S
         mProductNumbers.put(4536, DeviceType.GARMIN_FENIX_8);
         // mProductNumbers.put(4556, DeviceType.GARMIN_D2_MACH1_PRO);
         mProductNumbers.put(4575, DeviceType.GARMIN_ENDURO_3);
         mProductNumbers.put(4583, DeviceType.GARMIN_INSTINCT_E); // 40_MM
         mProductNumbers.put(4584, DeviceType.GARMIN_INSTINCT_E); // 45_MM
-        // mProductNumbers.put(4585, DeviceType.GARMIN_INSTINCT_3_SOLAR); // 45_MM
+        mProductNumbers.put(4585, DeviceType.GARMIN_INSTINCT_3_SOLAR); // 45_MM
         mProductNumbers.put(4586, DeviceType.GARMIN_INSTINCT_3); // AMOLED45_MM
         mProductNumbers.put(4587, DeviceType.GARMIN_INSTINCT_3); // AMOLED50_MM
         mProductNumbers.put(4588, DeviceType.GARMIN_DESCENT_G2);
-        // mProductNumbers.put(4595, DeviceType.GARMIN_FENIX_7_PRO_SOLAR); // NO_WIFI
+        mProductNumbers.put(4595, DeviceType.GARMIN_FENIX_7_PRO_SOLAR); // NO_WIFI
         mProductNumbers.put(4603, DeviceType.GARMIN_VENU_X1);
         mProductNumbers.put(4606, DeviceType.GARMIN_HRM_200);
         mProductNumbers.put(4625, DeviceType.GARMIN_VIVOACTIVE_6);
-        // mProductNumbers.put(4631, DeviceType.GARMIN_FENIX_8_PRO);
-        // mProductNumbers.put(4633, DeviceType.GARMIN_EDGE_550);
-        // mProductNumbers.put(4634, DeviceType.GARMIN_EDGE_850);
+        mProductNumbers.put(4631, DeviceType.GARMIN_FENIX_8_PRO);
+        mProductNumbers.put(4633, DeviceType.GARMIN_EDGE_550);
+        mProductNumbers.put(4634, DeviceType.GARMIN_EDGE_850);
         mProductNumbers.put(4643, DeviceType.GARMIN_VENU_4);
-        // mProductNumbers.put(4644, DeviceType.GARMIN_VENU_4S);
+        mProductNumbers.put(4644, DeviceType.GARMIN_VENU_4); // 4S
         // mProductNumbers.put(4647, DeviceType.GARMIN_APPROACHS44);
-        // mProductNumbers.put(4655, DeviceType.GARMIN_EDGE_MTB);
+        mProductNumbers.put(4655, DeviceType.GARMIN_EDGE_MTB);
         // mProductNumbers.put(4656, DeviceType.GARMIN_APPROACHS50);
-        // mProductNumbers.put(4666, DeviceType.GARMIN_FENIX_E);
+        mProductNumbers.put(4666, DeviceType.GARMIN_FENIX_E);
         // mProductNumbers.put(4745, DeviceType.GARMIN_BOUNCE2);
-        // mProductNumbers.put(4759, DeviceType.GARMIN_INSTINCT_3_SOLAR); // 50_MM
+        mProductNumbers.put(4759, DeviceType.GARMIN_INSTINCT_3_SOLAR); // 50_MM
         mProductNumbers.put(4775, DeviceType.GARMIN_TACTIX_8); // AMOLED
-        // mProductNumbers.put(4776, DeviceType.GARMIN_TACTIX_8_SOLAR); // SOLAR
+        mProductNumbers.put(4776, DeviceType.GARMIN_TACTIX_8_SOLAR);
         mProductNumbers.put(4814, DeviceType.GARMIN_FORERUNNER_170_MUSIC);
         mProductNumbers.put(4815, DeviceType.GARMIN_FORERUNNER_170);
         // mProductNumbers.put(4825, DeviceType.GARMIN_APPROACH_J1);

@@ -84,6 +84,16 @@ public class GarminHrmProPlusCoordinator extends GarminCoordinator {
     }
 
     @Override
+    public boolean supportsActiveCalories(@NonNull final GBDevice device) {
+        return true;
+    }
+
+    @Override
+    public boolean supportsPai(@NonNull final GBDevice device) {
+        return true;
+    }
+
+    @Override
     public boolean supportsHeartRateMeasurement(@NonNull final GBDevice device) {
         return true;
     }

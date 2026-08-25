@@ -44,4 +44,26 @@ public class GarminFenix3Coordinator extends GarminWatchCoordinator {
     public boolean supportsRespiratoryRate(@NonNull final GBDevice device) {
         return false;
     }
+
+    @Override
+    public boolean supportsManualHeartRateMeasurement(@NonNull final GBDevice device) {
+        // Does not have an HR sensor. We keep supportsHeartRateMeasurement as true since
+        // it still supports pairing with HR straps.
+        return false;
+    }
+
+    @Override
+    public boolean supportsStressMeasurement(@NonNull final GBDevice device) {
+        return false;
+    }
+
+    @Override
+    public boolean supportsHrvMeasurement(@NonNull final GBDevice device) {
+        return false;
+    }
+
+    @Override
+    public boolean supportsSleepScore(@NonNull final GBDevice device) {
+        return false;
+    }
 }

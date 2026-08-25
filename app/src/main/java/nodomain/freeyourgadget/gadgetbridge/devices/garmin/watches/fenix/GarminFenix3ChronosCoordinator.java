@@ -1,4 +1,4 @@
-package nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.swim;
+package nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.fenix;
 
 import androidx.annotation.NonNull;
 
@@ -8,15 +8,22 @@ import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.GarminWatchCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
-public class GarminSwim2Coordinator extends GarminWatchCoordinator {
+public class GarminFenix3ChronosCoordinator extends GarminWatchCoordinator {
+    @Override
+    public boolean isExperimental() {
+        // Not tested, and the supported device name below is unconfirmed
+        return true;
+    }
+
     @Override
     protected Pattern getSupportedDeviceName() {
-        return Pattern.compile("^Swim 2$");
+        // TODO: unconfirmed device name
+        return Pattern.compile("^fenix (3 )?Chronos$");
     }
 
     @Override
     public int getDeviceNameResource() {
-        return R.string.devicetype_garmin_swim_2;
+        return R.string.devicetype_garmin_fenix_3_chronos;
     }
 
     @Override
@@ -30,12 +37,12 @@ public class GarminSwim2Coordinator extends GarminWatchCoordinator {
     }
 
     @Override
-    public boolean supportsRespiratoryRate(@NonNull final GBDevice device) {
+    public boolean supportsBodyEnergy(@NonNull final GBDevice device) {
         return false;
     }
 
     @Override
-    public boolean supportsVO2Max(@NonNull final GBDevice device) {
+    public boolean supportsRespiratoryRate(@NonNull final GBDevice device) {
         return false;
     }
 

@@ -8,21 +8,27 @@ import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.GarminWatchCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
-public class GarminFenix5PlusCoordinator extends GarminWatchCoordinator {
+public class GarminFenix5XCoordinator extends GarminWatchCoordinator {
     @Override
     public boolean isExperimental() {
-        // https://codeberg.org/Freeyourgadget/Gadgetbridge/issues/3963
+        // Not tested, and the supported device name below is unconfirmed
         return true;
     }
 
     @Override
     protected Pattern getSupportedDeviceName() {
-        return Pattern.compile("^fenix 5 Plus$");
+        // TODO: unconfirmed device name
+        return Pattern.compile("^fenix 5X$");
     }
 
     @Override
     public int getDeviceNameResource() {
-        return R.string.devicetype_garmin_fenix_5_plus;
+        return R.string.devicetype_garmin_fenix_5x;
+    }
+
+    @Override
+    public boolean supportsSleepScore(@NonNull final GBDevice device) {
+        return false;
     }
 
     @Override
@@ -37,11 +43,6 @@ public class GarminFenix5PlusCoordinator extends GarminWatchCoordinator {
 
     @Override
     public boolean supportsRespiratoryRate(@NonNull final GBDevice device) {
-        return false;
-    }
-
-    @Override
-    public boolean supportsSleepScore(@NonNull final GBDevice device) {
         return false;
     }
 }

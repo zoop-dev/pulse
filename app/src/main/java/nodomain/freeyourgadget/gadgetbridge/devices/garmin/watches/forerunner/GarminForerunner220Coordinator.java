@@ -1,19 +1,3 @@
-/*  Copyright (C) 2026 Andreas Shimokawa
-
-    This file is part of Gadgetbridge.
-
-    Gadgetbridge is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Affero General Public License as published
-    by the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    Gadgetbridge is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Affero General Public License for more details.
-
-    You should have received a copy of the GNU Affero General Public License
-    along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.forerunner;
 
 import androidx.annotation.NonNull;
@@ -24,21 +8,33 @@ import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.GarminWatchCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
-public class GarminForerunner920Coordinator extends GarminWatchCoordinator {
+public class GarminForerunner220Coordinator extends GarminWatchCoordinator {
+    @Override
+    public boolean isExperimental() {
+        // Not tested, and the supported device name below is unconfirmed
+        return true;
+    }
+
     @Override
     protected Pattern getSupportedDeviceName() {
-        return Pattern.compile("^Forerunner 920$");
+        // TODO: unconfirmed device name
+        return Pattern.compile("^Forerunner 220$");
     }
 
     @Override
     public int getDeviceNameResource() {
-        return R.string.devicetype_garmin_forerunner_920;
+        return R.string.devicetype_garmin_forerunner_220;
     }
 
     @Override
     public boolean supportsManualHeartRateMeasurement(@NonNull final GBDevice device) {
         // Does not have an HR sensor. We keep supportsHeartRateMeasurement as true since
         // it still supports pairing with HR straps.
+        return false;
+    }
+
+    @Override
+    public boolean supportsVO2Max(@NonNull final GBDevice device) {
         return false;
     }
 
@@ -63,6 +59,16 @@ public class GarminForerunner920Coordinator extends GarminWatchCoordinator {
     }
 
     @Override
+    public boolean supportsHrvMeasurement(@NonNull final GBDevice device) {
+        return false;
+    }
+
+    @Override
+    public boolean supportsRespiratoryRate(@NonNull final GBDevice device) {
+        return false;
+    }
+
+    @Override
     public boolean supportsWeather(@NonNull final GBDevice device) {
         return false;
     }
@@ -73,12 +79,18 @@ public class GarminForerunner920Coordinator extends GarminWatchCoordinator {
     }
 
     @Override
-    public boolean supportsHrvMeasurement(@NonNull final GBDevice device) {
+    public boolean supportsSleepMeasurement(@NonNull final GBDevice device) {
+        // No sleep tracking of any kind is documented for this device
         return false;
     }
 
     @Override
-    public boolean supportsRespiratoryRate(@NonNull final GBDevice device) {
+    public boolean supportsMusicInfo(@NonNull final GBDevice device) {
+        return false;
+    }
+
+    @Override
+    public boolean supportsCalendarEvents(@NonNull final GBDevice device) {
         return false;
     }
 }
