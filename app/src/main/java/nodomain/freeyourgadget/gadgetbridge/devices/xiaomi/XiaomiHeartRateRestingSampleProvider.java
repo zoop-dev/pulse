@@ -21,6 +21,7 @@ import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import nodomain.freeyourgadget.gadgetbridge.devices.TimeSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.XiaomiDailySummarySampleProvider;
@@ -42,7 +43,9 @@ public class XiaomiHeartRateRestingSampleProvider implements TimeSampleProvider<
         final List<XiaomiDailySummarySample> allSamples = dailySummarySampleProvider.getAllSamples(timestampFrom, timestampTo);
         final List<HeartRateSample> ret = new ArrayList<>(allSamples.size());
         for (final XiaomiDailySummarySample sample : allSamples) {
-            ret.add(new XiaomiHeartRateRestingSample(sample));
+            if (sample.getHrResting() != null) {
+                ret.add(new XiaomiHeartRateRestingSample(sample));
+            }
         }
         return ret;
     }
@@ -66,7 +69,7 @@ public class XiaomiHeartRateRestingSampleProvider implements TimeSampleProvider<
     @Override
     public HeartRateSample getLatestSample() {
         final XiaomiDailySummarySample sample = dailySummarySampleProvider.getLatestSample();
-        if (sample != null) {
+        if (sample != null && sample.getHrResting() != null) {
             return new XiaomiHeartRateRestingSample(sample);
         }
         return null;
@@ -76,7 +79,7 @@ public class XiaomiHeartRateRestingSampleProvider implements TimeSampleProvider<
     @Override
     public HeartRateSample getLatestSample(final long until) {
         final XiaomiDailySummarySample sample = dailySummarySampleProvider.getLatestSample(until);
-        if (sample != null) {
+        if (sample != null && sample.getHrResting() != null) {
             return new XiaomiHeartRateRestingSample(sample);
         }
         return null;
@@ -86,7 +89,7 @@ public class XiaomiHeartRateRestingSampleProvider implements TimeSampleProvider<
     @Override
     public HeartRateSample getFirstSample() {
         final XiaomiDailySummarySample sample = dailySummarySampleProvider.getFirstSample();
-        if (sample != null) {
+        if (sample != null && sample.getHrResting() != null) {
             return new XiaomiHeartRateRestingSample(sample);
         }
         return null;
@@ -98,7 +101,7 @@ public class XiaomiHeartRateRestingSampleProvider implements TimeSampleProvider<
 
         public XiaomiHeartRateRestingSample(final XiaomiDailySummarySample sample) {
             this.timestamp = sample.getTimestamp();
-            this.heartRate = sample.getHrResting();
+            this.heartRate = Objects.requireNonNullElse(sample.getHrResting(), -1);
         }
 
         @Override
