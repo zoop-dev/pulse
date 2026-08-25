@@ -140,6 +140,126 @@ public class CobsCoDecTest {
         }
     }
 
+    // Real frames captured from a Venu X1 on 2026-08-23 (support dump):
+    // multi-chunk GFDI protobuf weather requests (current, forecast/day, forecast/hour)
+    // and the status message that followed. Chunk sizes are limited by the BLE MTU
+    // (229 bytes per notification). The forecast/hour frame arrived truncated - a middle
+    // chunk was lost on the BLE link - which used to wedge the COBS decoder until the
+    // app was restarted (no watch data for ~20h). The leading BLE handle byte is already
+    // stripped; these are the exact byte streams delivered to receivedBytes().
+    private static final String WEATHER_CURRENT_CHUNK1 = // current-weather request, chunk 1 of 2
+            "00078C01B313400301010103B6010103780101FF12B3032AB0030A7668747470733A2F2F6170692E6763732E6761726D696E2E636F6D2F776561746865722F76322F63757272656E743F6C61743D363730343035333830266C6F6E3D3434313236313933392674656D70556E69743D43454C53495553267370656564556E69743D4D45544552535F5045525F5345434F4E4418012A150A0F4163636570742D4C616E6775616765120272752A3C0A0D417574686F72697A6174696F6E122B4265617265722064643866653930382D636334652D346437382D396164332D31653732373434";
+    private static final String WEATHER_CURRENT_CHUNK2 = // current-weather request, chunk 2 of 2
+            "30313232642A170A0F4163636570742D456E636F64696E671204677A69702A210A1C782D6761726D696E2D696E747D65726E616C2D726571756573742D69641201312A1D0A17582D4761726D696E2D557365722D496E6974696174656412023F312A1E0A10582D4761726D696E2D556E69742D4944120A333631323932383336382A270A17582D4761726D696E2D53572D506172742D4E756D626572120C3030362D42343630332D30113F00";
+    private static final String WEATHER_CURRENT_DECODED = // current-weather request decoded (396 bytes)
+            "8C01B313400300000000B60100007801000012B3032AB0030A7668747470733A2F2F6170692E6763732E6761726D696E2E636F6D2F776561746865722F76322F63757272656E743F6C61743D363730343035333830266C6F6E3D3434313236313933392674656D70556E69743D43454C53495553267370656564556E69743D4D45544552535F5045525F5345434F4E4418012A150A0F4163636570742D4C616E6775616765120272752A3C0A0D417574686F72697A6174696F6E122B4265617265722064643866653930382D636334652D346437382D396164332D3165373237343430313232642A170A0F4163636570742D456E636F64696E671204677A69702A210A1C782D6761726D696E2D696E7465726E616C2D726571756573742D69641201312A1D0A17582D4761726D696E2D557365722D496E6974696174656412023F312A1E0A10582D4761726D696E2D556E69742D4944120A333631323932383336382A270A17582D4761726D696E2D53572D506172742D4E756D626572120C3030362D42343630332D30113F";
+    private static final String WEATHER_FORECAST_DAY_CHUNK1 = // forecast/day request, chunk 1 of 2
+            "00078C01B313410301010103AA010103780101FF12A7032AA4030A6A68747470733A2F2F6170692E6763732E6761726D696E2E636F6D2F776561746865722F76322F666F7265636173742F6461793F6C61743D363730343035333830266C6F6E3D343431323631393339266475726174696F6E3D352674656D70556E69743D43454C5349555318012A150A0F4163636570742D4C616E6775616765120272752A3C0A0D417574686F72697A6174696F6E122B4265617265722064643866653930382D636334652D346437382D396164332D3165373237343430313232642A170A0F416363";
+    private static final String WEATHER_FORECAST_DAY_CHUNK2 = // forecast/day request, chunk 2 of 2
+            "6570742D456E636F64696E671204677A69702A210A1C782D6761726D696E2D696E7465726E616C2D7265717565737D742D69641201312A1D0A17582D4761726D696E2D557365722D496E6974696174656412023F312A1E0A10582D4761726D696E2D556E69742D4944120A333631323932383336382A270A17582D4761726D696E2D53572D506172742D4E756D626572120C3030362D42343630332D30302A220A19582D4761726D6919D100";
+    private static final String WEATHER_FORECAST_DAY_DECODED = // forecast/day request decoded (396 bytes)
+            "8C01B313410300000000AA0100007801000012A7032AA4030A6A68747470733A2F2F6170692E6763732E6761726D696E2E636F6D2F776561746865722F76322F666F7265636173742F6461793F6C61743D363730343035333830266C6F6E3D343431323631393339266475726174696F6E3D352674656D70556E69743D43454C5349555318012A150A0F4163636570742D4C616E6775616765120272752A3C0A0D417574686F72697A6174696F6E122B4265617265722064643866653930382D636334652D346437382D396164332D3165373237343430313232642A170A0F4163636570742D456E636F64696E671204677A69702A210A1C782D6761726D696E2D696E7465726E616C2D726571756573742D69641201312A1D0A17582D4761726D696E2D557365722D496E6974696174656412023F312A1E0A10582D4761726D696E2D556E69742D4944120A333631323932383336382A270A17582D4761726D696E2D53572D506172742D4E756D626572120C3030362D42343630332D30302A220A19582D4761726D6919D1";
+    private static final String WEATHER_FORECAST_HOUR_CHUNK1 = // forecast/hour request, chunk 1 (truncated frame)
+            "00078C01B3134203010101030E020103780101FF128B042A88040ACD0168747470733A2F2F6170692E6763732E6761726D696E2E636F6D2F776561746865722F76322F666F7265636173742F686F75723F6C61743D363730343035333830266C6F6E3D343431323631393339266475726174696F6E3D3134267370656564556E69743D4D45544552535F5045525F5345434F4E442674656D70556E69743D43454C53495553267072657373757265556E69743D494E434845535F4F465F4D455243555259267669736962696C697479556E69743D4D455445522674696D65734F66496E74";
+    private static final String WEATHER_FORECAST_HOUR_CHUNK2 = // forecast/hour request, "final" chunk (middle chunk was lost)
+            "00021A05B31344030101010206010102060101066A041A0208037E1900";
+    private static final String STATUS_MSG = // protobuf status message, the next frame after the truncated one
+            "000211058813B41303370301010101010337E400";
+    private static final String STATUS_MSG_DECODED =
+            "11008813B41300370300000000000037E4";
+
+    // A truncated multi-chunk frame (a lost BLE notification) must not wedge the
+    // decoder - it is discarded and the next complete frame decodes normally.
+    @Test
+    public void testTruncatedFrameDoesNotWedgeDecoder() {
+        cobsCoDec.receivedBytes(GB.hexStringToByteArray(WEATHER_FORECAST_HOUR_CHUNK1));
+        Assert.assertNull(cobsCoDec.retrieveMessage());
+        // would previously throw BufferUnderflowException and leave the decoder wedged
+        cobsCoDec.receivedBytes(GB.hexStringToByteArray(WEATHER_FORECAST_HOUR_CHUNK2));
+        Assert.assertNull(cobsCoDec.retrieveMessage());
+        // the next complete frame must decode normally
+        cobsCoDec.receivedBytes(GB.hexStringToByteArray(STATUS_MSG));
+        Assert.assertArrayEquals(
+                GB.hexStringToByteArray(STATUS_MSG_DECODED),
+                cobsCoDec.retrieveMessage()
+        );
+    }
+
+    // A stream that starts mid-frame (no leading 0x00) must be discarded, not wedge the
+    // decoder: the next complete frame still decodes.
+    @Test
+    public void testOutOfSyncStreamRecovers() {
+        // mid-frame continuation bytes ending with a trailing 0x00: the buffer is
+        // out of sync (no leading 0x00) and must be discarded
+        cobsCoDec.receivedBytes(GB.hexStringToByteArray(WEATHER_FORECAST_DAY_CHUNK2));
+        Assert.assertNull(cobsCoDec.retrieveMessage());
+
+        // mid-frame continuation bytes without a trailing 0x00 stay in the buffer;
+        // when the next complete frame arrives, both are discarded as out of sync
+        final String midFrame = WEATHER_FORECAST_DAY_CHUNK2.substring(0, WEATHER_FORECAST_DAY_CHUNK2.length() - 2);
+        cobsCoDec.receivedBytes(GB.hexStringToByteArray(midFrame));
+        Assert.assertNull(cobsCoDec.retrieveMessage());
+        cobsCoDec.receivedBytes(GB.hexStringToByteArray(STATUS_MSG));
+        Assert.assertNull(cobsCoDec.retrieveMessage());
+
+        // the next complete frame decodes normally
+        cobsCoDec.receivedBytes(GB.hexStringToByteArray(STATUS_MSG));
+        Assert.assertArrayEquals(
+                GB.hexStringToByteArray(STATUS_MSG_DECODED),
+                cobsCoDec.retrieveMessage()
+        );
+    }
+
+    // Multi-chunk frames decode correctly, a truncated frame is skipped, and decoding
+    // continues with the following frame.
+    @Test
+    public void testMultiChunkFramesAndTruncatedFrameRecovery() {
+        cobsCoDec.receivedBytes(GB.hexStringToByteArray(WEATHER_CURRENT_CHUNK1));
+        Assert.assertNull(cobsCoDec.retrieveMessage());
+        cobsCoDec.receivedBytes(GB.hexStringToByteArray(WEATHER_CURRENT_CHUNK2));
+        Assert.assertArrayEquals(
+                GB.hexStringToByteArray(WEATHER_CURRENT_DECODED),
+                cobsCoDec.retrieveMessage()
+        );
+
+        cobsCoDec.receivedBytes(GB.hexStringToByteArray(WEATHER_FORECAST_DAY_CHUNK1));
+        Assert.assertNull(cobsCoDec.retrieveMessage());
+        cobsCoDec.receivedBytes(GB.hexStringToByteArray(WEATHER_FORECAST_DAY_CHUNK2));
+        Assert.assertArrayEquals(
+                GB.hexStringToByteArray(WEATHER_FORECAST_DAY_DECODED),
+                cobsCoDec.retrieveMessage()
+        );
+
+        // truncated frame - the middle chunk was lost on the BLE link
+        cobsCoDec.receivedBytes(GB.hexStringToByteArray(WEATHER_FORECAST_HOUR_CHUNK1));
+        Assert.assertNull(cobsCoDec.retrieveMessage());
+        cobsCoDec.receivedBytes(GB.hexStringToByteArray(WEATHER_FORECAST_HOUR_CHUNK2));
+        Assert.assertNull(cobsCoDec.retrieveMessage());
+
+        // decoder recovered - the following frame decodes
+        cobsCoDec.receivedBytes(GB.hexStringToByteArray(STATUS_MSG));
+        Assert.assertArrayEquals(
+                GB.hexStringToByteArray(STATUS_MSG_DECODED),
+                cobsCoDec.retrieveMessage()
+        );
+    }
+
+    // A buffer overflow (>10 KB without a frame terminator) must reset the decoder
+    // instead of wedging it: the next complete frame still decodes.
+    @Test
+    public void testBufferOverflowResetsDecoder() {
+        final byte[] junk = new byte[10_000];
+        Arrays.fill(junk, (byte) 0x55); // no 0x00 - the frame never completes
+        cobsCoDec.receivedBytes(junk);             // fills the buffer exactly
+        cobsCoDec.receivedBytes(new byte[]{0x55}); // overflows -> decoder reset
+        Assert.assertNull(cobsCoDec.retrieveMessage());
+        cobsCoDec.receivedBytes(GB.hexStringToByteArray(STATUS_MSG));
+        Assert.assertArrayEquals(
+                GB.hexStringToByteArray(STATUS_MSG_DECODED),
+                cobsCoDec.retrieveMessage()
+        );
+    }
+
     // reproducible fuzzing
     @Test
     public void TestEncodeDecodeRoundTrip() {

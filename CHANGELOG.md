@@ -17,6 +17,7 @@
 * Garmin: Fix crash on some older devices
 * Garmin: Fix some crashes on disconnection
 * Garmin: Make activity sync progress unit explicit
+* Garmin: Fix COBS decoder wedging on truncated frames
 * GloryFit: Fix crash on health settings screen
 * Nothing Ear (a): Fix bluetooth name
 * Optionally order disconnected devices by their most recent connection instead of by name
