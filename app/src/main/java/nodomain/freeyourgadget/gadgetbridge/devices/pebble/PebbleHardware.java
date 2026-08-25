@@ -30,6 +30,7 @@ import java.util.Map;
 
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceCandidate;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.BluetoothCompanyIdentifiers;
 
 /**
  * Unified source of truth for Pebble hardware definitions.
@@ -40,8 +41,10 @@ public class PebbleHardware {
     private static final Logger LOG = LoggerFactory.getLogger(PebbleHardware.class);
 
     // ======================= Vendor IDs =======================
-    public static final int PEBBLE_VENDOR_ID = 0x0154;  // 340 - Standard Pebble devices
-    public static final int CORE_VENDOR_ID = 0x0EEA;    // 3818 - Core devices (Pebble 2 Duo)
+    // 340 - Standard Pebble devices
+    public static final int PEBBLE_VENDOR_ID = BluetoothCompanyIdentifiers.PEBBLE_TECHNOLOGY;
+    // 3818 - Core devices (Pebble 2 Duo)
+    public static final int CORE_VENDOR_ID = BluetoothCompanyIdentifiers.CORE_DEVICES_LLC;
 
     // ======================= Platform Enum =======================
     /**

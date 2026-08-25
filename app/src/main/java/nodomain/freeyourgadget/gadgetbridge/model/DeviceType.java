@@ -27,6 +27,8 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.model;
 
+import java.lang.reflect.Constructor;
+
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.UnknownDeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.aawireless.AAWirelessCoordinator;
@@ -1075,9 +1077,9 @@ public enum DeviceType {
 
     private DeviceCoordinator coordinator;
 
-    private Class<? extends DeviceCoordinator> coordinatorClass;
+    private final Class<? extends DeviceCoordinator> coordinatorClass;
 
-    DeviceType(Class<? extends DeviceCoordinator> coordinatorClass) {
+    DeviceType(final Class<? extends DeviceCoordinator> coordinatorClass) {
         this.coordinatorClass = coordinatorClass;
     }
 
@@ -1085,7 +1087,7 @@ public enum DeviceType {
         return this != UNKNOWN;
     }
 
-    public static DeviceType fromName(String name) {
+    public static DeviceType fromName(final String name) {
         for (DeviceType type : values()) {
             if (type.name().equals(name)) {
                 return type;
@@ -1094,11 +1096,16 @@ public enum DeviceType {
         return DeviceType.UNKNOWN;
     }
 
+    public Class<? extends DeviceCoordinator> getCoordinatorClass() {
+        return coordinatorClass;
+    }
+
     public DeviceCoordinator getDeviceCoordinator() {
         if (coordinator == null) {
             try {
-                coordinator = coordinatorClass.newInstance();
-            } catch (ReflectiveOperationException e) {
+                final Constructor<? extends DeviceCoordinator> constructor = coordinatorClass.getConstructor();
+                coordinator = constructor.newInstance();
+            } catch (final ReflectiveOperationException e) {
                 throw new RuntimeException(e);
             }
         }

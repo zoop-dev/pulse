@@ -22,6 +22,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.SparseArray;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -83,10 +84,12 @@ import nodomain.freeyourgadget.gadgetbridge.entities.GenericTrainingLoadChronicS
 import nodomain.freeyourgadget.gadgetbridge.entities.GenericTrainingLoadChronicSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.PendingFileDao;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceCandidate;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryParser;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityTrackProvider;
 import nodomain.freeyourgadget.gadgetbridge.model.BodyEnergySample;
+import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
 import nodomain.freeyourgadget.gadgetbridge.model.FitActivityTrackProvider;
 import nodomain.freeyourgadget.gadgetbridge.model.GpxActivityTrackProvider;
 import nodomain.freeyourgadget.gadgetbridge.model.HrvSummarySample;
@@ -99,11 +102,26 @@ import nodomain.freeyourgadget.gadgetbridge.model.Spo2Sample;
 import nodomain.freeyourgadget.gadgetbridge.model.StressSample;
 import nodomain.freeyourgadget.gadgetbridge.model.WorkoutLoadSample;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.BluetoothCompanyIdentifiers;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.GarminSupport;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 import nodomain.freeyourgadget.gadgetbridge.util.preferences.DevicePrefs;
 
 public abstract class GarminCoordinator extends AbstractBLEDeviceCoordinator {
+    @Override
+    public boolean supports(@NonNull final GBDeviceCandidate candidate) {
+        final SparseArray<byte[]> manufacturerSpecificData = candidate.getManufacturerSpecificData();
+        final byte[] garminData = manufacturerSpecificData.get(BluetoothCompanyIdentifiers.GARMIN_INTERNATIONAL_INC);
+        if (garminData != null && garminData.length >= 2) {
+            final int partNumber = ((garminData[0] & 0xFF) << 8) | (garminData[1] & 0xFF);
+            final DeviceType deviceType = GarminProductNumbers.getDeviceType(partNumber);
+            return deviceType != null && deviceType.getCoordinatorClass() == this.getClass();
+        }
+
+        // Fallback to device name
+        return super.supports(candidate);
+    }
+
     @Override
     public boolean suggestUnbindBeforePair() {
         return false;

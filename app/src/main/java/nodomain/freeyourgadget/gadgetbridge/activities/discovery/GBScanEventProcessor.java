@@ -42,6 +42,7 @@ import java.util.concurrent.atomic.AtomicLong;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceCandidate;
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
 import nodomain.freeyourgadget.gadgetbridge.util.DeviceHelper;
+import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 /**
  * A dedicated thread to process {@link GBScanEvent}s. This class keeps a map from mac address to
@@ -152,7 +153,7 @@ public final class GBScanEventProcessor implements Runnable {
      * Schedule a {@link GBScanEvent} to be processed asynchronously.
      */
     public void scheduleProcessing(final GBScanEvent event) {
-        LOG.debug("Scheduling {} for processing ({})", event.getDevice().getAddress(), event.getServiceUuids());
+        LOG.debug("Scheduling {} for processing", event.getDevice().getAddress());
 
         final String address = event.getDevice().getAddress();
         synchronized (eventsToProcessMap) {
@@ -169,8 +170,26 @@ public final class GBScanEventProcessor implements Runnable {
         }
     }
 
+    private String toString(final SparseArray<byte[]> arr) {
+        if (arr == null) {
+            return null;
+        }
+        final StringBuilder sb = new StringBuilder();
+        sb.append("{");
+
+        for (int i = 0; i < arr.size(); i++) {
+            final int key = arr.keyAt(i);
+            final byte[] value = arr.valueAt(i);
+            sb.append(String.format("0x%02x", key)).append("=").append(GB.hexdump(value));
+        }
+
+        sb.append("}");
+
+        return sb.toString();
+    }
+
     private boolean processCandidate(final GBDeviceCandidate candidate) {
-        LOG.debug("found device: {}, {}", candidate.getName(), candidate.getMacAddress());
+        LOG.debug("found device: {}, {}, {}", candidate.getName(), candidate.getMacAddress(), toString(candidate.getManufacturerSpecificData()));
         if (LOG.isDebugEnabled()) {
             final ParcelUuid[] uuids = candidate.getServiceUuids();
             for (ParcelUuid uuid : uuids) {
