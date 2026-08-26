@@ -1,4 +1,4 @@
-package org.gadgetbridge.kaitai.aux;
+package org.gadgetbridge.kaitai_aux.main;
 
 import java.nio.file.Path;
 import java.util.List;

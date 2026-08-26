@@ -1,6 +1,6 @@
-package org.gadgetbridge.kaitai.aux;
+package org.gadgetbridge.kaitai_aux.main;
 
-import org.gadgetbridge.kaitai.dji.DumlCmdRoutingGenerator;
+import org.gadgetbridge.kaitai_aux.dji.DumlCmdRoutingGenerator;
 
 import java.io.IOException;
 import java.nio.file.DirectoryStream;

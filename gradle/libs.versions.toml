@@ -50,6 +50,7 @@ kaitai-plugin = "0.2.0"
 robolectric = "4.16.1"
 searchpreference = "2.7.3"
 slf4j = "2.0.18"
+snakeyaml = "2.6"
 solarpositioning = "2.0.13"
 security-crypto = "1.1.0"
 browser = "1.10.0"
@@ -114,6 +115,7 @@ protoc = { group = "com.google.protobuf", name = "protoc", version.ref = "protob
 robolectric = { group = "org.robolectric", name = "robolectric", version.ref = "robolectric" }
 searchpreference = { group = "com.github.ByteHamster", name = "SearchPreference", version.ref = "searchpreference" }
 slf4j-api = { group = "org.slf4j", name = "slf4j-api", version.ref = "slf4j" }
+snakeyaml = { module = "org.yaml:snakeyaml", version.ref = "snakeyaml" }
 solarpositioning = { group = "net.e175.klaus", name = "solarpositioning", version.ref = "solarpositioning" }
 androidx-security-crypto = { group = "androidx.security", name = "security-crypto", version.ref = "security-crypto" }
 androidx-browser = { group = "androidx.browser", name = "browser", version.ref = "browser" }

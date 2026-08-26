@@ -1,4 +1,4 @@
-package org.gadgetbridge.kaitai.aux;
+package org.gadgetbridge.kaitai_aux.main;
 
 import java.util.Map;
 

@@ -10,11 +10,11 @@ java {
 }
 
 application {
-    mainClass = "org.gadgetbridge.kaitai.aux.KaitaiAuxGen"
+    mainClass = "org.gadgetbridge.kaitai_aux.main.KaitaiAuxGen"
 }
 
 dependencies {
-    implementation("org.yaml:snakeyaml:2.6")
+    implementation(libs.snakeyaml)
 }
 
 tasks.register<JavaExec>("genKaitaiAux") {

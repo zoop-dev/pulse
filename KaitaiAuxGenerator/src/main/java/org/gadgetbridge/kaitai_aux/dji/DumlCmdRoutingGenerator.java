@@ -1,8 +1,8 @@
-package org.gadgetbridge.kaitai.dji;
+package org.gadgetbridge.kaitai_aux.dji;
 
-import org.gadgetbridge.kaitai.aux.AuxGenerator;
-import org.gadgetbridge.kaitai.aux.KsyFile;
-import org.gadgetbridge.kaitai.aux.KsyType;
+import org.gadgetbridge.kaitai_aux.main.AuxGenerator;
+import org.gadgetbridge.kaitai_aux.main.KsyFile;
+import org.gadgetbridge.kaitai_aux.main.KsyType;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,9 +15,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import static org.gadgetbridge.kaitai.aux.KaitaiNames.pascalCase;
-import static org.gadgetbridge.kaitai.aux.KaitaiNames.stripPrefix;
-import static org.gadgetbridge.kaitai.aux.KaitaiNames.stripSuffix;
+import static org.gadgetbridge.kaitai_aux.main.KaitaiNames.pascalCase;
+import static org.gadgetbridge.kaitai_aux.main.KaitaiNames.stripPrefix;
+import static org.gadgetbridge.kaitai_aux.main.KaitaiNames.stripSuffix;
 
 /**
  * Generates the DUML cmd routing (cmd constants + decoder table) for a .ksy file that contains
