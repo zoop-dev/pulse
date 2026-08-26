@@ -46,7 +46,6 @@ msgpack = "0.9.12"
 okhttp = "5.5.0"
 protobuf = "4.36.0"
 protobuf-plugin = "0.10.0"
-kaitai-plugin = "0.1.0"
 robolectric = "4.16.1"
 searchpreference = "2.7.3"
 slf4j = "2.0.18"
@@ -54,7 +53,6 @@ solarpositioning = "2.0.13"
 security-crypto = "1.1.0"
 browser = "1.10.0"
 exifinterface = "1.4.2"
-kaitai-struct-runtime = "0.11"
 
 [libraries]
 ahocorasick = { group = "org.ahocorasick", name = "ahocorasick", version.ref = "ahocorasick" }
@@ -118,7 +116,6 @@ solarpositioning = { group = "net.e175.klaus", name = "solarpositioning", versio
 androidx-security-crypto = { group = "androidx.security", name = "security-crypto", version.ref = "security-crypto" }
 androidx-browser = { group = "androidx.browser", name = "browser", version.ref = "browser" }
 androidx-exifinterface = { group = "androidx.exifinterface", name = "exifinterface", version.ref = "exifinterface" }
-kaitai-struct-runtime = { group = "io.kaitai", name = "kaitai-struct-runtime", version.ref = "kaitai-struct-runtime" }
 
 [bundles]
 android-emojify = [
@@ -144,4 +141,3 @@ mapsforge = [
 android-application = { id = "com.android.application", version.ref = "android-gradle-plugin" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
 protobuf = { id = "com.google.protobuf", version.ref = "protobuf-plugin" }
-kaitai = { id = "org.freeyourgadget.kaitai", version.ref = "kaitai-plugin" }

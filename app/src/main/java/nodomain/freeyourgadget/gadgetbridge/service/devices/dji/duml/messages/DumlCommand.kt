@@ -1,82 +1,79 @@
 package nodomain.freeyourgadget.gadgetbridge.service.devices.dji.duml.messages
 
-import io.kaitai.struct.ByteBufferKaitaiStream
-import io.kaitai.struct.KaitaiStream
-import io.kaitai.struct.KaitaiStruct
 import nodomain.freeyourgadget.gadgetbridge.service.devices.dji.duml.DumlAck
 import nodomain.freeyourgadget.gadgetbridge.service.devices.dji.duml.DumlAddress
 import nodomain.freeyourgadget.gadgetbridge.service.devices.dji.duml.DumlCmdSet
 import nodomain.freeyourgadget.gadgetbridge.service.devices.dji.duml.DumlPacket
 import nodomain.freeyourgadget.gadgetbridge.service.devices.dji.duml.DumlPacketType
 import nodomain.freeyourgadget.gadgetbridge.util.GB
-import java.nio.BufferOverflowException
 
 /**
- * One decoded DUML message. [payload] is whatever the registered decoder for
- * (cmdSet, cmd, packetType) produced - see [DECODERS] below.
+ * A DUML command family: one (cmdSet, cmd) pair, grouping both directions
+ * of the exchange under a single named operation. The two directions usually
+ * do not share a payload shape - a query carries little, the answer carries
+ * the actual data, so each direction still gets its own type.
+ *
+ * Subclasses live in per-cmdSet files (DumlCommandWifi.kt, etc.) rather than
+ * all here. Each such file contributes its own decoders to [DECODERS] below;
+ * add the new file's map there when it's created.
+ *
+ * Unknown payloads are decoded to [Unknown].
  */
-class DumlCommand(
-    val cmdSet: Int,
-    val cmd: Int,
-    val packetType: DumlPacketType,
-    val payload: Any,
-) {
-    override fun toString(): String {
-        val payloadStr = (payload as? ByteArray)?.let { GB.hexdump(it) } ?: payload.toString()
-        return "DumlCommand(cmdSet=0x%02x, cmd=0x%02x, %s, payload=%s)".format(cmdSet, cmd, packetType, payloadStr)
+sealed class DumlCommand(val cmdSet: Int, val cmd: Int) {
+
+    /** Anything not (yet) modeled - carries whichever direction was observed. */
+    class Unknown(
+        cmdSet: Int,
+        cmd: Int,
+        val packetType: DumlPacketType,
+        val rawPayload: ByteArray,
+    ) : DumlCommand(cmdSet, cmd) {
+        override fun equals(other: Any?): Boolean {
+            if (this === other) return true
+            if (other !is Unknown) return false
+            return cmdSet == other.cmdSet && cmd == other.cmd &&
+                    packetType == other.packetType && rawPayload.contentEquals(other.rawPayload)
+        }
+
+        override fun hashCode(): Int =
+            (31 * (31 * (31 * cmdSet + cmd) + packetType.hashCode())) + rawPayload.contentHashCode()
+
+        override fun toString(): String =
+            "Unknown(cmdSet=0x%02x, cmd=0x%02x, %s, payload=%s)".format(cmdSet, cmd, packetType, GB.hexdump(rawPayload))
     }
 
     companion object {
-        // Outer key is cmdSet, inner key is (cmd, packetType) - the two directions of an
-        // exchange aren't guaranteed to share a payload shape, so a decoder registered for
-        // one packetType might not match the other. One entry per cmdSet file; add the
-        // new file's table here when it's created.
-        private val DECODERS: Map<Int, Map<Pair<Int, DumlPacketType>, (ByteArray) -> Any>> = mapOf(
+        // Outer key is cmdSet, inner key is (cmd, packetType) - the two
+        // directions of an exchange aren't guaranteed to share a payload
+        // shape, so a decoder registered for one packetType must never also
+        // match the other. One entry per cmdSet file; each such file's
+        // own map only needs (cmd, packetType) keys since its cmdSet is
+        // fixed.
+        private val DECODERS: Map<Int, Map<Pair<Int, DumlPacketType>, (ByteArray) -> DumlCommand>> = mapOf(
             DumlCmdSet.WIFI to WIFI_DECODERS,
         )
 
         fun decode(cmdSet: Int, cmd: Int, packetType: DumlPacketType, payload: ByteArray): DumlCommand =
-            DumlCommand(cmdSet, cmd, packetType, DECODERS[cmdSet]?.get(cmd to packetType)?.invoke(payload) ?: payload)
+            DECODERS[cmdSet]?.get(cmd to packetType)?.invoke(payload) ?: Unknown(cmdSet, cmd, packetType, payload)
 
         fun decode(packet: DumlPacket): DumlCommand =
             decode(packet.cmdSet, packet.cmd, packet.packetType, packet.payload)
     }
 }
 
-/**
- * Turns a generated Kaitai struct's stream constructor into a byte-array decoder: wraps the
- * bytes in a [ByteBufferKaitaiStream] and calls `_read()`.
- */
-fun <T : KaitaiStruct.ReadOnly> decoderFor(factory: (KaitaiStream) -> T): (ByteArray) -> T =
-    { bytes -> factory(ByteBufferKaitaiStream(bytes)).apply { _read() } }
-
-/**
- * Serializes a generated Kaitai struct back to bytes, trimmed to what it actually wrote.
- */
-fun KaitaiStruct.ReadWrite.encodeToBytes(): ByteArray {
-    _check()
-    var size = 64
-    while (true) {
-        val scratch = ByteArray(size)
-        try {
-            _write(ByteBufferKaitaiStream(scratch))
-            return scratch.copyOf(_io().pos())
-        } catch (e: BufferOverflowException) {
-            size *= 2
-        }
-    }
+/** Implemented by whichever [DumlCommand] variant represents something the phone sends. */
+interface DumlEncodable {
+    fun encode(): ByteArray
 }
 
-/** Wraps an encoded Kaitai struct in a full [DumlPacket] envelope. */
-fun KaitaiStruct.ReadWrite.toPacket(
-    cmdSet: Int,
-    cmd: Int,
+/** Wraps an encodable command in a full [DumlPacket] envelope. */
+fun <T> T.toPacket(
     sender: DumlAddress,
     receiver: DumlAddress,
     seq: Int,
     ack: DumlAck = DumlAck.ACK_AFTER_EXEC,
     packetType: DumlPacketType = DumlPacketType.REQUEST,
-): DumlPacket = DumlPacket(
+): DumlPacket where T : DumlCommand, T : DumlEncodable = DumlPacket(
     sender = sender,
     receiver = receiver,
     seq = seq,
@@ -84,5 +81,5 @@ fun KaitaiStruct.ReadWrite.toPacket(
     packetType = packetType,
     cmdSet = cmdSet,
     cmd = cmd,
-    payload = encodeToBytes(),
+    payload = encode(),
 )
