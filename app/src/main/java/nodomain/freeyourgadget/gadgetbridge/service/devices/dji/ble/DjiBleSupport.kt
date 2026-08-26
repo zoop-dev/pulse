@@ -3,21 +3,23 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.dji.ble
 import android.bluetooth.BluetoothGatt
 import android.bluetooth.BluetoothGattCharacteristic
 import android.os.Bundle
+import io.kaitai.struct.KaitaiStruct
 import nodomain.freeyourgadget.gadgetbridge.GBApplication
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventUpdateDeviceState
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice
+import nodomain.freeyourgadget.gadgetbridge.kaitai.DumlWifi
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder
 import nodomain.freeyourgadget.gadgetbridge.service.devices.dji.DjiPrefs
 import nodomain.freeyourgadget.gadgetbridge.service.devices.dji.duml.DumlAck
 import nodomain.freeyourgadget.gadgetbridge.service.devices.dji.duml.DumlAddress
+import nodomain.freeyourgadget.gadgetbridge.service.devices.dji.duml.DumlCmdSet
 import nodomain.freeyourgadget.gadgetbridge.service.devices.dji.duml.DumlCodec
 import nodomain.freeyourgadget.gadgetbridge.service.devices.dji.duml.DumlFrameReassembler
 import nodomain.freeyourgadget.gadgetbridge.service.devices.dji.duml.DumlPacket
 import nodomain.freeyourgadget.gadgetbridge.service.devices.dji.duml.DumlPacketType
 import nodomain.freeyourgadget.gadgetbridge.service.devices.dji.duml.messages.DumlCommand
-import nodomain.freeyourgadget.gadgetbridge.service.devices.dji.duml.messages.DumlEncodable
-import nodomain.freeyourgadget.gadgetbridge.service.devices.dji.duml.messages.Wifi
+import nodomain.freeyourgadget.gadgetbridge.service.devices.dji.duml.messages.WifiCmd
 import nodomain.freeyourgadget.gadgetbridge.service.devices.dji.duml.messages.toPacket
 import org.slf4j.LoggerFactory
 import java.util.UUID
@@ -46,10 +48,16 @@ class DjiBleSupport : AbstractBTLESingleDeviceSupport(LOG) {
         sendPacket(
             builder,
             receiver = DumlAddress.WIFI,
-            command = Wifi.SetPairingPin.Request(
-                devicePrefs.getOrCreatePairingId(),
-                devicePrefs.getOrCreatePairingPin(),
-            )
+            cmdSet = DumlCmdSet.WIFI,
+            cmd = WifiCmd.SET_PAIRING_PIN,
+            payload = DumlWifi.SetPairingPinRequest().apply {
+                val id = devicePrefs.getOrCreatePairingId()
+                val pin = devicePrefs.getOrCreatePairingPin()
+                setIdLen(id.toByteArray(Charsets.UTF_8).size)
+                setId(id)
+                setPinLen(pin.toByteArray(Charsets.UTF_8).size)
+                setPin(pin)
+            }
         )
 
         builder.setDeviceState(GBDevice.State.AUTHENTICATING)
@@ -75,27 +83,30 @@ class DjiBleSupport : AbstractBTLESingleDeviceSupport(LOG) {
     }
 
     private fun handlePacket(packet: DumlPacket) {
-        when (val cmd = DumlCommand.decode(packet)) {
-            is Wifi.PairingPinApproved.Request -> {
-                if (cmd.status == 0x01) {
+        val cmd = DumlCommand.decode(packet)
+        when (val payload = cmd.payload) {
+            is DumlWifi.PairingPinApproved -> {
+                if (payload.status() == 0x01) {
                     evaluateGBDeviceEvent(GBDeviceEventUpdateDeviceState(GBDevice.State.INITIALIZED))
                     sendPacket(
                         "pairing ack",
                         receiver = DumlAddress.WIFI,
                         seq = packet.seq,
                         packetType = DumlPacketType.RESPONSE,
-                        command = Wifi.PairingPinApproved.Request(0x00)
+                        cmdSet = DumlCmdSet.WIFI,
+                        cmd = WifiCmd.PAIRING_PIN_APPROVED,
+                        payload = DumlWifi.PairingPinApproved().apply { setStatus(0x00) },
                     )
                 } else {
-                    LOG.warn("Unexpected pairing pin status {}", cmd.status)
+                    LOG.warn("Unexpected pairing pin status {}", payload.status())
                 }
             }
 
-            is Wifi.SetPairingPin.Response -> {
-                when (cmd.pairingState) {
+            is DumlWifi.SetPairingPinResponse -> {
+                when (payload.pairingState()) {
                     0x01 -> evaluateGBDeviceEvent(GBDeviceEventUpdateDeviceState(GBDevice.State.INITIALIZED))
                     0x02 -> return // waiting for user to approve
-                    else -> LOG.warn("Unexpected pairing state {}", cmd.pairingState)
+                    else -> LOG.warn("Unexpected pairing state {}", payload.pairingState())
                 }
             }
 
@@ -119,33 +130,53 @@ class DjiBleSupport : AbstractBTLESingleDeviceSupport(LOG) {
         builder.write(UUID_CHARACTERISTIC_DJI_FFF5, *DumlCodec.encode(packet))
     }
 
-    private fun <T> sendPacket(
+    private fun sendPacket(
         builder: TransactionBuilder,
         sender: DumlAddress = DumlAddress.APP,
         receiver: DumlAddress,
         seq: Int = allocateSeq(),
         ack: DumlAck = DumlAck.ACK_AFTER_EXEC,
         packetType: DumlPacketType = DumlPacketType.REQUEST,
-        command: T
-    ) where T : DumlCommand, T : DumlEncodable {
+        cmdSet: Int,
+        cmd: Int,
+        payload: KaitaiStruct.ReadWrite,
+    ) {
         sendPacket(
             builder,
-            command.toPacket(sender = sender, receiver = receiver, seq = seq, ack = ack, packetType = packetType)
+            payload.toPacket(
+                cmdSet = cmdSet,
+                cmd = cmd,
+                sender = sender,
+                receiver = receiver,
+                seq = seq,
+                ack = ack,
+                packetType = packetType
+            )
         )
     }
 
-    private fun <T> sendPacket(
+    private fun sendPacket(
         taskName: String,
         sender: DumlAddress = DumlAddress.APP,
         receiver: DumlAddress,
         seq: Int = allocateSeq(),
         ack: DumlAck = DumlAck.ACK_AFTER_EXEC,
         packetType: DumlPacketType = DumlPacketType.REQUEST,
-        command: T
-    ) where T : DumlCommand, T : DumlEncodable {
+        cmdSet: Int,
+        cmd: Int,
+        payload: KaitaiStruct.ReadWrite,
+    ) {
         sendPacket(
             taskName,
-            command.toPacket(sender = sender, receiver = receiver, seq = seq, ack = ack, packetType = packetType)
+            payload.toPacket(
+                cmdSet = cmdSet,
+                cmd = cmd,
+                sender = sender,
+                receiver = receiver,
+                seq = seq,
+                ack = ack,
+                packetType = packetType
+            )
         )
     }
 

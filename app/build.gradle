@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.protobuf)
+    alias(libs.plugins.kaitai)
 }
 
 tasks.withType(Test).configureEach {
@@ -177,6 +178,7 @@ android {
         main {
             java.srcDirs += "build/generated/sources/gbdao"
             java.srcDirs += "build/generated/sources/fit"
+            kotlin.srcDirs += "build/generated/sources/kaitaiaux"
             res.srcDirs += "build/generated/res/changelog"
         }
         test {
@@ -340,6 +342,7 @@ dependencies {
     implementation libs.bundles.mapsforge
     implementation libs.androidsvg
     implementation libs.jsoup
+    implementation libs.kaitai.struct.runtime
 
     // Bouncy Castle is included directly in GB, to avoid pulling the entire dependency
     // It's included in the org.bouncycastle.shaded package, to fix conflicts with roboelectric
@@ -359,11 +362,13 @@ dependencies {
 
 preBuild.dependsOn(":GBDaoGenerator:genSources")
 preBuild.dependsOn(':FitCodeGenerator:genFit')
+preBuild.dependsOn(':KaitaiAuxGenerator:genKaitaiAux')
 preBuild.dependsOn(tasks.buildGitChangelog)
 
 gradle.beforeProject {
     preBuild.dependsOn(":GBDaoGenerator:genSources")
     preBuild.dependsOn(':FitCodeGenerator:genFit')
+    preBuild.dependsOn(':KaitaiAuxGenerator:genKaitaiAux')
 }
 
 tasks.register('cleanGenerated', Delete) {
@@ -389,4 +394,9 @@ protobuf {
             }
         }
     }
+}
+
+kaitai {
+    javaPackage = "nodomain.freeyourgadget.gadgetbridge.kaitai"
+    readWrite = true
 }
