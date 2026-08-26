@@ -40,18 +40,13 @@ import nodomain.freeyourgadget.gadgetbridge.util.NotificationUtils;
 public class NotificationsHandler implements MessageHandler {
     public static final SimpleDateFormat NOTIFICATION_DATE_FORMAT = new SimpleDateFormat("yyyyMMdd'T'HHmmss", Locale.ROOT);
     private static final Logger LOG = LoggerFactory.getLogger(NotificationsHandler.class);
-    private final Queue<NotificationSpec> notificationSpecQueue;
-    private final Upload upload;
+    private final Queue<NotificationSpec> notificationSpecQueue = new LinkedList<>();
+    private final Upload upload = new Upload();
     private boolean enabled = false;
     // Keep track of Notification ID -> action handle, as BangleJSDeviceSupport.
     // TODO: This needs to be simplified.
     private final LimitedQueue<Integer, Long> mNotificationReplyAction = new LimitedQueue<>(32);
 
-
-    public NotificationsHandler() {
-        this.notificationSpecQueue = new LinkedList<>();
-        this.upload = new Upload();
-    }
 
     private static void encodeNotificationAttribute(NotificationSpec notificationSpec, Map.Entry<NotificationAttribute, Integer> entry, MessageWriter messageWriter) {
         messageWriter.writeByte(entry.getKey().code);
@@ -107,7 +102,7 @@ public class NotificationsHandler implements MessageHandler {
 
         NotificationUpdateMessage.NotificationUpdateType notificationUpdateType = isUpdate ? NotificationUpdateMessage.NotificationUpdateType.MODIFY : NotificationUpdateMessage.NotificationUpdateType.ADD;
 
-        if (notificationSpecQueue.size() > 10)
+        if (notificationSpecQueue.size() > 64)
             notificationSpecQueue.poll(); //remove the oldest notification TODO: should send a delete notification message to watch!
 
         final boolean hasActions = (null != notificationSpec.attachedActions && !notificationSpec.attachedActions.isEmpty());
@@ -162,7 +157,10 @@ public class NotificationsHandler implements MessageHandler {
                 return new NotificationUpdateMessage(NotificationUpdateMessage.NotificationUpdateType.REMOVE, e.type, getNotificationsCount(e.type), id, false, false);
             }
         }
-        return null;
+
+        LOG.warn("Failed to find notification in queue for id={}", id);
+
+        return new NotificationUpdateMessage(NotificationUpdateMessage.NotificationUpdateType.REMOVE, NotificationType.UNKNOWN, 0, id, false, false);
     }
 
     @Override
