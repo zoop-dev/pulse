@@ -1,4 +1,4 @@
-/*  Copyright (C) 2015-2024 115ek, akasaka / Genjitsu Labs, Alicia Hormann,
+/*  Copyright (C) 2015-2026 115ek, akasaka / Genjitsu Labs, Alicia Hormann,
     Andreas Böhler, Andreas Shimokawa, Andrew Watkins, angelpup, Carsten Pfeiffer,
     Cre3per, Damien Gaignon, DanialHanif, Daniel Dakhno, Daniele Gobbetti, Daniel
     Thompson, Da Pa, Dmytro Bielik, Frank Ertl, Gabriele Monaco, GeekosaurusR3x,
@@ -9,7 +9,7 @@
     Pavel Elagin, Petr Kadlec, Petr Vaněk, protomors, Quallenauge, Quang Ngô,
     Raghd Hamzeh, Sami Alaoui, Sebastian Kranz, sedy89, Sophanimus, Stefan Bora,
     Taavi Eomäe, thermatk, tiparega, Vadim Kaushan, x29a, xaos, Yoran Vulker,
-    Yukai Li
+    Yukai Li, Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -136,6 +136,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.fenix.GarminF
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.fenix.GarminFenix6SProSolarCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.fenix.GarminFenix6SSapphireCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.fenix.GarminFenix6SapphireCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.fenix.GarminFenix6XCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.fenix.GarminFenix6XProCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.fenix.GarminFenix6XProSolarCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.fenix.GarminFenix6XSapphireCoordinator;
@@ -151,6 +152,9 @@ import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.fenix.GarminF
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.fenix.GarminFenix8Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.fenix.GarminFenix8ProCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.fenix.GarminFenix8SolarCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.fenix.GarminFenix9Coordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.fenix.GarminFenix9ProCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.fenix.GarminFenix9ProSolarCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.fenix.GarminFenixECoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.forerunner.GarminForerunner165Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.forerunner.GarminForerunner165MusicCoordinator;
@@ -178,11 +182,14 @@ import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.forerunner.Ga
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.forerunner.GarminForerunner630Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.forerunner.GarminForerunner645Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.forerunner.GarminForerunner645MusicCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.forerunner.GarminForerunner70Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.forerunner.GarminForerunner735XTCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.forerunner.GarminForerunner745Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.forerunner.GarminForerunner920Coordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.forerunner.GarminForerunner920XTCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.forerunner.GarminForerunner935Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.forerunner.GarminForerunner945Coordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.forerunner.GarminForerunner945LTECoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.forerunner.GarminForerunner955Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.forerunner.GarminForerunner965Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.forerunner.GarminForerunner970Coordinator;
@@ -192,6 +199,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.instinct.Garm
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.instinct.GarminInstinct2SSurfCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.instinct.GarminInstinct2SolTacCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.instinct.GarminInstinct2SolarCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.instinct.GarminInstinct2XCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.instinct.GarminInstinct2XSolarCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.instinct.GarminInstinct2XTacticalCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.instinct.GarminInstinct3Coordinator;
@@ -226,6 +234,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.venu.GarminVe
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.venu.GarminVenuX1Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.vivoactive.GarminVivoActive3Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.vivoactive.GarminVivoActive3MusicCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.vivoactive.GarminVivoActive3TCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.vivoactive.GarminVivoActive4Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.vivoactive.GarminVivoActive4SCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.vivoactive.GarminVivoActive5Coordinator;
@@ -831,6 +840,7 @@ public enum DeviceType {
     GARMIN_FENIX_6S_SPORT(GarminFenix6SSportCoordinator.class),
     GARMIN_FENIX_6S_PRO_SOLAR(GarminFenix6SProSolarCoordinator.class),
     GARMIN_FENIX_6S_SAPPHIRE(GarminFenix6SSapphireCoordinator.class),
+    GARMIN_FENIX_6X(GarminFenix6XCoordinator.class),
     GARMIN_FENIX_6X_PRO(GarminFenix6XProCoordinator.class),
     GARMIN_FENIX_6X_PRO_SOLAR(GarminFenix6XProSolarCoordinator.class),
     GARMIN_FENIX_6X_SAPPHIRE(GarminFenix6XSapphireCoordinator.class),
@@ -846,6 +856,9 @@ public enum DeviceType {
     GARMIN_FENIX_8(GarminFenix8Coordinator.class),
     GARMIN_FENIX_8_SOLAR(GarminFenix8SolarCoordinator.class),
     GARMIN_FENIX_8_PRO(GarminFenix8ProCoordinator.class),
+    GARMIN_FENIX_9(GarminFenix9Coordinator.class),
+    GARMIN_FENIX_9_PRO(GarminFenix9ProCoordinator.class),
+    GARMIN_FENIX_9_PRO_SOLAR(GarminFenix9ProSolarCoordinator.class),
     GARMIN_FENIX_E(GarminFenixECoordinator.class),
     GARMIN_FORERUNNER_25(GarminForerunner25Coordinator.class),
     GARMIN_FORERUNNER_30(GarminForerunner30Coordinator.class),
@@ -873,11 +886,14 @@ public enum DeviceType {
     GARMIN_FORERUNNER_630(GarminForerunner630Coordinator.class),
     GARMIN_FORERUNNER_645(GarminForerunner645Coordinator.class),
     GARMIN_FORERUNNER_645_MUSIC(GarminForerunner645MusicCoordinator.class),
+    GARMIN_FORERUNNER_70(GarminForerunner70Coordinator.class),
     GARMIN_FORERUNNER_735XT(GarminForerunner735XTCoordinator.class),
     GARMIN_FORERUNNER_745(GarminForerunner745Coordinator.class),
     GARMIN_FORERUNNER_920(GarminForerunner920Coordinator.class),
+    GARMIN_FORERUNNER_920XT(GarminForerunner920XTCoordinator.class),
     GARMIN_FORERUNNER_935(GarminForerunner935Coordinator.class),
     GARMIN_FORERUNNER_945(GarminForerunner945Coordinator.class),
+    GARMIN_FORERUNNER_945_LTE(GarminForerunner945LTECoordinator.class),
     GARMIN_FORERUNNER_955(GarminForerunner955Coordinator.class),
     GARMIN_FORERUNNER_965(GarminForerunner965Coordinator.class),
     GARMIN_FORERUNNER_970(GarminForerunner970Coordinator.class),
@@ -895,6 +911,7 @@ public enum DeviceType {
     GARMIN_INSTINCT_2S(GarminInstinct2SCoordinator.class),
     GARMIN_INSTINCT_2S_SOLAR(GarminInstinct2SSolarCoordinator.class),
     GARMIN_INSTINCT_2S_SURF(GarminInstinct2SSurfCoordinator.class),
+    GARMIN_INSTINCT_2X(GarminInstinct2XCoordinator.class),
     GARMIN_INSTINCT_2X_SOLAR(GarminInstinct2XSolarCoordinator.class),
     GARMIN_INSTINCT_2X_TACTICAL(GarminInstinct2XTacticalCoordinator.class),
     GARMIN_INSTINCT_2_SOLAR(GarminInstinct2SolarCoordinator.class),
@@ -927,6 +944,7 @@ public enum DeviceType {
     GARMIN_VIVOACTIVE(GarminVivoActiveCoordinator.class),
     GARMIN_VIVOACTIVE_3(GarminVivoActive3Coordinator.class),
     GARMIN_VIVOACTIVE_3_MUSIC(GarminVivoActive3MusicCoordinator.class),
+    GARMIN_VIVOACTIVE_3T(GarminVivoActive3TCoordinator.class),
     GARMIN_VIVOACTIVE_4(GarminVivoActive4Coordinator.class),
     GARMIN_VIVOACTIVE_4S(GarminVivoActive4SCoordinator.class),
     GARMIN_VIVOACTIVE_5(GarminVivoActive5Coordinator.class),
