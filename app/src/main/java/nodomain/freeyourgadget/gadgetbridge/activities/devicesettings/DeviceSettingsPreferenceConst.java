@@ -647,7 +647,6 @@ public class DeviceSettingsPreferenceConst {
     public static final String PREF_MIJIA_LYWSD_COMFORT_HUMIDITY_UPPER = "pref_mijia_lywsd_comfort_humidity_upper";
 
     public static final String PREF_QC35_NOISE_CANCELLING_LEVEL = "qc35_noise_cancelling_level";
-    public static final String PREF_NC700_NOISE_CANCELLING_LEVEL = "nc700_noise_cancelling_level";
 
     public static final String PREF_DUAL_DEVICE_SUPPORT = "dual_device_support";
 

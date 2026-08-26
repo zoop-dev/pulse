@@ -30,15 +30,16 @@ import java.util.ArrayList;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEvent;
-import nodomain.freeyourgadget.gadgetbridge.devices.bose.AbstractBoseCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventBatteryInfo;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.BatteryState;
+import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
 import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol;
 import nodomain.freeyourgadget.gadgetbridge.util.StringUtils;
 
 public class BoseProtocol extends GBDeviceProtocol {
     Logger logger = LoggerFactory.getLogger(getClass());
+
     protected BoseProtocol(GBDevice device) {
         super(device);
     }
@@ -50,16 +51,16 @@ public class BoseProtocol extends GBDeviceProtocol {
         ArrayList<GBDeviceEvent> events = new ArrayList<>();
 
         ByteBuffer buffer = ByteBuffer.wrap(responseData);
-        while(buffer.remaining() > 0){
+        while (buffer.remaining() > 0) {
             int first = buffer.get();
             int second = buffer.get();
             int third = buffer.get();
             int length = buffer.get();
             byte[] data = new byte[length];
             buffer.get(data);
-            if(first == 0x02){
-                if(second == 0x02){
-                    if(third == 0x03){
+            if (first == 0x02) {
+                if (second == 0x02) {
+                    if (third == 0x03) {
                         GBDeviceEventBatteryInfo batteryInfo = new GBDeviceEventBatteryInfo();
                         batteryInfo.level = data[0];
                         batteryInfo.state = BatteryState.BATTERY_NORMAL;
@@ -78,32 +79,32 @@ public class BoseProtocol extends GBDeviceProtocol {
     }
 
     public byte[] encodeNoiseCancelling() {
-        final AbstractBoseCoordinator coordinator =
-                (AbstractBoseCoordinator) getDevice().getDeviceCoordinator();
-        return encodeSendConfiguration(coordinator.getNoiseCancellingPrefKey());
+        return encodeSendConfiguration(DeviceSettingsPreferenceConst.PREF_QC35_NOISE_CANCELLING_LEVEL);
     }
 
     @Override
     public byte[] encodeSendConfiguration(String config) {
         SharedPreferences prefs = GBApplication.getDeviceSpecificSharedPrefs(getDevice().getAddress());
 
-        if(config.equals(DeviceSettingsPreferenceConst.PREF_NC700_NOISE_CANCELLING_LEVEL)){
-            int level = prefs.getInt(config, 10);
-            byte[] packet = new byte[]{0x01, 0x05, 0x02, 0x02, (byte) (10 - level), 0x01};
-            // device resets to its default level when enabled flips 0 -> 1, so re-send it
-            ByteBuffer repeated = ByteBuffer.allocate(packet.length * 3);
-            repeated.put(packet).put(packet).put(packet);
-            return repeated.array();
-        }
-
-        if(config.equals(DeviceSettingsPreferenceConst.PREF_QC35_NOISE_CANCELLING_LEVEL)){
-            int level = prefs.getInt(config, 0);
-            if(level == 2){
-                level = 1;
-            }else if(level == 1){
-                level = 3;
+        if (DeviceSettingsPreferenceConst.PREF_QC35_NOISE_CANCELLING_LEVEL.equals(config)) {
+            if (getDevice().getType() == DeviceType.BOSE_NC700) {
+                int level = prefs.getInt(config, 10);
+                byte[] packet = new byte[]{0x01, 0x05, 0x02, 0x02, (byte) (10 - level), 0x01};
+                // device resets to its default level when enabled flips 0 -> 1, so re-send it
+                ByteBuffer repeated = ByteBuffer.allocate(packet.length * 3);
+                repeated.put(packet).put(packet).put(packet);
+                return repeated.array();
             }
-            return new byte[]{0x01, 0x06, 0x02, 0x01, (byte) level};
+
+            if (getDevice().getType() == DeviceType.BOSE_QC35) {
+                int level = prefs.getInt(config, 0);
+                if (level == 2) {
+                    level = 1;
+                } else if (level == 1) {
+                    level = 3;
+                }
+                return new byte[]{0x01, 0x06, 0x02, 0x01, (byte) level};
+            }
         }
 
         return null;

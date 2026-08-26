@@ -1057,9 +1057,6 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
         addPreferenceHandlerFor(PREF_MOYOUNG_WATCH_FACE);
         addPreferenceHandlerFor(PREF_MOYOUNG_DEVICE_VERSION);
 
-        addPreferenceHandlerFor(PREF_QC35_NOISE_CANCELLING_LEVEL);
-        addPreferenceHandlerFor(PREF_NC700_NOISE_CANCELLING_LEVEL);
-
         addPreferenceHandlerFor(PREF_DUAL_DEVICE_SUPPORT);
 
         addPreferenceHandlerFor(PREF_DEVICE_LOGS_TOGGLE);
