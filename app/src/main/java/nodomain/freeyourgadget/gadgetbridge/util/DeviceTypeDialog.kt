@@ -26,7 +26,6 @@ import nodomain.freeyourgadget.gadgetbridge.util.preferences.MacAddressInputFilt
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.util.Random
-import java.util.TreeMap
 import kotlin.collections.map
 
 class DeviceTypeDialog(
@@ -214,9 +213,8 @@ class DeviceTypeDialog(
             newMap[name] = DeviceTypeWithIcon(deviceType, icon)
         }
 
-        val sortedMap = TreeMap<String, DeviceTypeWithIcon>(String.CASE_INSENSITIVE_ORDER)
-        sortedMap.putAll(newMap)
-        newMap = LinkedHashMap(sortedMap.size + 3)
+        val sortedEntries = newMap.entries.sortedWith(compareBy(StringUtils::naturalCompare) { it.key })
+        newMap = LinkedHashMap(sortedEntries.size + 3)
 
         // Ensure some devices are first
         //newMap[context.getString(R.string.devicetype_scannable)] =
@@ -224,7 +222,9 @@ class DeviceTypeDialog(
         //newMap[context.getString(R.string.devicetype_ble_gatt_client)] =
         //    DeviceTypeWithIcon(DeviceType.BLE_GATT_CLIENT, R.drawable.ic_device_scannable)
 
-        newMap.putAll(sortedMap)
+        for (entry in sortedEntries) {
+            newMap[entry.key] = entry.value
+        }
 
         return newMap
     }
