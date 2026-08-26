@@ -225,6 +225,9 @@ public enum FitCodeGen {
         builder.append("package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.enums;\n");
         builder.append('\n');
         builder.append("import androidx.annotation.NonNull;\n");
+        builder.append("import androidx.annotation.Nullable;\n");
+        builder.append('\n');
+        builder.append("import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;\n");
         builder.append('\n');
         builder.append(AUTO_GENRATED);
         builder.append('\n');
@@ -241,7 +244,13 @@ public enum FitCodeGen {
             builder.append(device.product);
             builder.append(", \"");
             builder.append(device.name);
-            builder.append("\"),\n");
+            if(device.type == null) {
+                builder.append("\", null),\n");
+            }else{
+                builder.append("\", ");
+                builder.append(device.type);
+                builder.append("),\n");
+            }
         }
         builder.append("    ;\n");
         builder.append("\n");
@@ -249,11 +258,14 @@ public enum FitCodeGen {
         builder.append("    public final int product;\n");
         builder.append("    @NonNull\n");
         builder.append("    public final String name;\n");
+        builder.append("    @Nullable\n");
+        builder.append("    public final DeviceType type;\n");
         builder.append("\n");
-        builder.append("    FitDevice(int m, int p, @NonNull String n) {\n");
+        builder.append("    FitDevice(int m, int p, @NonNull String n, @Nullable DeviceType t) {\n");
         builder.append("        manufacturer = m;\n");
         builder.append("        product = p;\n");
         builder.append("        name = n;\n");
+        builder.append("        type = t;\n");
         builder.append("    }\n");
         builder.append("}\n");
 
@@ -492,7 +504,8 @@ public enum FitCodeGen {
             final FitDevice device = new FitDevice(
                     deviceJson.getInt("manufacturer"),
                     deviceJson.getInt("product"),
-                    deviceJson.getString("name")
+                    deviceJson.getString("name"),
+                    deviceJson.optString("type", null)
             );
             devices.add(device);
         }
@@ -989,6 +1002,9 @@ public enum FitCodeGen {
                 o.name("manufacturer").value(fitDevice.manufacturer);
                 o.name("product").value(fitDevice.product);
                 o.name("name").value(fitDevice.name);
+                if (null != fitDevice.type && !fitDevice.type.isEmpty()) {
+                    o.name("type").value(fitDevice.type);
+                }
                 o.endObject();
                 o.setFormattingStyle(FormattingStyle.PRETTY);
             }
@@ -1156,7 +1172,7 @@ public enum FitCodeGen {
         }
     }
 
-    record FitDevice(int manufacturer, int product, String name) implements Comparable<FitDevice> {
+    record FitDevice(int manufacturer, int product, String name, String type) implements Comparable<FitDevice> {
         @Override
         public int compareTo(FitDevice o) {
             int cmp = Integer.compare(manufacturer, o.manufacturer);
