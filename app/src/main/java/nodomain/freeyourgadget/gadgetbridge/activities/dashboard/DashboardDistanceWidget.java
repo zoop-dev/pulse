@@ -21,6 +21,7 @@ import android.os.Bundle;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.DashboardFragment;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.util.DashboardUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.FormatUtils;
 
 /**
@@ -28,7 +29,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.FormatUtils;
  * Use the {@link DashboardDistanceWidget#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class DashboardDistanceWidget extends AbstractGaugeWidget {
+public class DashboardDistanceWidget extends AbstractGaugeWidget<DashboardDistanceWidget.DistanceData> {
     public DashboardDistanceWidget() {
         super(R.string.distance, "stepsweek");
     }
@@ -49,9 +50,9 @@ public class DashboardDistanceWidget extends AbstractGaugeWidget {
     }
 
     @Override
-    protected void populateData(final DashboardFragment.DashboardData dashboardData) {
-        dashboardData.getDistanceTotal();
-        dashboardData.getDistanceGoalFactor();
+    protected DistanceData populateData(final DashboardFragment.DashboardData dashboardData) {
+        final float total = DashboardUtils.getDistanceTotal(dashboardData);
+        return new DistanceData(total, DashboardUtils.getDistanceGoalFactor(total));
     }
 
     @Override
@@ -60,11 +61,21 @@ public class DashboardDistanceWidget extends AbstractGaugeWidget {
     }
 
     @Override
-    protected void draw(final DashboardFragment.DashboardData dashboardData) {
-        setText(FormatUtils.getFormattedDistanceLabel(dashboardData.getDistanceTotal()));
+    protected void draw(final DistanceData data) {
+        setText(FormatUtils.getFormattedDistanceLabel(data.total));
         drawSimpleGauge(
                 color_distance,
-                dashboardData.getDistanceGoalFactor()
+                data.goalFactor
         );
+    }
+
+    protected static class DistanceData {
+        final float total;
+        final float goalFactor;
+
+        DistanceData(final float total, final float goalFactor) {
+            this.total = total;
+            this.goalFactor = goalFactor;
+        }
     }
 }

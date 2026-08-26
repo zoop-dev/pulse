@@ -23,7 +23,6 @@ import androidx.core.content.ContextCompat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.Serializable;
 import java.util.List;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
@@ -34,7 +33,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.TimeSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.HrvSummarySample;
 
-public class DashboardHrvWidget extends AbstractGaugeWidget {
+public class DashboardHrvWidget extends AbstractGaugeWidget<DashboardHrvWidget.HrvData> {
     private static final Logger LOG = LoggerFactory.getLogger(DashboardHrvWidget.class);
 
     public DashboardHrvWidget() {
@@ -55,7 +54,7 @@ public class DashboardHrvWidget extends AbstractGaugeWidget {
     }
 
     @Override
-    protected void populateData(final DashboardFragment.DashboardData dashboardData) {
+    protected HrvData populateData(final DashboardFragment.DashboardData dashboardData) {
         final List<GBDevice> devices = getSupportedDevices(dashboardData);
 
         HrvSummarySample latestSummary = null;
@@ -79,29 +78,27 @@ public class DashboardHrvWidget extends AbstractGaugeWidget {
                 }
             }
 
-            final HrvData hrvData = new HrvData();
-
             if (latestSummary != null) {
+                final HrvData hrvData = new HrvData();
                 hrvData.weeklyAverage = latestSummary.getWeeklyAverage() != null ? latestSummary.getWeeklyAverage() : 0;
                 hrvData.lastNightAverage = latestSummary.getLastNightAverage() != null ? latestSummary.getLastNightAverage() : 0;
                 hrvData.lastNight5MinHigh = latestSummary.getLastNight5MinHigh() != null ? latestSummary.getLastNight5MinHigh() : 0;
                 hrvData.baselineLowUpper = latestSummary.getBaselineLowUpper() != null ? latestSummary.getBaselineLowUpper() : 0;
                 hrvData.baselineBalancedLower = latestSummary.getBaselineBalancedLower() != null ? latestSummary.getBaselineBalancedLower() : 0;
                 hrvData.baselineBalancedUpper = latestSummary.getBaselineBalancedUpper() != null ? latestSummary.getBaselineBalancedUpper() : 0;
-
-                dashboardData.put("hrv", hrvData);
+                return hrvData;
             }
-
         } catch (final Exception e) {
             LOG.error("Could not get hrv sample", e);
         }
+
+        return null;
     }
 
     @Override
-    protected void draw(final DashboardFragment.DashboardData dashboardData) {
+    protected void draw(final HrvData hrvData) {
         final int[] colors = getColors();
         final float[] segments = getSegments();
-        final HrvData hrvData = (HrvData) dashboardData.get("hrv");
         final float value = hrvData != null ? calculateGaugeValue(hrvData.weeklyAverage, hrvData.baselineLowUpper, hrvData.baselineBalancedLower, hrvData.baselineBalancedUpper) : -1;
         final String valueText;
         valueText = hrvData != null && hrvData.weeklyAverage > 0 ? getString(R.string.hrv_status_unit, hrvData.weeklyAverage) : getString(R.string.stats_empty_value);
@@ -151,7 +148,7 @@ public class DashboardHrvWidget extends AbstractGaugeWidget {
         return value;
     }
 
-    private static class HrvData implements Serializable {
+    public static class HrvData {
         private int weeklyAverage;
         private int lastNightAverage;
         private int lastNight5MinHigh;

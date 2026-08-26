@@ -32,7 +32,7 @@ import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.BloodPressureSample;
 
-public class DashboardBloodPressureWidget extends AbstractGaugeWidget {
+public class DashboardBloodPressureWidget extends AbstractGaugeWidget<DashboardBloodPressureWidget.BloodPressureData> {
     private static final Logger LOG = LoggerFactory.getLogger(DashboardBloodPressureWidget.class);
 
     public DashboardBloodPressureWidget() {
@@ -53,7 +53,7 @@ public class DashboardBloodPressureWidget extends AbstractGaugeWidget {
     }
 
     @Override
-    protected void populateData(final DashboardFragment.DashboardData dashboardData) {
+    protected BloodPressureData populateData(final DashboardFragment.DashboardData dashboardData) {
         final List<GBDevice> devices = getSupportedDevices(dashboardData);
         int latestSystolic = 0;
         int latestDiastolic = 0;
@@ -82,16 +82,15 @@ public class DashboardBloodPressureWidget extends AbstractGaugeWidget {
             LOG.error("Could not get blood pressure samples", e);
         }
 
-        dashboardData.put("bp_systolic",  latestSystolic);
-        dashboardData.put("bp_diastolic", latestDiastolic);
+        return new BloodPressureData(latestSystolic, latestDiastolic);
     }
 
     @Override
-    protected void draw(final DashboardFragment.DashboardData dashboardData) {
-        final Integer systolic  = (Integer) dashboardData.get("bp_systolic");
-        final Integer diastolic = (Integer) dashboardData.get("bp_diastolic");
+    protected void draw(final BloodPressureData data) {
+        final int systolic  = data.systolic;
+        final int diastolic = data.diastolic;
 
-        if (systolic != null && systolic > 0 && diastolic != null && diastolic > 0) {
+        if (systolic > 0 && diastolic > 0) {
             setText(systolic + "/" + diastolic);
 
             // WHO classification: color and gauge position based on systolic/diastolic values
@@ -114,6 +113,16 @@ public class DashboardBloodPressureWidget extends AbstractGaugeWidget {
         } else {
             setText(getString(R.string.stats_empty_value));
             drawSimpleGauge(android.graphics.Color.GRAY, -1);
+        }
+    }
+
+    protected static class BloodPressureData {
+        final int systolic;
+        final int diastolic;
+
+        BloodPressureData(final int systolic, final int diastolic) {
+            this.systolic = systolic;
+            this.diastolic = diastolic;
         }
     }
 }

@@ -26,7 +26,7 @@ import nodomain.freeyourgadget.gadgetbridge.activities.DashboardFragment;
 import nodomain.freeyourgadget.gadgetbridge.activities.dashboard.data.DashboardStressData;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
-public class DashboardStressSegmentedWidget extends AbstractGaugeWidget {
+public class DashboardStressSegmentedWidget extends AbstractGaugeWidget<DashboardStressData> {
     public DashboardStressSegmentedWidget() {
         super(R.string.menuitem_stress, "stress");
     }
@@ -45,12 +45,12 @@ public class DashboardStressSegmentedWidget extends AbstractGaugeWidget {
     }
 
     @Override
-    protected void populateData(final DashboardFragment.DashboardData dashboardData) {
-        dashboardData.computeIfAbsent("stress", () -> DashboardStressData.compute(dashboardData));
+    protected DashboardStressData populateData(final DashboardFragment.DashboardData dashboardData) {
+        return DashboardStressData.compute(dashboardData);
     }
 
     @Override
-    protected void draw(final DashboardFragment.DashboardData dashboardData) {
+    protected void draw(final DashboardStressData stressData) {
         final int[] colors = new int[]{
                 ContextCompat.getColor(GBApplication.getContext(), R.color.chart_stress_relaxed),
                 ContextCompat.getColor(GBApplication.getContext(), R.color.chart_stress_mild),
@@ -61,8 +61,6 @@ public class DashboardStressSegmentedWidget extends AbstractGaugeWidget {
         final float[] segments;
         final float value;
         final String valueText;
-
-        final DashboardStressData stressData = (DashboardStressData) dashboardData.get("stress");
 
         if (stressData != null) {
             segments = new float[]{

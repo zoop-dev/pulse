@@ -23,13 +23,14 @@ import java.text.NumberFormat;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.DashboardFragment;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.util.DashboardUtils;
 
 /**
  * A simple {@link AbstractDashboardWidget} subclass.
  * Use the {@link DashboardStepsWidget#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class DashboardStepsWidget extends AbstractGaugeWidget {
+public class DashboardStepsWidget extends AbstractGaugeWidget<DashboardStepsWidget.StepsData> {
     public DashboardStepsWidget() {
         super(R.string.steps, "stepsweek");
     }
@@ -55,17 +56,27 @@ public class DashboardStepsWidget extends AbstractGaugeWidget {
     }
 
     @Override
-    protected void populateData(final DashboardFragment.DashboardData dashboardData) {
-        dashboardData.getStepsTotal();
-        dashboardData.getStepsGoalFactor();
+    protected StepsData populateData(final DashboardFragment.DashboardData dashboardData) {
+        final int total = DashboardUtils.getStepsTotal(dashboardData);
+        return new StepsData(total, DashboardUtils.getStepsGoalFactor(total));
     }
 
     @Override
-    protected void draw(final DashboardFragment.DashboardData dashboardData) {
-        setText(NumberFormat.getInstance().format(dashboardData.getStepsTotal()));
+    protected void draw(final StepsData data) {
+        setText(NumberFormat.getInstance().format(data.total));
         drawSimpleGauge(
                 color_activity,
-                dashboardData.getStepsGoalFactor()
+                data.goalFactor
         );
+    }
+
+    protected static class StepsData {
+        final int total;
+        final float goalFactor;
+
+        StepsData(final int total, final float goalFactor) {
+            this.total = total;
+            this.goalFactor = goalFactor;
+        }
     }
 }

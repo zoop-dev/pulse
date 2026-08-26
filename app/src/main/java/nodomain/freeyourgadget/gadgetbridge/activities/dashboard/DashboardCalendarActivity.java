@@ -233,7 +233,7 @@ public class DashboardCalendarActivity extends AbstractGBActivity {
                 dashboardData.showDeviceList = showDeviceList;
                 dashboardData.timeTo = (int) (day.getTimeInMillis() / 1000);
                 dashboardData.timeFrom = DateTimeUtils.shiftDays(dashboardData.timeTo, -1);
-                float goalFactor = DashboardUtils.getStepsGoalFactor(dashboardData);
+                float goalFactor = DashboardUtils.getStepsGoalFactor(DashboardUtils.getStepsTotal(dashboardData));
                 @ColorInt int dayColor;
                 if (goalFactor >= 1) {
                     dayColor = color_100;

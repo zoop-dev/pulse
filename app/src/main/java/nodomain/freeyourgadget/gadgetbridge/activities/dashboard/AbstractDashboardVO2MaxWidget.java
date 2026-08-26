@@ -6,7 +6,6 @@ import androidx.core.content.ContextCompat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.Serializable;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -23,7 +22,7 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityUser;
 import nodomain.freeyourgadget.gadgetbridge.model.Vo2MaxSample;
 
-public abstract class AbstractDashboardVO2MaxWidget extends AbstractGaugeWidget implements DashboardVO2MaxWidgetInterface {
+public abstract class AbstractDashboardVO2MaxWidget extends AbstractGaugeWidget<AbstractDashboardVO2MaxWidget.VO2MaxData> implements DashboardVO2MaxWidgetInterface {
     protected static final Logger LOG = LoggerFactory.getLogger(AbstractDashboardVO2MaxWidget.class);
 
     public AbstractDashboardVO2MaxWidget(int label, @Nullable String targetActivityTab) {
@@ -31,7 +30,7 @@ public abstract class AbstractDashboardVO2MaxWidget extends AbstractGaugeWidget 
     }
 
     @Override
-    protected void populateData(final DashboardFragment.DashboardData dashboardData) {
+    protected VO2MaxData populateData(final DashboardFragment.DashboardData dashboardData) {
         final List<GBDevice> devices = getSupportedDevices(dashboardData);
         final VO2MaxData data = new VO2MaxData();
 
@@ -54,7 +53,7 @@ public abstract class AbstractDashboardVO2MaxWidget extends AbstractGaugeWidget 
             LOG.error("Could not get vo2max for today", e);
         }
 
-        dashboardData.put(getWidgetKey(), data);
+        return data;
     }
 
     public static int[] getColors() {
@@ -79,8 +78,7 @@ public abstract class AbstractDashboardVO2MaxWidget extends AbstractGaugeWidget 
     }
 
     @Override
-    protected void draw(final DashboardFragment.DashboardData dashboardData) {
-        final VO2MaxData vo2MaxData = (VO2MaxData) dashboardData.get(getWidgetKey());
+    protected void draw(final VO2MaxData vo2MaxData) {
         if (vo2MaxData == null) {
             drawSimpleGauge(0, -1);
             return;
@@ -101,7 +99,7 @@ public abstract class AbstractDashboardVO2MaxWidget extends AbstractGaugeWidget 
         );
     }
 
-    private static class VO2MaxData implements Serializable {
+    protected static class VO2MaxData {
         private float value = -1;
     }
 }

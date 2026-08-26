@@ -39,6 +39,7 @@ import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.DashboardFragment;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.util.DashboardUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
 /**
@@ -118,19 +119,22 @@ public class DashboardGoalsWidget extends AbstractDashboardWidget {
         });
     }
 
-    private class FillDataAsyncTask extends AsyncTask<Void, Void, Void> {
-        private Bitmap goalsBitmap;
-
+    private class FillDataAsyncTask extends AsyncTask<Void, Void, Bitmap> {
         @Override
-        protected Void doInBackground(Void... params) {
+        protected Bitmap doInBackground(Void... params) {
             final long nanoStart = System.nanoTime();
+
+            final float stepsGoalFactor = DashboardUtils.getStepsGoalFactor(DashboardUtils.getStepsTotal(dashboardData));
+            final float distanceGoalFactor = DashboardUtils.getDistanceGoalFactor(DashboardUtils.getDistanceTotal(dashboardData));
+            final float activeMinutesGoalFactor = DashboardUtils.getActiveMinutesGoalFactor(DashboardUtils.getActiveMinutesTotal(dashboardData));
+            final float sleepMinutesGoalFactor = DashboardUtils.getSleepMinutesGoalFactor(DashboardUtils.getSleepMinutesTotal(dashboardData));
 
             int width = Resources.getSystem().getDisplayMetrics().widthPixels;
             int height = width;
             int barWidth = Math.round(height * 0.04f);
             int barMargin = (int) Math.ceil(barWidth / 2f);
 
-            goalsBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+            final Bitmap goalsBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
             Canvas canvas = new Canvas(goalsBitmap);
             Paint paint = new Paint();
             paint.setAntiAlias(true);
@@ -142,7 +146,7 @@ public class DashboardGoalsWidget extends AbstractDashboardWidget {
             canvas.drawArc(barMargin, barMargin, width - barMargin, height - barMargin, 270, 360, false, paint);
             paint.setStrokeWidth(barWidth);
             paint.setColor(color_activity);
-            canvas.drawArc(barMargin, barMargin, width - barMargin, height - barMargin, 270, 360 * dashboardData.getStepsGoalFactor(), false, paint);
+            canvas.drawArc(barMargin, barMargin, width - barMargin, height - barMargin, 270, 360 * stepsGoalFactor, false, paint);
 
             barMargin += barWidth * 1.5;
             paint.setStrokeWidth(barWidth * 0.75f);
@@ -150,7 +154,7 @@ public class DashboardGoalsWidget extends AbstractDashboardWidget {
             canvas.drawArc(barMargin, barMargin, width - barMargin, height - barMargin, 270, 360, false, paint);
             paint.setStrokeWidth(barWidth);
             paint.setColor(color_distance);
-            canvas.drawArc(barMargin, barMargin, width - barMargin, height - barMargin, 270, 360 * dashboardData.getDistanceGoalFactor(), false, paint);
+            canvas.drawArc(barMargin, barMargin, width - barMargin, height - barMargin, 270, 360 * distanceGoalFactor, false, paint);
 
             barMargin += barWidth * 1.5;
             paint.setStrokeWidth(barWidth * 0.75f);
@@ -158,7 +162,7 @@ public class DashboardGoalsWidget extends AbstractDashboardWidget {
             canvas.drawArc(barMargin, barMargin, width - barMargin, height - barMargin, 270, 360, false, paint);
             paint.setStrokeWidth(barWidth);
             paint.setColor(color_active_time);
-            canvas.drawArc(barMargin, barMargin, width - barMargin, height - barMargin, 270, 360 * dashboardData.getActiveMinutesGoalFactor(), false, paint);
+            canvas.drawArc(barMargin, barMargin, width - barMargin, height - barMargin, 270, 360 * activeMinutesGoalFactor, false, paint);
 
             barMargin += barWidth * 1.5;
             paint.setStrokeWidth(barWidth * 0.75f);
@@ -166,18 +170,18 @@ public class DashboardGoalsWidget extends AbstractDashboardWidget {
             canvas.drawArc(barMargin, barMargin, width - barMargin, height - barMargin, 270, 360, false, paint);
             paint.setStrokeWidth(barWidth);
             paint.setColor(color_light_sleep);
-            canvas.drawArc(barMargin, barMargin, width - barMargin, height - barMargin, 270, 360 * dashboardData.getSleepMinutesGoalFactor(), false, paint);
+            canvas.drawArc(barMargin, barMargin, width - barMargin, height - barMargin, 270, 360 * sleepMinutesGoalFactor, false, paint);
 
             final long nanoEnd = System.nanoTime();
             final long executionTime = (nanoEnd - nanoStart) / 1000000;
             LOG.debug("fillData for {} took {}ms", DashboardGoalsWidget.this.getClass().getSimpleName(), executionTime);
 
-            return null;
+            return goalsBitmap;
         }
 
         @Override
-        protected void onPostExecute(Void unused) {
-            super.onPostExecute(unused);
+        protected void onPostExecute(Bitmap goalsBitmap) {
+            super.onPostExecute(goalsBitmap);
             goalsChart.setImageBitmap(goalsBitmap);
         }
     }

@@ -49,17 +49,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Supplier;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
@@ -85,9 +80,6 @@ import nodomain.freeyourgadget.gadgetbridge.activities.dashboard.DashboardVO2Max
 import nodomain.freeyourgadget.gadgetbridge.activities.dashboard.DashboardVO2MaxAnyWidget;
 import nodomain.freeyourgadget.gadgetbridge.activities.dashboard.DashboardVO2MaxRunningWidget;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
-import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
-import nodomain.freeyourgadget.gadgetbridge.util.CachedValue;
-import nodomain.freeyourgadget.gadgetbridge.util.DashboardUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
@@ -168,11 +160,10 @@ public class DashboardFragment extends Fragment implements MenuProvider {
             }
         });
 
-        if (savedInstanceState != null && savedInstanceState.containsKey("dashboard_data") && dashboardData.isEmpty()) {
-            dashboardData = (DashboardData) savedInstanceState.getSerializable("dashboard_data");
-        } else if (dashboardData.isEmpty()) {
-            reloadPreferences();
+        if (savedInstanceState != null && savedInstanceState.containsKey("dashboard_day")) {
+            day.setTimeInMillis(savedInstanceState.getLong("dashboard_day"));
         }
+        reloadPreferences();
 
         IntentFilter filterLocal = new IntentFilter();
         filterLocal.addAction(GBDevice.ACTION_DEVICE_CHANGED);
@@ -189,7 +180,7 @@ public class DashboardFragment extends Fragment implements MenuProvider {
         if (isConfigChanged) {
             isConfigChanged = false;
             fullRefresh();
-        } else if (dashboardData.isEmpty() || !widgetMap.containsKey("today")) {
+        } else if (widgetMap.isEmpty()) {
             refresh();
         }
     }
@@ -203,7 +194,7 @@ public class DashboardFragment extends Fragment implements MenuProvider {
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putSerializable("dashboard_data", dashboardData);
+        outState.putLong("dashboard_day", day.getTimeInMillis());
     }
 
     @Override
@@ -237,7 +228,6 @@ public class DashboardFragment extends Fragment implements MenuProvider {
         day.set(Calendar.HOUR_OF_DAY, 23);
         day.set(Calendar.MINUTE, 59);
         day.set(Calendar.SECOND, 59);
-        dashboardData.clear();
         reloadPreferences();
         draw();
     }
@@ -380,10 +370,8 @@ public class DashboardFragment extends Fragment implements MenuProvider {
     }
 
     /**
-     * This class serves as a data collection object for all data points used by the various
-     * dashboard widgets. Since retrieving this data can be costly, this class makes sure it will
-     * only be done once. It will be passed to every widget, making sure they have the necessary
-     * data available.
+     * Carries the query parameters (selected day, device filter) that every dashboard widget
+     * needs to load its own data.
      */
     public static class DashboardData implements Serializable {
         public boolean showAllDevices;
@@ -391,127 +379,5 @@ public class DashboardFragment extends Fragment implements MenuProvider {
         public int hrIntervalSecs;
         public int timeFrom;
         public int timeTo;
-        public final List<GeneralizedActivity> generalizedActivities = Collections.synchronizedList(new ArrayList<>());
-        private final CachedValue<Integer> stepsTotal = new CachedValue<>();
-        private final CachedValue<Float> stepsGoalFactor = new CachedValue<>();
-        private final CachedValue<Integer> restingCaloriesTotal = new CachedValue<>();
-        private final CachedValue<Integer> activeCaloriesTotal = new CachedValue<>();
-        private final CachedValue<Float> activeCaloriesGoalFactor = new CachedValue<>();
-        private final CachedValue<Long> sleepTotalMinutes = new CachedValue<>();
-        private final CachedValue<Float> sleepGoalFactor = new CachedValue<>();
-        private final CachedValue<Float> distanceTotalMeters = new CachedValue<>();
-        private final CachedValue<Float> distanceGoalFactor = new CachedValue<>();
-        private final CachedValue<Long> activeMinutesTotal = new CachedValue<>();
-        private final CachedValue<Float> activeMinutesGoalFactor = new CachedValue<>();
-        private final Map<String, Serializable> genericData = new ConcurrentHashMap<>();
-
-        public void clear() {
-            restingCaloriesTotal.clear();
-            activeCaloriesTotal.clear();
-            activeCaloriesGoalFactor.clear();
-            stepsTotal.clear();
-            stepsGoalFactor.clear();
-            sleepTotalMinutes.clear();
-            sleepGoalFactor.clear();
-            distanceTotalMeters.clear();
-            distanceGoalFactor.clear();
-            activeMinutesTotal.clear();
-            activeMinutesGoalFactor.clear();
-            generalizedActivities.clear();
-            genericData.clear();
-        }
-
-        public boolean isEmpty() {
-            return (stepsTotal.isEmpty() &&
-                    stepsGoalFactor.isEmpty() &&
-                    restingCaloriesTotal.isEmpty() &&
-                    activeCaloriesTotal.isEmpty() &&
-                    activeCaloriesGoalFactor.isEmpty() &&
-                    sleepTotalMinutes.isEmpty() &&
-                    sleepGoalFactor.isEmpty() &&
-                    distanceTotalMeters.isEmpty() &&
-                    distanceGoalFactor.isEmpty() &&
-                    activeMinutesTotal.isEmpty() &&
-                    activeMinutesGoalFactor.isEmpty() &&
-                    genericData.isEmpty() &&
-                    generalizedActivities.isEmpty());
-        }
-
-        public int getStepsTotal() {
-            return stepsTotal.get(() -> DashboardUtils.getStepsTotal(this));
-        }
-
-        public float getStepsGoalFactor() {
-            return stepsGoalFactor.get(() -> DashboardUtils.getStepsGoalFactor(this));
-        }
-
-        public float getDistanceTotal() {
-            return distanceTotalMeters.get(() -> DashboardUtils.getDistanceTotal(this));
-        }
-
-        public float getDistanceGoalFactor() {
-            return distanceGoalFactor.get(() -> DashboardUtils.getDistanceGoalFactor(this));
-        }
-
-        public long getActiveMinutesTotal() {
-            return activeMinutesTotal.get(() -> DashboardUtils.getActiveMinutesTotal(this));
-        }
-
-        public float getActiveMinutesGoalFactor() {
-            return activeMinutesGoalFactor.get(() -> DashboardUtils.getActiveMinutesGoalFactor(this));
-        }
-
-        public long getSleepMinutesTotal() {
-            return sleepTotalMinutes.get(() -> DashboardUtils.getSleepMinutesTotal(this));
-        }
-
-        public float getSleepMinutesGoalFactor() {
-            return sleepGoalFactor.get(() -> DashboardUtils.getSleepMinutesGoalFactor(this));
-        }
-
-        public int getActiveCaloriesTotal() {
-            return activeCaloriesTotal.get(() -> DashboardUtils.getActiveCaloriesTotal(this));
-        }
-
-        public int getRestingCaloriesTotal() {
-            return restingCaloriesTotal.get(() -> DashboardUtils.getRestingCaloriesTotal(this));
-        }
-
-        public float getActiveCaloriesGoalFactor() {
-            return activeCaloriesGoalFactor.get(() -> DashboardUtils.getActiveCaloriesGoalFactor(this));
-        }
-
-        public void put(final String key, final Serializable value) {
-            genericData.put(key, value);
-        }
-
-        public Serializable get(final String key) {
-            return genericData.get(key);
-        }
-
-        /**
-         * @noinspection UnusedReturnValue
-         */
-        public Serializable computeIfAbsent(final String key, final Supplier<Serializable> supplier) {
-            return genericData.computeIfAbsent(key, absent -> supplier.get());
-        }
-
-        public static class GeneralizedActivity implements Serializable {
-            public ActivityKind activityKind;
-            public long timeFrom;
-            public long timeTo;
-
-            public GeneralizedActivity(ActivityKind activityKind, long timeFrom, long timeTo) {
-                this.activityKind = activityKind;
-                this.timeFrom = timeFrom;
-                this.timeTo = timeTo;
-            }
-
-            @NonNull
-            @Override
-            public String toString() {
-                return "Generalized activity: timeFrom=" + timeFrom + ", timeTo=" + timeTo + ", activityKind=" + activityKind + ", calculated duration: " + (timeTo - timeFrom) + " seconds";
-            }
-        }
     }
 }

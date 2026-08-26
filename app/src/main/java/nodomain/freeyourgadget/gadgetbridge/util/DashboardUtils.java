@@ -103,10 +103,10 @@ public class DashboardUtils {
         return Math.round(totalRestingCalories / (float) totalRestingCaloriesDevices);
     }
 
-    public static float getStepsGoalFactor(DashboardFragment.DashboardData dashboardData) {
+    public static float getStepsGoalFactor(int stepsTotal) {
         ActivityUser activityUser = new ActivityUser();
         float stepsGoal = activityUser.getStepsGoal();
-        float goalFactor = getStepsTotal(dashboardData) / stepsGoal;
+        float goalFactor = stepsTotal / stepsGoal;
         if (goalFactor > 1) goalFactor = 1;
 
         return goalFactor;
@@ -133,10 +133,10 @@ public class DashboardUtils {
         return totalSleepMinutes;
     }
 
-    public static float getSleepMinutesGoalFactor(DashboardFragment.DashboardData dashboardData) {
+    public static float getSleepMinutesGoalFactor(long sleepMinutesTotal) {
         ActivityUser activityUser = new ActivityUser();
         int sleepMinutesGoal = activityUser.getSleepDurationGoal();
-        float goalFactor = (float) getSleepMinutesTotal(dashboardData) / sleepMinutesGoal;
+        float goalFactor = (float) sleepMinutesTotal / sleepMinutesGoal;
         if (goalFactor > 1) goalFactor = 1;
 
         return goalFactor;
@@ -164,19 +164,19 @@ public class DashboardUtils {
         return totalDistanceCm * 0.01f;
     }
 
-    public static float getDistanceGoalFactor(DashboardFragment.DashboardData dashboardData) {
+    public static float getDistanceGoalFactor(float distanceTotal) {
         ActivityUser activityUser = new ActivityUser();
         int distanceGoal = activityUser.getDistanceGoalMeters();
-        float goalFactor = getDistanceTotal(dashboardData) / distanceGoal;
+        float goalFactor = distanceTotal / distanceGoal;
         if (goalFactor > 1) goalFactor = 1;
 
         return goalFactor;
     }
 
-    public static float getActiveCaloriesGoalFactor(DashboardFragment.DashboardData dashboardData) {
+    public static float getActiveCaloriesGoalFactor(int activeCaloriesTotal) {
         ActivityUser activityUser = new ActivityUser();
         int caloriesGoal = activityUser.getCaloriesBurntGoal();
-        float goalFactor = (float) getActiveCaloriesTotal(dashboardData) / caloriesGoal;
+        float goalFactor = (float) activeCaloriesTotal / caloriesGoal;
         if (goalFactor > 1) goalFactor = 1;
 
         return goalFactor;
@@ -197,10 +197,10 @@ public class DashboardUtils {
         return totalActiveMinutes;
     }
 
-    public static float getActiveMinutesGoalFactor(DashboardFragment.DashboardData dashboardData) {
+    public static float getActiveMinutesGoalFactor(long activeMinutesTotal) {
         ActivityUser activityUser = new ActivityUser();
         int activeTimeGoal = activityUser.getActiveTimeGoalMinutes();
-        float goalFactor = (float) getActiveMinutesTotal(dashboardData) / activeTimeGoal;
+        float goalFactor = (float) activeMinutesTotal / activeTimeGoal;
         if (goalFactor > 1) goalFactor = 1;
 
         return goalFactor;

@@ -43,11 +43,6 @@ public class DashboardVO2MaxAnyWidget extends AbstractDashboardVO2MaxWidget {
     }
 
     @Override
-    public String getWidgetKey() {
-        return "vo2max";
-    }
-
-    @Override
     protected boolean isSupportedBy(final GBDevice device) {
         return device.getDeviceCoordinator().supportsVO2Max(device);
     }

@@ -27,13 +27,14 @@ import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.DashboardFragment;
 import nodomain.freeyourgadget.gadgetbridge.activities.charts.CaloriesDailyFragment;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.util.DashboardUtils;
 
 /**
  * A simple {@link AbstractDashboardWidget} subclass.
  * Use the {@link DashboardCaloriesActiveGoalWidget#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class DashboardCaloriesActiveGoalWidget extends AbstractGaugeWidget {
+public class DashboardCaloriesActiveGoalWidget extends AbstractGaugeWidget<DashboardCaloriesActiveGoalWidget.ActiveCaloriesData> {
     public DashboardCaloriesActiveGoalWidget() {
         super(R.string.active_calories, "calories", CaloriesDailyFragment.GaugeViewMode.ACTIVE_CALORIES_GOAL.toString());
     }
@@ -59,18 +60,28 @@ public class DashboardCaloriesActiveGoalWidget extends AbstractGaugeWidget {
     }
 
     @Override
-    protected void populateData(final DashboardFragment.DashboardData dashboardData) {
-        dashboardData.getActiveCaloriesTotal();
-        dashboardData.getActiveCaloriesGoalFactor();
+    protected ActiveCaloriesData populateData(final DashboardFragment.DashboardData dashboardData) {
+        final int total = DashboardUtils.getActiveCaloriesTotal(dashboardData);
+        return new ActiveCaloriesData(total, DashboardUtils.getActiveCaloriesGoalFactor(total));
     }
 
     @Override
-    protected void draw(final DashboardFragment.DashboardData dashboardData) {
-        setText(NumberFormat.getInstance().format(dashboardData.getActiveCaloriesTotal()));
+    protected void draw(final ActiveCaloriesData data) {
+        setText(NumberFormat.getInstance().format(data.total));
         final int colorCalories = ContextCompat.getColor(GBApplication.getContext(), R.color.calories_color);
         drawSimpleGauge(
                 colorCalories,
-                dashboardData.getActiveCaloriesGoalFactor()
+                data.goalFactor
         );
+    }
+
+    protected static class ActiveCaloriesData {
+        final int total;
+        final float goalFactor;
+
+        ActiveCaloriesData(final int total, final float goalFactor) {
+            this.total = total;
+            this.goalFactor = goalFactor;
+        }
     }
 }

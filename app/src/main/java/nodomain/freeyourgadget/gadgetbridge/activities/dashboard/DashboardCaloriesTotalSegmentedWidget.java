@@ -28,13 +28,14 @@ import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.DashboardFragment;
 import nodomain.freeyourgadget.gadgetbridge.activities.charts.CaloriesDailyFragment;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.util.DashboardUtils;
 
 /**
  * A simple {@link AbstractDashboardWidget} subclass.
  * Use the {@link DashboardCaloriesTotalSegmentedWidget#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class DashboardCaloriesTotalSegmentedWidget extends AbstractGaugeWidget {
+public class DashboardCaloriesTotalSegmentedWidget extends AbstractGaugeWidget<DashboardCaloriesTotalSegmentedWidget.CaloriesData> {
     public DashboardCaloriesTotalSegmentedWidget() {
         super(R.string.calories, "calories", CaloriesDailyFragment.GaugeViewMode.TOTAL_CALORIES_SEGMENT.toString());
     }
@@ -60,15 +61,17 @@ public class DashboardCaloriesTotalSegmentedWidget extends AbstractGaugeWidget {
     }
 
     @Override
-    protected void populateData(final DashboardFragment.DashboardData dashboardData) {
-        dashboardData.getActiveCaloriesTotal();
-        dashboardData.getRestingCaloriesTotal();
+    protected CaloriesData populateData(final DashboardFragment.DashboardData dashboardData) {
+        return new CaloriesData(
+                DashboardUtils.getActiveCaloriesTotal(dashboardData),
+                DashboardUtils.getRestingCaloriesTotal(dashboardData)
+        );
     }
 
     @Override
-    protected void draw(final DashboardFragment.DashboardData dashboardData) {
-        int activeCalories = dashboardData.getActiveCaloriesTotal();
-        int restingCalories = dashboardData.getRestingCaloriesTotal();
+    protected void draw(final CaloriesData data) {
+        int activeCalories = data.activeCalories;
+        int restingCalories = data.restingCalories;
         int totalCalories = activeCalories + restingCalories;
         setText(NumberFormat.getInstance().format(totalCalories));
         final int[] colors;
@@ -97,5 +100,15 @@ public class DashboardCaloriesTotalSegmentedWidget extends AbstractGaugeWidget {
                 false,
                 false
         );
+    }
+
+    protected static class CaloriesData {
+        final int activeCalories;
+        final int restingCalories;
+
+        CaloriesData(final int activeCalories, final int restingCalories) {
+            this.activeCalories = activeCalories;
+            this.restingCalories = restingCalories;
+        }
     }
 }

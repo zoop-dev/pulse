@@ -26,7 +26,7 @@ import nodomain.freeyourgadget.gadgetbridge.activities.DashboardFragment;
 import nodomain.freeyourgadget.gadgetbridge.activities.dashboard.data.DashboardStressData;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
-public class DashboardStressBreakdownWidget extends AbstractGaugeWidget {
+public class DashboardStressBreakdownWidget extends AbstractGaugeWidget<DashboardStressData> {
     public DashboardStressBreakdownWidget() {
         super(R.string.menuitem_stress, "stress");
     }
@@ -45,13 +45,12 @@ public class DashboardStressBreakdownWidget extends AbstractGaugeWidget {
     }
 
     @Override
-    protected void populateData(final DashboardFragment.DashboardData dashboardData) {
-        dashboardData.computeIfAbsent("stress", () -> DashboardStressData.compute(dashboardData));
+    protected DashboardStressData populateData(final DashboardFragment.DashboardData dashboardData) {
+        return DashboardStressData.compute(dashboardData);
     }
 
     @Override
-    protected void draw(final DashboardFragment.DashboardData dashboardData) {
-        final DashboardStressData stressData = (DashboardStressData) dashboardData.get("stress");
+    protected void draw(final DashboardStressData stressData) {
         if (stressData == null) {
             drawSimpleGauge(0, -1);
             return;

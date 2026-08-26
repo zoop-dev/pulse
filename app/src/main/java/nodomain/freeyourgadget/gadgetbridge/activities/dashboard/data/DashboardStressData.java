@@ -19,7 +19,6 @@ package nodomain.freeyourgadget.gadgetbridge.activities.dashboard.data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.Serializable;
 import java.util.List;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
@@ -29,7 +28,7 @@ import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.StressSample;
 
-public class DashboardStressData implements Serializable {
+public class DashboardStressData {
     private static final Logger LOG = LoggerFactory.getLogger(DashboardStressData.class);
 
     public int value;

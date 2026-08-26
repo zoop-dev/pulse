@@ -23,7 +23,6 @@ import androidx.core.content.ContextCompat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.Serializable;
 import java.util.List;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
@@ -48,14 +47,11 @@ import nodomain.freeyourgadget.gadgetbridge.model.PaiSample;
  * The segmentation logic mirrors PaiChartFragment#refreshDayData and reuses the same
  * color constants so the chart and dashboard screens stay visually consistent.
  */
-public class DashboardPaiWidget extends AbstractGaugeWidget {
+public class DashboardPaiWidget extends AbstractGaugeWidget<DashboardPaiWidget.PaiData> {
     private static final Logger LOG = LoggerFactory.getLogger(DashboardPaiWidget.class);
 
-    /** Key used to stash/retrieve PaiData from the shared dashboard bundle. */
-    private static final String DATA_KEY = "pai";
-
     public DashboardPaiWidget() {
-        super(R.string.menuitem_pai, DATA_KEY);
+        super(R.string.menuitem_pai, "pai");
     }
 
     public static DashboardPaiWidget newInstance(final DashboardFragment.DashboardData dashboardData) {
@@ -76,7 +72,7 @@ public class DashboardPaiWidget extends AbstractGaugeWidget {
     }
 
     @Override
-    protected void populateData(final DashboardFragment.DashboardData dashboardData) {
+    protected PaiData populateData(final DashboardFragment.DashboardData dashboardData) {
         final List<GBDevice> devices = getSupportedDevices(dashboardData);
 
         // Use getAllSamples bounded by timeFrom and timeTo to ensure we only show data
@@ -120,13 +116,11 @@ public class DashboardPaiWidget extends AbstractGaugeWidget {
             LOG.error("Could not get PAI sample for dashboard widget", e);
         }
 
-        dashboardData.put(DATA_KEY, data);
+        return data;
     }
 
     @Override
-    protected void draw(final DashboardFragment.DashboardData dashboardData) {
-        final PaiData paiData = (PaiData) dashboardData.get(DATA_KEY);
-
+    protected void draw(final PaiData paiData) {
         if (paiData == null || paiData.target <= 0) {
             // No data available — render an empty gauge rather than crashing.
             drawSimpleGauge(0, -1);
@@ -199,7 +193,7 @@ public class DashboardPaiWidget extends AbstractGaugeWidget {
      * Intentionally package-private so unit tests in the same package can
      * inspect it without reflection.
      */
-    static final class PaiData implements Serializable {
+    static final class PaiData {
         /** Rolling 7-day PAI total at the end of the selected period. */
         int total  = 0;
         /** PAI earned on the most recent day within the selected period. */

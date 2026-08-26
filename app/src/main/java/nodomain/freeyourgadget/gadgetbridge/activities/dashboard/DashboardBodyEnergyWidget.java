@@ -28,7 +28,6 @@ import androidx.core.content.ContextCompat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.Serializable;
 import java.util.List;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
@@ -38,7 +37,7 @@ import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.BodyEnergySample;
 
-public class DashboardBodyEnergyWidget extends AbstractGaugeWidget {
+public class DashboardBodyEnergyWidget extends AbstractGaugeWidget<DashboardBodyEnergyWidget.BodyEnergyData> {
     private static final Logger LOG = LoggerFactory.getLogger(DashboardBodyEnergyWidget.class);
 
     public DashboardBodyEnergyWidget() {
@@ -59,7 +58,7 @@ public class DashboardBodyEnergyWidget extends AbstractGaugeWidget {
     }
 
     @Override
-    protected void populateData(final DashboardFragment.DashboardData dashboardData) {
+    protected BodyEnergyData populateData(final DashboardFragment.DashboardData dashboardData) {
         final List<GBDevice> devices = getSupportedDevices(dashboardData);
 
         final boolean isToday = DateUtils.isToday(dashboardData.timeTo * 1000L);
@@ -120,12 +119,11 @@ public class DashboardBodyEnergyWidget extends AbstractGaugeWidget {
             }
         }
 
-        dashboardData.put("bodyenergy", data);
+        return data;
     }
 
     @Override
-    protected void draw(final DashboardFragment.DashboardData dashboardData) {
-        final BodyEnergyData bodyEnergyData = (BodyEnergyData) dashboardData.get("bodyenergy");
+    protected void draw(final BodyEnergyData bodyEnergyData) {
         if (bodyEnergyData == null) {
             drawSimpleGauge(0, -1);
             return;
@@ -182,7 +180,7 @@ public class DashboardBodyEnergyWidget extends AbstractGaugeWidget {
         }
     }
 
-    private static class BodyEnergyData implements Serializable {
+    public static class BodyEnergyData {
         private int value = -1;
         private int gained = -1;
         private int lost = -1;

@@ -43,11 +43,6 @@ public class DashboardVO2MaxCyclingWidget extends AbstractDashboardVO2MaxWidget 
     }
 
     @Override
-    public String getWidgetKey() {
-        return "vo2max_cycling";
-    }
-
-    @Override
     protected boolean isSupportedBy(final GBDevice device) {
         return device.getDeviceCoordinator().supportsVO2MultiSport(device);
     }

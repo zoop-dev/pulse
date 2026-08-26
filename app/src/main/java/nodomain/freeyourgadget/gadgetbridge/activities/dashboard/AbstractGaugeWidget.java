@@ -33,7 +33,7 @@ import org.slf4j.LoggerFactory;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.DashboardFragment;
 
-public abstract class AbstractGaugeWidget extends AbstractDashboardWidget {
+public abstract class AbstractGaugeWidget<D> extends AbstractDashboardWidget {
     private static final Logger LOG = LoggerFactory.getLogger(AbstractGaugeWidget.class);
 
     private TextView gaugeValue;
@@ -90,41 +90,41 @@ public abstract class AbstractGaugeWidget extends AbstractDashboardWidget {
     }
 
     /**
-     * This is called from the async task, outside of the UI thread. It's expected that
-     * {@link nodomain.freeyourgadget.gadgetbridge.activities.DashboardFragment.DashboardData} be
-     * populated with the necessary data for display.
+     * This is called from the async task, outside of the UI thread. It loads and returns the
+     * data this widget needs for display.
      *
-     * @param dashboardData the DashboardData to populate
+     * @param dashboardData the current dashboard query parameters
      */
-    protected abstract void populateData(DashboardFragment.DashboardData dashboardData);
+    protected abstract D populateData(DashboardFragment.DashboardData dashboardData);
 
     /**
      * This is called from the UI thread.
      *
-     * @param dashboardData populated DashboardData
+     * @param data the data returned by {@link #populateData}, or null if it failed
      */
-    protected abstract void draw(DashboardFragment.DashboardData dashboardData);
+    protected abstract void draw(D data);
 
-    private class FillDataAsyncTask extends AsyncTask<Void, Void, Void> {
+    private class FillDataAsyncTask extends AsyncTask<Void, Void, D> {
         @Override
-        protected Void doInBackground(final Void... params) {
+        protected D doInBackground(final Void... params) {
             final long nanoStart = System.nanoTime();
+            D data = null;
             try {
-                populateData(dashboardData);
+                data = populateData(dashboardData);
             } catch (final Exception e) {
                 LOG.error("fillData for {} failed", AbstractGaugeWidget.this.getClass().getSimpleName(), e);
             }
             final long nanoEnd = System.nanoTime();
             final long executionTime = (nanoEnd - nanoStart) / 1000000;
             LOG.debug("fillData for {} took {}ms", AbstractGaugeWidget.this.getClass().getSimpleName(), executionTime);
-            return null;
+            return data;
         }
 
         @Override
-        protected void onPostExecute(final Void unused) {
-            super.onPostExecute(unused);
+        protected void onPostExecute(final D data) {
+            super.onPostExecute(data);
             try {
-                draw(dashboardData);
+                draw(data);
             } catch (final Exception e) {
                 LOG.error("draw for {} failed", AbstractGaugeWidget.this.getClass().getSimpleName(), e);
             }

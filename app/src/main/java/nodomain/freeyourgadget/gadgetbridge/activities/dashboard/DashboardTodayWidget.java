@@ -35,6 +35,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -75,6 +77,9 @@ public class DashboardTodayWidget extends AbstractDashboardWidget {
     private ImageView todayChart;
 
     private boolean mode_24h;
+    private int chartTimeFrom;
+    private DashboardFragment.DashboardData queryParams;
+    private List<GeneralizedActivity> generalizedActivities;
 
     public DashboardTodayWidget() {
         // Required empty public constructor
@@ -131,7 +136,7 @@ public class DashboardTodayWidget extends AbstractDashboardWidget {
 
         legend.setVisibility(prefs.getBoolean("dashboard_widget_today_legend", true) ? View.VISIBLE : View.GONE);
 
-        if (!dashboardData.generalizedActivities.isEmpty()) {
+        if (generalizedActivities != null) {
             draw();
         }
 
@@ -240,12 +245,11 @@ public class DashboardTodayWidget extends AbstractDashboardWidget {
         }
 
         // Draw generalized activities on circular chart
-        long secondIndex = dashboardData.timeFrom;
+        long secondIndex = chartTimeFrom;
         long currentTime = Calendar.getInstance().getTimeInMillis() / 1000;
         boolean dayIsToday = !(dashboardData.timeTo < currentTime);
         int startAngle = mode_24h && upsideDown24h ? 90 : 270;
-        synchronized (dashboardData.generalizedActivities) {
-            for (DashboardFragment.DashboardData.GeneralizedActivity activity : dashboardData.generalizedActivities) {
+        for (GeneralizedActivity activity : generalizedActivities) {
                 // Determine margin
                 float margin = innerCircleMargin;
                 if (mode_24h || activity.timeFrom >= midDaySecond) {
@@ -264,15 +268,15 @@ public class DashboardTodayWidget extends AbstractDashboardWidget {
                 if (!mode_24h && secondIndex < midDaySecond && activity.timeFrom >= midDaySecond) {
                     paint.setStrokeWidth(barWidth / 3f);
                     paint.setColor(color_unknown);
-                    canvas.drawArc(innerCircleMargin, innerCircleMargin, width - innerCircleMargin, height - innerCircleMargin, startAngle + (secondIndex - dashboardData.timeFrom) / degreeFactor, (midDaySecond - secondIndex) / degreeFactor, false, paint);
+                    canvas.drawArc(innerCircleMargin, innerCircleMargin, width - innerCircleMargin, height - innerCircleMargin, startAngle + (secondIndex - chartTimeFrom) / degreeFactor, (midDaySecond - secondIndex) / degreeFactor, false, paint);
                     secondIndex = midDaySecond;
                 }
                 if (activity.timeFrom > secondIndex) {
                     paint.setStrokeWidth(barWidth / 3f);
                     paint.setColor(color_unknown);
-                    canvas.drawArc(margin, margin, width - margin, height - margin, startAngle + (secondIndex - dashboardData.timeFrom) / degreeFactor, (activity.timeFrom - secondIndex) / degreeFactor, false, paint);
+                    canvas.drawArc(margin, margin, width - margin, height - margin, startAngle + (secondIndex - chartTimeFrom) / degreeFactor, (activity.timeFrom - secondIndex) / degreeFactor, false, paint);
                 }
-                float start_angle = startAngle + (activity.timeFrom - dashboardData.timeFrom) / degreeFactor;
+                float start_angle = startAngle + (activity.timeFrom - chartTimeFrom) / degreeFactor;
                 float sweep_angle = (activity.timeTo - activity.timeFrom) / degreeFactor;
                 if (activity.activityKind == ActivityKind.NOT_MEASURED) {
                     paint.setStrokeWidth(barWidth / 3f);
@@ -332,25 +336,24 @@ public class DashboardTodayWidget extends AbstractDashboardWidget {
                     canvas.drawArc(margin, margin, width - margin, height - margin, start_angle, sweep_angle, false, paint);
                 }
                 secondIndex = activity.timeTo;
-            }
         }
         // Draw indicator for current time
         if (prefs.getBoolean("dashboard_widget_today_time_indicator", false) && currentTime < dashboardData.timeTo) {
             float margin = (mode_24h || currentTime >= midDaySecond) ? outerCircleMargin : innerCircleMargin;
             paint.setStrokeWidth(barWidth);
             paint.setColor(GBApplication.getTextColor(requireContext()));
-            canvas.drawArc(margin, margin, width - margin, height - margin, startAngle + (currentTime - dashboardData.timeFrom) / degreeFactor, 300 / degreeFactor, false, paint);
+            canvas.drawArc(margin, margin, width - margin, height - margin, startAngle + (currentTime - chartTimeFrom) / degreeFactor, 300 / degreeFactor, false, paint);
         }
         // Fill remaining time until current time in 12h mode before midday
         if (!mode_24h && currentTime < midDaySecond) {
             // Fill inner bar up until current time
             paint.setStrokeWidth(barWidth / 3f);
             paint.setColor(color_unknown);
-            canvas.drawArc(innerCircleMargin, innerCircleMargin, width - innerCircleMargin, height - innerCircleMargin, startAngle + (secondIndex - dashboardData.timeFrom) / degreeFactor, (currentTime - secondIndex) / degreeFactor, false, paint);
+            canvas.drawArc(innerCircleMargin, innerCircleMargin, width - innerCircleMargin, height - innerCircleMargin, startAngle + (secondIndex - chartTimeFrom) / degreeFactor, (currentTime - secondIndex) / degreeFactor, false, paint);
             // Fill inner bar up until midday
             paint.setStrokeWidth(barWidth / 3f);
             paint.setColor(color_unknown);
-            canvas.drawArc(innerCircleMargin, innerCircleMargin, width - innerCircleMargin, height - innerCircleMargin, startAngle + (currentTime - dashboardData.timeFrom) / degreeFactor, (midDaySecond - currentTime) / degreeFactor, false, paint);
+            canvas.drawArc(innerCircleMargin, innerCircleMargin, width - innerCircleMargin, height - innerCircleMargin, startAngle + (currentTime - chartTimeFrom) / degreeFactor, (midDaySecond - currentTime) / degreeFactor, false, paint);
             // Fill outer bar up until midnight
             paint.setStrokeWidth(barWidth / 3f);
             paint.setColor(color_unknown);
@@ -362,24 +365,24 @@ public class DashboardTodayWidget extends AbstractDashboardWidget {
             if (!mode_24h && secondIndex < midDaySecond) {
                 paint.setStrokeWidth(barWidth / 3f);
                 paint.setColor(color_unknown);
-                canvas.drawArc(innerCircleMargin, innerCircleMargin, width - innerCircleMargin, height - innerCircleMargin, startAngle + (secondIndex - dashboardData.timeFrom) / degreeFactor, (midDaySecond - secondIndex) / degreeFactor, false, paint);
+                canvas.drawArc(innerCircleMargin, innerCircleMargin, width - innerCircleMargin, height - innerCircleMargin, startAngle + (secondIndex - chartTimeFrom) / degreeFactor, (midDaySecond - secondIndex) / degreeFactor, false, paint);
                 secondIndex = midDaySecond;
             }
             // Fill outer bar up until current time
             paint.setStrokeWidth(barWidth / 3f);
             paint.setColor(color_unknown);
-            canvas.drawArc(outerCircleMargin, outerCircleMargin, width - outerCircleMargin, height - outerCircleMargin, startAngle + (secondIndex - dashboardData.timeFrom) / degreeFactor, (currentTime - secondIndex) / degreeFactor, false, paint);
+            canvas.drawArc(outerCircleMargin, outerCircleMargin, width - outerCircleMargin, height - outerCircleMargin, startAngle + (secondIndex - chartTimeFrom) / degreeFactor, (currentTime - secondIndex) / degreeFactor, false, paint);
             // Fill outer bar up until midnight
             paint.setStrokeWidth(barWidth / 3f);
             paint.setColor(color_unknown);
-            canvas.drawArc(outerCircleMargin, outerCircleMargin, width - outerCircleMargin, height - outerCircleMargin, startAngle + (currentTime - dashboardData.timeFrom) / degreeFactor, (dashboardData.timeTo - currentTime) / degreeFactor, false, paint);
+            canvas.drawArc(outerCircleMargin, outerCircleMargin, width - outerCircleMargin, height - outerCircleMargin, startAngle + (currentTime - chartTimeFrom) / degreeFactor, (dashboardData.timeTo - currentTime) / degreeFactor, false, paint);
         }
         // Only when displaying a past day
         if (secondIndex < dashboardData.timeTo && currentTime > dashboardData.timeTo) {
             // Fill outer bar up until midnight
             paint.setStrokeWidth(barWidth / 3f);
             paint.setColor(color_unknown);
-            canvas.drawArc(outerCircleMargin, outerCircleMargin, width - outerCircleMargin, height - outerCircleMargin, startAngle + (secondIndex - dashboardData.timeFrom) / degreeFactor, (dashboardData.timeTo - secondIndex) / degreeFactor, false, paint);
+            canvas.drawArc(outerCircleMargin, outerCircleMargin, width - outerCircleMargin, height - outerCircleMargin, startAngle + (secondIndex - chartTimeFrom) / degreeFactor, (dashboardData.timeTo - secondIndex) / degreeFactor, false, paint);
         }
 
         todayChart.setImageBitmap(todayBitmap);
@@ -391,15 +394,24 @@ public class DashboardTodayWidget extends AbstractDashboardWidget {
 
         LOG.trace("Starting fillData for {}", getClass().getSimpleName());
 
+        int timeFrom = dashboardData.timeFrom;
         Prefs prefs = GBApplication.getPrefs();
         if (prefs.getBoolean("dashboard_widget_today_show_yesterday", false)) {
             Calendar today = Calendar.getInstance();
             Calendar dashboardDate = Calendar.getInstance();
-            dashboardDate.setTimeInMillis((dashboardData.timeFrom + 1) * 1000L);
+            dashboardDate.setTimeInMillis((timeFrom + 1) * 1000L);
             if (DateTimeUtils.isSameDay(today, dashboardDate)) {
-                dashboardData.timeFrom -= 86400;
+                timeFrom -= 86400;
             }
         }
+        chartTimeFrom = timeFrom;
+
+        queryParams = new DashboardFragment.DashboardData();
+        queryParams.showAllDevices = dashboardData.showAllDevices;
+        queryParams.showDeviceList = dashboardData.showDeviceList;
+        queryParams.hrIntervalSecs = dashboardData.hrIntervalSecs;
+        queryParams.timeFrom = chartTimeFrom;
+        queryParams.timeTo = dashboardData.timeTo;
 
         todayView.post(new Runnable() {
             @Override
@@ -410,7 +422,7 @@ public class DashboardTodayWidget extends AbstractDashboardWidget {
         });
     }
 
-    private class FillDataAsyncTask extends AsyncTask<Void, Void, Void> {
+    private class FillDataAsyncTask extends AsyncTask<Void, Void, List<GeneralizedActivity>> {
         private final HashMap<Long, ActivityKind> activityTimestamps = new HashMap<>();
 
         /**
@@ -514,10 +526,11 @@ public class DashboardTodayWidget extends AbstractDashboardWidget {
          * Merge per-second activities from `activityTimestamps` into generalized activity ranges
          * with minute-based resolution
          */
-        private void createGeneralizedActivities() {
+        private List<GeneralizedActivity> createGeneralizedActivities() {
+            final List<GeneralizedActivity> result = new ArrayList<>();
             long currentTime = Calendar.getInstance().getTimeInMillis() / 1000;
             long midDaySecond = dashboardData.timeTo - (12 * 60 * 60);
-            DashboardFragment.DashboardData.GeneralizedActivity previous = null;
+            GeneralizedActivity previous = null;
             List<Map.Entry<Long, ActivityKind>> sortedActivityTimestamps = activityTimestamps.entrySet()
                     .stream()
                     .sorted(Map.Entry.comparingByKey())
@@ -533,20 +546,20 @@ public class DashboardTodayWidget extends AbstractDashboardWidget {
                         timestamp == dashboardData.timeTo - 86400 ||
                         timestamp == currentTime - 86400 ||
                         previous.timeTo < timestamp - 60) {
-                    previous = new DashboardFragment.DashboardData.GeneralizedActivity(activityKind, timestamp, timestamp);
-                    dashboardData.generalizedActivities.add(previous);
+                    previous = new GeneralizedActivity(activityKind, timestamp, timestamp);
+                    result.add(previous);
                 } else {
                     previous.timeTo = timestamp;
                 }
             }
+            return result;
         }
 
         @Override
-        protected Void doInBackground(Void... params) {
+        protected List<GeneralizedActivity> doInBackground(Void... params) {
             final long nanoStart = System.nanoTime();
 
             // Retrieve activity data
-            dashboardData.generalizedActivities.clear();
             List<GBDevice> devices = GBApplication.app().getDeviceManager().getDevices();
             List<ActivitySample> allActivitySamples = new ArrayList<>();
             List<ActivitySession> stepSessions = new ArrayList<>();
@@ -555,14 +568,14 @@ public class DashboardTodayWidget extends AbstractDashboardWidget {
                 final List<Long> deviceIds = new LinkedList<>();
                 for (GBDevice dev : devices) {
                     if ((dashboardData.showAllDevices || dashboardData.showDeviceList.contains(dev.getAddress())) && dev.getDeviceCoordinator().supportsActivityTracking(dev)) {
-                        List<? extends ActivitySample> activitySamples = DashboardUtils.getAllSamples(dbHandler, dev, dashboardData);
+                        List<? extends ActivitySample> activitySamples = DashboardUtils.getAllSamples(dbHandler, dev, queryParams);
                         allActivitySamples.addAll(activitySamples);
                         StepAnalysis stepAnalysis = new StepAnalysis();
                         stepSessions.addAll(stepAnalysis.calculateStepSessions(activitySamples, Collections.emptyList()));
                         deviceIds.add(DBHelper.getDevice(dev, dbHandler.getDaoSession()).getId());
                     }
                 }
-                activitySummaries = deviceIds.isEmpty() ? new ArrayList<>() : DashboardUtils.getWorkoutSamples(dbHandler, dashboardData, deviceIds);
+                activitySummaries = deviceIds.isEmpty() ? new ArrayList<>() : DashboardUtils.getWorkoutSamples(dbHandler, queryParams, deviceIds);
             } catch (Exception e) {
                 LOG.warn("Could not retrieve activity amounts: ", e);
             }
@@ -589,23 +602,42 @@ public class DashboardTodayWidget extends AbstractDashboardWidget {
             }
 
             // Merge per-second activities
-            createGeneralizedActivities();
+            final List<GeneralizedActivity> result = createGeneralizedActivities();
 
             final long nanoEnd = System.nanoTime();
             final long executionTime = (nanoEnd - nanoStart) / 1000000;
             LOG.debug("fillData for {} took {}ms", DashboardTodayWidget.this.getClass().getSimpleName(), executionTime);
 
-            return null;
+            return result;
         }
 
         @Override
-        protected void onPostExecute(final Void unused) {
-            super.onPostExecute(unused);
+        protected void onPostExecute(final List<GeneralizedActivity> result) {
+            super.onPostExecute(result);
+            generalizedActivities = result;
             try {
                 draw();
             } catch (final Exception e) {
                 LOG.error("calling draw() failed", e);
             }
+        }
+    }
+
+    static class GeneralizedActivity {
+        public ActivityKind activityKind;
+        public long timeFrom;
+        public long timeTo;
+
+        public GeneralizedActivity(ActivityKind activityKind, long timeFrom, long timeTo) {
+            this.activityKind = activityKind;
+            this.timeFrom = timeFrom;
+            this.timeTo = timeTo;
+        }
+
+        @NonNull
+        @Override
+        public String toString() {
+            return "Generalized activity: timeFrom=" + timeFrom + ", timeTo=" + timeTo + ", activityKind=" + activityKind + ", calculated duration: " + (timeTo - timeFrom) + " seconds";
         }
     }
 }

@@ -21,7 +21,6 @@ import android.os.Bundle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.Serializable;
 import java.util.List;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
@@ -37,7 +36,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.SleepScoreSample;
  * Use the {@link DashboardSleepScoreWidget#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class DashboardSleepScoreWidget extends AbstractGaugeWidget {
+public class DashboardSleepScoreWidget extends AbstractGaugeWidget<DashboardSleepScoreWidget.SleepScoreData> {
     protected static final Logger LOG = LoggerFactory.getLogger(DashboardSleepScoreWidget.class);
     public DashboardSleepScoreWidget() {
         super(R.string.sleep_score, "sleep");
@@ -59,7 +58,7 @@ public class DashboardSleepScoreWidget extends AbstractGaugeWidget {
     }
 
     @Override
-    protected void populateData(final DashboardFragment.DashboardData dashboardData) {
+    protected SleepScoreData populateData(final DashboardFragment.DashboardData dashboardData) {
         final List<GBDevice> devices = getSupportedDevices(dashboardData);
         final SleepScoreData data = new SleepScoreData();
 
@@ -81,12 +80,11 @@ public class DashboardSleepScoreWidget extends AbstractGaugeWidget {
             LOG.error("Could not get vo2max for today", e);
         }
 
-        dashboardData.put("sleepscore", data);
+        return data;
     }
 
     @Override
-    protected void draw(final DashboardFragment.DashboardData dashboardData) {
-        final SleepScoreData data = (SleepScoreData) dashboardData.get("sleepscore");
+    protected void draw(final SleepScoreData data) {
         setText(String.valueOf(data.value));
         drawSimpleGauge(
                 color_light_sleep,
@@ -99,7 +97,7 @@ public class DashboardSleepScoreWidget extends AbstractGaugeWidget {
         return device.getDeviceCoordinator().supportsSleepScore(device);
     }
 
-    private static class SleepScoreData implements Serializable {
+    public static class SleepScoreData {
         public int value = -1;
     }
 }

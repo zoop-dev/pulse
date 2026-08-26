@@ -23,13 +23,14 @@ import java.util.Locale;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.DashboardFragment;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.util.DashboardUtils;
 
 /**
  * A simple {@link AbstractDashboardWidget} subclass.
  * Use the {@link DashboardActiveTimeWidget#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class DashboardActiveTimeWidget extends AbstractGaugeWidget {
+public class DashboardActiveTimeWidget extends AbstractGaugeWidget<DashboardActiveTimeWidget.ActiveTimeData> {
     public DashboardActiveTimeWidget() {
         super(R.string.activity_list_summary_active_time, "activity");
     }
@@ -55,26 +56,35 @@ public class DashboardActiveTimeWidget extends AbstractGaugeWidget {
     }
 
     @Override
-    protected void populateData(final DashboardFragment.DashboardData dashboardData) {
-        dashboardData.getActiveMinutesTotal();
-        dashboardData.getActiveMinutesGoalFactor();
+    protected ActiveTimeData populateData(final DashboardFragment.DashboardData dashboardData) {
+        final long total = DashboardUtils.getActiveMinutesTotal(dashboardData);
+        return new ActiveTimeData(total, DashboardUtils.getActiveMinutesGoalFactor(total));
     }
 
     @Override
-    protected void draw(final DashboardFragment.DashboardData dashboardData) {
-        final long totalActiveMinutes = dashboardData.getActiveMinutesTotal();
+    protected void draw(final ActiveTimeData data) {
         final String valueText = String.format(
                 Locale.ROOT,
                 "%d:%02d",
-                (int) Math.floor(totalActiveMinutes / 60f),
-                (int) (totalActiveMinutes % 60f)
+                (int) Math.floor(data.total / 60f),
+                (int) (data.total % 60f)
         );
 
         setText(valueText);
 
         drawSimpleGauge(
                 color_active_time,
-                dashboardData.getActiveMinutesGoalFactor()
+                data.goalFactor
         );
+    }
+
+    protected static class ActiveTimeData {
+        final long total;
+        final float goalFactor;
+
+        ActiveTimeData(final long total, final float goalFactor) {
+            this.total = total;
+            this.goalFactor = goalFactor;
+        }
     }
 }

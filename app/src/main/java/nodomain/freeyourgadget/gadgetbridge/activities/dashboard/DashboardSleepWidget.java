@@ -23,13 +23,14 @@ import java.util.Locale;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.DashboardFragment;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.util.DashboardUtils;
 
 /**
  * A simple {@link AbstractDashboardWidget} subclass.
  * Use the {@link DashboardSleepWidget#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class DashboardSleepWidget extends AbstractGaugeWidget {
+public class DashboardSleepWidget extends AbstractGaugeWidget<DashboardSleepWidget.SleepData> {
     public DashboardSleepWidget() {
         super(R.string.menuitem_sleep, "sleep");
     }
@@ -55,25 +56,34 @@ public class DashboardSleepWidget extends AbstractGaugeWidget {
     }
 
     @Override
-    protected void populateData(final DashboardFragment.DashboardData dashboardData) {
-        dashboardData.getSleepMinutesTotal();
-        dashboardData.getSleepMinutesGoalFactor();
+    protected SleepData populateData(final DashboardFragment.DashboardData dashboardData) {
+        final long total = DashboardUtils.getSleepMinutesTotal(dashboardData);
+        return new SleepData(total, DashboardUtils.getSleepMinutesGoalFactor(total));
     }
 
     @Override
-    protected void draw(final DashboardFragment.DashboardData dashboardData) {
-        final long totalSleepMinutes = dashboardData.getSleepMinutesTotal();
+    protected void draw(final SleepData data) {
         final String valueText = String.format(
                 Locale.ROOT,
                 "%d:%02d",
-                (int) Math.floor(totalSleepMinutes / 60f),
-                (int) (totalSleepMinutes % 60f)
+                (int) Math.floor(data.total / 60f),
+                (int) (data.total % 60f)
         );
 
         setText(valueText);
         drawSimpleGauge(
                 color_light_sleep,
-                dashboardData.getSleepMinutesGoalFactor()
+                data.goalFactor
         );
+    }
+
+    protected static class SleepData {
+        final long total;
+        final float goalFactor;
+
+        SleepData(final long total, final float goalFactor) {
+            this.total = total;
+            this.goalFactor = goalFactor;
+        }
     }
 }
