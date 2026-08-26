@@ -258,6 +258,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.gloryfit.watches.OukitelBT10
 import nodomain.freeyourgadget.gadgetbridge.devices.gloryfit.watches.QecnatoS10Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.gloryfit.watches.R1Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.gloryfit.watches.S52Coordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.gloryfit.watches.SwissPeakCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.gloryfit.watches.Y66Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.gloryfit.watches.Y6Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.gloryfitpro.watches.DM58Coordinator;
@@ -1071,6 +1072,7 @@ public enum DeviceType {
     OPPO_ENCO_AIR2(OppoEncoAir2Coordinator.class),
     OPPO_ENCO_BUDS2(OppoEncoBuds2Coordinator.class),
     OUKITEL_BT103(OukitelBT103Coordinator.class),
+    GLORYFIT_SWISS_PEAK(SwissPeakCoordinator.class),
     BLACKVIEW_R3MAX(BlackviewR3MaxCoordinator.class),
     DOTN_P66D(DotnP66DCoordinator.class),
     QECNATO_S10(QecnatoS10Coordinator.class),
