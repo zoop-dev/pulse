@@ -33,8 +33,10 @@ import org.slf4j.LoggerFactory;
 import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
@@ -154,7 +156,7 @@ public class DeviceManager {
     }
 
     private void refreshPairedDevices() {
-        Set<GBDevice> availableDevices = DeviceHelper.getInstance().getAvailableDevices();
+        final Set<GBDevice> availableDevices = DeviceHelper.getInstance().getAvailableDevices();
         deviceList.retainAll(availableDevices);
         for (GBDevice availableDevice : availableDevices) {
             if (!deviceList.contains(availableDevice)) {
@@ -162,28 +164,48 @@ public class DeviceManager {
             }
         }
 
-        Collections.sort(deviceList, new Comparator<GBDevice>() {
-            @Override
-            public int compare(GBDevice lhs, GBDevice rhs) {
-                int stateDiff = rhs.getStateOrdinal() - lhs.getStateOrdinal();
-                if (stateDiff != 0) {
-                    return stateDiff;
-                }
-
-                if(GBApplication.getPrefs().getSortByLastConnectedTs()) {
-                    long lhsLastConnected = GBApplication.getDeviceSpecificSharedPrefs(lhs.getAddress())
-                            .getLong(GBPrefs.LAST_CONNECTED_TS, 0L);
-                    long rhsLastConnected = GBApplication.getDeviceSpecificSharedPrefs(rhs.getAddress())
-                            .getLong(GBPrefs.LAST_CONNECTED_TS, 0L);
-                    int lastConnDiff = Long.compare(rhsLastConnected, lhsLastConnected); // più recente prima
-                    if (lastConnDiff != 0) {
-                        return lastConnDiff;
-                    }
-                }
-                return Collator.getInstance().compare(lhs.getAliasOrName(), rhs.getAliasOrName());
+        // Snapshot the sort keys up front, instead of re-reading mutable GBDevice
+        // fields on every compare() call. GBDevice state can be mutated concurrently by
+        // device support threads while this sort runs, and re-reading it mid-sort can
+        // make compare() inconsistent between calls, which violates the contract TimSort
+        // relies on (IllegalArgumentException: Comparison method violates its general contract!).
+        final boolean sortByLastConnectedTs = GBApplication.getPrefs().getSortByLastConnectedTs();
+        final Collator collator = Collator.getInstance();
+        final Map<GBDevice, DeviceSortKey> sortKeys = new HashMap<>();
+        for (GBDevice device : deviceList) {
+            final long lastConnectedTs;
+            if (sortByLastConnectedTs) {
+                lastConnectedTs = GBApplication.getDeviceSpecificSharedPrefs(device.getAddress())
+                        .getLong(GBPrefs.LAST_CONNECTED_TS, 0L);
+            } else {
+                lastConnectedTs = 0L;
             }
+            sortKeys.put(device, new DeviceSortKey(device.getStateOrdinal(), lastConnectedTs, device.getAliasOrName()));
+        }
+
+        Collections.sort(deviceList, (lhs, rhs) -> {
+            final DeviceSortKey lhsKey = Objects.requireNonNull(sortKeys.get(lhs));
+            final DeviceSortKey rhsKey = Objects.requireNonNull(sortKeys.get(rhs));
+
+            int stateDiff = rhsKey.stateOrdinal - lhsKey.stateOrdinal;
+            if (stateDiff != 0) {
+                return stateDiff;
+            }
+
+            if (sortByLastConnectedTs) {
+                int lastConnDiff = Long.compare(rhsKey.lastConnectedTs, lhsKey.lastConnectedTs); // più recente prima
+                if (lastConnDiff != 0) {
+                    return lastConnDiff;
+                }
+            }
+            return collator.compare(lhsKey.aliasOrName, rhsKey.aliasOrName);
         });
         notifyDevicesChanged();
+    }
+
+    private record DeviceSortKey(int stateOrdinal,
+                                 long lastConnectedTs,
+                                 String aliasOrName) {
     }
 
     /**
