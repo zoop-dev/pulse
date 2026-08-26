@@ -41,6 +41,7 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.os.ParcelUuid;
 import android.os.Parcelable;
@@ -109,11 +110,12 @@ public class DiscoveryActivityV2 extends AbstractGBActivity implements AdapterVi
     private static final Logger LOG = LoggerFactory.getLogger(DiscoveryActivityV2.class);
 
     private static final int CHILD_RESULT = 0x826983; // "RES" as ASCII hex
-    private final Handler handler = new Handler();
+    private final Handler handler = new Handler(Looper.getMainLooper());
 
     private static final long SCAN_DURATION = 30000; // 30s
     private static final long LIST_REFRESH_THRESHOLD_MS = 1000L;
     private long lastListRefresh = System.currentTimeMillis();
+    private boolean listRefreshPending = false;
 
     private final ScanCallback bleScanCallback = new BleScanCallback();
 
@@ -270,7 +272,17 @@ public class DiscoveryActivityV2 extends AbstractGBActivity implements AdapterVi
 
     private void refreshDeviceList(final boolean throttle) {
         handler.post(() -> {
-            if (throttle && System.currentTimeMillis() - lastListRefresh < LIST_REFRESH_THRESHOLD_MS) {
+            final long timeSinceLastRefresh = System.currentTimeMillis() - lastListRefresh;
+            if (throttle && timeSinceLastRefresh < LIST_REFRESH_THRESHOLD_MS) {
+                // Make sure a refresh still happens later, in case no further refresh is triggered
+                // before discovery finishes
+                if (!listRefreshPending) {
+                    listRefreshPending = true;
+                    handler.postDelayed(() -> {
+                        listRefreshPending = false;
+                        refreshDeviceList(false);
+                    }, LIST_REFRESH_THRESHOLD_MS - timeSinceLastRefresh);
+                }
                 return;
             }
 
@@ -453,7 +465,8 @@ public class DiscoveryActivityV2 extends AbstractGBActivity implements AdapterVi
 
     private void bluetoothStateChanged(final int newState) {
         if (newState == BluetoothAdapter.STATE_ON) {
-            this.adapter = BluetoothAdapter.getDefaultAdapter();
+            final BluetoothManager bluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
+            this.adapter = bluetoothManager.getAdapter();
             startButton.setEnabled(true);
         } else {
             this.adapter = null;
@@ -800,7 +813,8 @@ public class DiscoveryActivityV2 extends AbstractGBActivity implements AdapterVi
             ));
         }
 
-        if (coordinator.getDeviceSpecificSettings(device) != null) {
+        //noinspection deprecation
+        if (coordinator.getDeviceSpecificSettings(device) != null || coordinator.getDeviceSettings(device) != null) {
             longClickItems.add(new RunnableListIconItem(
                     getString(R.string.pref_header_device_spec_settings),
                     R.drawable.ic_settings,
