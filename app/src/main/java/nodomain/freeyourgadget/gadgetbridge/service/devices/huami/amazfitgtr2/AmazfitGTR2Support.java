@@ -26,6 +26,7 @@ import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiFWHelper;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.amazfitgtr2.AmazfitGTR2FWHelper;
 import nodomain.freeyourgadget.gadgetbridge.model.CallSpec;
+import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.amazfitgtr.AmazfitGTRSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.operations.update.UpdateFirmwareOperation;
@@ -62,5 +63,11 @@ public class AmazfitGTR2Support extends AmazfitGTRSupport {
     protected AmazfitGTR2Support setDisplayItems(TransactionBuilder builder) {
         setDisplayItemsNew(builder, false, false, R.array.pref_gtsgtr2_display_items_default);
         return this;
+    }
+
+    @Override
+    public String getNotificationBody(NotificationSpec notificationSpec) {
+        // #6024
+        return getNotificationBodyCheckAcceptsSender(notificationSpec);
     }
 }

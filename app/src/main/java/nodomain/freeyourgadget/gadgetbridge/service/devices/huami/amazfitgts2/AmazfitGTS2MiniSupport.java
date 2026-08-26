@@ -19,20 +19,13 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.huami.amazfitgts2;
 import android.content.Context;
 import android.net.Uri;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.IOException;
 
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiFWHelper;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.amazfitgts2.AmazfitGTS2MiniFWHelper;
-import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 
 public class AmazfitGTS2MiniSupport extends AmazfitGTS2Support {
-
-    private static final Logger LOG = LoggerFactory.getLogger(AmazfitGTS2MiniSupport.class);
-
     @Override
     protected void setLanguage(TransactionBuilder builder) {
         setLanguageByIdNew(builder);
@@ -41,11 +34,5 @@ public class AmazfitGTS2MiniSupport extends AmazfitGTS2Support {
     @Override
     public HuamiFWHelper createFWHelper(Uri uri, Context context) throws IOException {
         return new AmazfitGTS2MiniFWHelper(uri, context);
-    }
-
-    @Override
-    public String getNotificationBody(NotificationSpec notificationSpec) {
-        // #2987
-        return getNotificationBodyCheckAcceptsSender(notificationSpec);
     }
 }
