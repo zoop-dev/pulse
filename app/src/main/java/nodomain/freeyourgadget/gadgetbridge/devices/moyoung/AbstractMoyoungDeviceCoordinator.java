@@ -283,7 +283,11 @@ public abstract class AbstractMoyoungDeviceCoordinator extends AbstractBLEDevice
         );
     }
 
-    public MoyoungSetting[] getSupportedSettings() {
+    public boolean supportsDeviceInfoProfile() {
+        return true;
+    }
+
+    public MoyoungSetting<?>[] getSupportedSettings() {
         return MOYOUNG_SETTINGS;
     }
 

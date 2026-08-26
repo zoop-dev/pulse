@@ -196,12 +196,15 @@ public class MoyoungDeviceSupport extends AbstractBTLESingleDeviceSupport {
 
     @Override
     protected TransactionBuilder initializeDevice(TransactionBuilder builder) {
-        final int mtu = ((AbstractMoyoungDeviceCoordinator) getDevice().getDeviceCoordinator()).getMtu();
+        final AbstractMoyoungDeviceCoordinator coordinator = (AbstractMoyoungDeviceCoordinator) getDevice().getDeviceCoordinator();
+        final int mtu = coordinator.getMtu();
         builder.requestMtu(mtu + 3);  // Add 3 bytes for the BLE overhead
 
         builder.setDeviceState(GBDevice.State.INITIALIZING);
         builder.notify(MoyoungConstants.UUID_CHARACTERISTIC_DATA_IN, true);
-        deviceInfoProfile.requestDeviceInfo(builder);
+        if (coordinator.supportsDeviceInfoProfile()) {
+            deviceInfoProfile.requestDeviceInfo(builder);
+        }
         setTime(builder);
         setMeasurementSystem(builder);
         sendSetting(builder, getSetting("USER_INFO"), new ActivityUser()); // these settings are write-only, so write them just in case because there is no way to know if they desynced somehow
@@ -1646,9 +1649,9 @@ public class MoyoungDeviceSupport extends AbstractBTLESingleDeviceSupport {
     }
 
     @SuppressWarnings("unchecked")
-    private <T extends MoyoungSetting> T getSetting(String id) {
+    private <T extends MoyoungSetting<?>> T getSetting(String id) {
         AbstractMoyoungDeviceCoordinator coordinator = (AbstractMoyoungDeviceCoordinator) getDevice().getDeviceCoordinator();
-        for (MoyoungSetting setting : coordinator.getSupportedSettings()) {
+        for (MoyoungSetting<?> setting : coordinator.getSupportedSettings()) {
             if (setting.name.equals(id))
                 return (T) setting;
         }
