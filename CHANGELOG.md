@@ -3,8 +3,11 @@
 #### Next version (WIP)
 
 * Initial support for Redmi Watch 6
-* Initial support for Garmin Edge 1050
-* Initial support for Garmin Forerunner 230
+* Initial support for Garmin Edge 1050, Forerunner 230, Vívoactive 3 Music
+* Initial support for GRV FC1, Swiss Peak (GloryFit)
+* Initial support for Alt Vibe (MoYoung / Da Fit)
+* Initial support for Xiaomi Watch 5
+* Experimental support for 54 new Garmin devices
 * Accessibility: Label image controls for screen readers
 * Activity list: Fix occasional crash
 * Allow notifications from other users
@@ -19,6 +22,12 @@
 * Garmin: Make activity sync progress unit explicit
 * Garmin: Fix COBS decoder wedging on truncated frames
 * GloryFit: Fix crash on health settings screen
+* Garmin: Fix occasional crash on reconnection
+* Garmin: Fix dismiss of old notifications
+* Garmin: Fix stuck connection when a frame is dropped
+* Garmin: Do not send stale GPS location to watch
+* Garmin: Send phone info to watch
+* Discovery Activity: Improve list refresh timing
 * Nothing Ear (a): Fix bluetooth name
 * Optionally order disconnected devices by their most recent connection instead of by name
 * Rate limit the serialization of incoming CoMaps navigation messages
@@ -27,8 +36,19 @@
 * UNA Watch: Import workouts as soon as they are saved on the watch
 * UNA Watch: Per-minute heart rate and honest daily totals
 * WeatherSpec: Add atmospheric pressure, cloud cover and dew point forecasts
+* MoYoung: Add more workout types and parse max speed
+* Pebble: Initial support for new weather v4
+* Charts: Fix crash when exiting live activity
 * Zepp OS: Add some missing display items and shortcut cards
 * Zepp OS: Fix download of long voice notes
+* Xiaomi-protobuf: Fix notification "open on phone"
+* Xiaomi-protobuf: Improve workout and activity parsing
+* Xiaomi-protobuf: Fix crash when dismissing some notifications
+* BLE Intent API: Allow multiple target packages
+* BLE Intent API: Prevent abortion of device init
+* GPX export: Give tracks a real name
+* Garmin: Allow upload of gpx with navigation instructions
+* Xiaomi-protobuf: Fix crash on resting heart rate query
 
 #### 0.93.0
 
