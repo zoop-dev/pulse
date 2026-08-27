@@ -798,6 +798,10 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
             }
         }
 
+        // Always ensure that todayDailyForecast or weatherDailyForecast have the same fields set,
+        // since they share the same message type in the definition message
+        final int dailyMessageType = weatherLocalMessage.getNextAvailableLocalMessageType();
+
         final FitWeather.Builder todayDailyForecast = new FitWeather.Builder();
         todayDailyForecast.setWeatherReport(WeatherReport.daily_forecast);
         todayDailyForecast.setTimestamp((long) weather.getTimestamp());
@@ -813,9 +817,8 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
         todayDailyForecast.weatherUvIndex(weather.getUvIndex());
         todayDailyForecast.weatherAtmosphericPressure(weather.getPressure());
         // TODO: FIT encoding unclear for weather.getCloudCover()
-        weatherLocalMessage.addRecordData(todayDailyForecast.build(weatherLocalMessage.getNextAvailableLocalMessageType()));
+        weatherLocalMessage.addRecordData(todayDailyForecast.build(dailyMessageType));
 
-        final int dailyMessageType = weatherLocalMessage.getNextAvailableLocalMessageType();
         for (int day = 0; day < 4; day++) {
             if (day < weather.getForecasts().size()) {
                 WeatherSpec.Daily daily = weather.getForecasts().get(day);
