@@ -39,6 +39,7 @@ message HttpService {
   optional WebResponse webResponse = 2;
   optional RawRequest rawRequest = 5;
   optional RawResponse rawResponse = 6;
+  optional ShowURLRequest showURLRequest = 11;
 
   message WebRequest {
     required string url = 1;
@@ -85,5 +86,11 @@ message HttpService {
   message Header {
     required string key = 1;
     required string value = 2;
+  }
+  
+  message ShowURLRequest {
+    required string url = 1;
+    optional bytes parameters = 2;
+    optional string app = 3;
   }
 }
