@@ -5,7 +5,7 @@ android-gradle-plugin = "9.3.2"
 androidsvg = "1.4"
 androidx-activity = "1.13.0"
 androidx-appcompat = "1.8.0"
-androidx-camera = "1.6.1"
+androidx-camera = "1.6.2"
 androidx-cardview = "1.0.0"
 androidx-constraintlayout = "2.2.2"
 androidx-core = "1.19.0"
@@ -31,7 +31,6 @@ flexbox = "3.0.0"
 freemarker = "2.3.34"
 greendao = "2.2.1"
 gson = "2.14.0"
-guava = "33.7.0-android"
 hamcrest = "3.0"
 json = "20260814"
 jsoup = "1.23.2"
@@ -94,7 +93,6 @@ flexbox = { group = "com.google.android.flexbox", name = "flexbox", version.ref 
 freemarker = { group = "org.freemarker", name = "freemarker", version.ref = "freemarker" }
 greendao = { group = "org.greenrobot", name = "greendao", version.ref = "greendao" }
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
-guava = { group = "com.google.guava", name = "guava", version.ref = "guava" }
 hamcrest = { group = "org.hamcrest", name = "hamcrest-library", version.ref = "hamcrest" }
 json = { group = "org.json", name = "json", version.ref = "json" }
 jsoup = { group = "org.jsoup", name = "jsoup", version.ref = "jsoup" }

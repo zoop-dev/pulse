@@ -356,7 +356,6 @@ dependencies {
     implementation libs.ahocorasick
 
     // Android Health Connect
-    implementation libs.guava // This is needed because CameraActivity.java line 41 doesn't have a ListenableFuture package
     implementation libs.androidx.health.connect.client
 }
 
