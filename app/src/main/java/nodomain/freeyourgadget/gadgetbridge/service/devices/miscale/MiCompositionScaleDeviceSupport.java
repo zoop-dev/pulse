@@ -22,6 +22,8 @@ import android.bluetooth.BluetoothGattCharacteristic;
 import android.os.Parcelable;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -51,6 +53,8 @@ import nodomain.freeyourgadget.gadgetbridge.util.GB;
 public class MiCompositionScaleDeviceSupport extends AbstractBTLESingleDeviceSupport {
     private static final Logger LOG = LoggerFactory.getLogger(MiCompositionScaleDeviceSupport.class);
 
+    private static final long SCALE_RELEASE_DATE = 1521072000000L;
+
     private final DeviceInfoProfile<MiCompositionScaleDeviceSupport> deviceInfoProfile;
     private final GBDeviceEventVersionInfo versionCmd = new GBDeviceEventVersionInfo();
 
@@ -75,11 +79,11 @@ public class MiCompositionScaleDeviceSupport extends AbstractBTLESingleDeviceSup
         addSupportedProfile(deviceInfoProfile);
     }
 
+    @NonNull
     @Override
     protected TransactionBuilder initializeDevice(final TransactionBuilder builder) {
         builder.setDeviceState(GBDevice.State.INITIALIZING);
 
-        LOG.debug("Requesting Device Info!");
         deviceInfoProfile.requestDeviceInfo(builder);
         builder.setDeviceState(GBDevice.State.INITIALIZED);
 
@@ -139,17 +143,19 @@ public class MiCompositionScaleDeviceSupport extends AbstractBTLESingleDeviceSup
     private void handleWeightInfo(final Date date, final float weightKg) {
         GB.toast(getContext().getString(R.string.weight_kg, weightKg), Toast.LENGTH_SHORT, GB.INFO);
 
+        long sampleTs = date.getTime();
+        if (sampleTs < SCALE_RELEASE_DATE || sampleTs > System.currentTimeMillis() + 86400_000L) {
+            LOG.warn("Implausible sample time {}, sanitizing sample date to current time", date.getTime());
+            sampleTs = System.currentTimeMillis();
+        }
+
         try (DBHandler db = GBApplication.acquireDB()) {
             final MiScaleWeightSampleProvider provider = new MiScaleWeightSampleProvider(getDevice(), db.getDaoSession());
-            final Long userId = DBHelper.getUser(db.getDaoSession()).getId();
-            final Long deviceId = DBHelper.getDevice(getDevice(), db.getDaoSession()).getId();
 
-            provider.addSample(new MiScaleWeightSample(
-                    date.getTime(),
-                    deviceId,
-                    userId,
-                    weightKg
-            ));
+            final MiScaleWeightSample sample = new MiScaleWeightSample();
+            sample.setTimestamp(sampleTs);
+            sample.setWeightKg(weightKg);
+            provider.persistSamples(sample, getContext());
         } catch (final Exception e) {
             LOG.error("Error saving weight sample", e);
         }

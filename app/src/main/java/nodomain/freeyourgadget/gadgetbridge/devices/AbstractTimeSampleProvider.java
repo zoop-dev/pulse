@@ -29,6 +29,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import de.greenrobot.dao.AbstractDao;
 import de.greenrobot.dao.Property;
@@ -238,10 +239,10 @@ public abstract class AbstractTimeSampleProvider<T extends AbstractTimeSample> i
                 LOG.warn("Device not found in database for '{}'", gbDevice.getAliasOrName());
                 return false;
             }
-            final long deviceId = device.getId();
+            final long deviceId = Objects.requireNonNull(device.getId());
 
             final User user = DBHelper.getUser(session);
-            final long userId = user.getId();
+            final long userId = Objects.requireNonNull(user.getId());
 
             for (final T sample : samples) {
                 sample.setDeviceId(deviceId);
