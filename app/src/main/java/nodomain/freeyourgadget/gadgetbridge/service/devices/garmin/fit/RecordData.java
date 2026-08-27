@@ -121,6 +121,13 @@ public class RecordData {
         writer.writeBytes(valueHolder.array());
     }
 
+    /**
+     * Size in bytes this record will take up once encoded, i.e. the record header byte plus its field values.
+     */
+    public int getEncodedSize() {
+        return 1 + valueHolder.capacity();
+    }
+
     public void setFieldByNumber(int number, Object... value) {
         boolean found = false;
         for (FieldData fieldData :
