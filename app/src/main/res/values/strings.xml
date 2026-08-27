@@ -2654,6 +2654,7 @@
     <string name="weather_condition_light_shower_snow">light shower snow</string>
     <string name="weather_condition_heavy_snow">heavy snow</string>
     <string name="weather_condition_sleet">sleet</string>
+    <string name="weather_condition_light_shower_sleet">light shower sleet</string>
     <string name="weather_condition_shower_sleet">shower sleet</string>
     <string name="weather_condition_shower_snow">shower snow</string>
     <string name="weather_condition_heavy_shower_snow">heavy shower snow</string>

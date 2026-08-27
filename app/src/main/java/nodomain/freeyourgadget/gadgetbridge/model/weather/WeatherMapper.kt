@@ -63,87 +63,8 @@ object WeatherMapper {
     }
 
     @JvmStatic
-    fun getConditionString(context: Context, code: Int): String = when (code) {
-        200 -> context.getString(R.string.weather_condition_thunderstorm_with_light_rain)
-        201 -> context.getString(R.string.weather_condition_thunderstorm_with_rain)
-        202 -> context.getString(R.string.weather_condition_thunderstorm_with_heavy_rain)
-        210 -> context.getString(R.string.weather_condition_light_thunderstorm)
-        211 -> context.getString(R.string.weather_condition_thunderstorm)
-        230 -> context.getString(R.string.weather_condition_thunderstorm_with_light_drizzle)
-        231 -> context.getString(R.string.weather_condition_thunderstorm_with_drizzle)
-        232 -> context.getString(R.string.weather_condition_thunderstorm_with_heavy_drizzle)
-        212 -> context.getString(R.string.weather_condition_heavy_thunderstorm)
-        221 -> context.getString(R.string.weather_condition_ragged_thunderstorm)
-        // Group 3xx: Drizzle
-        300 -> context.getString(R.string.weather_condition_light_intensity_drizzle)
-        301 -> context.getString(R.string.weather_condition_drizzle)
-        302 -> context.getString(R.string.weather_condition_heavy_intensity_drizzle)
-        310 -> context.getString(R.string.weather_condition_light_intensity_drizzle_rain)
-        311 -> context.getString(R.string.weather_condition_drizzle_rain)
-        312 -> context.getString(R.string.weather_condition_heavy_intensity_drizzle_rain)
-        313 -> context.getString(R.string.weather_condition_shower_rain_and_drizzle)
-        314 -> context.getString(R.string.weather_condition_heavy_shower_rain_and_drizzle)
-        321 -> context.getString(R.string.weather_condition_shower_drizzle)
-        // Group 5xx: Rain
-        500 -> context.getString(R.string.weather_condition_light_rain)
-        501 -> context.getString(R.string.weather_condition_moderate_rain)
-        502 -> context.getString(R.string.weather_condition_heavy_intensity_rain)
-        503 -> context.getString(R.string.weather_condition_very_heavy_rain)
-        504 -> context.getString(R.string.weather_condition_extreme_rain)
-        511 -> context.getString(R.string.weather_condition_freezing_rain)
-        520 -> context.getString(R.string.weather_condition_light_intensity_shower_rain)
-        521 -> context.getString(R.string.weather_condition_shower_rain)
-        522 -> context.getString(R.string.weather_condition_heavy_intensity_shower_rain)
-        531 -> context.getString(R.string.weather_condition_ragged_shower_rain)
-        // Group 6xx: Snow
-        600 -> context.getString(R.string.weather_condition_light_snow)
-        601 -> context.getString(R.string.weather_condition_snow)
-        602 -> context.getString(R.string.weather_condition_heavy_snow)
-        611 -> context.getString(R.string.weather_condition_sleet)
-        612 -> context.getString(R.string.weather_condition_shower_sleet)
-        615 -> context.getString(R.string.weather_condition_light_rain_and_snow)
-        616 -> context.getString(R.string.weather_condition_rain_and_snow)
-        620 -> context.getString(R.string.weather_condition_light_shower_snow)
-        621 -> context.getString(R.string.weather_condition_shower_snow)
-        622 -> context.getString(R.string.weather_condition_heavy_shower_snow)
-        // Group 7xx: Atmosphere
-        701 -> context.getString(R.string.weather_condition_mist)
-        711 -> context.getString(R.string.weather_condition_smoke)
-        721 -> context.getString(R.string.weather_condition_haze)
-        731 -> context.getString(R.string.weather_condition_sandcase_dust_whirls)
-        741 -> context.getString(R.string.weather_condition_fog)
-        751 -> context.getString(R.string.weather_condition_sand)
-        761 -> context.getString(R.string.weather_condition_dust)
-        762 -> context.getString(R.string.weather_condition_volcanic_ash)
-        771 -> context.getString(R.string.weather_condition_squalls)
-        781, 900 -> context.getString(R.string.weather_condition_tornado)
-        // Group 80x: Clouds
-        800 -> context.getString(R.string.weather_condition_clear_sky)
-        801 -> context.getString(R.string.weather_condition_few_clouds)
-        802 -> context.getString(R.string.weather_condition_scattered_clouds)
-        803 -> context.getString(R.string.weather_condition_broken_clouds)
-        804 -> context.getString(R.string.weather_condition_overcast_clouds)
-        // Group 90x: Extreme
-        901 -> context.getString(R.string.weather_condition_tropical_storm)
-        902, 962 -> context.getString(R.string.weather_condition_hurricane)
-        903 -> context.getString(R.string.weather_condition_cold)
-        904 -> context.getString(R.string.weather_condition_hot)
-        905 -> context.getString(R.string.weather_condition_windy)
-        906 -> context.getString(R.string.weather_condition_hail)
-        // Group 9xx: Additional
-        951 -> context.getString(R.string.weather_condition_calm)
-        952 -> context.getString(R.string.weather_condition_light_breeze)
-        953 -> context.getString(R.string.weather_condition_gentle_breeze)
-        954 -> context.getString(R.string.weather_condition_moderate_breeze)
-        955 -> context.getString(R.string.weather_condition_fresh_breeze)
-        956 -> context.getString(R.string.weather_condition_strong_breeze)
-        957 -> context.getString(R.string.weather_condition_high_windcase_near_gale)
-        958 -> context.getString(R.string.weather_condition_gale)
-        959 -> context.getString(R.string.weather_condition_severe_gale)
-        960 -> context.getString(R.string.weather_condition_storm)
-        961 -> context.getString(R.string.weather_condition_violent_storm)
-
-        else -> ""
+    fun getConditionString(context: Context, code: Int): String {
+        return OwmCondition.fromCode(code)?.let { context.getString(it.labelRes) }?: ""
     }
 
     @JvmStatic

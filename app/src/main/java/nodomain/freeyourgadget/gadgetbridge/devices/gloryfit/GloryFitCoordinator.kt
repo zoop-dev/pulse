@@ -143,8 +143,7 @@ abstract class GloryFitCoordinator : AbstractBLEDeviceCoordinator() {
     }
 
     override fun supportsWeather(device: GBDevice): Boolean {
-        // TODO it does
-        return false
+        return true
     }
 
     override fun supportsFindDevice(device: GBDevice): Boolean {
