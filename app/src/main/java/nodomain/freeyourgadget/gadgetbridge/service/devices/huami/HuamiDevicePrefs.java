@@ -41,6 +41,10 @@ public class HuamiDevicePrefs extends DevicePrefs {
             localeString = language + "_" + country.toUpperCase();
         }
 
+        if (localeString.startsWith("0x")) {
+            return (byte) Integer.parseInt(localeString.substring(2), 16);
+        }
+
         final Integer id = HuamiLanguageType.idLookup.get(localeString);
         if (id != null) {
             languageCode = id.byteValue();
