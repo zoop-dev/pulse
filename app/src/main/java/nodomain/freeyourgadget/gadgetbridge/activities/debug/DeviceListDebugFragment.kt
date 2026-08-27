@@ -15,7 +15,7 @@ class DeviceListDebugFragment : AbstractDebugFragment() {
     private fun reloadDevices() {
         removeDynamicPrefs(preferenceScreen)
 
-        val devices = GBApplication.app().deviceManager.devices
+        val devices = GBApplication.app().deviceManager.devices.sortedBy { it.aliasOrName }
 
         if (!devices.isEmpty()) {
             for (device in devices) {
