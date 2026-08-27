@@ -68,6 +68,8 @@ public class HttpHandler {
                         .build();
             }
             return null;
+        } else if (httpService.hasShowURLRequest()) {
+            return handleShowURLRequest(httpService.getShowURLRequest(), messageRequestId);
         }
 
         LOG.warn("Unsupported http service request {}", httpService);
@@ -187,6 +189,17 @@ public class HttpHandler {
                 .setBody(ByteString.copyFrom(responseBody))
                 .addAllHeader(responseHeaders)
                 .build();
+    }
+
+    public GdiHttpService.HttpService handleShowURLRequest(final GdiHttpService.HttpService.ShowURLRequest showURLRequest,
+                                                           final int messageRequestId) {
+        LOG.warn("Got unsupported ShowUrlRequest {}: {} {} {}",
+                messageRequestId,
+                showURLRequest.hasUrl() ? showURLRequest.getUrl() : null,
+                showURLRequest.hasParameters() ? showURLRequest.getParameters() : null,
+                showURLRequest.hasApp() ? showURLRequest.getApp() : null);
+        // TODO: ask the user if they want to open the web page
+        return null;
     }
 
     public GdiHttpService.HttpService.WebResponse handleWebRequest(final GdiHttpService.HttpService.WebRequest webRequest,
