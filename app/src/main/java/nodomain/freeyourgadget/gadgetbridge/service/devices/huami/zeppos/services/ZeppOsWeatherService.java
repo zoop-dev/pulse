@@ -22,6 +22,7 @@ import org.slf4j.LoggerFactory;
 import java.io.ByteArrayOutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Locale;
+import java.util.Objects;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
@@ -78,10 +79,9 @@ public class ZeppOsWeatherService extends AbstractZeppOsService {
             lat = GBApplication.getPrefs().getFloat("location_latitude", 0f);
             lon = GBApplication.getPrefs().getFloat("location_longitude", 0f);
         }
-        final String coordKey = String.format(Locale.ROOT, "%.4f,%.4f", lat, lon);
-        final long locationKeyId = ((long) coordKey.hashCode()) & 0xFFFFFFFFL;
+        final long locationKeyId = weatherSpec.getTimestamp() & 0xFFFFFFFFL;
         final String locationKey = String.format(Locale.ROOT, "%.4f,%.4f,xiaomi_accu:%d", lat, lon, locationKeyId);
-        final String locationName = weatherSpec.getLocation();
+        final String locationName = Objects.requireNonNullElse(weatherSpec.getLocation(), "Unknown");
 
         try {
             final ByteArrayOutputStream baos = new ByteArrayOutputStream();

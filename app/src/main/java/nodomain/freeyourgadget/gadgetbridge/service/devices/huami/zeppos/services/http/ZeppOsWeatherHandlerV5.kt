@@ -94,10 +94,11 @@ object ZeppOsWeatherHandlerV5 {
 
     private fun createPlace(weatherSpec: WeatherSpec): Place {
         val (lat, lon) = resolveCoordinates(weatherSpec)
-        // Stable per-location id so the watch can dedupe responses. Hash of rounded
-        // coords keeps it deterministic across requests for the same location.
-        val coordKey = String.format(Locale.ROOT, "%.4f,%.4f", lat, lon)
-        val locationKeyId = coordKey.hashCode().toLong() and 0xFFFFFFFFL
+        // While the location ID should be stable so that the watch can dedupe responses, this
+        // is also preventing it from reloading the most updated data from the phone. Until we
+        // understand the protocol better, keep the location key tied to the last weather update
+        // timestamp, so that the watch refreshes it.
+        val locationKeyId = weatherSpec.timestamp.toLong() and 0xFFFFFFFFL
         return Place(
             locationKey = "accu:$locationKeyId",
             longitude = String.format(Locale.ROOT, "%.3f", lon),
