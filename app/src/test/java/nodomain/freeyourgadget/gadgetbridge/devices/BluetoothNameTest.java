@@ -256,6 +256,8 @@ public class BluetoothNameTest extends TestBase {
             put("Soundcore Life Tune", DeviceType.SOUNDCORE_LIFE_TUNE); // #6396
             put("Soundcore Life Tune XR", DeviceType.SOUNDCORE_LIFE_TUNE_XR); // #6396
             put("OsmoAction4-ABCD", DeviceType.DJI_OSMO_ACTION_4);
+            put("Jabra Evolve2 55", DeviceType.JABRA_EVOLVE2_55); // #6644
+            put("Jabra Evolve2 5", DeviceType.UNKNOWN); // #6644 - BLE Google FastPair
             put("Bose QC 35 II", DeviceType.BOSE_QC35);
             put("Bose NC 700 Headphones", DeviceType.BOSE_NC700);
             put("LE-Bose NC 700 Headphones", DeviceType.BOSE_NC700);

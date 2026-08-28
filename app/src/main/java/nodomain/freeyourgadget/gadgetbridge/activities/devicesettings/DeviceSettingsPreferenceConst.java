@@ -125,6 +125,26 @@ public class DeviceSettingsPreferenceConst {
 
     public static final String PREF_ACTIVE_NOISE_CANCELLING_TOGGLE = "active_noise_cancelling_toggle";
     public static final String PREF_NOISE_CONTROL_SELECTOR = "noise_control_selector";
+    public static final String PREF_BUSYLIGHT_ON_CALL = "busylight_on_call";
+    public static final String PREF_BUSYLIGHT = "busylight";
+    public static final String PREF_JABRA_ANSWER_CALL_BOOM_ARM = "jabra_answer_call_boom_arm";
+    public static final String PREF_JABRA_MUTE_MIC_BOOM_ARM = "jabra_mute_mic_boom_arm";
+    public static final String PREF_JABRA_AUTO_REJECT_CALL = "jabra_auto_reject_call";
+    public static final String PREF_JABRA_MUTE_REMINDER = "jabra_mute_reminder";
+    public static final String PREF_JABRA_SIDETONE = "jabra_sidetone";
+    public static final String PREF_JABRA_SIDETONE_VOLUME = "jabra_sidetone_volume";
+    public static final String PREF_JABRA_CALL_AUDIO_EQ = "jabra_call_audio_eq";
+    public static final String PREF_JABRA_EQUALIZER = "jabra_equalizer";
+    public static final String PREF_JABRA_EQUALIZER_BAND1 = "jabra_equalizer_band1";
+    public static final String PREF_JABRA_EQUALIZER_BAND2 = "jabra_equalizer_band2";
+    public static final String PREF_JABRA_EQUALIZER_BAND3 = "jabra_equalizer_band3";
+    public static final String PREF_JABRA_EQUALIZER_BAND4 = "jabra_equalizer_band4";
+    public static final String PREF_JABRA_EQUALIZER_BAND5 = "jabra_equalizer_band5";
+    public static final String PREF_JABRA_SLEEP_MODE = "jabra_sleep_mode";
+    public static final String PREF_JABRA_HEADSET_GUIDANCE = "jabra_headset_guidance";
+    public static final String PREF_JABRA_BOOM_ARM_GUIDANCE = "jabra_boom_arm_guidance";
+    public static final String PREF_JABRA_BUTTON_SOUNDS = "jabra_button_sounds";
+    public static final String PREF_JABRA_VOICE_ASSISTANT = "jabra_voice_assistant";
     public static final String PREF_WEAR_SENSOR_TOGGLE = "wear_sensor_toggle";
     public static final String PREF_BANDW_PSERIES_VPT_ENABLED = "bandw_pseries_vpt_enabled";
     public static final String PREF_BANDW_PSERIES_VPT_LEVEL = "bandw_pseries_vpt_level";

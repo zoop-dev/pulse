@@ -1159,6 +1159,8 @@
     <string name="minutes_210">210 minutes</string>
     <string name="minutes_240">240 minutes</string>
     <string name="minutes_255">255 minutes</string>
+    <string name="minutes_360">360 minutes</string>
+    <string name="minutes_480">480 minutes</string>
     <string name="liveactivity_live_activity">Live activity</string>
     <string name="weeksteps_today_steps_description">Steps today, target: %1$s</string>
     <string name="lack_of_step">Lack of steps: %1$s</string>
@@ -3419,6 +3421,8 @@
     <string name="pref_title_equalizer_dynamic">Dynamic</string>
     <string name="pref_title_equalizer_clear">Clear</string>
     <string name="pref_title_equalizer_trebble">Treble boost</string>
+    <string name="pref_title_equalizer_smooth">Smooth</string>
+    <string name="pref_title_equalizer_energize">Energize</string>
     <string name="pref_title_equalizer_natural">Natural</string>
     <string name="prefs_dolby_mode">Dolby Mode</string>
     <string name="prefs_equalizer">Equalizer</string>
@@ -3456,6 +3460,36 @@
     <string name="prefs_active_noise_cancelling_level_ultra">Ultra</string>
     <string name="prefs_active_noise_cancelling_level_dynamic">Dynamic</string>
     <string name="prefs_active_noise_cancelling_summary">Block noises of the surroundings</string>
+    <string name="prefs_busylight_on_call">Busylight on active call</string>
+    <string name="prefs_busylight_on_call_summary">Illuminate the busylight LED when a call is active</string>
+    <string name="prefs_busylight">Busylight</string>
+    <string name="prefs_busylight_summary">Toggle the busylight LED manually</string>
+    <string name="prefs_jabra_answer_call_boom_arm">Auto-answer calls using the boom arm</string>
+    <string name="prefs_jabra_answer_call_boom_arm_summary">Move down the microphone boom arm to answer incoming calls</string>
+    <string name="prefs_jabra_mute_mic_boom_arm">Auto-mute microphone using boom arm</string>
+    <string name="prefs_jabra_mute_mic_boom_arm_summary">Mute the microphone by moving the boom arm up or down</string>
+    <string name="prefs_jabra_auto_reject_call">Auto-reject calls</string>
+    <string name="prefs_jabra_auto_reject_call_summary">Reject an incoming call when you are busy on another call</string>
+    <string name="prefs_jabra_mute_reminder">Mute reminder</string>
+    <string name="prefs_jabra_mute_reminder_summary">Play a reminder tone periodically when the microphone is muted</string>
+    <string name="prefs_jabra_sidetone">Sidetone</string>
+    <string name="prefs_jabra_sidetone_summary">Hear your own voice in the headset during a call</string>
+    <string name="prefs_jabra_mute_unmute">Mute/unmute calls</string>
+    <string name="prefs_jabra_call_audio_eq">In-call audio</string>
+    <string name="prefs_jabra_call_audio_eq_summary">Select the equalizer setting for calls</string>
+    <string name="jabra_equalizer_band_60">60 Hz</string>
+    <string name="jabra_equalizer_band_7600">7.6 kHz</string>
+    <string name="prefs_call_quality">Call quality</string>
+    <string name="prefs_jabra_headset_guidance">Headset guidance</string>
+    <string name="prefs_jabra_headset_guidance_summary">Choose how the headset announces status changes</string>
+    <string name="prefs_jabra_boom_arm_guidance">Boom arm guidance</string>
+    <string name="prefs_jabra_boom_arm_guidance_summary">Choose how the headset announces boom arm actions</string>
+    <string name="prefs_jabra_guidance_voice">Voice</string>
+    <string name="prefs_jabra_guidance_tone">Tone</string>
+    <string name="prefs_jabra_button_sounds">Button sounds</string>
+    <string name="prefs_jabra_button_sounds_summary">Play a sound when pressing the headset buttons</string>
+    <string name="prefs_active_calls">Active calls</string>
+    <string name="prefs_incoming_calls">Incoming calls</string>
     <string name="prefs_active_noise_cancelling_transport">Transport</string>
     <string name="prefs_active_noise_cancelling_indoor">Indoor</string>
     <string name="prefs_active_noise_cancelling_outdoor">Outdoor</string>
@@ -3857,6 +3891,7 @@
     <string name="devicetype_vesc" translatable="false">VESC</string>
     <string name="devicetype_bose_qc35" translatable="false">Bose QC35</string>
     <string name="devicetype_bose_nc700" translatable="false">Bose NC 700</string>
+    <string name="devicetype_jabra_evolve2_55" translatable="false">Jabra Evolve2 55</string>
     <string name="devicetype_onemore_sonoflow" translatable="false">1MORE SonoFlow</string>
     <string name="devicetype_sony_wena3" translatable="false">Sony Wena 3</string>
     <string name="devicetype_withings_steel_hr" translatable="false">Withings Steel HR</string>
