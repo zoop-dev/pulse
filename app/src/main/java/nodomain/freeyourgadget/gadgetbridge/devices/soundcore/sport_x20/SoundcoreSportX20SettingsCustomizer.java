@@ -4,7 +4,6 @@ import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.Dev
 import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_SOUNDCORE_EQUALIZER_CUSTOM;
 import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_SOUNDCORE_EQUALIZER_PRESET;
 import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_SOUNDCORE_EQUALIZER_RESET;
-import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_SOUNDCORE_ENABLE_PAIRING_MODE;
 import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_SOUNDCORE_FIT_TEST;
 
 import android.os.Parcel;
@@ -55,14 +54,6 @@ public class SoundcoreSportX20SettingsCustomizer implements DeviceSpecificSettin
         if (fitTest != null) {
             fitTest.setOnPreferenceClickListener(pref -> {
                 handler.notifyPreferenceChanged(PREF_SOUNDCORE_FIT_TEST);
-                return true;
-            });
-        }
-
-        final Preference pairingMode = handler.findPreference(PREF_SOUNDCORE_ENABLE_PAIRING_MODE);
-        if (pairingMode != null) {
-            pairingMode.setOnPreferenceClickListener(pref -> {
-                handler.notifyPreferenceChanged(PREF_SOUNDCORE_ENABLE_PAIRING_MODE);
                 return true;
             });
         }
