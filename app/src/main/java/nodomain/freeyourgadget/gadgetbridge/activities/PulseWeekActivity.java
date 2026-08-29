@@ -51,6 +51,10 @@ public class PulseWeekActivity extends AbstractGBActivity {
 
     private final NumberFormat nf = NumberFormat.getIntegerInstance();
 
+    private static final int MAX_LOOKBACK_DAYS = 372;
+
+    private volatile Thread worker;
+
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         AbstractGBActivity.init(this);
@@ -73,9 +77,9 @@ public class PulseWeekActivity extends AbstractGBActivity {
     }
 
     private void compute() {
-        new Thread(() -> {
+        final Thread t = new Thread(() -> {
             final WeekData d = new WeekData();
-            try (DBHandler db = GBApplication.acquireDB()) {
+            try (DBHandler db = GBApplication.acquireDbReadOnly()) {
                 final List<GBDevice> devices = GBApplication.app().getDeviceManager().getDevices();
 
                 // week boundaries (Mon 00:00 .. now), and last week
@@ -109,7 +113,16 @@ public class PulseWeekActivity extends AbstractGBActivity {
                     cur.set(Calendar.SECOND, 0);
                     final Calendar today = GregorianCalendar.getInstance();
 
+                    final Calendar oldest = (Calendar) today.clone();
+                    oldest.add(Calendar.DAY_OF_MONTH, -MAX_LOOKBACK_DAYS);
+                    if (cur.before(oldest)) {
+                        cur.setTimeInMillis(oldest.getTimeInMillis());
+                    }
+
                     while (!cur.after(today)) {
+                        if (isFinishing() || isDestroyed()) {
+                            return;
+                        }
                         long daySteps = 0, dayDistCm = 0, dayCalRaw = 0, daySleep = 0;
                         for (final GBDevice dev : devices) {
                             final DailyTotals dt = DailyTotals.getDailyTotalsForDevice(dev, (Calendar) cur.clone(), db);
@@ -158,7 +171,7 @@ public class PulseWeekActivity extends AbstractGBActivity {
                     }
                 }
             } catch (final Exception e) {
-                return;
+                android.util.Log.w("PulseWeek", "week compute failed", e);
             }
 
             final Prefs prefs = GBApplication.getPrefs();
@@ -172,7 +185,19 @@ public class PulseWeekActivity extends AbstractGBActivity {
             if (d.target <= 0) d.target = 70000;
 
             runOnUiThread(() -> render(d));
-        }).start();
+        }, "pulse-week-compute");
+        worker = t;
+        t.start();
+    }
+
+    @Override
+    protected void onDestroy() {
+        final Thread t = worker;
+        if (t != null) {
+            t.interrupt();
+            worker = null;
+        }
+        super.onDestroy();
     }
 
     private void render(final WeekData d) {
