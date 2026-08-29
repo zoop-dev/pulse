@@ -721,7 +721,7 @@
     <string name="unknown">Unknown</string>
     <string name="test">Test</string>
     <string name="test_notification">Test notification</string>
-    <string name="this_is_a_test_notification_from_gadgetbridge">This is a test notification from Gadgetbridge</string>
+    <string name="this_is_a_test_notification_from_gadgetbridge">This is a test notification from Pulse</string>
     <string name="find_my_phone_notification">Find my phone</string>
     <string name="find_my_phone_companion_warning">Companion pairing is required for find phone. Click here for more information.</string>
     <string name="bluetooth_is_not_supported_">Bluetooth is not supported.</string>
@@ -2433,7 +2433,7 @@
     <string name="notification_channel_low_battery_name">Low battery</string>
     <string name="notification_channel_full_battery_name">Full battery</string>
     <string name="notification_channel_gps">GPS tracking</string>
-    <string name="notification_gps_title">Gadgetbridge GPS</string>
+    <string name="notification_gps_title">Pulse GPS</string>
     <string name="notification_gps_text">Sending GPS location to %1$d devices</string>
     <string name="devicetype_amazfit_gts" translatable="false">Amazfit GTS</string>
     <string name="devicetype_amazfit_vergel" translatable="false">Amazfit Verge Lite</string>
@@ -2788,13 +2788,14 @@
     <string name="pref_qhybrid_title_widget_draw_circles">Draw widget circles</string>
     <string name="pref_qhybrid_save_raw_activity_files">Save raw activity files</string>
     <string name="hr_widget_last_notification">Last notification</string>
-    <string name="homepage_url" translatable="false">Homepage: <a href="https://gadgetbridge.org/">https://gadgetbridge.org/</a></string>
-    <string name="codeberg_url" translatable="false">Code: <a href="https://codeberg.org/Freeyourgadget/Gadgetbridge">https://codeberg.org/Freeyourgadget/Gadgetbridge</a></string>
-    <string name="fdroid_url" translatable="false">F-Droid: <a href="https://f-droid.org/packages/nodomain.freeyourgadget.gadgetbridge/">https://f-droid.org/packages/nodomain.freeyourgadget.gadgetbridge/</a></string>
+    <string name="homepage_url" translatable="false">Homepage: <a href="https://zachy.cc/">https://zachy.cc/</a></string>
+    <string name="codeberg_url" translatable="false">Code: <a href="https://github.com/zoop-dev/pulse">https://github.com/zoop-dev/pulse</a></string>
+    <string name="fdroid_url" translatable="false">Releases: <a href="https://github.com/zoop-dev/pulse/releases">https://github.com/zoop-dev/pulse/releases</a></string>
+    <string name="upstream_url" translatable="false">Built on Gadgetbridge: <a href="https://codeberg.org/Freeyourgadget/Gadgetbridge">codeberg.org/Freeyourgadget/Gadgetbridge</a></string>
     <string name="about_title">About</string>
     <string name="about_version">Version %s</string>
     <string name="about_hash">Commit %s</string>
-    <string name="gpx_receiver_activity_title">GPX Receiver Gadgetbridge</string>
+    <string name="gpx_receiver_activity_title">GPX Receiver Pulse</string>
     <string name="text_receiver_activity_title">Send text to device</string>
     <string name="gpx_receiver_files_received">GPX file(s) received:</string>
     <string name="gpx_receiver_overwrite_some_files">Some file(s) already exist. Overwrite?</string>
@@ -4651,13 +4652,13 @@
     <string name="first_start_intro_welcome_to">Welcome to</string>
     <string name="first_start_intro_tag_line">Break free from the proprietary apps and cloud services of gadget vendors.</string>
     <string name="first_start_overview_title">Overview</string>
-    <string name="first_start_overview_desc">Gadgetbridge has two main views, each with their own purpose.</string>
+    <string name="first_start_overview_desc">Pulse has two main views, each with their own purpose.</string>
     <string name="first_start_overview_dashboard">The dashboard allows you to get a quick idea of how you\'re doing today. The calendar view shows the status of your goals over a whole month.</string>
     <string name="first_start_overview_devices">The devices view shows all devices you have configured and their status, and gives access to device specific functions such as detailed charts, settings, apps and alarms.</string>
     <string name="first_start_open_source_title">Open Source</string>
-    <string name="first_start_open_source_text">Gadgetbridge is an open source app. It is developed by the community, for the community.\n\nAnyone is welcome to contribute via code, documentation, testing and donations.\n\nGadgetbridge contains no ads and no tracking. It keeps your data locally on your Android device, so it is 100% privacy friendly.\n\nVisit our website for more information, documentation and links to our communication channels.</string>
+    <string name="first_start_open_source_text">Pulse is an open source app, built on the Gadgetbridge project.\n\nIt contains no ads and no tracking. It keeps your data locally on your Android device, so it is 100% privacy friendly.\n\nVisit the website for more information, documentation and links.</string>
     <string name="first_start_permissions_title">Permissions</string>
-    <string name="first_start_permissions_desc">Gadgetbridge needs a lot of permissions to perform all its functions. Review the permissions and their purposes below.</string>
+    <string name="first_start_permissions_desc">Pulse needs a lot of permissions to perform all its functions. Review the permissions and their purposes below.</string>
     <string name="first_start_permissions_request_all_button">Request all permissions</string>
     <string name="first_start_permissions_do_not_ask_again">Do not ask again</string>
     <string name="first_start_permissions_do_not_ask_warning_summary">Not granting a permission might cause issues. You can open this screen again from the Settings screen.</string>
@@ -4946,7 +4947,7 @@
     <string name="activity_print_image_apply_dithering_switch">Apply Dithering</string>
     <string name="activity_print_image_upscale_switch">Upscale image</string>
     <string name="activity_print_label_print_size">Print size (px): %1$d x %2$d</string>
-    <string name="service_notification_collector_service_title">Gadgetbridge Notification Monitor</string>
+    <string name="service_notification_collector_service_title">Pulse Notification Monitor</string>
     <string name="service_notification_collector_service_text">Monitoring notifications in background</string>
     <string name="devicetype_imiki_frame_2" translatable="false">IMIKI Frame 2</string>
     <string name="devicetype_ollee_watch_one" translatable="false">Ollee Watch One</string>
