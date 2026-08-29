@@ -44,6 +44,7 @@ import java.util.Locale;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.GBDatabaseManager;
 import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.activities.automations.AutoExportDbSettingsActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.files.FileManagerActivity;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHelper;
@@ -129,7 +130,30 @@ public class DataManagementActivity extends AbstractGBActivity {
             startActivity(fileManagerIntent);
         });
 
+        findViewById(R.id.autoExportButton).setOnClickListener(v ->
+                startActivity(new Intent(this, AutoExportDbSettingsActivity.class)));
+
         sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateAutoExportSummary();
+    }
+
+    private void updateAutoExportSummary() {
+        final TextView summary = findViewById(R.id.autoExportSummary);
+        if (summary == null) {
+            return;
+        }
+        final boolean enabled = GBApplication.getPrefs().getBoolean("auto_export_enabled", false);
+        final int interval = GBApplication.getPrefs().getInt("auto_export_interval", 0);
+        if (enabled && interval > 0) {
+            summary.setText(getString(R.string.pref_summary_auto_export_interval, interval));
+        } else {
+            summary.setText(R.string.off);
+        }
     }
 
     private String getExternalPath() {

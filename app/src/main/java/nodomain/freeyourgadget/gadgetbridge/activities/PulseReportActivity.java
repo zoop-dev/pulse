@@ -27,6 +27,7 @@ import androidx.annotation.NonNull;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.materialswitch.MaterialSwitch;
 
 import java.io.IOException;
 
@@ -41,6 +42,7 @@ public class PulseReportActivity extends AbstractGBActivity {
     public static final String EXTRA_CRASH_TRACE = "pulse_crash_trace";
 
     private MaterialButton sendButton;
+    private MaterialSwitch includeFitSwitch;
     private String crashTrace;
 
     @Override
@@ -60,6 +62,18 @@ public class PulseReportActivity extends AbstractGBActivity {
 
         sendButton = findViewById(R.id.report_send);
         sendButton.setOnClickListener(v -> confirmAndSend());
+
+        includeFitSwitch = findViewById(R.id.report_include_fit);
+        new Thread(() -> {
+            final boolean hasFit = PulseLogReporter.hasActivityFiles();
+            runOnUiThread(() -> {
+                if (isFinishing() || isDestroyed() || !hasFit) {
+                    return;
+                }
+                includeFitSwitch.setVisibility(View.VISIBLE);
+                findViewById(R.id.report_include_fit_hint).setVisibility(View.VISIBLE);
+            });
+        }, "pulse-report-fit-scan").start();
 
         final MaterialButton enableLogging = findViewById(R.id.report_enable_logging);
         enableLogging.setOnClickListener(v -> {
@@ -97,9 +111,10 @@ public class PulseReportActivity extends AbstractGBActivity {
 
     private void send() {
         final String note = ((TextView) findViewById(R.id.report_note)).getText().toString().trim();
+        final boolean includeFit = includeFitSwitch.getVisibility() == View.VISIBLE && includeFitSwitch.isChecked();
         sendButton.setEnabled(false);
         sendButton.setText(R.string.pulse_report_sending);
-        PulseLogReporter.submit(this, note, crashTrace, new PulseLogReporter.Callback() {
+        PulseLogReporter.submit(this, note, crashTrace, includeFit, new PulseLogReporter.Callback() {
             @Override
             public void onSuccess(final String ref) {
                 if (isFinishing() || isDestroyed()) {

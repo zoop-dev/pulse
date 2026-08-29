@@ -54,6 +54,8 @@ public final class PulseLogReporter {
     private static final Logger LOG = LoggerFactory.getLogger(PulseLogReporter.class);
 
     private static final long MAX_LOG_BYTES = 8L * 1024 * 1024;
+    private static final long MAX_FIT_BYTES = 25L * 1024 * 1024;
+    private static final int MAX_FIT_FILES = 500;
     private static final int LOGCAT_LINES = 3000;
 
     public interface Callback {
@@ -71,13 +73,13 @@ public final class PulseLogReporter {
     }
 
     public static void submit(final Context context, final String note, final String crashTrace,
-                              final Callback callback) {
+                              final boolean includeActivityFiles, final Callback callback) {
         final Context app = context.getApplicationContext();
         final Handler main = new Handler(Looper.getMainLooper());
         new Thread(() -> {
             File bundle = null;
             try {
-                bundle = buildBundle(app, note, crashTrace);
+                bundle = buildBundle(app, note, crashTrace, includeActivityFiles);
                 final String ref = upload(bundle, note, crashTrace != null);
                 main.post(() -> callback.onSuccess(ref));
             } catch (final Exception e) {
@@ -92,11 +94,13 @@ public final class PulseLogReporter {
         }, "pulse-log-report").start();
     }
 
-    private static File buildBundle(final Context context, final String note, final String crashTrace)
+    private static File buildBundle(final Context context, final String note, final String crashTrace,
+                                    final boolean includeActivityFiles)
             throws IOException {
         final File out = new File(context.getCacheDir(), "pulse-report-" + System.currentTimeMillis() + ".zip");
         try (ZipOutputStream zip = new ZipOutputStream(new java.io.FileOutputStream(out))) {
-            writeEntry(zip, "meta.json", collectMeta(context, note, crashTrace).getBytes(StandardCharsets.UTF_8));
+            writeEntry(zip, "meta.json",
+                    collectMeta(context, note, crashTrace, includeActivityFiles).getBytes(StandardCharsets.UTF_8));
 
             final byte[] logcat = readLogcat();
             if (logcat.length > 0) {
@@ -113,16 +117,32 @@ public final class PulseLogReporter {
                 }
                 budget -= copyEntry(zip, "logs/" + f.getName(), f, budget);
             }
+
+            if (includeActivityFiles) {
+                long fitBudget = MAX_FIT_BYTES;
+                for (final File f : activityFiles()) {
+                    if (fitBudget <= 0) {
+                        break;
+                    }
+                    if (f.length() > fitBudget) {
+                        continue;
+                    }
+                    fitBudget -= copyEntry(zip, "activities/" + f.getParentFile().getName() + "/" + f.getName(),
+                            f, fitBudget);
+                }
+            }
         }
         return out;
     }
 
-    private static String collectMeta(final Context context, final String note, final String crashTrace) {
+    private static String collectMeta(final Context context, final String note, final String crashTrace,
+                                      final boolean includeActivityFiles) {
         final JSONObject meta = new JSONObject();
         try {
             meta.put("generated", System.currentTimeMillis());
             meta.put("note", note != null ? note : "");
             meta.put("hasCrash", crashTrace != null);
+            meta.put("includesActivityFiles", includeActivityFiles);
 
             final JSONObject appInfo = new JSONObject();
             appInfo.put("id", BuildConfig.APPLICATION_ID);
@@ -200,6 +220,32 @@ public final class PulseLogReporter {
             }
         }
         return files;
+    }
+
+    private static List<File> activityFiles() {
+        final List<File> files = new ArrayList<>();
+        for (final GBDevice device : GBApplication.app().getDeviceManager().getDevices()) {
+            try {
+                final File dir = device.getDeviceCoordinator().getWritableExportDirectory(device, false);
+                if (dir == null || !dir.isDirectory()) {
+                    continue;
+                }
+                final File[] listed = dir.listFiles((d, name) -> {
+                    final String lower = name.toLowerCase(java.util.Locale.ROOT);
+                    return lower.endsWith(".fit") || lower.endsWith(".bin");
+                });
+                if (listed != null) {
+                    files.addAll(Arrays.asList(listed));
+                }
+            } catch (final Exception ignored) {
+            }
+        }
+        files.sort(Comparator.comparingLong(File::lastModified).reversed());
+        return files.size() > MAX_FIT_FILES ? files.subList(0, MAX_FIT_FILES) : files;
+    }
+
+    public static boolean hasActivityFiles() {
+        return !activityFiles().isEmpty();
     }
 
     private static byte[] readLogcat() {

@@ -5639,6 +5639,8 @@
     <string name="pulse_report_logging_off">Detailed logging is off, so this report will be thin. Turn it on, reproduce the problem, then come back and send.</string>
     <string name="pulse_report_enable_logging">Turn on detailed logging</string>
     <string name="pulse_report_logging_on">Logging is on. Reproduce the issue, then send the report.</string>
+    <string name="pulse_report_include_fit">Include recorded activity files</string>
+    <string name="pulse_report_include_fit_hint">Attaches the raw .fit files synced from your watch. Helps with sync and activity-detail bugs. They hold workout data and GPS tracks.</string>
     <string name="pulse_report_send">Send debug logs</string>
     <string name="pulse_report_sending">Sending…</string>
     <string name="pulse_report_confirm_title">Send debug logs?</string>
