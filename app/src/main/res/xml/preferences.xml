@@ -315,5 +315,10 @@
             android:summary="@string/pref_crash_notification_summary"
             android:title="@string/pref_crash_notification_title"
             app:iconSpaceReserved="false" />
+        <Preference
+            android:key="pulse_send_logs"
+            android:summary="@string/pulse_settings_send_logs_desc"
+            android:title="@string/pulse_settings_send_logs"
+            app:iconSpaceReserved="false" />
     </PreferenceScreen>
 </PreferenceScreen>

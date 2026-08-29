@@ -130,12 +130,14 @@ android {
         minSdk = 23
 
         // Note: always bump BOTH versionCode and versionName!
-        versionName "0.98.0"
-        versionCode 257
+        versionName "0.99.0"
+        versionCode 258
         vectorDrawables.useSupportLibrary = true
         buildConfigField "String", "GIT_HASH_SHORT", "\"${getGitHashShort()}\""
         buildConfigField "String", "GIT_DIRTY_STATUS", "\"${getGitDirtyFlag()}\""
         buildConfigField "boolean", "INTERNET_ACCESS", "false"
+        buildConfigField "String", "PULSE_LOG_ENDPOINT", "\"https://logs.zachy.cc/v1/report\""
+        buildConfigField "String", "PULSE_LOG_TOKEN", "\"pulse-logs-v1\""
 
         manifestPlaceholders = [
             appAuthRedirectScheme: "${applicationId}"

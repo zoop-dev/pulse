@@ -114,6 +114,23 @@ public class GBExceptionHandler implements Thread.UncaughtExceptionHandler {
 
         final NotificationCompat.Action shareAction = new NotificationCompat.Action.Builder(android.R.drawable.ic_menu_share, context.getString(R.string.share), pendingShareIntent).build();
 
+        final Intent reportIntent = new Intent(context,
+                nodomain.freeyourgadget.gadgetbridge.activities.PulseReportActivity.class);
+        reportIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        reportIntent.putExtra(
+                nodomain.freeyourgadget.gadgetbridge.activities.PulseReportActivity.EXTRA_CRASH_TRACE,
+                Log.getStackTraceString(e));
+        final PendingIntent pendingReportIntent = PendingIntent.getActivity(
+                context,
+                1,
+                reportIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
+        );
+        final NotificationCompat.Action reportAction = new NotificationCompat.Action.Builder(
+                android.R.drawable.ic_menu_send,
+                context.getString(R.string.pulse_report_send),
+                pendingReportIntent).build();
+
         final Notification notification = new NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_HIGH_PRIORITY_ID)
                 .setSmallIcon(R.drawable.ic_notification)
                 .setContentTitle(context.getString(
@@ -122,6 +139,8 @@ public class GBExceptionHandler implements Thread.UncaughtExceptionHandler {
                 ))
                 .setContentText(e.getLocalizedMessage())
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentIntent(pendingReportIntent)
+                .addAction(reportAction)
                 .addAction(shareAction)
                 .build();
 

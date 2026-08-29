@@ -186,6 +186,14 @@ public class SettingsActivity extends AbstractSettingsActivityV2 {
                 });
             }
 
+            final Preference sendLogs = findPreference("pulse_send_logs");
+            if (sendLogs != null) {
+                sendLogs.setOnPreferenceClickListener(preference -> {
+                    startActivity(new Intent(requireContext(), PulseReportActivity.class));
+                    return true;
+                });
+            }
+
             pref = findPreference(PREF_LANGUAGE);
             if (pref != null) {
                 pref.setOnPreferenceChangeListener((preference, newVal) -> {

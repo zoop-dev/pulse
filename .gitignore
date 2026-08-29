@@ -84,3 +84,5 @@ fdroid/*.p12
 fdroid/*.jks
 fdroid/config.yml
 fdroid/icon.png
+
+/logs-worker/
