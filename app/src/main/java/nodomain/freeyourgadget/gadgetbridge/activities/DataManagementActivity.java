@@ -63,7 +63,7 @@ public class DataManagementActivity extends AbstractGBActivity {
         setContentView(R.layout.activity_data_management);
 
         final ActivityResultLauncher<String> backupZipFileChooser = registerForActivityResult(
-                new ActivityResultContracts.CreateDocument("application/octet-stream"),
+                new ActivityResultContracts.CreateDocument("application/zip"),
                 uri -> {
                     LOG.info("Got target backup file: {}", uri);
                     if (uri != null) {
@@ -78,7 +78,7 @@ public class DataManagementActivity extends AbstractGBActivity {
         final Button backupToZipButton = findViewById(R.id.backupToZipButton);
         backupToZipButton.setOnClickListener(v -> {
             final SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault());
-            final String defaultFilename = String.format(Locale.ROOT, "Pulse_%s.pulse", sdf.format(new Date()));
+            final String defaultFilename = String.format(Locale.ROOT, "Pulse_%s.zip", sdf.format(new Date()));
             backupZipFileChooser.launch(defaultFilename);
         });
 
@@ -112,7 +112,7 @@ public class DataManagementActivity extends AbstractGBActivity {
         );
 
         final Button restoreFromZipButton = findViewById(R.id.restoreFromZipButton);
-        // accept .pulse (octet-stream) as well as plain zips
+        // accept any file type so older .pulse backups can still be restored
         restoreFromZipButton.setOnClickListener(v -> restoreFileChooser.launch(new String[]{"*/*"}));
 
         TextView dbPath = findViewById(R.id.activity_data_management_path);

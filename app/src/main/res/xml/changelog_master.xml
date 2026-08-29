@@ -196,7 +196,7 @@
         <change>Tidied up some leftover wording</change>
     </release>
     <release version="1.5" versioncode="253">
-        <change>Back up and restore everything to a single .pulse file (Data management)</change>
+        <change>Back up and restore everything to a single .zip file (Data management)</change>
         <change>First launch now offers to restore from a backup</change>
         <change>Intensity minutes: a daily tile, with a daily view added to the chart</change>
         <change>Material Symbols icons throughout, and Material 3 buttons + loading indicator</change>
