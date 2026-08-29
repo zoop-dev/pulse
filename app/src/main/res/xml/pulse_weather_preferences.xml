@@ -3,6 +3,14 @@
 
     <PreferenceCategory android:title="@string/pulse_tab_health">
 
+        <ListPreference
+            android:key="pulse_weather_source"
+            android:defaultValue="auto"
+            android:entries="@array/pulse_weather_source_names"
+            android:entryValues="@array/pulse_weather_source_values"
+            android:title="@string/pulse_weather_source"
+            android:summary="%s" />
+
         <SwitchPreferenceCompat
             android:key="pulse_weather_auto"
             android:defaultValue="true"
