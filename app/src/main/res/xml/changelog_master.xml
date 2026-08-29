@@ -184,6 +184,7 @@
         <change>Huawei: Fix connection stuck on authentication on newer firmware</change>
         <change>OpenTracks integration: Remove unsupported elevation field</change>
         <change>Xiaomi-protobuf: Fix GPS dropping mid-workout on newer firmware</change>
+    </release>
     <release version="1.8" versioncode="256">
         <change>Dropped unused Fossil watch assets</change>
     </release>
