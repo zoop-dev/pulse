@@ -1274,14 +1274,15 @@ public class DashboardFragment extends Fragment implements MenuProvider {
         try (nodomain.freeyourgadget.gadgetbridge.database.DBHandler db = GBApplication.acquireDbReadOnly()) {
             final nodomain.freeyourgadget.gadgetbridge.entities.DaoSession s = db.getDaoSession();
             final long now = System.currentTimeMillis();
+            final long selEnd = Math.min(day.getTimeInMillis(), now);
             for (final GBDevice dev : devices) {
                 try {
                     final nodomain.freeyourgadget.gadgetbridge.model.SleepScoreSample x =
-                            dev.getDeviceCoordinator().getSleepScoreProvider(dev, s).getLatestSample(now);
+                            dev.getDeviceCoordinator().getSleepScoreProvider(dev, s).getLatestSample(selEnd);
                     if (x != null) sleepScore = Math.max(sleepScore, x.getSleepScore());
                 } catch (final Exception ignored) { }
             }
-            final Calendar to = Calendar.getInstance();
+            final Calendar to = (Calendar) day.clone();
             to.set(Calendar.HOUR_OF_DAY, 12); to.set(Calendar.MINUTE, 0); to.set(Calendar.SECOND, 0); to.set(Calendar.MILLISECOND, 0);
             if (to.getTimeInMillis() > now) to.setTimeInMillis(now);
             final int toSec = (int) (to.getTimeInMillis() / 1000L);
@@ -1308,13 +1309,13 @@ public class DashboardFragment extends Fragment implements MenuProvider {
                 sleepBed = best.getSleepStart();
                 sleepWake = best.getSleepEnd();
             }
-            final Calendar today = Calendar.getInstance();
+            final Calendar today = (Calendar) day.clone();
             for (int i = 0; i < 7; i++) {
-                final Calendar day = (Calendar) today.clone();
-                day.add(Calendar.DAY_OF_MONTH, -(6 - i));
+                final Calendar d = (Calendar) today.clone();
+                d.add(Calendar.DAY_OF_MONTH, -(6 - i));
                 long mins = 0;
                 for (final GBDevice dev : devices) {
-                    mins += DailyTotals.getDailyTotalsForDevice(dev, day, db).getSleep();
+                    mins += DailyTotals.getDailyTotalsForDevice(dev, d, db).getSleep();
                 }
                 sleepWeek[i] = (int) mins;
             }

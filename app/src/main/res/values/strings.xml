@@ -5611,6 +5611,9 @@
     <string name="pulse_goal_on_watch">On watch</string>
     <string name="pulse_loading">Loading…</string>
     <string name="pulse_weather_title">Weather</string>
+    <string name="pulse_weather_source">Weather source</string>
+    <string name="pulse_weather_source_auto">Built-in (Open-Meteo)</string>
+    <string name="pulse_weather_source_external">Another app (e.g. Breezy Weather)</string>
     <string name="pulse_weather_use_location">Use phone location</string>
     <string name="pulse_weather_use_location_summary">Fetch weather for where you are right now</string>
     <string name="pulse_weather_city">City</string>

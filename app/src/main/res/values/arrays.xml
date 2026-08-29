@@ -4,6 +4,16 @@
         <!-- empty array -->
     </string-array>
 
+    <string-array name="pulse_weather_source_names">
+        <item>@string/pulse_weather_source_auto</item>
+        <item>@string/pulse_weather_source_external</item>
+    </string-array>
+
+    <string-array name="pulse_weather_source_values">
+        <item>auto</item>
+        <item>external</item>
+    </string-array>
+
     <string-array name="pref_theme_options">
         <item>@string/pref_theme_system</item>
         <item>@string/pref_theme_light</item>
