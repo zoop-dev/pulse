@@ -1,0 +1,6 @@
+Send debug logs to the developer from Settings > Advanced, or in one tap from the
+crash notification - the bundle is only uploaded when you tap send. Fixes the
+Sleep tab not following the day change, Your Week hanging on large histories, and
+weather overwriting Breezy Weather. Backups now save as .zip, the About screen and
+notifications say Pulse, and 20 languages were translated. Also syncs the latest
+upstream Gadgetbridge changes.

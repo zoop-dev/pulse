@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Pulse changelog. Newest release on top. -->
 <changelog>
+    <release version="0.99.0" versioncode="258">
+        <change>New: Settings &#8250; Advanced &#8250; Send debug logs &#8212; bundle your recent logs and send them to the developer to help track down a bug</change>
+        <change>The crash notification can now send a full debug report in one tap</change>
+        <change>Fixed the Sleep tab showing the same night when you change day</change>
+        <change>Fixed Your Week hanging on large histories</change>
+        <change>Weather no longer overwrites Breezy Weather data</change>
+        <change>Backups now save as a .zip file</change>
+        <change>About screen and notifications rebranded to Pulse</change>
+        <change>Translations for 20 languages</change>
+        <change>Synced the latest upstream Gadgetbridge changes</change>
+    </release>
     <release version="0.93.0" versioncode="252">
       <change>Initial support for AK75 Pro, AK86, AK102 (TopStep / FitCloud)</change>
       <change>Initial support for DM58 (GloryFit Pro)</change>

@@ -5622,4 +5622,23 @@
     <string name="pulse_weather_refresh">Refresh now</string>
     <string name="pulse_weather_refresh_summary">Fetch and send weather to your watch</string>
     <string name="pulse_weather_refreshing">Fetching weather…</string>
+    <string name="pulse_report_title">Report a problem</string>
+    <string name="pulse_report_intro">Send your recent Pulse logs to the developer to help track down a bug.</string>
+    <string name="pulse_report_includes">The bundle has app logs, recent system log output, and details about your phone and watch. Logs can contain personal data — notification text, contact and caller names, calendar entries, and the location Pulse uses for weather. It is uploaded over HTTPS and only when you tap send.</string>
+    <string name="pulse_report_note_hint">What went wrong? (optional)</string>
+    <string name="pulse_report_crash_banner">A crash was just recorded and will be included in this report.</string>
+    <string name="pulse_report_logging_off">Detailed logging is off, so this report will be thin. Turn it on, reproduce the problem, then come back and send.</string>
+    <string name="pulse_report_enable_logging">Turn on detailed logging</string>
+    <string name="pulse_report_logging_on">Logging is on. Reproduce the issue, then send the report.</string>
+    <string name="pulse_report_send">Send debug logs</string>
+    <string name="pulse_report_sending">Sending…</string>
+    <string name="pulse_report_confirm_title">Send debug logs?</string>
+    <string name="pulse_report_confirm_msg">This uploads the log bundle to the Pulse developer. Only send it if you are OK with that.</string>
+    <string name="pulse_report_sent_title">Report sent</string>
+    <string name="pulse_report_sent_msg">Reference: %1$s\n\nInclude this in your bug report so the developer can find it.</string>
+    <string name="pulse_report_failed">Could not send the report: %1$s</string>
+    <string name="pulse_report_copy_ref">Copy reference</string>
+    <string name="pulse_report_copied">Reference copied</string>
+    <string name="pulse_settings_send_logs">Send debug logs</string>
+    <string name="pulse_settings_send_logs_desc">Bundle recent logs and send them to the developer to debug a problem</string>
 </resources>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/pulse_bg"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pulse_report_title"
+            android:fontFamily="@font/unbounded"
+            android:textColor="@color/pulse_text"
+            android:textSize="26sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="@string/pulse_report_intro"
+            android:textColor="@color/pulse_text"
+            android:textSize="15sp"
+            android:lineSpacingMultiplier="1.2" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="@string/pulse_report_includes"
+            android:textColor="@color/pulse_text_dim"
+            android:textSize="13sp"
+            android:lineSpacingMultiplier="1.25" />
+
+        <TextView
+            android:id="@+id/report_crash_banner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:padding="12dp"
+            android:background="@drawable/pulse_widget_bg"
+            android:text="@string/pulse_report_crash_banner"
+            android:textColor="@color/pulse_text"
+            android:textSize="13sp"
+            android:visibility="gone" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:hint="@string/pulse_report_note_hint">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/report_note"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine|textCapSentences"
+                android:minLines="3"
+                android:gravity="top"
+                android:textColor="@color/pulse_text" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/report_logging_hint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/pulse_report_logging_off"
+            android:textColor="@color/pulse_text_dim"
+            android:textSize="13sp"
+            android:lineSpacingMultiplier="1.2"
+            android:visibility="gone" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/report_enable_logging"
+            style="@style/Widget.Material3.Button.TonalButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/pulse_report_enable_logging"
+            android:visibility="gone" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/report_send"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:paddingTop="14dp"
+            android:paddingBottom="14dp"
+            android:text="@string/pulse_report_send"
+            android:textSize="15sp" />
+
+    </LinearLayout>
+
+</ScrollView>

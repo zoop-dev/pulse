@@ -15,12 +15,18 @@ Repo: https://github.com/zoop-dev/pulse.git
 Builds:
   - versionName: 0.98.0
     versionCode: 257
-    commit: 258fb699a
+    commit: 0.98.0
+    subdir: app
+    gradle:
+      - mainline
+  - versionName: 0.99.0
+    versionCode: 258
+    commit: 0.99.0
     subdir: app
     gradle:
       - mainline
 
 AutoUpdateMode: Version
 UpdateCheckMode: Tags ^[0-9.]+$
-CurrentVersion: 0.98.0
-CurrentVersionCode: 257
+CurrentVersion: 0.99.0
+CurrentVersionCode: 258

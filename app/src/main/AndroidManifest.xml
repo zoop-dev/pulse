@@ -1022,6 +1022,11 @@
         <activity android:name=".activities.PulseOnboardingActivity"
             android:exported="false" />
 
+        <activity android:name=".activities.PulseReportActivity"
+            android:label="@string/pulse_report_title"
+            android:exported="false"
+            android:parentActivityName=".activities.SettingsActivity" />
+
         <activity android:name=".activities.WidgetConfigurationActivity"
             android:exported="false">
             <intent-filter>
