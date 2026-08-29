@@ -5523,8 +5523,8 @@
     <string name="pulse_ach_5m">5M steps</string>
     <string name="pulse_ach_500mi">500 mi total</string>
     <string name="pulse_badge_unlocked">Achievement unlocked</string>
-    <string name="pulse_wordmark">Pulse</string>
-    <string name="pulse_share_brand">zachy.cc</string>
+    <string name="pulse_wordmark" translatable="false">Pulse</string>
+    <string name="pulse_share_brand" translatable="false">zachy.cc</string>
     <string name="pulse_share_today">Share today</string>
     <string name="pulse_share_streak_fmt">🔥 %1$d day streak</string>
     <string name="pulse_alarms_title">Alarms</string>
