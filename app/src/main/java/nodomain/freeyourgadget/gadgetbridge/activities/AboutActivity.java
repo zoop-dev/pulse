@@ -54,6 +54,8 @@ public class AboutActivity extends AbstractGBActivity {
         link2.setMovementMethod(LinkMovementMethod.getInstance());
         TextView link3 = findViewById(R.id.links3);
         link3.setMovementMethod(LinkMovementMethod.getInstance());
+        TextView link4 = findViewById(R.id.links4);
+        link4.setMovementMethod(LinkMovementMethod.getInstance());
 
         Button licensesButton = findViewById(R.id.showLicenses);
         licensesButton.setOnClickListener(v -> startActivity(new Intent(AboutActivity.this, LicensesActivity.class)));

@@ -105,6 +105,15 @@
             android:textColorLink="?attr/pulseAccent"
             android:textSize="13sp" />
 
+        <TextView
+            android:id="@+id/links4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/upstream_url"
+            android:textColor="@color/pulse_text_dim"
+            android:textColorLink="?attr/pulseAccent"
+            android:textSize="13sp" />
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/showLicenses"
             android:layout_width="wrap_content"
