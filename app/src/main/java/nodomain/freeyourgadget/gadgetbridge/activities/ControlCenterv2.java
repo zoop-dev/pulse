@@ -76,7 +76,6 @@ import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.debug.DebugActivityV2;
 import nodomain.freeyourgadget.gadgetbridge.activities.discovery.DiscoveryActivityV2;
-import nodomain.freeyourgadget.gadgetbridge.activities.welcome.WelcomeActivity;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceService;
@@ -394,11 +393,10 @@ public class ControlCenterv2 extends AppCompatActivity
         filterLocal.addAction(GBDevice.ACTION_DEVICE_CHANGED);
         LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver, filterLocal);
 
-        // Open the Welcome flow on first run, only check permissions on next runs
+        // Pulse: first-run is handled by PulseOnboardingActivity above; only pester about
+        // permissions on later runs.
         boolean firstRun = prefs.getBoolean("first_run", true);
-        if (firstRun) {
-            launchWelcomeActivity();
-        } else {
+        if (!firstRun) {
             pesterWithPermissions = prefs.getBoolean("permission_pestering", true);
             if (pesterWithPermissions && !PermissionsUtils.checkAllPermissions(this)) {
                 Intent permissionsIntent = new Intent(this, PermissionsActivity.class);
@@ -578,10 +576,6 @@ public class ControlCenterv2 extends AppCompatActivity
         if (dot != null) dot.setAlpha(dev.isInitialized() ? 1f : 0.3f);
         final int batt = dev.getBatteryLevel();
         battery.setText((batt >= 0 && batt <= 100) ? batt + "%" : "");
-    }
-
-    private void launchWelcomeActivity() {
-        startActivity(new Intent(this, WelcomeActivity.class));
     }
 
     private void launchDiscoveryActivity() {

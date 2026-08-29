@@ -5465,6 +5465,18 @@
     <string name="pulse_onboard_connect">Connect your watch</string>
     <string name="pulse_onboard_start">Get started</string>
     <string name="pulse_onboard_restore">Restore from a backup</string>
+    <string name="pulse_onboard_next">Next</string>
+    <string name="pulse_onboard_done">Done</string>
+    <string name="pulse_onboard_skip">Skip</string>
+    <string name="pulse_onboard_appearance_title">Make it yours</string>
+    <string name="pulse_onboard_appearance_body">Pick a theme and an accent colour. You can change these later in Settings.</string>
+    <string name="pulse_onboard_theme_light">Light</string>
+    <string name="pulse_onboard_theme_dark">Dark</string>
+    <string name="pulse_onboard_theme_system">System</string>
+    <string name="pulse_onboard_permissions_title">Permissions</string>
+    <string name="pulse_onboard_permissions_body">Pulse needs Bluetooth to talk to your watch, and notification access to forward alerts to it. Nothing leaves your phone.</string>
+    <string name="pulse_onboard_permissions_review">Review permissions</string>
+    <string name="pulse_onboard_start_title">You\'re set</string>
     <string name="pulse_widget_steps_description">Pulse steps</string>
     <string name="pulse_qs_tile_label">Pulse Steps</string>
     <string name="pulse_qs_steps_label">%1$s steps</string>
@@ -5531,6 +5543,9 @@
     <string name="pulse_alarms_title">Alarms</string>
     <string name="pulse_calendar_title">Calendar</string>
     <string name="pulse_workouts_title">Workouts</string>
+    <string name="pulse_set_category_title">Edit set categories</string>
+    <string name="pulse_set_category_keep">Keep watch value</string>
+    <string name="pulse_set_category_set">Set %1$d</string>
     <string name="pulse_workouts_empty">No workouts recorded yet.\nStart one on your watch and sync.</string>
     <!-- Today extra cards -->
     <string name="pulse_this_week">THIS WEEK</string>

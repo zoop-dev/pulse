@@ -14,9 +14,9 @@
         android:gravity="center_horizontal">
 
         <ImageView
-            android:layout_width="72dp"
-            android:layout_height="72dp"
-            android:layout_marginTop="48dp"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginTop="56dp"
             android:src="@drawable/ic_partly_cloudy_day"
             app:tint="?attr/pulseAccent" />
 
@@ -73,7 +73,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginTop="12dp"
-            android:layout_marginBottom="24dp"
             android:padding="18dp"
             android:background="@drawable/pulse_widget_bg"
             android:clickable="true"

@@ -36,6 +36,14 @@ public class ActivitySummaryTableRowEntry extends ActivitySummaryEntry {
         return 2;
     }
 
+    public List<ActivitySummaryValue> getColumns() {
+        return columns;
+    }
+
+    public void setColumn(final int index, final ActivitySummaryValue value) {
+        columns.set(index, value);
+    }
+
     @Override
     public void populate(final String key, final LinearLayout linearLayout, final WorkoutValueFormatter workoutValueFormatter) {
         final GridLayout rowLayout = new GridLayout(linearLayout.getContext());

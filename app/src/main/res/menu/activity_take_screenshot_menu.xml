@@ -32,6 +32,12 @@
                 android:icon="@drawable/ic_gps_edit"
                 android:title="@string/activity_summary_detail_select_gpx_track"
                 app:showAsAction="never" />
+
+            <item
+                android:id="@+id/pulse_action_edit_set_categories"
+                android:icon="@drawable/ic_edit"
+                android:title="@string/pulse_set_category_title"
+                app:showAsAction="never" />
         </menu>
     </item>
 

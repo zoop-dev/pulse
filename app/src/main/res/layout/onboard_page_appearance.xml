@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/pulse_bg"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="28dp"
+        android:gravity="center_horizontal">
+
+        <ImageView
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginTop="56dp"
+            android:src="@drawable/ic_paint"
+            app:tint="?attr/pulseAccent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/pulse_onboard_appearance_title"
+            android:fontFamily="@font/unbounded"
+            android:textColor="@color/pulse_text"
+            android:textSize="26sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="@string/pulse_onboard_appearance_body"
+            android:textColor="@color/pulse_text_dim"
+            android:textSize="15sp"
+            android:lineSpacingMultiplier="1.2" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="36dp"
+            android:baselineAligned="false">
+
+            <Button
+                android:id="@+id/onboard_theme_light"
+                style="@style/PulseOnboardThemeButton"
+                android:text="@string/pulse_onboard_theme_light" />
+
+            <Button
+                android:id="@+id/onboard_theme_dark"
+                style="@style/PulseOnboardThemeButton"
+                android:layout_marginStart="8dp"
+                android:text="@string/pulse_onboard_theme_dark" />
+
+            <Button
+                android:id="@+id/onboard_theme_system"
+                style="@style/PulseOnboardThemeButton"
+                android:layout_marginStart="8dp"
+                android:text="@string/pulse_onboard_theme_system" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="28dp">
+
+            <View android:id="@+id/onboard_accent_blue" style="@style/PulseOnboardSwatch" />
+            <View android:id="@+id/onboard_accent_violet" style="@style/PulseOnboardSwatch" android:layout_marginStart="14dp" />
+            <View android:id="@+id/onboard_accent_coral" style="@style/PulseOnboardSwatch" android:layout_marginStart="14dp" />
+            <View android:id="@+id/onboard_accent_mint" style="@style/PulseOnboardSwatch" android:layout_marginStart="14dp" />
+            <View android:id="@+id/onboard_accent_pink" style="@style/PulseOnboardSwatch" android:layout_marginStart="14dp" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

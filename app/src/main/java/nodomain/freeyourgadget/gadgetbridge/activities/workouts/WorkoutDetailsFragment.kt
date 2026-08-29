@@ -76,6 +76,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.Device
 import nodomain.freeyourgadget.gadgetbridge.export.FitExporter
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind
+import nodomain.freeyourgadget.gadgetbridge.util.PulseSetOverrides
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryData
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries
 import nodomain.freeyourgadget.gadgetbridge.model.workout.Workout
@@ -308,6 +309,8 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
 
     private fun updateWorkoutDetails(workout: Workout) {
         binding.summaryDetails.removeAllViews()
+
+        workout.summary.id?.let { PulseSetOverrides.apply(requireContext(), it, workout.data) }
 
         val groups = ActivitySummaryGroup.buildGroupedList(workout.data)
 
@@ -650,6 +653,14 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
                 true
             }
 
+            R.id.pulse_action_edit_set_categories -> {
+                PulseSetCategoryDialog.show(requireContext(), workout) {
+                    notifyWorkoutChanged()
+                    loadWorkoutData()
+                }
+                true
+            }
+
             android.R.id.home -> {
                 requireActivity().finish()
                 true
@@ -690,6 +701,7 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
         val overflowMenu2 = menu.findItem(R.id.activity_detail_overflowMenu2)?.subMenu
         overflowMenu2?.findItem(R.id.activity_summary_detail_action_add_photo)?.isVisible = workout.summary.headerPhoto == null
         overflowMenu2?.findItem(R.id.activity_summary_detail_action_remove_photo)?.isVisible = workout.summary.headerPhoto != null
+        overflowMenu2?.findItem(R.id.pulse_action_edit_set_categories)?.isVisible = PulseSetCategoryDialog.hasSets(workout.data)
 
         // Endurain accepts FIT (built from the summary alone if needed), so it is offered
         // for any workout. Wanderer only supports GPX uploads, so it requires a GPS track.

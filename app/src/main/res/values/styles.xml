@@ -328,6 +328,24 @@
         <item name="android:layout_marginTop">2dp</item>
         <item name="android:lineSpacingMultiplier">1.1</item>
     </style>
+    <style name="PulseOnboardThemeButton">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">46dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">@drawable/pulse_pill</item>
+        <item name="android:backgroundTint">@null</item>
+        <item name="android:textColor">@color/pulse_text</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">@font/plusjakarta_medium</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:stateListAnimator">@null</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+    </style>
+    <style name="PulseOnboardSwatch">
+        <item name="android:layout_width">44dp</item>
+        <item name="android:layout_height">44dp</item>
+    </style>
 
     <!-- Pulse: reusable stat-cell styles (rounded card with Unbounded value + dim label). -->
     <style name="PulseStatCell">
