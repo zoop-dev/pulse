@@ -8,8 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.fragment.app.FragmentManager;
-
 import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
@@ -39,7 +37,6 @@ public class StepsDailyFragment extends StepsFragment<StepsDailyFragment.StepsDa
     private ImageView stepsGauge;
     private TextView steps;
     private TextView distance;
-    ImageView stepsStreaksButton;
     private LineChart stepsChart;
 
     protected int STEPS_GOAL;
@@ -66,16 +63,6 @@ public class StepsDailyFragment extends StepsFragment<StepsDailyFragment.StepsDa
 
         STEPS_GOAL = GBApplication.getPrefs().getInt(ActivityUser.PREF_USER_STEPS_GOAL, ActivityUser.defaultUserStepsGoal);
         refresh();
-
-        stepsStreaksButton = rootView.findViewById(R.id.steps_streaks_button);
-        stepsStreaksButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentManager fm = getActivity().getSupportFragmentManager();
-                StepStreaksDashboard stepStreaksDashboard = StepStreaksDashboard.newInstance(STEPS_GOAL, getChartsHost().getDevice());
-                stepStreaksDashboard.show(fm, "steps_streaks_dashboard");
-            }
-        });
 
         return rootView;
     }
