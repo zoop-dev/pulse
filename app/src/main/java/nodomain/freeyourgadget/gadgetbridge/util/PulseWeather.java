@@ -55,6 +55,9 @@ public final class PulseWeather {
 
     /** Fetch + send if we haven't recently. Runs on a background thread. */
     public static void maybeFetch(final Context context) {
+        if (!"auto".equals(GBApplication.getPrefs().getString("pulse_weather_source", "auto"))) {
+            return;
+        }
         if (System.currentTimeMillis() - lastFetch < THROTTLE_MS) {
             return;
         }
