@@ -16,16 +16,20 @@ package nodomain.freeyourgadget.gadgetbridge.activities;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.discovery.DiscoveryActivityV2;
+import nodomain.freeyourgadget.gadgetbridge.util.PulseWeather;
 
-/** Pulse: first-run welcome screen, shown once until "Get started" is tapped. */
+/** Pulse: first-run flow — a welcome screen, then a weather-source choice. */
 public class PulseOnboardingActivity extends AbstractGBActivity {
     public static final String PREF_ONBOARDED = "pulse_onboarded";
+
+    private boolean onWeatherStep = false;
 
     private final ActivityResultLauncher<String[]> restorePicker = registerForActivityResult(
             new ActivityResultContracts.OpenDocument(), uri -> {
@@ -40,6 +44,22 @@ public class PulseOnboardingActivity extends AbstractGBActivity {
     protected void onCreate(final Bundle savedInstanceState) {
         AbstractGBActivity.init(this, AbstractGBActivity.NO_ACTIONBAR);
         super.onCreate(savedInstanceState);
+        showWelcomeStep();
+
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                if (onWeatherStep) {
+                    showWelcomeStep();
+                } else {
+                    finish();
+                }
+            }
+        });
+    }
+
+    private void showWelcomeStep() {
+        onWeatherStep = false;
         setContentView(R.layout.activity_pulse_onboarding);
 
         findViewById(R.id.onboard_connect).setOnClickListener(v ->
@@ -48,9 +68,26 @@ public class PulseOnboardingActivity extends AbstractGBActivity {
         findViewById(R.id.onboard_restore).setOnClickListener(v ->
                 restorePicker.launch(new String[]{"*/*"}));
 
-        findViewById(R.id.onboard_start).setOnClickListener(v -> {
-            GBApplication.getPrefs().getPreferences().edit().putBoolean(PREF_ONBOARDED, true).apply();
-            finish();
-        });
+        findViewById(R.id.onboard_start).setOnClickListener(v -> showWeatherStep());
+    }
+
+    private void showWeatherStep() {
+        onWeatherStep = true;
+        setContentView(R.layout.activity_pulse_onboarding_weather);
+
+        findViewById(R.id.onboard_weather_openmeteo).setOnClickListener(v -> chooseWeather("auto"));
+        findViewById(R.id.onboard_weather_breezy).setOnClickListener(v -> chooseWeather("external"));
+        findViewById(R.id.onboard_weather_skip).setOnClickListener(v -> chooseWeather("off"));
+    }
+
+    private void chooseWeather(final String source) {
+        GBApplication.getPrefs().getPreferences().edit()
+                .putString("pulse_weather_source", source)
+                .putBoolean(PREF_ONBOARDED, true)
+                .apply();
+        if ("auto".equals(source)) {
+            PulseWeather.maybeFetch(getApplicationContext());
+        }
+        finish();
     }
 }

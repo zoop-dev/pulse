@@ -5615,6 +5615,15 @@
     <string name="pulse_weather_source">Weather source</string>
     <string name="pulse_weather_source_auto">Built-in (Open-Meteo)</string>
     <string name="pulse_weather_source_external">Another app (e.g. Breezy Weather)</string>
+    <string name="pulse_weather_source_off">Off</string>
+    <string name="pulse_onboard_weather_title">Weather on your watch</string>
+    <string name="pulse_onboard_weather_body">Pick where your watch gets weather from. You can change this later in Settings.</string>
+    <string name="pulse_onboard_weather_openmeteo">Open-Meteo</string>
+    <string name="pulse_onboard_weather_openmeteo_desc">Pulse fetches it directly. This is the only feature that uses the internet.</string>
+    <string name="pulse_onboard_weather_breezy">Breezy Weather</string>
+    <string name="pulse_onboard_weather_breezy_desc">Get it from Breezy Weather or another weather app. Pulse stays fully offline.</string>
+    <string name="pulse_onboard_weather_skip">No weather</string>
+    <string name="pulse_onboard_weather_skip_desc">Your watch won\'t receive weather. Pulse stays fully offline.</string>
     <string name="pulse_weather_use_location">Use phone location</string>
     <string name="pulse_weather_use_location_summary">Fetch weather for where you are right now</string>
     <string name="pulse_weather_city">City</string>

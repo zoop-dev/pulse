@@ -7,11 +7,13 @@
     <string-array name="pulse_weather_source_names">
         <item>@string/pulse_weather_source_auto</item>
         <item>@string/pulse_weather_source_external</item>
+        <item>@string/pulse_weather_source_off</item>
     </string-array>
 
     <string-array name="pulse_weather_source_values">
         <item>auto</item>
         <item>external</item>
+        <item>off</item>
     </string-array>
 
     <string-array name="pref_theme_options">

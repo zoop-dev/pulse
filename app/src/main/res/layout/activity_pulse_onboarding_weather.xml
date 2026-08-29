@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/pulse_bg"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="28dp"
+        android:gravity="center_horizontal">
+
+        <ImageView
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:layout_marginTop="48dp"
+            android:src="@drawable/ic_partly_cloudy_day"
+            app:tint="?attr/pulseAccent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/pulse_onboard_weather_title"
+            android:fontFamily="@font/unbounded"
+            android:textColor="@color/pulse_text"
+            android:textSize="26sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="@string/pulse_onboard_weather_body"
+            android:textColor="@color/pulse_text_dim"
+            android:textSize="15sp"
+            android:lineSpacingMultiplier="1.2" />
+
+        <LinearLayout
+            android:id="@+id/onboard_weather_openmeteo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="32dp"
+            android:padding="18dp"
+            android:background="@drawable/pulse_widget_bg"
+            android:clickable="true"
+            android:focusable="true">
+            <TextView style="@style/PulseOnboardHead" android:text="@string/pulse_onboard_weather_openmeteo" />
+            <TextView style="@style/PulseOnboardBody" android:text="@string/pulse_onboard_weather_openmeteo_desc" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/onboard_weather_breezy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="12dp"
+            android:padding="18dp"
+            android:background="@drawable/pulse_widget_bg"
+            android:clickable="true"
+            android:focusable="true">
+            <TextView style="@style/PulseOnboardHead" android:text="@string/pulse_onboard_weather_breezy" />
+            <TextView style="@style/PulseOnboardBody" android:text="@string/pulse_onboard_weather_breezy_desc" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/onboard_weather_skip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="24dp"
+            android:padding="18dp"
+            android:background="@drawable/pulse_widget_bg"
+            android:clickable="true"
+            android:focusable="true">
+            <TextView style="@style/PulseOnboardHead" android:text="@string/pulse_onboard_weather_skip" />
+            <TextView style="@style/PulseOnboardBody" android:text="@string/pulse_onboard_weather_skip_desc" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

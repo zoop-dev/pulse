@@ -55,7 +55,7 @@ public final class PulseWeather {
 
     /** Fetch + send if we haven't recently. Runs on a background thread. */
     public static void maybeFetch(final Context context) {
-        if (!"auto".equals(GBApplication.getPrefs().getString("pulse_weather_source", "auto"))) {
+        if (!isOpenMeteoSelected()) {
             return;
         }
         if (System.currentTimeMillis() - lastFetch < THROTTLE_MS) {
@@ -65,7 +65,14 @@ public final class PulseWeather {
         new Thread(() -> fetchAndSend(app), "pulse-weather").start();
     }
 
+    public static boolean isOpenMeteoSelected() {
+        return "auto".equals(GBApplication.getPrefs().getString("pulse_weather_source", "off"));
+    }
+
     public static void fetchAndSend(final Context context) {
+        if (!isOpenMeteoSelected()) {
+            return;
+        }
         try {
             final Location loc = lastKnownLocation(context);
             if (loc == null) {

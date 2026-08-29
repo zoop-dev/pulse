@@ -257,6 +257,12 @@ public class GBApplication extends Application {
 
         migratePrefsIfNeeded();
 
+        if (!BuildConfig.INTERNET_ACCESS
+                && sharedPrefs.getBoolean("pulse_onboarded", false)
+                && !sharedPrefs.contains("pulse_weather_source")) {
+            sharedPrefs.edit().putString("pulse_weather_source", "auto").apply();
+        }
+
         setupExceptionHandler(prefs.getBoolean("crash_notification", isDebug()));
 
         registerActivityLifecycleCallbacks(new GBActivityLifecycleCallbacks());
@@ -746,7 +752,13 @@ public class GBApplication extends Application {
     }
 
     public static boolean hasDirectInternetAccess() {
-        return PermissionsUtils.checkPermission(getContext(), Manifest.permission.INTERNET);
+        if (!PermissionsUtils.checkPermission(getContext(), Manifest.permission.INTERNET)) {
+            return false;
+        }
+        if (BuildConfig.INTERNET_ACCESS) {
+            return true;
+        }
+        return "auto".equals(prefs.getString("pulse_weather_source", "off"));
     }
 
     public static boolean hasInternetAccess() {

@@ -5,7 +5,7 @@
 
         <ListPreference
             android:key="pulse_weather_source"
-            android:defaultValue="auto"
+            android:defaultValue="off"
             android:entries="@array/pulse_weather_source_names"
             android:entryValues="@array/pulse_weather_source_values"
             android:title="@string/pulse_weather_source"

@@ -10,12 +10,23 @@ set -e
 cd "$(dirname "$0")"
 
 # repo signing-key SHA-256 fingerprint, for the one-tap "Add to F-Droid" link
-FINGERPRINT=64E3BF277CC48A270B543B5D8B4087CB3CBA19D350947464776079A52E56C4A3
+FINGERPRINT=80A165093CC44A46AD283FD696356F6032C581EABEC43EB6EBE4811796ED6F9F
 
 [ -f "$HOME/keys/pulse-signing.env" ] && . "$HOME/keys/pulse-signing.env"
-export JAVA_HOME="${JAVA_HOME:-$HOME/dev/android-toolchain/jdk17}"
-export ANDROID_HOME="${ANDROID_HOME:-$HOME/dev/android-toolchain/sdk}"
+
+for j in "$JAVA_HOME" "$HOME/dev/android-toolchain/jdk21" "$HOME/dev/android-toolchain/jdk17" \
+         "$HOME/.sdkman/candidates/java/current"; do
+    [ -x "$j/bin/javac" ] && { export JAVA_HOME="$j"; break; }
+done
+for a in "$ANDROID_HOME" "$ANDROID_SDK_ROOT" "$HOME/dev/android-toolchain/sdk" "$HOME/Android/Sdk"; do
+    [ -d "$a/build-tools" ] && { export ANDROID_HOME="$a"; break; }
+done
 export PATH="$JAVA_HOME/bin:$HOME/.local/bin:$PATH"
+
+fail() { echo "publish-fdroid: $1" >&2; exit 1; }
+[ -d "$ANDROID_HOME/build-tools" ] || fail "no Android SDK build-tools (set ANDROID_HOME). run this on the machine with the toolchain + signing keys."
+[ -n "$PULSE_KEYSTORE" ] && [ -f "$PULSE_KEYSTORE" ] || fail "app signing key not found (\$HOME/keys/pulse-signing.env). run this on the machine that holds the release key."
+command -v fdroid >/dev/null || fail "fdroidserver not installed (pip install fdroidserver)."
 
 echo "building release (r8)…"
 # skip vital lint — slow and not a useful gate for our own repo
@@ -26,7 +37,8 @@ UNSIGNED=$(ls -t app/build/outputs/apk/mainline/release/*.apk | head -1)
 mkdir -p fdroid/repo/icons
 
 echo "signing…"
-APKSIGNER=$(ls "$ANDROID_HOME"/build-tools/*/apksigner | sort -V | tail -1)
+APKSIGNER=$(ls "$ANDROID_HOME"/build-tools/*/apksigner 2>/dev/null | sort -V | tail -1)
+[ -x "$APKSIGNER" ] || fail "apksigner not found under $ANDROID_HOME/build-tools"
 "$APKSIGNER" sign --ks "$PULSE_KEYSTORE" --ks-pass env:PULSE_KS_PASS \
     --ks-key-alias "$PULSE_KEY_ALIAS" --key-pass env:PULSE_KEY_PASS \
     --out "fdroid/repo/cc.zachy.pulse_${VCODE}.apk" "$UNSIGNED"
