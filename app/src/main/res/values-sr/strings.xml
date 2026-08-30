@@ -2953,4 +2953,20 @@
     <string name="pulse_report_copied">Референца копирана</string>
     <string name="pulse_settings_send_logs">Пошаљи дневнике за отклањање грешака</string>
     <string name="pulse_settings_send_logs_desc">Спакуј недавне дневнике и пошаљи их програмеру ради отклањања проблема</string>
+    <string name="pulse_permissions_subtitle">Одобрите све за потпуни доживљај Pulse. Ако прескочите дозволу, функција коју она откључава остаје искључена док се не вратите.</string>
+    <string name="pulse_permissions_required_label">Обавезно</string>
+    <string name="pulse_permissions_optional_label">Опционо — откључава додатне функције</string>
+    <string name="pulse_permissions_optional_caption">Свака коју прескочите искључује функцију испод ње. Можете их одобрити касније у подешавањима.</string>
+    <string name="pulse_permissions_allow">Дозволи</string>
+    <string name="pulse_permissions_allow_all">Дозволи све</string>
+    <string name="pulse_permissions_required_only">Само обавезне — неке функције остају искључене</string>
+    <string name="pulse_permissions_granted">Одобрено</string>
+    <string name="pulse_devices_more">Још</string>
+    <string name="pulse_devices_last_sync">Синхронизовано %1$s</string>
+    <string name="pulse_devices_never_synced">Још није синхронизовано</string>
+    <plurals name="pulse_permissions_still_needed">
+        <item quantity="one">Још %d обавезна дозвола недостаје — синхронизација неће почети без ње</item>
+        <item quantity="few">Још %d обавезне дозволе недостају — синхронизација неће почети без њих</item>
+        <item quantity="other">Још %d обавезних дозвола недостаје — синхронизација неће почети без њих</item>
+    </plurals>
 </resources>

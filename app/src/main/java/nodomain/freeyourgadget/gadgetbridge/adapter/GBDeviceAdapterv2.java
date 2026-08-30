@@ -40,6 +40,7 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.text.format.DateUtils;
 import android.util.Pair;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -149,14 +150,16 @@ public class GBDeviceAdapterv2 extends ListAdapter<GBDevice, GBDeviceAdapterv2.V
     private String expandedFolderName = "";
     private ViewGroup parent;
     private HashMap<String, DailyTotals> deviceActivityMap = new HashMap<>();
+    private HashMap<String, Long> deviceLastSyncMap = new HashMap<>();
     private final StableIdGenerator idGenerator = new StableIdGenerator();
 
-    public GBDeviceAdapterv2(Context context, List<GBDevice> deviceList, HashMap<String, DailyTotals> deviceMap) {
+    public GBDeviceAdapterv2(Context context, List<GBDevice> deviceList, HashMap<String, DailyTotals> deviceMap, HashMap<String, Long> lastSyncMap) {
         super(new GBDeviceDiffUtil());
         this.context = context;
         this.deviceList = deviceList;
         rebuildFolders();
         this.deviceActivityMap = deviceMap;
+        this.deviceLastSyncMap = lastSyncMap;
     }
 
     public void rebuildFolders() {
@@ -223,6 +226,8 @@ public class GBDeviceAdapterv2 extends ListAdapter<GBDevice, GBDeviceAdapterv2.V
         holder.container.setVisibility(View.VISIBLE);
         holder.deviceNameLabel.setText(folder.getName());
         holder.infoIcons.setVisibility(View.GONE);
+        holder.primaryActions.setVisibility(View.GONE);
+        holder.lastSyncLabel.setVisibility(View.GONE);
         holder.deviceInfoBox.setVisibility(View.GONE);
         holder.cardViewActivityCardLayout.setVisibility(View.GONE);
         holder.deviceImageView.setImageResource(R.drawable.ic_device_folder);
@@ -361,6 +366,21 @@ public class GBDeviceAdapterv2 extends ListAdapter<GBDevice, GBDeviceAdapterv2.V
         } else {
             holder.deviceStatusLabel.setText(device.getStateString(context));
             holder.busyIndicator.setVisibility(View.INVISIBLE);
+        }
+        holder.deviceStatusLabel.setTextColor(context.getColor(
+                device.isInitialized() ? R.color.pulse_mint : R.color.pulse_text_dim));
+
+        holder.primaryActions.setVisibility(View.VISIBLE);
+        holder.moreButton.setOnClickListener(v -> showDeviceCardMoreMenu(v, holder));
+
+        final Long lastSync = deviceLastSyncMap != null ? deviceLastSyncMap.get(device.getAddress()) : null;
+        if (lastSync != null && lastSync > 0) {
+            holder.lastSyncLabel.setVisibility(View.VISIBLE);
+            holder.lastSyncLabel.setText(context.getString(R.string.pulse_devices_last_sync,
+                    DateUtils.getRelativeTimeSpanString(lastSync, System.currentTimeMillis(),
+                            DateUtils.MINUTE_IN_MILLIS)));
+        } else {
+            holder.lastSyncLabel.setVisibility(View.GONE);
         }
 
         //begin of action row
@@ -603,7 +623,7 @@ public class GBDeviceAdapterv2 extends ListAdapter<GBDevice, GBDeviceAdapterv2.V
         justifyListViewHeightBasedOnChildren(holder.deviceInfoList);
         holder.deviceInfoList.setFocusable(false);
 
-        holder.infoIcons.setVisibility(View.VISIBLE);
+        holder.infoIcons.setVisibility(View.GONE);
 
         final boolean detailsShown = expandedDeviceAddress.equals(device.getAddress());
         boolean showInfoIcon = device.hasDeviceInfos() && !device.isBusy();
@@ -925,6 +945,58 @@ public class GBDeviceAdapterv2 extends ListAdapter<GBDevice, GBDeviceAdapterv2.V
     private boolean showInstallerItem(GBDevice device) {
         final DeviceCoordinator coordinator = device.getDeviceCoordinator();
         return coordinator.supportsAppsManagement(device) || coordinator.supportsFlashing(device);
+    }
+
+    private void showDeviceCardMoreMenu(final View anchor, final ViewHolder holder) {
+        final PopupMenu menu = new PopupMenu(anchor.getContext(), anchor);
+        menu.inflate(R.menu.device_card_more);
+
+        menu.getMenu().findItem(R.id.devcard_more_reminders).setVisible(holder.setRemindersView.getVisibility() == View.VISIBLE);
+        menu.getMenu().findItem(R.id.devcard_more_graphs).setVisible(holder.showActivityGraphs.getVisibility() == View.VISIBLE);
+        menu.getMenu().findItem(R.id.devcard_more_tracks).setVisible(holder.showActivityTracks.getVisibility() == View.VISIBLE);
+        menu.getMenu().findItem(R.id.devcard_more_screenshot).setVisible(holder.takeScreenshotView.getVisibility() == View.VISIBLE);
+        menu.getMenu().findItem(R.id.devcard_more_heart_rate).setVisible(holder.heartRateStatusBox.getVisibility() == View.VISIBLE);
+        menu.getMenu().findItem(R.id.devcard_more_calibrate).setVisible(holder.calibrateDevice.getVisibility() == View.VISIBLE);
+        menu.getMenu().findItem(R.id.devcard_more_fm_frequency).setVisible(holder.fmFrequencyBox.getVisibility() == View.VISIBLE);
+        menu.getMenu().findItem(R.id.devcard_more_led_color).setVisible(holder.ledColor.getVisibility() == View.VISIBLE);
+        menu.getMenu().findItem(R.id.devcard_more_power_off).setVisible(holder.powerOff.getVisibility() == View.VISIBLE);
+
+        final MenuItem[] customItems = {
+                menu.getMenu().findItem(R.id.devcard_more_custom_0),
+                menu.getMenu().findItem(R.id.devcard_more_custom_1),
+                menu.getMenu().findItem(R.id.devcard_more_custom_2),
+        };
+        for (int i = 0; i < customItems.length; i++) {
+            final boolean visible = holder.customActions[i].layout.getVisibility() == View.VISIBLE;
+            customItems[i].setVisible(visible);
+            if (visible) {
+                final CharSequence label = holder.customActions[i].label.getVisibility() == View.VISIBLE
+                        ? holder.customActions[i].label.getText()
+                        : holder.customActions[i].layout.getContentDescription();
+                if (!TextUtils.isEmpty(label)) {
+                    customItems[i].setTitle(label);
+                }
+            }
+        }
+
+        menu.setOnMenuItemClickListener(item -> {
+            final int id = item.getItemId();
+            if (id == R.id.devcard_more_reminders) holder.setRemindersView.performClick();
+            else if (id == R.id.devcard_more_graphs) holder.showActivityGraphs.performClick();
+            else if (id == R.id.devcard_more_tracks) holder.showActivityTracks.performClick();
+            else if (id == R.id.devcard_more_screenshot) holder.takeScreenshotView.performClick();
+            else if (id == R.id.devcard_more_heart_rate) holder.heartRateStatusBox.performClick();
+            else if (id == R.id.devcard_more_calibrate) holder.calibrateDevice.performClick();
+            else if (id == R.id.devcard_more_fm_frequency) holder.fmFrequencyBox.performClick();
+            else if (id == R.id.devcard_more_led_color) holder.ledColor.performClick();
+            else if (id == R.id.devcard_more_power_off) holder.powerOff.performClick();
+            else if (id == R.id.devcard_more_custom_0) holder.customActions[0].layout.performClick();
+            else if (id == R.id.devcard_more_custom_1) holder.customActions[1].layout.performClick();
+            else if (id == R.id.devcard_more_custom_2) holder.customActions[2].layout.performClick();
+            else return false;
+            return true;
+        });
+        menu.show();
     }
 
     private void showDeviceSubmenu(final View v, final GBDevice device) {
@@ -1268,6 +1340,9 @@ public class GBDeviceAdapterv2 extends ListAdapter<GBDevice, GBDeviceAdapterv2.V
         ImageView deviceImageView;
         TextView deviceNameLabel;
         TextView deviceStatusLabel;
+        TextView lastSyncLabel;
+        LinearLayout primaryActions;
+        ImageView moreButton;
 
         //actions
         LinearLayout batteryStatusBox0;
@@ -1325,6 +1400,9 @@ public class GBDeviceAdapterv2 extends ListAdapter<GBDevice, GBDeviceAdapterv2.V
             deviceImageView = view.findViewById(R.id.device_image);
             deviceNameLabel = view.findViewById(R.id.device_name);
             deviceStatusLabel = view.findViewById(R.id.device_status);
+            lastSyncLabel = view.findViewById(R.id.device_last_sync);
+            primaryActions = view.findViewById(R.id.device_primary_actions);
+            moreButton = view.findViewById(R.id.device_more);
 
             //actions
             batteryStatusBox0 = view.findViewById(R.id.device_battery_status_box);

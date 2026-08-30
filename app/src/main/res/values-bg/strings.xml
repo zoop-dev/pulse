@@ -803,4 +803,19 @@
     <string name="pulse_report_copied">Референцията е копирана</string>
     <string name="pulse_settings_send_logs">Изпращане на дневниците за отстраняване на грешки</string>
     <string name="pulse_settings_send_logs_desc">Събиране на скорошните дневници и изпращането им на разработчика за отстраняване на проблем</string>
+    <string name="pulse_permissions_subtitle">Дайте всички разрешения за пълноценно изживяване с Pulse. Пропуснете разрешение и функцията, която то отключва, остава изключена, докато не се върнете.</string>
+    <string name="pulse_permissions_required_label">Задължително</string>
+    <string name="pulse_permissions_optional_label">По желание — отключва допълнителни функции</string>
+    <string name="pulse_permissions_optional_caption">Всяко пропуснато разрешение изключва функцията под него. Може да ги дадете по-късно от настройките.</string>
+    <string name="pulse_permissions_allow">Разреши</string>
+    <string name="pulse_permissions_allow_all">Разреши всички</string>
+    <string name="pulse_permissions_required_only">Само задължителните — някои функции остават изключени</string>
+    <string name="pulse_permissions_granted">Дадено</string>
+    <string name="pulse_devices_more">Още</string>
+    <string name="pulse_devices_last_sync">Синхронизирано %1$s</string>
+    <string name="pulse_devices_never_synced">Още не е синхронизирано</string>
+    <plurals name="pulse_permissions_still_needed">
+        <item quantity="one">Нужно е още %d задължително разрешение — синхронизирането няма да започне без него</item>
+        <item quantity="other">Нужни са още %d задължителни разрешения — синхронизирането няма да започне без тях</item>
+    </plurals>
 </resources>

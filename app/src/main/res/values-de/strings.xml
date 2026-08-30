@@ -4615,4 +4615,19 @@
     <string name="pulse_report_copied">Referenz kopiert</string>
     <string name="pulse_settings_send_logs">Debug-Protokolle senden</string>
     <string name="pulse_settings_send_logs_desc">Aktuelle Protokolle bündeln und an den Entwickler senden, um ein Problem zu beheben</string>
+    <string name="pulse_permissions_subtitle">Erteile alle Berechtigungen für das volle Pulse-Erlebnis. Überspringst du eine Berechtigung, bleibt die Funktion, die sie freischaltet, aus, bis du zurückkommst.</string>
+    <string name="pulse_permissions_required_label">Erforderlich</string>
+    <string name="pulse_permissions_optional_label">Optional — schaltet zusätzliche Funktionen frei</string>
+    <string name="pulse_permissions_optional_caption">Jede übersprungene Berechtigung deaktiviert die Funktion darunter. Du kannst sie später in den Einstellungen erteilen.</string>
+    <string name="pulse_permissions_allow">Zulassen</string>
+    <string name="pulse_permissions_allow_all">Alle zulassen</string>
+    <string name="pulse_permissions_required_only">Nur erforderliche — einige Funktionen bleiben aus</string>
+    <string name="pulse_permissions_granted">Erteilt</string>
+    <string name="pulse_devices_more">Mehr</string>
+    <string name="pulse_devices_last_sync">Synchronisiert %1$s</string>
+    <string name="pulse_devices_never_synced">Noch nicht synchronisiert</string>
+    <plurals name="pulse_permissions_still_needed">
+        <item quantity="one">Noch %d erforderliche Berechtigung nötig — die Synchronisierung startet ohne sie nicht</item>
+        <item quantity="other">Noch %d erforderliche Berechtigungen nötig — die Synchronisierung startet ohne sie nicht</item>
+    </plurals>
 </resources>

@@ -4001,6 +4001,9 @@
     <string name="controlcenter_set_preferences">Set preferences</string>
     <string name="controlcenter_toggle_details">Toggle details</string>
     <string name="controlcenter_connected_fraction">Connected: %1$d/%2$d</string>
+    <string name="pulse_devices_more">More</string>
+    <string name="pulse_devices_last_sync">Synced %1$s</string>
+    <string name="pulse_devices_never_synced">Not synced yet</string>
     <string name="error_setting_parent_folder">Error setting parent folder: %s</string>
     <string name="error_deleting_device">Error deleting device: %s</string>
     <string name="device_delete_in_progress">Deleting device…</string>

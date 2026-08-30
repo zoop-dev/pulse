@@ -4614,4 +4614,19 @@
     <string name="pulse_report_copied">Referentie gekopieerd</string>
     <string name="pulse_settings_send_logs">Foutopsporingslogboeken verzenden</string>
     <string name="pulse_settings_send_logs_desc">Recente logboeken bundelen en naar de ontwikkelaar sturen om een probleem op te sporen</string>
+    <string name="pulse_permissions_subtitle">Verleen alles voor de volledige Pulse-ervaring. Sla een toestemming over en de bijbehorende functie blijft uit tot je terugkomt.</string>
+    <string name="pulse_permissions_required_label">Vereist</string>
+    <string name="pulse_permissions_optional_label">Optioneel — ontgrendelt extra functies</string>
+    <string name="pulse_permissions_optional_caption">Elke die je overslaat schakelt de functie eronder uit. Je kunt ze later verlenen via instellingen.</string>
+    <string name="pulse_permissions_allow">Toestaan</string>
+    <string name="pulse_permissions_allow_all">Alles toestaan</string>
+    <string name="pulse_permissions_required_only">Alleen vereist — sommige functies blijven uit</string>
+    <string name="pulse_permissions_granted">Verleend</string>
+    <string name="pulse_devices_more">Meer</string>
+    <string name="pulse_devices_last_sync">Gesynchroniseerd %1$s</string>
+    <string name="pulse_devices_never_synced">Nog niet gesynchroniseerd</string>
+    <plurals name="pulse_permissions_still_needed">
+        <item quantity="one">Nog %d vereiste toestemming nodig — synchroniseren start niet zonder deze</item>
+        <item quantity="other">Nog %d vereiste toestemmingen nodig — synchroniseren start niet zonder deze</item>
+    </plurals>
 </resources>

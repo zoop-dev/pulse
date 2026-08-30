@@ -1819,4 +1819,20 @@
     <string name="pulse_report_copied">Referenca kopirana</string>
     <string name="pulse_settings_send_logs">Pošalji zapise za ispravljanje pogrešaka</string>
     <string name="pulse_settings_send_logs_desc">Sažmi nedavne zapise i pošalji ih razvijatelju za ispravljanje problema</string>
+    <string name="pulse_permissions_subtitle">Odobrite sve za potpun doživljaj Pulsea. Ako preskočite dopuštenje, značajka koju otključava ostaje isključena dok se ne vratite.</string>
+    <string name="pulse_permissions_required_label">Obavezno</string>
+    <string name="pulse_permissions_optional_label">Neobavezno — otključava dodatne značajke</string>
+    <string name="pulse_permissions_optional_caption">Svako preskočeno dopuštenje isključuje značajku ispod njega. Možete ih odobriti kasnije u postavkama.</string>
+    <string name="pulse_permissions_allow">Dopusti</string>
+    <string name="pulse_permissions_allow_all">Dopusti sve</string>
+    <string name="pulse_permissions_required_only">Samo obavezna — neke značajke ostaju isključene</string>
+    <string name="pulse_permissions_granted">Odobreno</string>
+    <string name="pulse_devices_more">Više</string>
+    <string name="pulse_devices_last_sync">Sinkronizirano %1$s</string>
+    <string name="pulse_devices_never_synced">Još nije sinkronizirano</string>
+    <plurals name="pulse_permissions_still_needed">
+        <item quantity="one">Još je potrebno %d obavezno dopuštenje — sinkronizacija bez njega neće započeti</item>
+        <item quantity="few">Još su potrebna %d obavezna dopuštenja — sinkronizacija bez njih neće započeti</item>
+        <item quantity="other">Još je potrebno %d obaveznih dopuštenja — sinkronizacija bez njih neće započeti</item>
+    </plurals>
 </resources>

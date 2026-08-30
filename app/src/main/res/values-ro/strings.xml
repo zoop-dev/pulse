@@ -1428,4 +1428,20 @@
     <string name="pulse_report_copied">Referință copiată</string>
     <string name="pulse_settings_send_logs">Trimite jurnalele de depanare</string>
     <string name="pulse_settings_send_logs_desc">Grupează jurnalele recente și trimite-le către dezvoltator pentru a depana o problemă</string>
+    <string name="pulse_permissions_subtitle">Acordă tot pentru experiența Pulse completă. Dacă sari peste o permisiune, funcția pe care o deblochează rămâne dezactivată până când revii.</string>
+    <string name="pulse_permissions_required_label">Obligatorie</string>
+    <string name="pulse_permissions_optional_label">Opțională — deblochează funcții suplimentare</string>
+    <string name="pulse_permissions_optional_caption">Fiecare permisiune pe care o sari dezactivează funcția de sub ea. Le poți acorda mai târziu din setări.</string>
+    <string name="pulse_permissions_allow">Permite</string>
+    <string name="pulse_permissions_allow_all">Permite tot</string>
+    <string name="pulse_permissions_required_only">Doar cele obligatorii — unele funcții rămân dezactivate</string>
+    <string name="pulse_permissions_granted">Acordată</string>
+    <string name="pulse_devices_more">Mai multe</string>
+    <string name="pulse_devices_last_sync">Sincronizat %1$s</string>
+    <string name="pulse_devices_never_synced">Încă nesincronizat</string>
+    <plurals name="pulse_permissions_still_needed">
+        <item quantity="one">Mai este nevoie de %d permisiune obligatorie — sincronizarea nu pornește fără ea</item>
+        <item quantity="few">Mai este nevoie de %d permisiuni obligatorii — sincronizarea nu pornește fără ele</item>
+        <item quantity="other">Mai este nevoie de %d de permisiuni obligatorii — sincronizarea nu pornește fără ele</item>
+    </plurals>
 </resources>

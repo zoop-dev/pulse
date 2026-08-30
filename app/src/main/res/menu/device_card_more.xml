@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/devcard_more_reminders"
+        android:title="@string/controlcenter_start_configure_reminders" />
+    <item
+        android:id="@+id/devcard_more_graphs"
+        android:title="@string/controlcenter_start_activitymonitor" />
+    <item
+        android:id="@+id/devcard_more_tracks"
+        android:title="@string/controlcenter_start_activity_tracks" />
+    <item
+        android:id="@+id/devcard_more_screenshot"
+        android:title="@string/controlcenter_take_screenshot" />
+    <item
+        android:id="@+id/devcard_more_heart_rate"
+        android:title="@string/controlcenter_get_heartrate_measurement" />
+    <item
+        android:id="@+id/devcard_more_calibrate"
+        android:title="@string/controlcenter_calibrate_device" />
+    <item
+        android:id="@+id/devcard_more_fm_frequency"
+        android:title="@string/controlcenter_change_fm_frequency" />
+    <item
+        android:id="@+id/devcard_more_led_color"
+        android:title="@string/controlcenter_change_led_color" />
+    <item
+        android:id="@+id/devcard_more_custom_0"
+        android:title="@string/controlcenter_start_configure_reminders" />
+    <item
+        android:id="@+id/devcard_more_custom_1"
+        android:title="@string/controlcenter_start_configure_reminders" />
+    <item
+        android:id="@+id/devcard_more_custom_2"
+        android:title="@string/controlcenter_start_configure_reminders" />
+    <item
+        android:id="@+id/devcard_more_power_off"
+        android:title="@string/controlcenter_power_off" />
+</menu>

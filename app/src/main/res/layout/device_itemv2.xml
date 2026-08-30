@@ -2,596 +2,521 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center_horizontal">
+    android:layout_height="wrap_content">
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="6dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="6dp"
         android:foreground="?android:attr/selectableItemBackground"
-        app:cardBackgroundColor="?attr/cardview_background_color"
-        card_view:cardElevation="3dp"
-        card_view:contentPadding="8dp">
+        app:cardBackgroundColor="@color/pulse_card"
+        app:cardCornerRadius="22dp"
+        app:cardElevation="0dp"
+        app:contentPadding="16dp"
+        app:strokeColor="@color/pulse_card_alt"
+        app:strokeWidth="1dp">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <RelativeLayout
-                android:id="@+id/device_item_infos_box"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginBottom="8dp"
-                android:focusable="false"
-                android:visibility="gone">
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-                <ListView
-                    android:id="@+id/device_item_infos"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentStart="true"
-                    android:focusable="false"
-                    android:scrollbars="none">
-                </ListView>
-            </RelativeLayout>
+                <FrameLayout
+                    android:id="@+id/device_chip"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:background="@drawable/pulse_device_chip">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:id="@+id/device_name_layout"
-                android:layout_below="@id/device_item_infos_box"
-                android:layout_height="wrap_content">
+                    <ImageView
+                        android:id="@+id/device_image"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_gravity="center"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:contentDescription="@string/candidate_item_device_image"
+                        android:focusable="true"
+                        android:longClickable="true"
+                        app:tint="?attr/pulseAccent"
+                        app:srcCompat="@drawable/ic_device_pebble" />
+                </FrameLayout>
 
-                <ImageView
-                    android:id="@+id/device_image"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginTop="2dp"
-                    android:background="?android:attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:contentDescription="@string/candidate_item_device_image"
-                    android:tooltipText="@string/candidate_item_device_image"
-                    android:focusable="true"
-                    android:longClickable="true"
-                    card_view:srcCompat="@drawable/ic_device_pebble" />
-
-                <TextView
-                    android:id="@+id/device_name"
-                    android:layout_width="match_parent"
+                <LinearLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_toEndOf="@id/device_image"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="48dp"
-                    android:gravity="center"
-                    android:maxLines="1"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                    tools:text="My Pebble Watch" />
+                    android:layout_marginStart="12dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/device_status"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/device_name"
-                    android:layout_toEndOf="@id/device_image"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="48dp"
-                    android:gravity="center"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                    tools:text="@string/connecting" />
+                    <TextView
+                        android:id="@+id/device_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/plusjakarta_medium"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:textColor="@color/pulse_text"
+                        android:textSize="15sp"
+                        tools:text="Forerunner 265" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/device_status"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/pulse_device_pill"
+                            android:fontFamily="@font/plusjakarta_medium"
+                            android:paddingStart="9dp"
+                            android:paddingTop="4dp"
+                            android:paddingEnd="9dp"
+                            android:paddingBottom="4dp"
+                            android:textColor="@color/pulse_text_dim"
+                            android:textSize="11sp"
+                            tools:text="Connected" />
+
+                        <ProgressBar
+                            android:id="@+id/device_busy_indicator"
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:layout_marginStart="8dp"
+                            android:indeterminate="true"
+                            android:visibility="invisible" />
+                    </LinearLayout>
+                </LinearLayout>
 
                 <ImageView
                     android:id="@+id/device_info_image"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="0dp"
-                    android:layout_marginTop="8dp"
-                    android:clickable="true"
-                    android:contentDescription="@string/candidate_item_device_image"
-                    android:tooltipText="@string/candidate_item_device_image"
+                    android:layout_width="34dp"
+                    android:layout_height="34dp"
                     android:background="?android:attr/selectableItemBackground"
-                    card_view:srcCompat="@drawable/ic_more_vert"
+                    android:clickable="true"
+                    android:contentDescription="@string/controlcenter_toggle_details"
                     android:focusable="true"
-                    card_view:tint="@color/secondarytext" />
-            </RelativeLayout>
+                    android:padding="6dp"
+                    android:scaleType="fitCenter"
+                    app:tint="@color/pulse_text_dim"
+                    app:srcCompat="@drawable/ic_more_vert" />
+            </LinearLayout>
 
-            <com.google.android.flexbox.FlexboxLayout
-                android:id="@+id/device_info_icons"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/device_name_layout"
-                card_view:flexWrap="wrap">
+                android:layout_marginTop="12dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
                 <LinearLayout
                     android:id="@+id/device_battery_status_box"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="7dp"
+                    android:background="@drawable/pulse_device_pill"
                     android:contentDescription="@string/battery_detail_activity_title"
-                    android:tooltipText="@string/battery_detail_activity_title"
-                    android:layout_alignParentStart="true"
-                    android:layout_margin="3dp"
-                    android:orientation="vertical">
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="9dp"
+                    android:paddingTop="6dp"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="6dp">
 
                     <ImageView
                         android:id="@+id/device_battery_status"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:background="?android:attr/selectableItemBackground"
-                        android:padding="3dp"
-                        android:scaleType="fitXY"
-                        card_view:srcCompat="@drawable/level_list_battery"
-                        card_view:tint="@color/secondarytext" />
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        app:srcCompat="@drawable/level_list_battery"
+                        app:tint="@color/pulse_text_dim" />
 
                     <TextView
                         android:id="@+id/battery_status"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        android:minWidth="36dp"
-                        android:textColor="@color/secondarytext"
-                        android:textStyle="bold"
-                        tools:text="100%" />
-
+                        android:layout_marginStart="5dp"
+                        android:fontFamily="@font/plusjakarta_medium"
+                        android:textColor="@color/pulse_text_dim"
+                        android:textSize="11sp"
+                        tools:text="72%" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/device_battery_status_box1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
-                    android:layout_alignParentStart="true"
-                    android:layout_margin="3dp"
-                    android:orientation="vertical">
+                    android:layout_marginEnd="7dp"
+                    android:background="@drawable/pulse_device_pill"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="9dp"
+                    android:paddingTop="6dp"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="6dp"
+                    android:visibility="gone">
 
                     <ImageView
                         android:id="@+id/device_battery_status1"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:background="?android:attr/selectableItemBackground"
-                        android:padding="3dp"
-                        android:scaleType="fitXY"
-                        card_view:srcCompat="@drawable/level_list_battery"
-                        card_view:tint="@color/secondarytext" />
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        app:srcCompat="@drawable/level_list_battery"
+                        app:tint="@color/pulse_text_dim" />
 
                     <TextView
                         android:id="@+id/battery_status1"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        android:minWidth="36dp"
-                        android:textColor="@color/secondarytext"
-                        android:textStyle="bold"
-                        tools:text="100%" />
-
+                        android:layout_marginStart="5dp"
+                        android:fontFamily="@font/plusjakarta_medium"
+                        android:textColor="@color/pulse_text_dim"
+                        android:textSize="11sp" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/device_battery_status_box2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
-                    android:layout_alignParentStart="true"
-                    android:layout_margin="3dp"
-                    android:orientation="vertical">
+                    android:layout_marginEnd="7dp"
+                    android:background="@drawable/pulse_device_pill"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="9dp"
+                    android:paddingTop="6dp"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="6dp"
+                    android:visibility="gone">
 
                     <ImageView
                         android:id="@+id/device_battery_status2"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:background="?android:attr/selectableItemBackground"
-                        android:padding="3dp"
-                        android:scaleType="fitXY"
-                        card_view:srcCompat="@drawable/level_list_battery"
-                        card_view:tint="@color/secondarytext" />
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        app:srcCompat="@drawable/level_list_battery"
+                        app:tint="@color/pulse_text_dim" />
 
                     <TextView
                         android:id="@+id/battery_status2"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        android:minWidth="36dp"
-                        android:textColor="@color/secondarytext"
-                        android:textStyle="bold"
-                        tools:text="100%" />
-
+                        android:layout_marginStart="5dp"
+                        android:fontFamily="@font/plusjakarta_medium"
+                        android:textColor="@color/pulse_text_dim"
+                        android:textSize="11sp" />
                 </LinearLayout>
 
+                <TextView
+                    android:id="@+id/device_last_sync"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/pulse_device_pill"
+                    android:fontFamily="@font/plusjakarta_medium"
+                    android:paddingStart="9dp"
+                    android:paddingTop="6dp"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="6dp"
+                    android:textColor="@color/pulse_text_dim"
+                    android:textSize="11sp"
+                    android:visibility="gone"
+                    tools:text="Synced 4m ago"
+                    tools:visibility="visible" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/device_item_infos_box"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:focusable="false"
+                android:visibility="gone">
+
+                <ListView
+                    android:id="@+id/device_item_infos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:scrollbars="none" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="13dp"
+                android:layout_marginBottom="12dp"
+                android:background="@color/pulse_card_alt" />
+
+            <LinearLayout
+                android:id="@+id/device_primary_actions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/device_action_fetch_activity_box"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/pulse_device_action"
+                    android:contentDescription="@string/controlcenter_fetch_activity_data"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/device_action_fetch_activity"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:contentDescription="@string/controlcenter_fetch_activity_data"
+                        app:tint="?attr/pulseAccent"
+                        app:srcCompat="@drawable/ic_refresh" />
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/device_action_set_alarms"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/pulse_device_action"
+                    android:clickable="true"
+                    android:contentDescription="@string/controlcenter_start_configure_alarms"
+                    android:focusable="true"
+                    android:padding="11dp"
+                    android:scaleType="fitCenter"
+                    app:tint="@color/pulse_text"
+                    app:srcCompat="@drawable/ic_access_alarms" />
+
+                <ImageView
+                    android:id="@+id/device_action_find"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/pulse_device_action"
+                    android:clickable="true"
+                    android:contentDescription="@string/controlcenter_find_device"
+                    android:focusable="true"
+                    android:padding="11dp"
+                    android:scaleType="fitCenter"
+                    app:tint="@color/pulse_text"
+                    app:srcCompat="@drawable/ic_action_find_lost_device" />
+
+                <ImageView
+                    android:id="@+id/device_action_manage_apps"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/pulse_device_action"
+                    android:clickable="true"
+                    android:contentDescription="@string/title_activity_appmanager"
+                    android:focusable="true"
+                    android:padding="11dp"
+                    android:scaleType="fitCenter"
+                    app:tint="@color/pulse_text"
+                    app:srcCompat="@drawable/ic_action_manage_apps" />
 
                 <ImageView
                     android:id="@+id/device_specific_settings"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/pulse_device_action"
+                    android:clickable="true"
+                    android:contentDescription="@string/title_activity_device_specific_settings"
+                    android:focusable="true"
+                    android:padding="11dp"
+                    android:scaleType="fitCenter"
+                    app:tint="@color/pulse_text"
+                    app:srcCompat="@drawable/ic_settings" />
+
+                <ImageView
+                    android:id="@+id/device_more"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:background="@drawable/pulse_device_action"
+                    android:clickable="true"
+                    android:contentDescription="@string/pulse_devices_more"
+                    android:focusable="true"
+                    android:padding="11dp"
+                    android:scaleType="fitCenter"
+                    app:tint="@color/pulse_text"
+                    app:srcCompat="@drawable/ic_more_horiz" />
+            </LinearLayout>
+
+            <com.google.android.flexbox.FlexboxLayout
+                android:id="@+id/device_info_icons"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:flexWrap="wrap">
+
+                <ImageView
+                    android:id="@+id/device_action_take_screenshot"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:layout_below="@id/device_image"
-                    android:layout_marginStart="3dp"
-                    android:layout_marginTop="3dp"
-                    android:layout_marginEnd="3dp"
-                    android:layout_marginBottom="3dp"
-                    android:layout_toEndOf="@id/device_battery_status_box"
-                    android:background="?android:attr/selectableItemBackground"
                     android:clickable="true"
+                    android:contentDescription="@string/controlcenter_take_screenshot"
                     android:focusable="true"
-                    android:padding="3dp"
-                    android:contentDescription="@string/title_activity_device_specific_settings"
-                    android:tooltipText="@string/title_activity_device_specific_settings"
-                    android:scaleType="fitXY"
-                    card_view:srcCompat="@drawable/ic_settings"
-                    card_view:tint="@color/secondarytext" />
+                    app:srcCompat="@drawable/ic_screenshot" />
 
+                <ImageView
+                    android:id="@+id/device_action_set_reminders"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:clickable="true"
+                    android:contentDescription="@string/controlcenter_start_configure_reminders"
+                    android:focusable="true"
+                    app:srcCompat="@drawable/ic_device_set_reminders" />
+
+                <ImageView
+                    android:id="@+id/device_action_show_activity_graphs"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:clickable="true"
+                    android:contentDescription="@string/controlcenter_start_activitymonitor"
+                    android:focusable="true"
+                    app:srcCompat="@drawable/ic_activity_graphs" />
+
+                <ImageView
+                    android:id="@+id/device_action_show_activity_tracks"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:clickable="true"
+                    android:contentDescription="@string/controlcenter_start_activity_tracks"
+                    android:focusable="true"
+                    app:srcCompat="@drawable/ic_activity_tracks" />
+
+                <ImageView
+                    android:id="@+id/device_action_calibrate"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:clickable="true"
+                    android:contentDescription="@string/controlcenter_calibrate_device"
+                    android:focusable="true"
+                    app:srcCompat="@drawable/ic_activity_unknown" />
+
+                <ImageView
+                    android:id="@+id/device_action_power_off"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:clickable="true"
+                    android:contentDescription="@string/controlcenter_power_off"
+                    android:focusable="true"
+                    app:srcCompat="@drawable/ic_power_settings_new" />
 
                 <LinearLayout
                     android:id="@+id/device_fm_frequency_box"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/device_image"
                     android:contentDescription="@string/controlcenter_change_fm_frequency"
-                    android:tooltipText="@string/controlcenter_change_fm_frequency"
-                    android:layout_margin="3dp"
-                    android:layout_toEndOf="@id/device_specific_settings"
                     android:orientation="vertical">
 
                     <ImageView
-                        android:id="@+id/device_fm_frequency"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:background="?android:attr/selectableItemBackground"
-                        android:padding="3dp"
-                        android:scaleType="fitXY"
-                        card_view:srcCompat="@drawable/ic_radio"
-                        card_view:tint="@color/secondarytext" />
+                        app:srcCompat="@drawable/ic_radio" />
 
                     <TextView
                         android:id="@+id/fm_frequency"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
-                        android:minWidth="36dp"
-                        android:textColor="@color/secondarytext"
-                        android:textStyle="bold"
                         tools:text="107.8" />
-
                 </LinearLayout>
 
                 <ImageView
                     android:id="@+id/device_led_color"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:layout_below="@id/device_image"
-                    android:layout_margin="3dp"
-                    android:layout_toEndOf="@id/device_fm_frequency_box"
-                    android:background="?android:attr/selectableItemBackground"
                     android:clickable="true"
                     android:contentDescription="@string/controlcenter_change_led_color"
-                    android:tooltipText="@string/controlcenter_change_led_color"
                     android:focusable="true"
-                    android:padding="3dp"
-                    android:scaleType="fitXY"
-                    card_view:srcCompat="@drawable/ic_led_color" />
-
-                <LinearLayout
-                    android:id="@+id/device_action_fetch_activity_box"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/device_image"
-                    android:layout_margin="3dp"
-                    android:layout_toEndOf="@id/device_led_color"
-                    android:gravity="center_vertical"
-                    android:minWidth="36dp"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:id="@+id/device_action_fetch_activity"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:background="?android:attr/selectableItemBackground"
-                        android:clickable="true"
-                        android:contentDescription="@string/controlcenter_fetch_activity_data"
-                        android:tooltipText="@string/controlcenter_fetch_activity_data"
-                        android:focusable="true"
-                        android:padding="3dp"
-                        android:scaleType="fitXY"
-                        card_view:srcCompat="@drawable/ic_refresh"
-                        card_view:tint="@color/secondarytext" />
-
-                    <ProgressBar
-                        android:id="@+id/device_busy_indicator"
-                        style="@android:style/Widget.ProgressBar.Horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="3dp"
-                        android:indeterminate="true"
-                        android:visibility="visible"
-                        tools:visibility="visible" />
-
-                </LinearLayout>
-
-                <ImageView
-                    android:id="@+id/device_action_take_screenshot"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_below="@id/device_image"
-                    android:layout_margin="3dp"
-                    android:layout_toEndOf="@id/device_action_fetch_activity_box"
-                    android:background="?android:attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:contentDescription="@string/controlcenter_take_screenshot"
-                    android:tooltipText="@string/controlcenter_take_screenshot"
-                    android:focusable="true"
-                    android:padding="3dp"
-                    android:scaleType="fitXY"
-                    card_view:srcCompat="@drawable/ic_screenshot"
-                    card_view:tint="@color/secondarytext" />
-
-                <ImageView
-                    android:id="@+id/device_action_manage_apps"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_below="@id/device_image"
-                    android:layout_margin="3dp"
-                    android:layout_toEndOf="@id/device_action_take_screenshot"
-                    android:background="?android:attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:contentDescription="@string/title_activity_appmanager"
-                    android:tooltipText="@string/title_activity_appmanager"
-                    android:focusable="true"
-                    android:padding="3dp"
-                    android:scaleType="fitXY"
-                    card_view:srcCompat="@drawable/ic_action_manage_apps"
-                    card_view:tint="@color/secondarytext" />
-
-                <ImageView
-                    android:id="@+id/device_action_set_alarms"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_below="@id/device_image"
-                    android:layout_margin="3dp"
-                    android:layout_toEndOf="@id/device_action_manage_apps"
-                    android:background="?android:attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:contentDescription="@string/controlcenter_start_configure_alarms"
-                    android:tooltipText="@string/controlcenter_start_configure_alarms"
-                    android:focusable="true"
-                    android:padding="3dp"
-                    android:scaleType="fitXY"
-                    card_view:srcCompat="@drawable/ic_access_alarms"
-                    card_view:tint="@color/secondarytext" />
-
-                <ImageView
-                    android:id="@+id/device_action_set_reminders"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_below="@id/device_image"
-                    android:layout_margin="3dp"
-                    android:layout_toEndOf="@id/device_action_set_alarms"
-                    android:background="?android:attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:contentDescription="@string/controlcenter_start_configure_reminders"
-                    android:tooltipText="@string/controlcenter_start_configure_reminders"
-                    android:focusable="true"
-                    android:padding="4dp"
-                    android:scaleType="fitXY"
-                    card_view:srcCompat="@drawable/ic_device_set_reminders"
-                    app:tint="@color/secondarytext" />
-
-                <ImageView
-                    android:id="@+id/device_action_show_activity_graphs"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_below="@id/device_image"
-                    android:layout_margin="3dp"
-                    android:layout_toEndOf="@id/device_action_set_reminders"
-                    android:background="?android:attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:contentDescription="@string/controlcenter_start_activitymonitor"
-                    android:tooltipText="@string/controlcenter_start_activitymonitor"
-                    android:focusable="true"
-                    android:padding="3dp"
-                    android:scaleType="fitXY"
-                    card_view:srcCompat="@drawable/ic_activity_graphs"
-                    card_view:tint="@color/secondarytext" />
-
-                <ImageView
-                    android:id="@+id/device_action_show_activity_tracks"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_below="@id/device_image"
-                    android:layout_margin="3dp"
-                    android:layout_toEndOf="@id/device_action_show_activity_graphs"
-                    android:background="?android:attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:contentDescription="@string/controlcenter_start_activity_tracks"
-                    android:tooltipText="@string/controlcenter_start_activity_tracks"
-                    android:focusable="true"
-                    android:padding="3dp"
-                    android:scaleType="fitXY"
-                    card_view:srcCompat="@drawable/ic_activity_tracks"
-                    card_view:tint="@color/secondarytext" />
-
-                <ImageView
-                    android:id="@+id/device_action_find"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_below="@id/device_image"
-                    android:layout_margin="3dp"
-                    android:layout_toEndOf="@id/device_action_show_activity_tracks"
-                    android:background="?android:attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:contentDescription="@string/controlcenter_find_device"
-                    android:tooltipText="@string/controlcenter_find_device"
-                    android:focusable="true"
-                    android:padding="3dp"
-                    android:scaleType="fitXY"
-                    card_view:srcCompat="@drawable/ic_action_find_lost_device"
-                    card_view:tint="@color/secondarytext" />
-
-                <ImageView
-                    android:id="@+id/device_action_calibrate"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_below="@id/device_image"
-                    android:layout_margin="3dp"
-                    android:layout_toEndOf="@id/device_action_find"
-                    android:background="?android:attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:contentDescription="@string/controlcenter_calibrate_device"
-                    android:tooltipText="@string/controlcenter_calibrate_device"
-                    android:focusable="true"
-                    android:padding="3dp"
-                    android:scaleType="fitXY"
-                    card_view:srcCompat="@drawable/ic_activity_unknown"
-                    card_view:tint="@color/secondarytext" />
+                    app:srcCompat="@drawable/ic_led_color" />
 
                 <LinearLayout
                     android:id="@+id/device_heart_rate_status_box"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:contentDescription="@string/controlcenter_get_heartrate_measurement"
-                    android:tooltipText="@string/controlcenter_get_heartrate_measurement"
-                    android:layout_alignParentStart="true"
-                    android:layout_margin="3dp"
                     android:orientation="vertical">
 
                     <ImageView
                         android:id="@+id/device_heart_rate_status"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:background="?android:attr/selectableItemBackground"
-                        android:padding="3dp"
-                        android:scaleType="fitXY"
-                        card_view:srcCompat="@drawable/ic_heart"
-                        card_view:tint="@color/secondarytext" />
+                        app:srcCompat="@drawable/ic_heart" />
 
                     <TextView
                         android:id="@+id/heart_rate_status"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        android:minWidth="36dp"
-                        android:textColor="@color/secondarytext"
-                        android:textStyle="bold"
-                        tools:text="100%" />
-
+                        android:gravity="center_horizontal" />
                 </LinearLayout>
-
-                <ImageView
-                    android:id="@+id/device_action_power_off"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_margin="3dp"
-                    android:layout_toEndOf="@id/device_heart_rate_status_box"
-                    android:background="?android:attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:contentDescription="@string/controlcenter_power_off"
-                    android:tooltipText="@string/controlcenter_power_off"
-                    android:focusable="true"
-                    android:padding="3dp"
-                    android:scaleType="fitXY"
-                    card_view:srcCompat="@drawable/ic_power_settings_new"
-                    card_view:tint="@color/secondarytext" />
 
                 <LinearLayout
                     android:id="@+id/device_custom_action_0_box"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/device_image"
-                    android:layout_margin="3dp"
-                    android:layout_toEndOf="@id/device_action_power_off"
-                    android:contentDescription=""
-                    android:orientation="vertical"
-                    android:tooltipText="">
+                    android:orientation="vertical">
 
                     <ImageView
                         android:id="@+id/device_custom_action_0_image"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:background="?android:attr/selectableItemBackground"
-                        android:padding="3dp"
-                        android:scaleType="fitXY"
-                        card_view:srcCompat="@drawable/ic_device_unknown"
-                        card_view:tint="@color/secondarytext" />
+                        app:srcCompat="@drawable/ic_device_unknown" />
 
                     <TextView
                         android:id="@+id/device_custom_action_0_label"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        android:minWidth="36dp"
-                        android:textColor="@color/secondarytext"
-                        android:textStyle="bold"
-                        tools:text="" />
+                        android:gravity="center_horizontal" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/device_custom_action_1_box"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/device_image"
-                    android:layout_margin="3dp"
-                    android:layout_toEndOf="@id/device_custom_action_0_box"
-                    android:contentDescription=""
-                    android:orientation="vertical"
-                    android:tooltipText="">
+                    android:orientation="vertical">
 
                     <ImageView
                         android:id="@+id/device_custom_action_1_image"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:background="?android:attr/selectableItemBackground"
-                        android:padding="3dp"
-                        android:scaleType="fitXY"
-                        card_view:srcCompat="@drawable/ic_device_unknown"
-                        card_view:tint="@color/secondarytext" />
+                        app:srcCompat="@drawable/ic_device_unknown" />
 
                     <TextView
                         android:id="@+id/device_custom_action_1_label"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        android:minWidth="36dp"
-                        android:textColor="@color/secondarytext"
-                        android:textStyle="bold"
-                        tools:text="" />
+                        android:gravity="center_horizontal" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/device_custom_action_2_box"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/device_image"
-                    android:layout_margin="3dp"
-                    android:layout_toEndOf="@id/device_custom_action_1_box"
-                    android:contentDescription=""
-                    android:orientation="vertical"
-                    android:tooltipText="">
+                    android:orientation="vertical">
 
                     <ImageView
                         android:id="@+id/device_custom_action_2_image"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:background="?android:attr/selectableItemBackground"
-                        android:padding="3dp"
-                        android:scaleType="fitXY"
-                        card_view:srcCompat="@drawable/ic_device_unknown"
-                        card_view:tint="@color/secondarytext" />
+                        app:srcCompat="@drawable/ic_device_unknown" />
 
                     <TextView
                         android:id="@+id/device_custom_action_2_label"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        android:minWidth="36dp"
-                        android:textColor="@color/secondarytext"
-                        android:textStyle="bold"
-                        tools:text="" />
+                        android:gravity="center_horizontal" />
                 </LinearLayout>
             </com.google.android.flexbox.FlexboxLayout>
 
@@ -599,8 +524,7 @@
                 android:id="@+id/card_view_activity_card_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/device_info_icons"
-                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -611,38 +535,26 @@
 
                     <com.github.mikephil.charting.charts.PieChart
                         android:id="@+id/activity_dashboard_piechart1"
-                        android:layout_width="110dp"
+                        android:layout_width="0dp"
                         android:layout_height="110dp"
-                        android:layout_gravity="bottom|center"
-                        android:layout_marginBottom="0dp"
-                        android:contentDescription="@string/live_activity_total_steps"
-                        android:tooltipText="@string/live_activity_total_steps"
-                        android:layout_weight="1" />
+                        android:layout_weight="1"
+                        android:contentDescription="@string/live_activity_total_steps" />
 
                     <com.github.mikephil.charting.charts.PieChart
                         android:id="@+id/activity_dashboard_piechart2"
-                        android:layout_width="110dp"
+                        android:layout_width="0dp"
                         android:layout_height="110dp"
-                        android:layout_gravity="bottom|center"
-                        android:contentDescription="@string/activity_list_summary_distance"
-                        android:tooltipText="@string/activity_list_summary_distance"
-                        android:layout_marginBottom="0dp"
-                        android:layout_weight="1" />
+                        android:layout_weight="1"
+                        android:contentDescription="@string/activity_list_summary_distance" />
 
                     <com.github.mikephil.charting.charts.PieChart
                         android:id="@+id/activity_dashboard_piechart3"
-                        android:layout_width="110dp"
+                        android:layout_width="0dp"
                         android:layout_height="110dp"
-                        android:layout_gravity="bottom|center"
-                        android:contentDescription="@string/sleepchart_your_sleep"
-                        android:tooltipText="@string/sleepchart_your_sleep"
-                        android:layout_marginBottom="0dp"
-                        android:layout_weight="1" />
+                        android:layout_weight="1"
+                        android:contentDescription="@string/sleepchart_your_sleep" />
                 </LinearLayout>
             </LinearLayout>
-        </RelativeLayout>
-
+        </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
-
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

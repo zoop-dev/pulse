@@ -754,4 +754,21 @@
     <string name="pulse_report_copied">Nuoroda nukopijuota</string>
     <string name="pulse_settings_send_logs">Siųsti derinimo žurnalus</string>
     <string name="pulse_settings_send_logs_desc">Sujungti naujausius žurnalus ir nusiųsti juos kūrėjui problemai derinti</string>
+    <string name="pulse_permissions_subtitle">Suteikite visus leidimus visavertei Pulse patirčiai. Praleidus leidimą, jo atrakinama funkcija liks išjungta, kol sugrįšite.</string>
+    <string name="pulse_permissions_required_label">Būtina</string>
+    <string name="pulse_permissions_optional_label">Nebūtina — atrakina papildomas funkcijas</string>
+    <string name="pulse_permissions_optional_caption">Kiekvienas praleistas leidimas išjungia po juo esančią funkciją. Vėliau juos galite suteikti nustatymuose.</string>
+    <string name="pulse_permissions_allow">Leisti</string>
+    <string name="pulse_permissions_allow_all">Leisti viską</string>
+    <string name="pulse_permissions_required_only">Tik būtini — kai kurios funkcijos liks išjungtos</string>
+    <string name="pulse_permissions_granted">Suteikta</string>
+    <string name="pulse_devices_more">Daugiau</string>
+    <string name="pulse_devices_last_sync">Sinchronizuota %1$s</string>
+    <string name="pulse_devices_never_synced">Dar nesinchronizuota</string>
+    <plurals name="pulse_permissions_still_needed">
+        <item quantity="one">Trūksta dar %d būtino leidimo — sinchronizavimas be jo neprasidės</item>
+        <item quantity="few">Trūksta dar %d būtinų leidimų — sinchronizavimas be jų neprasidės</item>
+        <item quantity="many">Trūksta dar %d būtino leidimo — sinchronizavimas be jo neprasidės</item>
+        <item quantity="other">Trūksta dar %d būtinų leidimų — sinchronizavimas be jų neprasidės</item>
+    </plurals>
 </resources>

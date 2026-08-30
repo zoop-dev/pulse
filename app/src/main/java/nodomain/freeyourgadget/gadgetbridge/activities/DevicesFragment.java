@@ -54,6 +54,7 @@ import nodomain.freeyourgadget.gadgetbridge.database.DBAccess;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceManager;
+import nodomain.freeyourgadget.gadgetbridge.devices.SampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.model.DailyTotals;
@@ -68,6 +69,7 @@ public class DevicesFragment extends Fragment {
     private FloatingActionButton fab;
     List<GBDevice> deviceList;
     private  HashMap<String, DailyTotals> deviceActivityHashMap = new HashMap();
+    private final HashMap<String, Long> deviceLastSyncHashMap = new HashMap<>();
 
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
@@ -119,7 +121,7 @@ public class DevicesFragment extends Fragment {
         deviceListView.setLayoutManager(new LinearLayoutManager(currentView.getContext()));
 
         deviceList = deviceManager.getDevices();
-        mGBDeviceAdapter = new GBDeviceAdapterv2(currentView.getContext(), deviceList, deviceActivityHashMap);
+        mGBDeviceAdapter = new GBDeviceAdapterv2(currentView.getContext(), deviceList, deviceActivityHashMap, deviceLastSyncHashMap);
         mGBDeviceAdapter.setHasStableIds(true);
 
         deviceListView.setAdapter(this.mGBDeviceAdapter);
@@ -264,6 +266,15 @@ public class DevicesFragment extends Fragment {
             if ((coordinator.supportsStepCounter(gbDevice) || coordinator.supportsSleepMeasurement(gbDevice)) && showActivityCard) {
                 final DailyTotals stepsAndSleepData = getSteps(gbDevice, db);
                 deviceActivityHashMap.put(gbDevice.getAddress(), stepsAndSleepData);
+            }
+            try {
+                final SampleProvider<? extends ActivitySample> provider = coordinator.getSampleProvider(gbDevice, db.getDaoSession());
+                final ActivitySample latest = provider.getLatestActivitySample();
+                if (latest != null) {
+                    deviceLastSyncHashMap.put(gbDevice.getAddress(), latest.getTimestamp() * 1000L);
+                }
+            } catch (final Exception e) {
+                GB.log("Could not determine last sync time for " + gbDevice.getAddress(), GB.WARN, e);
             }
         }
 

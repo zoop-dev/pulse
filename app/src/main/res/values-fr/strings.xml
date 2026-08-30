@@ -4781,4 +4781,19 @@
     <string name="pulse_report_copied">Référence copiée</string>
     <string name="pulse_settings_send_logs">Envoyer les journaux de débogage</string>
     <string name="pulse_settings_send_logs_desc">Regrouper les journaux récents et les envoyer au développeur pour déboguer un problème</string>
+    <string name="pulse_permissions_subtitle">Accordez tout pour profiter pleinement de Pulse. Si vous ignorez une autorisation, la fonctionnalité qu’elle débloque reste désactivée jusqu’à votre retour.</string>
+    <string name="pulse_permissions_required_label">Obligatoire</string>
+    <string name="pulse_permissions_optional_label">Facultatif — débloque des fonctionnalités supplémentaires</string>
+    <string name="pulse_permissions_optional_caption">Chaque autorisation ignorée désactive la fonctionnalité située en dessous. Vous pourrez les accorder plus tard dans les réglages.</string>
+    <string name="pulse_permissions_allow">Autoriser</string>
+    <string name="pulse_permissions_allow_all">Tout autoriser</string>
+    <string name="pulse_permissions_required_only">Obligatoires uniquement — certaines fonctionnalités restent désactivées</string>
+    <string name="pulse_permissions_granted">Accordé</string>
+    <string name="pulse_devices_more">Plus</string>
+    <string name="pulse_devices_last_sync">Synchronisé %1$s</string>
+    <string name="pulse_devices_never_synced">Pas encore synchronisé</string>
+    <plurals name="pulse_permissions_still_needed">
+        <item quantity="one">Encore %d autorisation obligatoire requise — la synchronisation ne démarrera pas sans elle</item>
+        <item quantity="other">Encore %d autorisations obligatoires requises — la synchronisation ne démarrera pas sans elles</item>
+    </plurals>
 </resources>

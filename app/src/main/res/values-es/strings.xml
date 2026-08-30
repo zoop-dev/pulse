@@ -4822,4 +4822,19 @@
     <string name="pulse_report_copied">Referencia copiada</string>
     <string name="pulse_settings_send_logs">Enviar registros de depuración</string>
     <string name="pulse_settings_send_logs_desc">Agrupar los registros recientes y enviarlos al desarrollador para depurar un problema</string>
+    <string name="pulse_permissions_subtitle">Concede todo para disfrutar de la experiencia completa de Pulse. Si omites un permiso, la función que desbloquea permanece desactivada hasta que vuelvas.</string>
+    <string name="pulse_permissions_required_label">Obligatorio</string>
+    <string name="pulse_permissions_optional_label">Opcional — desbloquea funciones adicionales</string>
+    <string name="pulse_permissions_optional_caption">Cada permiso que omites desactiva la función que hay debajo. Puedes concederlos más tarde desde los ajustes.</string>
+    <string name="pulse_permissions_allow">Permitir</string>
+    <string name="pulse_permissions_allow_all">Permitir todo</string>
+    <string name="pulse_permissions_required_only">Solo los obligatorios — algunas funciones quedan desactivadas</string>
+    <string name="pulse_permissions_granted">Concedido</string>
+    <string name="pulse_devices_more">Más</string>
+    <string name="pulse_devices_last_sync">Sincronizado %1$s</string>
+    <string name="pulse_devices_never_synced">Aún sin sincronizar</string>
+    <plurals name="pulse_permissions_still_needed">
+        <item quantity="one">Aún falta %d permiso obligatorio — la sincronización no empezará sin él</item>
+        <item quantity="other">Aún faltan %d permisos obligatorios — la sincronización no empezará sin ellos</item>
+    </plurals>
 </resources>

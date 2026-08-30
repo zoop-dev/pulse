@@ -4362,4 +4362,21 @@
     <string name="pulse_report_copied">Референс скопійовано</string>
     <string name="pulse_settings_send_logs">Надіслати журнали налагодження</string>
     <string name="pulse_settings_send_logs_desc">Зібрати недавні журнали й надіслати їх розробнику для налагодження проблеми</string>
+    <string name="pulse_permissions_subtitle">Надайте всі дозволи для повноцінної роботи Pulse. Пропустіть дозвіл — і повʼязана з ним функція залишиться вимкненою, доки ви не повернетесь.</string>
+    <string name="pulse_permissions_required_label">Обовʼязково</string>
+    <string name="pulse_permissions_optional_label">Необовʼязково — відкриває додаткові функції</string>
+    <string name="pulse_permissions_optional_caption">Кожен пропущений дозвіл вимикає функцію під ним. Ви можете надати їх пізніше в налаштуваннях.</string>
+    <string name="pulse_permissions_allow">Дозволити</string>
+    <string name="pulse_permissions_allow_all">Дозволити все</string>
+    <string name="pulse_permissions_required_only">Лише обовʼязкові — частина функцій залишиться вимкненою</string>
+    <string name="pulse_permissions_granted">Надано</string>
+    <string name="pulse_devices_more">Ще</string>
+    <string name="pulse_devices_last_sync">Синхронізовано %1$s</string>
+    <string name="pulse_devices_never_synced">Ще не синхронізовано</string>
+    <plurals name="pulse_permissions_still_needed">
+        <item quantity="one">Не вистачає ще %d обовʼязкового дозволу — синхронізація без нього не почнеться</item>
+        <item quantity="few">Не вистачає ще %d обовʼязкових дозволів — синхронізація без них не почнеться</item>
+        <item quantity="many">Не вистачає ще %d обовʼязкових дозволів — синхронізація без них не почнеться</item>
+        <item quantity="other">Не вистачає ще %d обовʼязкового дозволу — синхронізація без них не почнеться</item>
+    </plurals>
 </resources>

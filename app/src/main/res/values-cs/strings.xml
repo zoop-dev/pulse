@@ -5079,4 +5079,21 @@
     <string name="pulse_report_copied">Reference zkopírována</string>
     <string name="pulse_settings_send_logs">Odeslat ladicí protokoly</string>
     <string name="pulse_settings_send_logs_desc">Zabalí nedávné protokoly a odešle je vývojáři k ladění problému</string>
+    <string name="pulse_permissions_subtitle">Udělte vše pro plný zážitek z Pulse. Když nějaké oprávnění přeskočíte, funkce, kterou odemyká, zůstane vypnutá, dokud se nevrátíte.</string>
+    <string name="pulse_permissions_required_label">Povinné</string>
+    <string name="pulse_permissions_optional_label">Volitelné — odemyká další funkce</string>
+    <string name="pulse_permissions_optional_caption">Každé přeskočené oprávnění vypne funkci pod ním. Můžete je udělit později v nastavení.</string>
+    <string name="pulse_permissions_allow">Povolit</string>
+    <string name="pulse_permissions_allow_all">Povolit vše</string>
+    <string name="pulse_permissions_required_only">Jen povinná — některé funkce zůstanou vypnuté</string>
+    <string name="pulse_permissions_granted">Uděleno</string>
+    <string name="pulse_devices_more">Více</string>
+    <string name="pulse_devices_last_sync">Synchronizováno %1$s</string>
+    <string name="pulse_devices_never_synced">Zatím nesynchronizováno</string>
+    <plurals name="pulse_permissions_still_needed">
+        <item quantity="one">Ještě je potřeba %d povinné oprávnění — synchronizace bez něj nezačne</item>
+        <item quantity="few">Ještě jsou potřeba %d povinná oprávnění — synchronizace bez nich nezačne</item>
+        <item quantity="many">Ještě je potřeba %d povinného oprávnění — synchronizace bez nich nezačne</item>
+        <item quantity="other">Ještě je potřeba %d povinných oprávnění — synchronizace bez nich nezačne</item>
+    </plurals>
 </resources>

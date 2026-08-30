@@ -1864,4 +1864,19 @@
     <string name="pulse_report_copied">Referència copiada</string>
     <string name="pulse_settings_send_logs">Envia els registres de depuració</string>
     <string name="pulse_settings_send_logs_desc">Empaqueta els registres recents i envia’ls al desenvolupador per depurar un problema</string>
+    <string name="pulse_permissions_subtitle">Concediu-ho tot per gaudir de l’experiència completa de Pulse. Si ometeu un permís, la funció que desbloqueja es manté desactivada fins que hi torneu.</string>
+    <string name="pulse_permissions_required_label">Necessari</string>
+    <string name="pulse_permissions_optional_label">Opcional — desbloqueja funcions addicionals</string>
+    <string name="pulse_permissions_optional_caption">Cada permís que ometeu desactiva la funció que hi ha a sota. Els podeu concedir més tard des dels ajustos.</string>
+    <string name="pulse_permissions_allow">Permet</string>
+    <string name="pulse_permissions_allow_all">Permet-ho tot</string>
+    <string name="pulse_permissions_required_only">Només els necessaris — algunes funcions es mantenen desactivades</string>
+    <string name="pulse_permissions_granted">Concedit</string>
+    <string name="pulse_devices_more">Més</string>
+    <string name="pulse_devices_last_sync">Sincronitzat %1$s</string>
+    <string name="pulse_devices_never_synced">Encara no s’ha sincronitzat</string>
+    <plurals name="pulse_permissions_still_needed">
+        <item quantity="one">Encara cal %d permís necessari — la sincronització no començarà sense ell</item>
+        <item quantity="other">Encara calen %d permisos necessaris — la sincronització no començarà sense ells</item>
+    </plurals>
 </resources>

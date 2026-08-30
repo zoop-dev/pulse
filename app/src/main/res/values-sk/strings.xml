@@ -907,4 +907,21 @@
     <string name="pulse_report_copied">Referencia skopírovaná</string>
     <string name="pulse_settings_send_logs">Odoslať ladiace záznamy</string>
     <string name="pulse_settings_send_logs_desc">Zbaliť nedávne záznamy a odoslať ich vývojárovi na ladenie problému</string>
+    <string name="pulse_permissions_subtitle">Udeľte všetko pre plný zážitok z Pulse. Ak preskočíte povolenie, funkcia, ktorú odomyká, zostane vypnutá, kým sa nevrátite.</string>
+    <string name="pulse_permissions_required_label">Povinné</string>
+    <string name="pulse_permissions_optional_label">Voliteľné — odomyká ďalšie funkcie</string>
+    <string name="pulse_permissions_optional_caption">Každé povolenie, ktoré preskočíte, vypne funkciu pod ním. Môžete ich udeliť neskôr v nastaveniach.</string>
+    <string name="pulse_permissions_allow">Povoliť</string>
+    <string name="pulse_permissions_allow_all">Povoliť všetko</string>
+    <string name="pulse_permissions_required_only">Len povinné — niektoré funkcie zostanú vypnuté</string>
+    <string name="pulse_permissions_granted">Udelené</string>
+    <string name="pulse_devices_more">Viac</string>
+    <string name="pulse_devices_last_sync">Synchronizované %1$s</string>
+    <string name="pulse_devices_never_synced">Zatiaľ nesynchronizované</string>
+    <plurals name="pulse_permissions_still_needed">
+        <item quantity="one">Stále chýba %d povinné povolenie — synchronizácia sa bez neho nespustí</item>
+        <item quantity="few">Stále chýbajú %d povinné povolenia — synchronizácia sa bez nich nespustí</item>
+        <item quantity="many">Stále chýba %d povinného povolenia — synchronizácia sa bez nich nespustí</item>
+        <item quantity="other">Stále chýba %d povinných povolení — synchronizácia sa bez nich nespustí</item>
+    </plurals>
 </resources>

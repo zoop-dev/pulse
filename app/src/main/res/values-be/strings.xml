@@ -230,4 +230,21 @@
     <string name="pulse_report_copied">Спасылка скапіравана</string>
     <string name="pulse_settings_send_logs">Даслаць журналы адладкі</string>
     <string name="pulse_settings_send_logs_desc">Сабраць нядаўнія журналы і даслаць іх распрацоўшчыку для адладкі праблемы</string>
+    <string name="pulse_permissions_subtitle">Дайце ўсе дазволы для поўнага досведу Pulse. Прапусціце дазвол — і функцыя, якую ён адкрывае, застанецца выключанай, пакуль вы не вернецеся.</string>
+    <string name="pulse_permissions_required_label">Абавязкова</string>
+    <string name="pulse_permissions_optional_label">Неабавязкова — адкрывае дадатковыя функцыі</string>
+    <string name="pulse_permissions_optional_caption">Кожны прапушчаны дазвол выключае функцыю пад ім. Вы можаце даць іх пазней у наладах.</string>
+    <string name="pulse_permissions_allow">Дазволіць</string>
+    <string name="pulse_permissions_allow_all">Дазволіць усё</string>
+    <string name="pulse_permissions_required_only">Толькі абавязковыя — некаторыя функцыі застануцца выключанымі</string>
+    <string name="pulse_permissions_granted">Дадзена</string>
+    <string name="pulse_devices_more">Яшчэ</string>
+    <string name="pulse_devices_last_sync">Сінхранізавана %1$s</string>
+    <string name="pulse_devices_never_synced">Яшчэ не сінхранізавана</string>
+    <plurals name="pulse_permissions_still_needed">
+        <item quantity="one">Патрэбны яшчэ %d абавязковы дазвол — сінхранізацыя не пачнецца без яго</item>
+        <item quantity="few">Патрэбныя яшчэ %d абавязковыя дазволы — сінхранізацыя не пачнецца без іх</item>
+        <item quantity="many">Патрэбна яшчэ %d абавязковых дазволаў — сінхранізацыя не пачнецца без іх</item>
+        <item quantity="other">Патрэбна яшчэ %d абавязковых дазволаў — сінхранізацыя не пачнецца без іх</item>
+    </plurals>
 </resources>

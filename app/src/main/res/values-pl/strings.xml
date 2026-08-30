@@ -5089,4 +5089,21 @@
     <string name="pulse_report_copied">Skopiowano numer referencyjny</string>
     <string name="pulse_settings_send_logs">Wyślij dzienniki diagnostyczne</string>
     <string name="pulse_settings_send_logs_desc">Spakuj ostatnie dzienniki i wyślij je do dewelopera, aby zdiagnozować problem</string>
+    <string name="pulse_permissions_subtitle">Przyznaj wszystkie uprawnienia, aby w pełni korzystać z Pulse. Pominięcie uprawnienia sprawi, że powiązana funkcja pozostanie wyłączona, dopóki nie wrócisz.</string>
+    <string name="pulse_permissions_required_label">Wymagane</string>
+    <string name="pulse_permissions_optional_label">Opcjonalne — odblokowuje dodatkowe funkcje</string>
+    <string name="pulse_permissions_optional_caption">Każde pominięte uprawnienie wyłącza funkcję pod nim. Możesz je przyznać później w ustawieniach.</string>
+    <string name="pulse_permissions_allow">Zezwól</string>
+    <string name="pulse_permissions_allow_all">Zezwól na wszystko</string>
+    <string name="pulse_permissions_required_only">Tylko wymagane — część funkcji pozostanie wyłączona</string>
+    <string name="pulse_permissions_granted">Przyznano</string>
+    <string name="pulse_devices_more">Więcej</string>
+    <string name="pulse_devices_last_sync">Zsynchronizowano %1$s</string>
+    <string name="pulse_devices_never_synced">Jeszcze nie zsynchronizowano</string>
+    <plurals name="pulse_permissions_still_needed">
+        <item quantity="one">Nadal brakuje %d wymaganego uprawnienia — synchronizacja bez niego się nie rozpocznie</item>
+        <item quantity="few">Nadal brakuje %d wymaganych uprawnień — synchronizacja bez nich się nie rozpocznie</item>
+        <item quantity="many">Nadal brakuje %d wymaganych uprawnień — synchronizacja bez nich się nie rozpocznie</item>
+        <item quantity="other">Nadal brakuje %d wymaganego uprawnienia — synchronizacja bez nich się nie rozpocznie</item>
+    </plurals>
 </resources>
