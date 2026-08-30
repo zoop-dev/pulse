@@ -4663,6 +4663,18 @@
     <string name="first_start_permissions_do_not_ask_again">Do not ask again</string>
     <string name="first_start_permissions_do_not_ask_warning_summary">Not granting a permission might cause issues. You can open this screen again from the Settings screen.</string>
     <string name="first_start_permissions_request_button">Request</string>
+    <string name="pulse_permissions_subtitle">Grant everything for the full Pulse experience. Skip a permission and the feature it unlocks stays off until you come back.</string>
+    <string name="pulse_permissions_required_label">Required</string>
+    <string name="pulse_permissions_optional_label">Optional — unlocks extra features</string>
+    <string name="pulse_permissions_optional_caption">Each one you skip disables the feature below it. You can grant them later from settings.</string>
+    <string name="pulse_permissions_allow">Allow</string>
+    <string name="pulse_permissions_allow_all">Allow all</string>
+    <string name="pulse_permissions_required_only">Required only — some features stay off</string>
+    <string name="pulse_permissions_granted">Granted</string>
+    <plurals name="pulse_permissions_still_needed">
+        <item quantity="one">%d required permission still needed — syncing won\'t start without it</item>
+        <item quantity="other">%d required permissions still needed — syncing won\'t start without them</item>
+    </plurals>
     <string name="first_start_get_started_title">Get started</string>
     <string name="first_start_get_started_desc">To get started, add your first device directly from this screen, restore a backup or start with a clean database.</string>
     <string name="first_start_get_started_add_first_device_button">Add first device</string>

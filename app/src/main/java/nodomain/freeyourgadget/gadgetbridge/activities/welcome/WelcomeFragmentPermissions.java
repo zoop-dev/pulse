@@ -17,11 +17,12 @@
 package nodomain.freeyourgadget.gadgetbridge.activities.welcome;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -30,6 +31,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.widget.ImageViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -49,7 +52,8 @@ public class WelcomeFragmentPermissions extends Fragment {
     public static final String ARG_SHOW_DO_NOT_ASK_BUTTON = "show_do_not_ask";
 
     private FragmentWelcomePermissionsBinding binding;
-    private PermissionAdapter permissionAdapter;
+    private PermissionAdapter requiredAdapter;
+    private PermissionAdapter optionalAdapter;
     private List<String> requestingPermissions = new ArrayList<>();
     private boolean showDoNotAskAgain;
 
@@ -76,42 +80,42 @@ public class WelcomeFragmentPermissions extends Fragment {
                         requireActivity().finish();
                     })
                     .setNegativeButton(R.string.cancel, (dialog, which) -> {
-                        // do nothing
                     })
                     .show();
         });
 
-        binding.buttonRequestAll.setOnClickListener(v -> {
-            List<PermissionsUtils.PermissionDetails> wantedPermissions = PermissionsUtils.getRequiredPermissionsList(requireActivity());
-            requestingPermissions = new ArrayList<>();
-            for (PermissionsUtils.PermissionDetails wantedPermission : wantedPermissions) {
-                requestingPermissions.add(wantedPermission.permission());
-            }
-            requestAllPermissions();
-        });
+        binding.buttonRequestAll.setOnClickListener(v -> queueAndRequest(tierPermissions(null)));
+        binding.buttonRequiredOnly.setOnClickListener(v -> queueAndRequest(tierPermissions(true)));
 
         final ActionBar supportActionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
-        if (supportActionBar!= null && supportActionBar.isShowing()) {
-            // Hide title when the Action Bar is visible (i.e. when not in the first run flow)
+        if (supportActionBar != null && supportActionBar.isShowing()) {
             binding.permissionsTitle.setVisibility(View.GONE);
         }
 
-        // Set up RecyclerView
-        final ArrayList<PermissionsUtils.PermissionDetails> requiredPermissionsList = PermissionsUtils.getRequiredPermissionsList(requireActivity());
-        requiredPermissionsList.sort((p1, p2) -> {
-            final boolean p1Granted = PermissionsUtils.checkPermission(requireContext(), p1.permission());
-            final boolean p2Granted = PermissionsUtils.checkPermission(requireContext(), p2.permission());
+        final List<PermissionsUtils.PermissionDetails> required = new ArrayList<>();
+        final List<PermissionsUtils.PermissionDetails> optional = new ArrayList<>();
+        for (final PermissionsUtils.PermissionDetails permission : PermissionsUtils.getRequiredPermissionsList(requireActivity())) {
+            (permission.required() ? required : optional).add(permission);
+        }
+        sortByGrantThenName(required);
+        sortByGrantThenName(optional);
 
-            // Ungranted at the top
-            if (p1Granted && !p2Granted) return 1;
-            if (!p1Granted && p2Granted) return -1;
+        requiredAdapter = new PermissionAdapter(required, requireContext());
+        optionalAdapter = new PermissionAdapter(optional, requireContext());
+        binding.permissionsListRequired.setLayoutManager(new LinearLayoutManager(requireContext()));
+        binding.permissionsListRequired.setAdapter(requiredAdapter);
+        binding.permissionsListOptional.setLayoutManager(new LinearLayoutManager(requireContext()));
+        binding.permissionsListOptional.setAdapter(optionalAdapter);
 
-            // Both granted or both ungranted -> sort by name
-            return p1.title().compareToIgnoreCase(p2.title());
-        });
-        permissionAdapter = new PermissionAdapter(requiredPermissionsList, requireContext());
-        binding.permissionsList.setLayoutManager(new LinearLayoutManager(requireContext()));
-        binding.permissionsList.setAdapter(permissionAdapter);
+        if (required.isEmpty()) {
+            binding.permissionsRequiredLabel.setVisibility(View.GONE);
+        }
+        if (optional.isEmpty()) {
+            binding.permissionsOptionalLabel.setVisibility(View.GONE);
+            binding.permissionsOptionalCaption.setVisibility(View.GONE);
+        }
+
+        updateCallout();
 
         return binding.getRoot();
     }
@@ -119,17 +123,66 @@ public class WelcomeFragmentPermissions extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        permissionAdapter.notifyDataSetChanged();
+        requiredAdapter.notifyDataSetChanged();
+        optionalAdapter.notifyDataSetChanged();
+        updateCallout();
         if (PermissionsUtils.checkAllPermissions(requireActivity())) {
             binding.buttonRequestAll.setEnabled(false);
             if (showDoNotAskAgain) {
-                // We just got all permissions, and this was pestering - disappear
                 requireActivity().finish();
             }
         }
         if (!requestingPermissions.isEmpty()) {
             requestAllPermissions();
         }
+    }
+
+    private void sortByGrantThenName(final List<PermissionsUtils.PermissionDetails> list) {
+        list.sort((p1, p2) -> {
+            final boolean p1Granted = PermissionsUtils.checkPermission(requireContext(), p1.permission());
+            final boolean p2Granted = PermissionsUtils.checkPermission(requireContext(), p2.permission());
+            if (p1Granted && !p2Granted) return 1;
+            if (!p1Granted && p2Granted) return -1;
+            return p1.title().compareToIgnoreCase(p2.title());
+        });
+    }
+
+    private List<String> tierPermissions(final Boolean required) {
+        final List<String> result = new ArrayList<>();
+        for (final PermissionsUtils.PermissionDetails permission : PermissionsUtils.getRequiredPermissionsList(requireActivity())) {
+            if (required == null || permission.required() == required) {
+                result.add(permission.permission());
+            }
+        }
+        return result;
+    }
+
+    private int ungrantedRequiredCount() {
+        int count = 0;
+        for (final PermissionsUtils.PermissionDetails permission : PermissionsUtils.getRequiredPermissionsList(requireActivity())) {
+            if (permission.required() && !PermissionsUtils.checkPermission(requireContext(), permission.permission())) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    private void updateCallout() {
+        final int pending = ungrantedRequiredCount();
+        if (pending > 0) {
+            binding.permissionsCallout.setVisibility(View.VISIBLE);
+            binding.permissionsCalloutText.setText(getResources().getQuantityString(
+                    R.plurals.pulse_permissions_still_needed, pending, pending));
+            binding.buttonRequiredOnly.setVisibility(View.VISIBLE);
+        } else {
+            binding.permissionsCallout.setVisibility(View.GONE);
+            binding.buttonRequiredOnly.setVisibility(View.GONE);
+        }
+    }
+
+    private void queueAndRequest(final List<String> permissions) {
+        requestingPermissions = new ArrayList<>(permissions);
+        requestAllPermissions();
     }
 
     public void requestAllPermissions() {
@@ -151,18 +204,32 @@ public class WelcomeFragmentPermissions extends Fragment {
         }
     }
 
+    private static int accentColor(final Context context) {
+        final TypedValue typedValue = new TypedValue();
+        context.getTheme().resolveAttribute(R.attr.pulseAccent, typedValue, true);
+        return typedValue.data;
+    }
+
+    private static int softTint(final int color) {
+        return (color & 0x00FFFFFF) | 0x24000000;
+    }
+
     private static class PermissionHolder extends RecyclerView.ViewHolder {
-        TextView titleTextView;
-        TextView summaryTextView;
-        ImageView checkmarkImageView;
-        Button requestButton;
+        final View chip;
+        final ImageView icon;
+        final TextView title;
+        final TextView summary;
+        final TextView requestPill;
+        final TextView grantedPill;
 
         public PermissionHolder(View itemView) {
             super(itemView);
-            titleTextView = itemView.findViewById(R.id.permission_title);
-            summaryTextView = itemView.findViewById(R.id.permission_summary);
-            checkmarkImageView = itemView.findViewById(R.id.permission_check);
-            requestButton = itemView.findViewById(R.id.permission_request);
+            chip = itemView.findViewById(R.id.permission_chip);
+            icon = itemView.findViewById(R.id.permission_icon);
+            title = itemView.findViewById(R.id.permission_title);
+            summary = itemView.findViewById(R.id.permission_summary);
+            requestPill = itemView.findViewById(R.id.permission_request);
+            grantedPill = itemView.findViewById(R.id.permission_granted);
         }
     }
 
@@ -179,26 +246,40 @@ public class WelcomeFragmentPermissions extends Fragment {
         @Override
         public PermissionHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View itemView = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.fragment_welcome_permission_row, parent, false);
+                    .inflate(R.layout.pulse_permission_row, parent, false);
             return new PermissionHolder(itemView);
         }
 
         @Override
         public void onBindViewHolder(@NonNull PermissionHolder holder, int position) {
-            PermissionsUtils.PermissionDetails permissionData = permissionList.get(position);
-            holder.titleTextView.setText(permissionData.title());
-            holder.summaryTextView.setText(permissionData.summary());
-            if (PermissionsUtils.checkPermission(requireContext(), permissionData.permission())) {
-                holder.requestButton.setVisibility(View.INVISIBLE);
-                holder.requestButton.setEnabled(false);
-                holder.checkmarkImageView.setVisibility(View.VISIBLE);
+            final PermissionsUtils.PermissionDetails permission = permissionList.get(position);
+            holder.title.setText(permission.title());
+            holder.summary.setText(permission.summary());
+
+            final int color = ContextCompat.getColor(context, permission.colorRes());
+            holder.icon.setImageResource(permission.iconRes());
+            ImageViewCompat.setImageTintList(holder.icon, ColorStateList.valueOf(color));
+            holder.chip.setBackgroundTintList(ColorStateList.valueOf(softTint(color)));
+
+            if (PermissionsUtils.checkPermission(requireContext(), permission.permission())) {
+                holder.requestPill.setVisibility(View.GONE);
+                holder.grantedPill.setVisibility(View.VISIBLE);
+                final int mint = ContextCompat.getColor(context, R.color.pulse_mint);
+                holder.grantedPill.setBackgroundTintList(ColorStateList.valueOf(softTint(mint)));
+                holder.grantedPill.setTextColor(mint);
             } else {
-                holder.requestButton.setVisibility(View.VISIBLE);
-                holder.requestButton.setEnabled(true);
-                holder.checkmarkImageView.setVisibility(View.GONE);
-                holder.requestButton.setOnClickListener(view -> {
-                    PermissionsUtils.requestPermission(requireActivity(), permissionData.permission());
-                });
+                holder.grantedPill.setVisibility(View.GONE);
+                holder.requestPill.setVisibility(View.VISIBLE);
+                if (permission.required()) {
+                    holder.requestPill.setBackgroundTintList(ColorStateList.valueOf(accentColor(context)));
+                    holder.requestPill.setTextColor(ContextCompat.getColor(context, android.R.color.white));
+                } else {
+                    holder.requestPill.setBackgroundTintList(ColorStateList.valueOf(
+                            ContextCompat.getColor(context, R.color.pulse_card_alt)));
+                    holder.requestPill.setTextColor(ContextCompat.getColor(context, R.color.pulse_text));
+                }
+                holder.requestPill.setOnClickListener(view ->
+                        PermissionsUtils.requestPermission(requireActivity(), permission.permission()));
             }
         }
 

@@ -76,135 +76,105 @@ public class PermissionsUtils {
     }};
 
     public static ArrayList<PermissionDetails> getRequiredPermissionsList(Activity activity) {
-        ArrayList<PermissionDetails> permissionsList = new ArrayList<>();
+        final ArrayList<PermissionDetails> permissionsList = new ArrayList<>();
         int companionDevicesCount = 0;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             final CompanionDeviceManager manager = (CompanionDeviceManager) GBApplication.getContext().getSystemService(Context.COMPANION_DEVICE_SERVICE);
             companionDevicesCount = manager.getAssociations().size();
         }
         if (companionDevicesCount == 0) {
-            permissionsList.add(new PermissionDetails(
-                    CUSTOM_PERM_IGNORE_BATT_OPTIM,
-                    activity.getString(R.string.permission_disable_doze_title),
-                    activity.getString(R.string.permission_disable_doze_summary)
-            ));
+            addPermission(permissionsList, activity, CUSTOM_PERM_IGNORE_BATT_OPTIM,
+                    R.string.permission_disable_doze_title, R.string.permission_disable_doze_summary,
+                    false, R.drawable.ic_battery_saver, R.color.accent_coral);
         } else {
             LOG.info("Not requesting explicit battery optimization exemption due to paired Companion devices");
         }
-        permissionsList.add(new PermissionDetails(
-                CUSTOM_PERM_NOTIFICATION_LISTENER,
-                activity.getString(R.string.menuitem_notifications),
-                activity.getString(R.string.permission_notifications_summary)));
-        permissionsList.add(new PermissionDetails(
-                CUSTOM_PERM_NOTIFICATION_SERVICE,
-                activity.getString(R.string.permission_manage_dnd_title),
-                activity.getString(R.string.permission_manage_dnd_summary)));
-        permissionsList.add(new PermissionDetails(
-                CUSTOM_PERM_DISPLAY_OVER,
-                activity.getString(R.string.permission_displayover_title),
-                activity.getString(R.string.permission_displayover_summary)));
-        permissionsList.add(new PermissionDetails(
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                activity.getString(R.string.permission_fine_location_title),
-                activity.getString(R.string.permission_fine_location_summary)));
+        addPermission(permissionsList, activity, CUSTOM_PERM_NOTIFICATION_LISTENER,
+                R.string.menuitem_notifications, R.string.permission_notifications_summary,
+                false, R.drawable.ic_notification, R.color.accent_pink);
+        addPermission(permissionsList, activity, CUSTOM_PERM_NOTIFICATION_SERVICE,
+                R.string.permission_manage_dnd_title, R.string.permission_manage_dnd_summary,
+                false, R.drawable.ic_dnd, R.color.accent_violet);
+        addPermission(permissionsList, activity, CUSTOM_PERM_DISPLAY_OVER,
+                R.string.permission_displayover_title, R.string.permission_displayover_summary,
+                false, R.drawable.ic_smartphone, R.color.accent_blue);
+        addPermission(permissionsList, activity, Manifest.permission.ACCESS_FINE_LOCATION,
+                R.string.permission_fine_location_title, R.string.permission_fine_location_summary,
+                true, R.drawable.ic_gps_location, R.color.accent_violet);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            permissionsList.add(new PermissionDetails(
-                    Manifest.permission.ACCESS_BACKGROUND_LOCATION,
-                    activity.getString(R.string.permission_background_location_title),
-                    activity.getString(R.string.permission_background_location_summary)));
+            addPermission(permissionsList, activity, Manifest.permission.ACCESS_BACKGROUND_LOCATION,
+                    R.string.permission_background_location_title, R.string.permission_background_location_summary,
+                    false, R.drawable.ic_share_location, R.color.accent_violet);
         }
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.R) {
-            permissionsList.add(new PermissionDetails(
-                    Manifest.permission.BLUETOOTH,
-                    activity.getString(R.string.permission_bluetooth_title),
-                    activity.getString(R.string.permission_bluetooth_summary)));
-            permissionsList.add(new PermissionDetails(
-                    Manifest.permission.BLUETOOTH_ADMIN,
-                    activity.getString(R.string.permission_bluetooth_admin_title),
-                    activity.getString(R.string.permission_bluetooth_admin_summary)));
+            addPermission(permissionsList, activity, Manifest.permission.BLUETOOTH,
+                    R.string.permission_bluetooth_title, R.string.permission_bluetooth_summary,
+                    true, R.drawable.ic_bluetooth, R.color.accent_blue);
+            addPermission(permissionsList, activity, Manifest.permission.BLUETOOTH_ADMIN,
+                    R.string.permission_bluetooth_admin_title, R.string.permission_bluetooth_admin_summary,
+                    true, R.drawable.ic_bluetooth, R.color.accent_blue);
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            permissionsList.add(new PermissionDetails(
-                    Manifest.permission.BLUETOOTH_SCAN,
-                    activity.getString(R.string.permission_bluetooth_scan_title),
-                    activity.getString(R.string.permission_bluetooth_scan_summary)));
-            permissionsList.add(new PermissionDetails(
-                    Manifest.permission.BLUETOOTH_CONNECT,
-                    activity.getString(R.string.permission_bluetooth_connect_title),
-                    activity.getString(R.string.permission_bluetooth_connect_summary)));
+            addPermission(permissionsList, activity, Manifest.permission.BLUETOOTH_SCAN,
+                    R.string.permission_bluetooth_scan_title, R.string.permission_bluetooth_scan_summary,
+                    true, R.drawable.ic_bluetooth_searching, R.color.accent_blue);
+            addPermission(permissionsList, activity, Manifest.permission.BLUETOOTH_CONNECT,
+                    R.string.permission_bluetooth_connect_title, R.string.permission_bluetooth_connect_summary,
+                    true, R.drawable.ic_bluetooth_connected, R.color.accent_blue);
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            permissionsList.add(new PermissionDetails(
-                    Manifest.permission.POST_NOTIFICATIONS,
-                    activity.getString(R.string.permission_post_notification_title),
-                    activity.getString(R.string.permission_post_notification_summary)));
+            addPermission(permissionsList, activity, Manifest.permission.POST_NOTIFICATIONS,
+                    R.string.permission_post_notification_title, R.string.permission_post_notification_summary,
+                    true, R.drawable.ic_notifications, R.color.accent_mint);
         }
         if (isPermissionDeclared(activity, Manifest.permission.INTERNET)) {
-            permissionsList.add(new PermissionDetails(
-                    Manifest.permission.INTERNET,
-                    activity.getString(R.string.permission_internet_access_title),
-                    activity.getString(R.string.permission_internet_access_summary)));
+            addPermission(permissionsList, activity, Manifest.permission.INTERNET,
+                    R.string.permission_internet_access_title, R.string.permission_internet_access_summary,
+                    false, R.drawable.ic_language, R.color.accent_mint);
         }
         if (!GBApplication.hasDirectInternetAccess() && AndroidUtils.isPackageInstalled(PACKAGE_INTERNET_HELPER)) {
-            permissionsList.add(new PermissionDetails(
-                    CUSTOM_PERM_INTERNET_HELPER,
-                    activity.getString(R.string.internet_helper_permission_title),
-                    activity.getString(R.string.internet_helper_permission_summary)
-            ));
+            addPermission(permissionsList, activity, CUSTOM_PERM_INTERNET_HELPER,
+                    R.string.internet_helper_permission_title, R.string.internet_helper_permission_summary,
+                    false, R.drawable.ic_language, R.color.accent_mint);
         }
-//        permissionsList.add(new PermissionDetails(  // NOTE: can't request this, it's only allowed for system apps
-//                Manifest.permission.MEDIA_CONTENT_CONTROL,
-//                "Media content control",
-//                "Read and control media playback"));
-        permissionsList.add(new PermissionDetails(
-                Manifest.permission.READ_CONTACTS,
-                activity.getString(R.string.permission_contacts_title),
-                activity.getString(R.string.permission_contacts_summary)));
-        permissionsList.add(new PermissionDetails(
-                Manifest.permission.READ_CALENDAR,
-                activity.getString(R.string.permission_calendar_title),
-                activity.getString(R.string.permission_calendar_summary)));
-        permissionsList.add(new PermissionDetails(
-                Manifest.permission.RECEIVE_SMS,
-                activity.getString(R.string.permission_receive_sms_title),
-                activity.getString(R.string.permission_receive_sms_summary)));
-        permissionsList.add(new PermissionDetails(
-                Manifest.permission.SEND_SMS,
-                activity.getString(R.string.permission_send_sms_title),
-                activity.getString(R.string.permission_send_sms_summary)));
-        permissionsList.add(new PermissionDetails(
-                Manifest.permission.READ_CALL_LOG,
-                activity.getString(R.string.permission_read_call_log_title),
-                activity.getString(R.string.permission_read_call_log_summary)));
-        permissionsList.add(new PermissionDetails(
-                Manifest.permission.READ_PHONE_STATE,
-                activity.getString(R.string.permission_read_phone_state_title),
-                activity.getString(R.string.permission_read_phone_state_summary)));
-        permissionsList.add(new PermissionDetails(
-                Manifest.permission.CALL_PHONE,
-                activity.getString(R.string.permission_call_phone_title),
-                activity.getString(R.string.permission_call_phone_summary)));
-        permissionsList.add(new PermissionDetails(
-                Manifest.permission.PROCESS_OUTGOING_CALLS,
-                activity.getString(R.string.permission_process_outgoing_calls_title),
-                activity.getString(R.string.permission_process_outgoing_calls_summary)));
+        addPermission(permissionsList, activity, Manifest.permission.READ_CONTACTS,
+                R.string.permission_contacts_title, R.string.permission_contacts_summary,
+                false, R.drawable.ic_phone_outline, R.color.pulse_ring_cal);
+        addPermission(permissionsList, activity, Manifest.permission.READ_CALENDAR,
+                R.string.permission_calendar_title, R.string.permission_calendar_summary,
+                false, R.drawable.ic_calendar_month, R.color.accent_mint);
+        addPermission(permissionsList, activity, Manifest.permission.RECEIVE_SMS,
+                R.string.permission_receive_sms_title, R.string.permission_receive_sms_summary,
+                false, R.drawable.ic_message_outline, R.color.accent_pink);
+        addPermission(permissionsList, activity, Manifest.permission.SEND_SMS,
+                R.string.permission_send_sms_title, R.string.permission_send_sms_summary,
+                false, R.drawable.ic_message_outline, R.color.accent_pink);
+        addPermission(permissionsList, activity, Manifest.permission.READ_CALL_LOG,
+                R.string.permission_read_call_log_title, R.string.permission_read_call_log_summary,
+                false, R.drawable.ic_phone_missed_outline, R.color.pulse_ring_cal);
+        addPermission(permissionsList, activity, Manifest.permission.READ_PHONE_STATE,
+                R.string.permission_read_phone_state_title, R.string.permission_read_phone_state_summary,
+                false, R.drawable.ic_phone_outline, R.color.pulse_ring_cal);
+        addPermission(permissionsList, activity, Manifest.permission.CALL_PHONE,
+                R.string.permission_call_phone_title, R.string.permission_call_phone_summary,
+                false, R.drawable.ic_phone_outline, R.color.pulse_ring_cal);
+        addPermission(permissionsList, activity, Manifest.permission.PROCESS_OUTGOING_CALLS,
+                R.string.permission_process_outgoing_calls_title, R.string.permission_process_outgoing_calls_summary,
+                false, R.drawable.ic_phone_outline, R.color.pulse_ring_cal);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            permissionsList.add(new PermissionDetails(
-                    Manifest.permission.ANSWER_PHONE_CALLS,
-                    activity.getString(R.string.permission_answer_phone_calls_title),
-                    activity.getString(R.string.permission_answer_phone_calls_summary)));
+            addPermission(permissionsList, activity, Manifest.permission.ANSWER_PHONE_CALLS,
+                    R.string.permission_answer_phone_calls_title, R.string.permission_answer_phone_calls_summary,
+                    false, R.drawable.ic_phone_outline, R.color.pulse_ring_cal);
         }
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.S_V2) {
-            permissionsList.add(new PermissionDetails(
-                    Manifest.permission.READ_EXTERNAL_STORAGE,
-                    activity.getString(R.string.permission_external_storage_title),
-                    activity.getString(R.string.permission_external_storage_summary)));
+            addPermission(permissionsList, activity, Manifest.permission.READ_EXTERNAL_STORAGE,
+                    R.string.permission_external_storage_title, R.string.permission_external_storage_summary,
+                    false, R.drawable.ic_folder, R.color.accent_blue);
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            permissionsList.add(new PermissionDetails(
-                    Manifest.permission.QUERY_ALL_PACKAGES,
-                    activity.getString(R.string.permission_query_all_packages_title),
-                    activity.getString(R.string.permission_query_all_packages_summary)));
+            addPermission(permissionsList, activity, Manifest.permission.QUERY_ALL_PACKAGES,
+                    R.string.permission_query_all_packages_title, R.string.permission_query_all_packages_summary,
+                    false, R.drawable.ic_smartphone, R.color.accent_violet);
         }
         return permissionsList;
     }
@@ -259,7 +229,17 @@ public class PermissionsUtils {
 
     public record PermissionDetails(String permission,
                                     String title,
-                                    String summary) {
+                                    String summary,
+                                    boolean required,
+                                    int iconRes,
+                                    int colorRes) {
+    }
+
+    private static void addPermission(final List<PermissionDetails> list, final Activity activity,
+                                      final String permission, final int titleRes, final int summaryRes,
+                                      final boolean required, final int iconRes, final int colorRes) {
+        list.add(new PermissionDetails(permission, activity.getString(titleRes),
+                activity.getString(summaryRes), required, iconRes, colorRes));
     }
 
     public static boolean isPermissionDeclared(Context context, String permission) {

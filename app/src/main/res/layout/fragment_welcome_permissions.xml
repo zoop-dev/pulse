@@ -1,54 +1,193 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
-    android:gravity="center_horizontal"
-    android:orientation="vertical"
-    android:padding="8dp">
+    android:background="@color/pulse_bg"
+    android:orientation="vertical">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="22dp"
+            android:paddingTop="24dp"
+            android:paddingEnd="22dp"
+            android:paddingBottom="12dp">
+
+            <ImageView
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_shield"
+                app:tint="?attr/pulseAccent" />
+
+            <TextView
+                android:id="@+id/permissions_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:fontFamily="@font/unbounded"
+                android:text="@string/first_start_permissions_title"
+                android:textColor="@color/pulse_text"
+                android:textSize="26sp" />
+
+            <TextView
+                android:id="@+id/permissions_subtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:lineSpacingMultiplier="1.3"
+                android:text="@string/pulse_permissions_subtitle"
+                android:textColor="@color/pulse_text_dim"
+                android:textSize="13sp" />
+
+            <LinearLayout
+                android:id="@+id/permissions_callout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/pulse_perm_pill"
+                android:backgroundTint="#22E5484D"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="13dp"
+                android:paddingTop="11dp"
+                android:paddingEnd="13dp"
+                android:paddingBottom="11dp"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_warning"
+                    app:tint="@color/accent_coral" />
+
+                <TextView
+                    android:id="@+id/permissions_callout_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:fontFamily="@font/plusjakarta_medium"
+                    android:textColor="@color/accent_coral"
+                    android:textSize="12.5sp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/permissions_required_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/spacegrotesk_semibold"
+                android:letterSpacing="0.12"
+                android:text="@string/pulse_permissions_required_label"
+                android:textAllCaps="true"
+                android:textColor="@color/pulse_text_dim"
+                android:textSize="11sp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/permissions_list_required"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false" />
+
+            <TextView
+                android:id="@+id/permissions_optional_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:layout_marginBottom="4dp"
+                android:fontFamily="@font/spacegrotesk_semibold"
+                android:letterSpacing="0.12"
+                android:text="@string/pulse_permissions_optional_label"
+                android:textAllCaps="true"
+                android:textColor="@color/pulse_text_dim"
+                android:textSize="11sp" />
+
+            <TextView
+                android:id="@+id/permissions_optional_caption"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="9dp"
+                android:lineSpacingMultiplier="1.2"
+                android:text="@string/pulse_permissions_optional_caption"
+                android:textColor="@color/pulse_text_dim"
+                android:textSize="12sp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/permissions_list_optional"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false" />
+
+            <TextView
+                android:id="@+id/button_do_not_ask_again"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:padding="12dp"
+                android:text="@string/first_start_permissions_do_not_ask_again"
+                android:textColor="@color/pulse_text_dim"
+                android:textSize="13sp" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/pulse_card_alt" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/permissions_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:text="@string/first_start_permissions_title"
-            android:textAlignment="center"
-            android:textSize="30sp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="@string/first_start_permissions_desc"
-            android:textAlignment="center"
-            android:textSize="20sp" />
-
-        <Button
-            android:id="@+id/button_do_not_ask_again"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="@string/first_start_permissions_do_not_ask_again" />
+        android:background="@color/pulse_bg"
+        android:orientation="vertical"
+        android:paddingStart="22dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="22dp"
+        android:paddingBottom="22dp">
 
         <Button
             android:id="@+id/button_request_all"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="@string/first_start_permissions_request_all_button" />
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:background="@drawable/pulse_pill_primary"
+            android:backgroundTint="@null"
+            android:fontFamily="@font/plusjakarta_medium"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:stateListAnimator="@null"
+            android:text="@string/pulse_permissions_allow_all"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="15sp" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/permissions_list"
+        <TextView
+            android:id="@+id/button_required_only"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:nestedScrollingEnabled="false" />
+            android:layout_marginTop="11dp"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:fontFamily="@font/plusjakarta_medium"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="@string/pulse_permissions_required_only"
+            android:textColor="@color/pulse_text_dim"
+            android:textSize="14sp"
+            android:visibility="gone" />
     </LinearLayout>
-</androidx.core.widget.NestedScrollView>
+</LinearLayout>
