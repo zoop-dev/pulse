@@ -2969,4 +2969,13 @@
         <item quantity="few">Још %d обавезне дозволе недостају — синхронизација неће почети без њих</item>
         <item quantity="other">Још %d обавезних дозвола недостаје — синхронизација неће почети без њих</item>
     </plurals>
+    <string name="pulse_health_vitals">Витални знаци</string>
+    <string name="pulse_health_edit">Уреди главну меру и редослед</string>
+    <string name="pulse_health_headline_title">Главна мера</string>
+    <string name="pulse_health_headline_none">Без главне мере</string>
+    <string name="pulse_health_headline_sub">Приказује се крупно на врху, са већим графиконом.</string>
+    <string name="pulse_health_steady">Без промене у односу на 7-дневни просек</string>
+    <string name="pulse_health_delta_up">↑ %1$d у односу на 7-дневни просек</string>
+    <string name="pulse_health_delta_down">↓ %1$d у односу на 7-дневни просек</string>
+    <string name="pulse_edit_hint_health">Превуците да промените редослед, укључите/искључите да сакријете. Главна мера стоји на врху; остале чине листу испод ње.</string>
 </resources>

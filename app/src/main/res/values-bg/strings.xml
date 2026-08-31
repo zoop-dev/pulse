@@ -818,4 +818,13 @@
         <item quantity="one">Нужно е още %d задължително разрешение — синхронизирането няма да започне без него</item>
         <item quantity="other">Нужни са още %d задължителни разрешения — синхронизирането няма да започне без тях</item>
     </plurals>
+    <string name="pulse_health_vitals">Жизнени показатели</string>
+    <string name="pulse_health_edit">Редактиране на водещия показател и реда</string>
+    <string name="pulse_health_headline_title">Водещ показател</string>
+    <string name="pulse_health_headline_none">Без водещ показател</string>
+    <string name="pulse_health_headline_sub">Показва се едро най-горе, с по-голяма диаграма.</string>
+    <string name="pulse_health_steady">Без промяна спрямо средното за 7 дни</string>
+    <string name="pulse_health_delta_up">↑ %1$d спрямо средното за 7 дни</string>
+    <string name="pulse_health_delta_down">↓ %1$d спрямо средното за 7 дни</string>
+    <string name="pulse_edit_hint_health">Плъзнете за пренареждане, превключете за скриване. Водещият показател е най-горе; останалите образуват списъка под него.</string>
 </resources>

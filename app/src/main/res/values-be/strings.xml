@@ -247,4 +247,13 @@
         <item quantity="many">Патрэбна яшчэ %d абавязковых дазволаў — сінхранізацыя не пачнецца без іх</item>
         <item quantity="other">Патрэбна яшчэ %d абавязковых дазволаў — сінхранізацыя не пачнецца без іх</item>
     </plurals>
+    <string name="pulse_health_vitals">Жыццёвыя паказчыкі</string>
+    <string name="pulse_health_edit">Змяніць галоўны паказчык і парадак</string>
+    <string name="pulse_health_headline_title">Галоўны паказчык</string>
+    <string name="pulse_health_headline_none">Без галоўнага паказчыка</string>
+    <string name="pulse_health_headline_sub">Паказваецца буйна ўверсе, з большым графікам.</string>
+    <string name="pulse_health_steady">Без зменаў у параўнанні з сярэднім за 7 дзён</string>
+    <string name="pulse_health_delta_up">↑ %1$d у параўнанні з сярэднім за 7 дзён</string>
+    <string name="pulse_health_delta_down">↓ %1$d у параўнанні з сярэднім за 7 дзён</string>
+    <string name="pulse_edit_hint_health">Перацягвайце для парадку, пераключайце для хавання. Галоўны паказчык знаходзіцца ўверсе; астатнія ўтвараюць спіс пад ім.</string>
 </resources>

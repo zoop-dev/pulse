@@ -4630,4 +4630,13 @@
         <item quantity="one">Noch %d erforderliche Berechtigung nötig — die Synchronisierung startet ohne sie nicht</item>
         <item quantity="other">Noch %d erforderliche Berechtigungen nötig — die Synchronisierung startet ohne sie nicht</item>
     </plurals>
+    <string name="pulse_health_vitals">Vitalwerte</string>
+    <string name="pulse_health_edit">Hauptwert &amp; Reihenfolge bearbeiten</string>
+    <string name="pulse_health_headline_title">Hauptwert</string>
+    <string name="pulse_health_headline_none">Kein Hauptwert</string>
+    <string name="pulse_health_headline_sub">Wird oben groß angezeigt, mit einem größeren Diagramm.</string>
+    <string name="pulse_health_steady">Unverändert ggü. 7-Tage-Schnitt</string>
+    <string name="pulse_health_delta_up">↑ %1$d ggü. 7-Tage-Schnitt</string>
+    <string name="pulse_health_delta_down">↓ %1$d ggü. 7-Tage-Schnitt</string>
+    <string name="pulse_edit_hint_health">Zum Umsortieren ziehen, zum Ausblenden umschalten. Der Hauptwert steht oben; der Rest bildet die Liste darunter.</string>
 </resources>

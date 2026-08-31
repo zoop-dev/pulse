@@ -1835,4 +1835,13 @@
         <item quantity="few">Još su potrebna %d obavezna dopuštenja — sinkronizacija bez njih neće započeti</item>
         <item quantity="other">Još je potrebno %d obaveznih dopuštenja — sinkronizacija bez njih neće započeti</item>
     </plurals>
+    <string name="pulse_health_vitals">Vitalni pokazatelji</string>
+    <string name="pulse_health_edit">Uredi glavnu mjeru i redoslijed</string>
+    <string name="pulse_health_headline_title">Glavna mjera</string>
+    <string name="pulse_health_headline_none">Bez glavne mjere</string>
+    <string name="pulse_health_headline_sub">Prikazuje se veliko na vrhu, s većim grafikonom.</string>
+    <string name="pulse_health_steady">Bez promjene u odnosu na 7-dnevni prosjek</string>
+    <string name="pulse_health_delta_up">↑ %1$d u odnosu na 7-dnevni prosjek</string>
+    <string name="pulse_health_delta_down">↓ %1$d u odnosu na 7-dnevni prosjek</string>
+    <string name="pulse_edit_hint_health">Povucite za promjenu redoslijeda, uključite/isključite za skrivanje. Glavna mjera je na vrhu; ostale čine popis ispod nje.</string>
 </resources>

@@ -1879,4 +1879,13 @@
         <item quantity="one">Encara cal %d permís necessari — la sincronització no començarà sense ell</item>
         <item quantity="other">Encara calen %d permisos necessaris — la sincronització no començarà sense ells</item>
     </plurals>
+    <string name="pulse_health_vitals">Constants vitals</string>
+    <string name="pulse_health_edit">Edita la mètrica principal i l’ordre</string>
+    <string name="pulse_health_headline_title">Mètrica principal</string>
+    <string name="pulse_health_headline_none">Sense mètrica principal</string>
+    <string name="pulse_health_headline_sub">Es mostra gran a la part superior, amb un gràfic més gran.</string>
+    <string name="pulse_health_steady">Sense canvis respecte a la mitjana de 7 dies</string>
+    <string name="pulse_health_delta_up">↑ %1$d respecte a la mitjana de 7 dies</string>
+    <string name="pulse_health_delta_down">↓ %1$d respecte a la mitjana de 7 dies</string>
+    <string name="pulse_edit_hint_health">Arrossegueu per reordenar, toqueu per amagar. La mètrica principal se situa a dalt; la resta formen la llista de sota.</string>
 </resources>

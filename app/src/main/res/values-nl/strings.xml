@@ -4629,4 +4629,13 @@
         <item quantity="one">Nog %d vereiste toestemming nodig — synchroniseren start niet zonder deze</item>
         <item quantity="other">Nog %d vereiste toestemmingen nodig — synchroniseren start niet zonder deze</item>
     </plurals>
+    <string name="pulse_health_vitals">Vitale functies</string>
+    <string name="pulse_health_edit">Hoofdmetriek en volgorde bewerken</string>
+    <string name="pulse_health_headline_title">Hoofdmetriek</string>
+    <string name="pulse_health_headline_none">Geen hoofdmetriek</string>
+    <string name="pulse_health_headline_sub">Groot bovenaan weergegeven, met een grotere grafiek.</string>
+    <string name="pulse_health_steady">Gelijk aan 7-daags gemiddelde</string>
+    <string name="pulse_health_delta_up">↑ %1$d t.o.v. 7-daags gemiddelde</string>
+    <string name="pulse_health_delta_down">↓ %1$d t.o.v. 7-daags gemiddelde</string>
+    <string name="pulse_edit_hint_health">Sleep om te herschikken, tik om te verbergen. De hoofdmetriek staat bovenaan; de rest wordt de lijst eronder.</string>
 </resources>

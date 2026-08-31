@@ -5523,6 +5523,15 @@
     <string name="pulse_settings_general_desc">Startup, language, units and location</string>
     <string name="pulse_settings_appearance">Appearance</string>
     <string name="pulse_customize_health">Customize</string>
+    <string name="pulse_health_vitals">Vitals</string>
+    <string name="pulse_health_edit">Edit headline &amp; order</string>
+    <string name="pulse_health_headline_title">Headline metric</string>
+    <string name="pulse_health_headline_none">No headline</string>
+    <string name="pulse_health_headline_sub">Shown large at the top, with a bigger chart.</string>
+    <string name="pulse_health_steady">Steady vs 7-day avg</string>
+    <string name="pulse_health_delta_up">↑ %1$d vs 7-day avg</string>
+    <string name="pulse_health_delta_down">↓ %1$d vs 7-day avg</string>
+    <string name="pulse_edit_hint_health">Drag to reorder, toggle to hide. The headline metric sits at the top; the rest become the list below it.</string>
     <string name="pulse_accent_title">Accent color</string>
     <string name="pulse_settings_appearance_desc">Theme, colors and home screen</string>
     <string name="pulse_settings_notifications_desc">Choose what reaches your watch</string>

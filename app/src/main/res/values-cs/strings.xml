@@ -5096,4 +5096,13 @@
         <item quantity="many">Ještě je potřeba %d povinného oprávnění — synchronizace bez nich nezačne</item>
         <item quantity="other">Ještě je potřeba %d povinných oprávnění — synchronizace bez nich nezačne</item>
     </plurals>
+    <string name="pulse_health_vitals">Vitální funkce</string>
+    <string name="pulse_health_edit">Upravit hlavní metriku a pořadí</string>
+    <string name="pulse_health_headline_title">Hlavní metrika</string>
+    <string name="pulse_health_headline_none">Bez hlavní metriky</string>
+    <string name="pulse_health_headline_sub">Zobrazuje se velké nahoře, s větším grafem.</string>
+    <string name="pulse_health_steady">Beze změny oproti průměru za 7 dní</string>
+    <string name="pulse_health_delta_up">↑ %1$d oproti průměru za 7 dní</string>
+    <string name="pulse_health_delta_down">↓ %1$d oproti průměru za 7 dní</string>
+    <string name="pulse_edit_hint_health">Přetažením změníte pořadí, přepnutím skryjete. Hlavní metrika je nahoře; ostatní tvoří seznam pod ní.</string>
 </resources>

@@ -4379,4 +4379,13 @@
         <item quantity="many">Не вистачає ще %d обовʼязкових дозволів — синхронізація без них не почнеться</item>
         <item quantity="other">Не вистачає ще %d обовʼязкового дозволу — синхронізація без них не почнеться</item>
     </plurals>
+    <string name="pulse_health_vitals">Показники здоровʼя</string>
+    <string name="pulse_health_edit">Змінити головний показник і порядок</string>
+    <string name="pulse_health_headline_title">Головний показник</string>
+    <string name="pulse_health_headline_none">Без головного показника</string>
+    <string name="pulse_health_headline_sub">Відображається великим угорі, з більшою діаграмою.</string>
+    <string name="pulse_health_steady">Без змін щодо середнього за 7 днів</string>
+    <string name="pulse_health_delta_up">↑ %1$d щодо середнього за 7 днів</string>
+    <string name="pulse_health_delta_down">↓ %1$d щодо середнього за 7 днів</string>
+    <string name="pulse_edit_hint_health">Перетягуйте для впорядкування, перемикайте для приховування. Головний показник розташований угорі; решта утворюють список під ним.</string>
 </resources>

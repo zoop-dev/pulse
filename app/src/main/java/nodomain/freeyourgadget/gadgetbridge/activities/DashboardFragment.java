@@ -135,7 +135,9 @@ public class DashboardFragment extends Fragment implements MenuProvider {
     private boolean hasLoadedOnce = false;
     private final Map<String, Integer> extraMetrics = new ConcurrentHashMap<>();
     private final Map<String, int[]> healthHistory = new ConcurrentHashMap<>(); // metric → 7 daily values (oldest..today)
-    private static final String DEFAULT_HEALTH_METRICS = "heartrate,bodybattery,stress,spo2,hrv,respiration";
+    static final String DEFAULT_HEALTH_METRICS = "heartrate,bodybattery,stress,spo2,hrv,respiration";
+    static final String PREF_HEALTH_HEADLINE = "pulse_health_headline";
+    static final String DEFAULT_HEALTH_HEADLINE = "bodybattery";
 
     // Pulse: inline Sleep-tab detail
     private LinearLayout sleepDetailContainer;
@@ -669,6 +671,15 @@ public class DashboardFragment extends Fragment implements MenuProvider {
     }
 
     /** Pulse: latest values for the richer Garmin metrics (HR, Body Battery, stress, SpO2, …). */
+    private long selectedDayEnd() {
+        final Calendar end = (Calendar) day.clone();
+        end.set(Calendar.HOUR_OF_DAY, 23);
+        end.set(Calendar.MINUTE, 59);
+        end.set(Calendar.SECOND, 59);
+        end.set(Calendar.MILLISECOND, 999);
+        return Math.min(end.getTimeInMillis(), System.currentTimeMillis());
+    }
+
     private void warmExtraMetrics() {
         extraMetrics.clear();
         final List<GBDevice> devices = GBApplication.app().getDeviceManager().getDevices();
@@ -676,31 +687,32 @@ public class DashboardFragment extends Fragment implements MenuProvider {
             return;
         }
         final GBDevice dev = devices.get(0);
+        final long until = selectedDayEnd();
         try (nodomain.freeyourgadget.gadgetbridge.database.DBHandler db = GBApplication.acquireDbReadOnly()) {
             final nodomain.freeyourgadget.gadgetbridge.entities.DaoSession s = db.getDaoSession();
             final nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator c = dev.getDeviceCoordinator();
             try {
-                final nodomain.freeyourgadget.gadgetbridge.model.BodyEnergySample x = c.getBodyEnergySampleProvider(dev, s).getLatestSample();
+                final nodomain.freeyourgadget.gadgetbridge.model.BodyEnergySample x = c.getBodyEnergySampleProvider(dev, s).getLatestSample(until);
                 if (x != null) extraMetrics.put("bodybattery", x.getEnergy());
             } catch (final Exception ignored) { }
             try {
-                final nodomain.freeyourgadget.gadgetbridge.model.StressSample x = c.getStressSampleProvider(dev, s).getLatestSample();
+                final nodomain.freeyourgadget.gadgetbridge.model.StressSample x = c.getStressSampleProvider(dev, s).getLatestSample(until);
                 if (x != null) extraMetrics.put("stress", x.getStress());
             } catch (final Exception ignored) { }
             try {
-                final nodomain.freeyourgadget.gadgetbridge.model.Spo2Sample x = c.getSpo2SampleProvider(dev, s).getLatestSample();
+                final nodomain.freeyourgadget.gadgetbridge.model.Spo2Sample x = c.getSpo2SampleProvider(dev, s).getLatestSample(until);
                 if (x != null) extraMetrics.put("spo2", x.getSpo2());
             } catch (final Exception ignored) { }
             try {
-                final nodomain.freeyourgadget.gadgetbridge.model.HeartRateSample x = c.getHeartRateRestingSampleProvider(dev, s).getLatestSample();
+                final nodomain.freeyourgadget.gadgetbridge.model.HeartRateSample x = c.getHeartRateRestingSampleProvider(dev, s).getLatestSample(until);
                 if (x != null && x.getHeartRate() > 0) extraMetrics.put("heartrate", x.getHeartRate());
             } catch (final Exception ignored) { }
             try {
-                final nodomain.freeyourgadget.gadgetbridge.model.HrvValueSample x = c.getHrvValueSampleProvider(dev, s).getLatestSample();
+                final nodomain.freeyourgadget.gadgetbridge.model.HrvValueSample x = c.getHrvValueSampleProvider(dev, s).getLatestSample(until);
                 if (x != null) extraMetrics.put("hrv", x.getValue());
             } catch (final Exception ignored) { }
             try {
-                final nodomain.freeyourgadget.gadgetbridge.model.RespiratoryRateSample x = c.getRespiratoryRateSampleProvider(dev, s).getLatestSample();
+                final nodomain.freeyourgadget.gadgetbridge.model.RespiratoryRateSample x = c.getRespiratoryRateSampleProvider(dev, s).getLatestSample(until);
                 if (x != null) extraMetrics.put("respiration", Math.round(x.getRespiratoryRate()));
             } catch (final Exception ignored) { }
             try {
@@ -792,13 +804,21 @@ public class DashboardFragment extends Fragment implements MenuProvider {
             }
         }
 
-        // Health tab: a customizable 2-column grid of "cube" cards with 7-day mini charts.
         if ("health".equals(section)) {
-            gridLayout.setColumnCount(2);
-            for (final String metric : metrics) {
-                addHealthCubeCard(metric);
+            gridLayout.setColumnCount(1);
+            final java.util.List<String> rows = new java.util.ArrayList<>(java.util.Arrays.asList(metrics));
+            final String headline = GBApplication.getPrefs().getString(PREF_HEALTH_HEADLINE, DEFAULT_HEALTH_HEADLINE);
+            final boolean hasHeadline = !headline.isEmpty() && rows.remove(headline);
+            if (hasHeadline) {
+                addHealthHeadlineCard(headline);
             }
-            addHealthCustomizeCard();
+            if (hasHeadline && !rows.isEmpty()) {
+                addHealthSectionLabel();
+            }
+            for (final String metric : rows) {
+                addHealthListRow(metric);
+            }
+            addHealthEditRow();
             return;
         }
 
@@ -1028,13 +1048,13 @@ public class DashboardFragment extends Fragment implements MenuProvider {
         try (nodomain.freeyourgadget.gadgetbridge.database.DBHandler db = GBApplication.acquireDbReadOnly()) {
             final nodomain.freeyourgadget.gadgetbridge.entities.DaoSession s = db.getDaoSession();
             final nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator c = dev.getDeviceCoordinator();
-            final Calendar today = Calendar.getInstance();
+            final Calendar anchor = (Calendar) day.clone();
             for (final String metric : pulseMetrics()) {
                 final int[] vals = new int[7];
                 for (int i = 0; i < 7; i++) {
-                    final Calendar day = (Calendar) today.clone();
-                    day.add(Calendar.DAY_OF_MONTH, -(6 - i));
-                    vals[i] = healthDailyValue(metric, day, dev, c, s, db);
+                    final Calendar d = (Calendar) anchor.clone();
+                    d.add(Calendar.DAY_OF_MONTH, -(6 - i));
+                    vals[i] = healthDailyValue(metric, d, dev, c, s, db);
                 }
                 healthHistory.put(metric, vals);
             }
@@ -1094,52 +1114,205 @@ public class DashboardFragment extends Fragment implements MenuProvider {
         }
     }
 
-    /** A Health "cube" card: name, big value and a 7-day mini bar chart with weekday labels. */
-    private void addHealthCubeCard(final String metric) {
-        final Context ctx = requireContext();
-        final float scale = getResources().getDisplayMetrics().density;
-        final MetricSpec spc = resolveMetric(metric);
-
-        final com.google.android.material.card.MaterialCardView card = new com.google.android.material.card.MaterialCardView(ctx);
-        card.setRadius(dp(20, scale));
-        card.setCardElevation(0);
-        card.setCardBackgroundColor(ContextCompat.getColor(ctx, R.color.pulse_card));
+    private GridLayout.LayoutParams healthFillParams(final float scale, final int top, final int bottom) {
         final GridLayout.LayoutParams lp = new GridLayout.LayoutParams(
                 GridLayout.spec(GridLayout.UNDEFINED, GridLayout.FILL, 1f),
                 GridLayout.spec(GridLayout.UNDEFINED, GridLayout.FILL, 1f));
         lp.width = 0;
-        lp.setMargins(dp(5, scale), dp(5, scale), dp(5, scale), dp(5, scale));
-        card.setLayoutParams(lp);
+        lp.setMargins(dp(5, scale), dp(top, scale), dp(5, scale), dp(bottom, scale));
+        return lp;
+    }
+
+    private com.google.android.material.card.MaterialCardView healthCard(final Context ctx, final float scale, final int radius) {
+        final com.google.android.material.card.MaterialCardView card = new com.google.android.material.card.MaterialCardView(ctx);
+        card.setRadius(dp(radius, scale));
+        card.setCardElevation(0);
+        card.setCardBackgroundColor(ContextCompat.getColor(ctx, R.color.pulse_card));
+        card.setStrokeColor(ContextCompat.getColor(ctx, R.color.pulse_card_alt));
+        card.setStrokeWidth(dp(1, scale));
+        card.setClickable(true);
+        card.setRippleColorResource(R.color.pulse_card_alt);
+        return card;
+    }
+
+    private android.view.View healthChipView(final Context ctx, final float scale, final int iconRes, final int tint, final int chipSize, final int iconSize) {
+        final android.widget.FrameLayout chip = new android.widget.FrameLayout(ctx);
+        final android.graphics.drawable.GradientDrawable bg = new android.graphics.drawable.GradientDrawable();
+        bg.setShape(android.graphics.drawable.GradientDrawable.RECTANGLE);
+        bg.setCornerRadius(dp(chipSize / 3, scale));
+        bg.setColor((tint & 0x00FFFFFF) | 0x24000000);
+        chip.setBackground(bg);
+        final android.widget.ImageView icon = new android.widget.ImageView(ctx);
+        icon.setImageResource(iconRes);
+        icon.setColorFilter(tint);
+        final android.widget.FrameLayout.LayoutParams iconLp = new android.widget.FrameLayout.LayoutParams(dp(iconSize, scale), dp(iconSize, scale));
+        iconLp.gravity = android.view.Gravity.CENTER;
+        chip.addView(icon, iconLp);
+        return chip;
+    }
+
+    private void addHealthHeadlineCard(final String metric) {
+        final Context ctx = requireContext();
+        final float scale = getResources().getDisplayMetrics().density;
+        final MetricSpec spc = resolveMetric(metric);
+        final int[] hist = healthHistory.get(metric);
+
+        final com.google.android.material.card.MaterialCardView card = healthCard(ctx, scale, 22);
+        card.setLayoutParams(healthFillParams(scale, 6, 4));
 
         final LinearLayout root = new LinearLayout(ctx);
         root.setOrientation(LinearLayout.VERTICAL);
-        root.setPadding(dp(16, scale), dp(16, scale), dp(16, scale), dp(14, scale));
+        root.setPadding(dp(18, scale), dp(18, scale), dp(18, scale), dp(16, scale));
 
+        final LinearLayout header = new LinearLayout(ctx);
+        header.setOrientation(LinearLayout.HORIZONTAL);
+        header.setGravity(android.view.Gravity.CENTER_VERTICAL);
+        final android.view.View chip = healthChipView(ctx, scale, spc.iconRes, spc.tint, 30, 15);
+        final LinearLayout.LayoutParams chipLp = new LinearLayout.LayoutParams(dp(30, scale), dp(30, scale));
+        chipLp.rightMargin = dp(10, scale);
+        header.addView(chip, chipLp);
         final TextView name = new TextView(ctx);
         name.setText(spc.label);
-        name.setTextColor(ContextCompat.getColor(ctx, R.color.pulse_text_dim));
+        name.setTextColor(ContextCompat.getColor(ctx, R.color.pulse_text));
         name.setTextSize(13);
-        root.addView(name);
+        name.setTypeface(androidx.core.content.res.ResourcesCompat.getFont(ctx, R.font.plusjakarta_medium));
+        header.addView(name);
+        final android.widget.ImageView chev = new android.widget.ImageView(ctx);
+        chev.setImageResource(R.drawable.ic_pulse_chevron_down);
+        chev.setColorFilter(ContextCompat.getColor(ctx, R.color.pulse_text_dim));
+        final LinearLayout.LayoutParams chevLp = new LinearLayout.LayoutParams(dp(15, scale), dp(15, scale));
+        chevLp.leftMargin = dp(3, scale);
+        header.addView(chev, chevLp);
+        root.addView(header);
 
+        final LinearLayout valRow = new LinearLayout(ctx);
+        valRow.setOrientation(LinearLayout.HORIZONTAL);
+        valRow.setGravity(android.view.Gravity.BOTTOM);
+        final LinearLayout.LayoutParams valRowLp = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        valRowLp.topMargin = dp(12, scale);
         final TextView value = new TextView(ctx);
         value.setText(spc.value);
         value.setTextColor(spc.tint);
-        value.setTextSize(26);
+        value.setTextSize(34);
         value.setTypeface(androidx.core.content.res.ResourcesCompat.getFont(ctx, R.font.unbounded));
-        final LinearLayout.LayoutParams vlp = new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        vlp.topMargin = dp(4, scale);
-        root.addView(value, vlp);
+        valRow.addView(value);
+        final String deltaText = healthDelta(hist);
+        if (deltaText != null) {
+            final TextView delta = new TextView(ctx);
+            delta.setText(deltaText);
+            delta.setTextColor(ContextCompat.getColor(ctx, R.color.pulse_text_dim));
+            delta.setTextSize(12);
+            final LinearLayout.LayoutParams deltaLp = new LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            deltaLp.leftMargin = dp(9, scale);
+            deltaLp.bottomMargin = dp(6, scale);
+            valRow.addView(delta, deltaLp);
+        }
+        root.addView(valRow, valRowLp);
 
-        root.addView(buildMiniChart(ctx, scale, healthHistory.get(metric), spc.tint));
+        final SparkView spark = new SparkView(ctx, hist, spc.tint, true, 2.4f);
+        final LinearLayout.LayoutParams sparkLp = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, dp(58, scale));
+        sparkLp.topMargin = dp(14, scale);
+        root.addView(spark, sparkLp);
 
-        card.setClickable(true);
-        card.setRippleColorResource(R.color.pulse_card_alt);
         final int titleRes = spc.titleRes;
         final String chartTab = spc.chartTab, chartMode = spc.chartMode;
         card.setOnClickListener(v -> openChart(chartTab, titleRes, chartMode));
         card.addView(root);
         gridLayout.addView(card);
+    }
+
+    private void addHealthListRow(final String metric) {
+        final Context ctx = requireContext();
+        final float scale = getResources().getDisplayMetrics().density;
+        final MetricSpec spc = resolveMetric(metric);
+        final int[] hist = healthHistory.get(metric);
+
+        final com.google.android.material.card.MaterialCardView card = healthCard(ctx, scale, 16);
+        card.setLayoutParams(healthFillParams(scale, 4, 4));
+
+        final LinearLayout row = new LinearLayout(ctx);
+        row.setOrientation(LinearLayout.HORIZONTAL);
+        row.setGravity(android.view.Gravity.CENTER_VERTICAL);
+        row.setPadding(dp(13, scale), dp(11, scale), dp(13, scale), dp(11, scale));
+
+        final android.view.View chip = healthChipView(ctx, scale, spc.iconRes, spc.tint, 30, 15);
+        final LinearLayout.LayoutParams chipLp = new LinearLayout.LayoutParams(dp(30, scale), dp(30, scale));
+        chipLp.rightMargin = dp(12, scale);
+        row.addView(chip, chipLp);
+
+        final LinearLayout mid = new LinearLayout(ctx);
+        mid.setOrientation(LinearLayout.VERTICAL);
+        final LinearLayout.LayoutParams midLp = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f);
+        final TextView name = new TextView(ctx);
+        name.setText(spc.label);
+        name.setTextColor(ContextCompat.getColor(ctx, R.color.pulse_text));
+        name.setTextSize(13);
+        name.setTypeface(androidx.core.content.res.ResourcesCompat.getFont(ctx, R.font.plusjakarta_medium));
+        mid.addView(name);
+        final String subText = healthDelta(hist);
+        if (subText != null) {
+            final TextView sub = new TextView(ctx);
+            sub.setText(subText);
+            sub.setTextColor(ContextCompat.getColor(ctx, R.color.pulse_text_dim));
+            sub.setTextSize(10);
+            final LinearLayout.LayoutParams subLp = new LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            subLp.topMargin = dp(1, scale);
+            mid.addView(sub, subLp);
+        }
+        row.addView(mid, midLp);
+
+        final SparkView spark = new SparkView(ctx, hist, spc.tint, false, 2f);
+        final LinearLayout.LayoutParams sparkLp = new LinearLayout.LayoutParams(dp(48, scale), dp(22, scale));
+        sparkLp.rightMargin = dp(10, scale);
+        row.addView(spark, sparkLp);
+
+        final TextView value = new TextView(ctx);
+        value.setText(spc.value);
+        value.setTextColor(ContextCompat.getColor(ctx, R.color.pulse_text));
+        value.setTextSize(15);
+        value.setTypeface(androidx.core.content.res.ResourcesCompat.getFont(ctx, R.font.unbounded));
+        row.addView(value);
+
+        final android.widget.ImageView chev = new android.widget.ImageView(ctx);
+        chev.setImageResource(R.drawable.ic_pulse_chevron_right);
+        chev.setColorFilter(ContextCompat.getColor(ctx, R.color.pulse_text_dim));
+        final LinearLayout.LayoutParams chevLp = new LinearLayout.LayoutParams(dp(15, scale), dp(15, scale));
+        chevLp.leftMargin = dp(6, scale);
+        row.addView(chev, chevLp);
+
+        final int titleRes = spc.titleRes;
+        final String chartTab = spc.chartTab, chartMode = spc.chartMode;
+        card.setOnClickListener(v -> openChart(chartTab, titleRes, chartMode));
+        card.addView(row);
+        gridLayout.addView(card);
+    }
+
+    private String healthDelta(final int[] hist) {
+        if (hist == null || hist.length < 2) {
+            return null;
+        }
+        final int today = hist[hist.length - 1];
+        long sum = 0;
+        int n = 0;
+        for (int i = 0; i < hist.length - 1; i++) {
+            if (hist[i] > 0) {
+                sum += hist[i];
+                n++;
+            }
+        }
+        if (n == 0 || today == 0) {
+            return null;
+        }
+        final int avg = (int) (sum / n);
+        final int diff = today - avg;
+        if (Math.abs(diff) <= Math.max(1, avg / 20)) {
+            return getString(R.string.pulse_health_steady);
+        }
+        return getString(diff > 0 ? R.string.pulse_health_delta_up : R.string.pulse_health_delta_down, Math.abs(diff));
     }
 
     /** 7-day mini bar chart with weekday labels (oldest..today). */
@@ -1196,72 +1369,55 @@ public class DashboardFragment extends Fragment implements MenuProvider {
         return row;
     }
 
-    /** A trailing "Customize" cube on the Health grid → pick which metrics show. */
-    private void addHealthCustomizeCard() {
+    private void addHealthSectionLabel() {
         final Context ctx = requireContext();
         final float scale = getResources().getDisplayMetrics().density;
-        final com.google.android.material.card.MaterialCardView card = new com.google.android.material.card.MaterialCardView(ctx);
-        card.setRadius(dp(20, scale));
-        card.setCardElevation(0);
-        card.setCardBackgroundColor(ContextCompat.getColor(ctx, R.color.pulse_card));
-        card.setStrokeColor(ContextCompat.getColor(ctx, R.color.pulse_card_alt));
-        card.setStrokeWidth(dp(1, scale));
+        final TextView t = new TextView(ctx);
+        t.setText(R.string.pulse_health_vitals);
+        t.setTextColor(ContextCompat.getColor(ctx, R.color.pulse_text_dim));
+        t.setTextSize(11);
+        t.setAllCaps(true);
+        t.setLetterSpacing(0.12f);
+        t.setTypeface(androidx.core.content.res.ResourcesCompat.getFont(ctx, R.font.spacegrotesk_semibold));
         final GridLayout.LayoutParams lp = new GridLayout.LayoutParams(
                 GridLayout.spec(GridLayout.UNDEFINED, GridLayout.FILL, 1f),
                 GridLayout.spec(GridLayout.UNDEFINED, GridLayout.FILL, 1f));
         lp.width = 0;
-        lp.setMargins(dp(5, scale), dp(5, scale), dp(5, scale), dp(5, scale));
-        card.setLayoutParams(lp);
-
-        final LinearLayout root = new LinearLayout(ctx);
-        root.setOrientation(LinearLayout.VERTICAL);
-        root.setGravity(android.view.Gravity.CENTER);
-        root.setPadding(dp(16, scale), dp(28, scale), dp(16, scale), dp(28, scale));
-        final android.widget.ImageView plus = new android.widget.ImageView(ctx);
-        plus.setImageResource(R.drawable.ic_add);
-        plus.setColorFilter(GBApplication.getAccentColor(ctx));
-        plus.setLayoutParams(new LinearLayout.LayoutParams(dp(28, scale), dp(28, scale)));
-        final TextView t = new TextView(ctx);
-        t.setText(R.string.pulse_customize_health);
-        t.setTextColor(ContextCompat.getColor(ctx, R.color.pulse_text_dim));
-        t.setTextSize(13);
-        t.setPadding(0, dp(8, scale), 0, 0);
-        root.addView(plus);
-        root.addView(t);
-
-        card.setClickable(true);
-        card.setRippleColorResource(R.color.pulse_card_alt);
-        card.setOnClickListener(v -> showMetricPicker("pulse_health_metrics", DEFAULT_HEALTH_METRICS, R.string.pulse_customize_health));
-        card.addView(root);
-        gridLayout.addView(card);
+        lp.setMargins(dp(8, scale), dp(18, scale), dp(8, scale), dp(6, scale));
+        t.setLayoutParams(lp);
+        gridLayout.addView(t);
     }
 
-    /** Multi-select which metrics a customizable tab shows. */
-    private void showMetricPicker(final String prefKey, final String def, final int titleRes) {
-        final java.util.List<String> enabled = new java.util.ArrayList<>(java.util.Arrays.asList(
-                GBApplication.getPrefs().getString(prefKey, def).split(",")));
-        final String[] labels = new String[ALL_METRICS.length];
-        final boolean[] checked = new boolean[ALL_METRICS.length];
-        for (int i = 0; i < ALL_METRICS.length; i++) {
-            labels[i] = metricLabel(ALL_METRICS[i]);
-            checked[i] = enabled.contains(ALL_METRICS[i]);
-        }
-        new androidx.appcompat.app.AlertDialog.Builder(requireContext())
-                .setTitle(titleRes)
-                .setMultiChoiceItems(labels, checked, (d, which, isChecked) -> checked[which] = isChecked)
-                .setPositiveButton(android.R.string.ok, (d, w) -> {
-                    final StringBuilder sb = new StringBuilder();
-                    for (int i = 0; i < ALL_METRICS.length; i++) {
-                        if (checked[i]) {
-                            if (sb.length() > 0) sb.append(",");
-                            sb.append(ALL_METRICS[i]);
-                        }
-                    }
-                    GBApplication.getPrefs().getPreferences().edit().putString(prefKey, sb.toString()).apply();
-                    refresh();
-                })
-                .setNegativeButton(android.R.string.cancel, null)
-                .show();
+    private void addHealthEditRow() {
+        final Context ctx = requireContext();
+        final float scale = getResources().getDisplayMetrics().density;
+        final LinearLayout row = new LinearLayout(ctx);
+        row.setOrientation(LinearLayout.HORIZONTAL);
+        row.setGravity(android.view.Gravity.CENTER);
+        final android.graphics.drawable.GradientDrawable bg = new android.graphics.drawable.GradientDrawable();
+        bg.setShape(android.graphics.drawable.GradientDrawable.RECTANGLE);
+        bg.setCornerRadius(dp(22, scale));
+        bg.setColor(ContextCompat.getColor(ctx, R.color.pulse_card_alt));
+        row.setBackground(bg);
+        row.setPadding(0, dp(13, scale), 0, dp(13, scale));
+        row.setClickable(true);
+        final android.widget.ImageView icon = new android.widget.ImageView(ctx);
+        icon.setImageResource(R.drawable.ic_edit);
+        icon.setColorFilter(ContextCompat.getColor(ctx, R.color.pulse_text));
+        final LinearLayout.LayoutParams iconLp = new LinearLayout.LayoutParams(dp(15, scale), dp(15, scale));
+        iconLp.rightMargin = dp(8, scale);
+        iconLp.gravity = android.view.Gravity.CENTER_VERTICAL;
+        row.addView(icon, iconLp);
+        final TextView t = new TextView(ctx);
+        t.setText(R.string.pulse_health_edit);
+        t.setTextColor(ContextCompat.getColor(ctx, R.color.pulse_text));
+        t.setTextSize(12.5f);
+        t.setTypeface(androidx.core.content.res.ResourcesCompat.getFont(ctx, R.font.plusjakarta_medium));
+        row.addView(t);
+        row.setOnClickListener(v -> startActivity(new Intent(requireActivity(), PulseDashboardEditActivity.class)
+                .putExtra(PulseDashboardEditActivity.EXTRA_SECTION, "health")));
+        row.setLayoutParams(healthFillParams(scale, 14, 5));
+        gridLayout.addView(row);
     }
 
     /** Compute the Sleep tab's inline detail (score, last-night stages, 7-night totals). */
@@ -1818,6 +1974,75 @@ public class DashboardFragment extends Fragment implements MenuProvider {
 
     private static int dp(final int value, final float scale) {
         return (int) (value * scale + 0.5f);
+    }
+
+    static class SparkView extends View {
+        private final int[] data;
+        private final android.graphics.Paint line = new android.graphics.Paint(android.graphics.Paint.ANTI_ALIAS_FLAG);
+        private final android.graphics.Paint area = new android.graphics.Paint(android.graphics.Paint.ANTI_ALIAS_FLAG);
+        private final android.graphics.Paint dot = new android.graphics.Paint(android.graphics.Paint.ANTI_ALIAS_FLAG);
+        private final boolean fill;
+
+        SparkView(final Context ctx, final int[] data, final int color, final boolean fill, final float strokeDp) {
+            super(ctx);
+            this.data = data;
+            this.fill = fill;
+            final float d = ctx.getResources().getDisplayMetrics().density;
+            line.setStyle(android.graphics.Paint.Style.STROKE);
+            line.setStrokeCap(android.graphics.Paint.Cap.ROUND);
+            line.setStrokeJoin(android.graphics.Paint.Join.ROUND);
+            line.setStrokeWidth(strokeDp * d);
+            line.setColor(color);
+            area.setStyle(android.graphics.Paint.Style.FILL);
+            area.setColor((color & 0x00FFFFFF) | 0x1A000000);
+            dot.setStyle(android.graphics.Paint.Style.FILL);
+            dot.setColor(color);
+        }
+
+        @Override
+        protected void onDraw(final android.graphics.Canvas c) {
+            if (data == null || data.length < 2) {
+                return;
+            }
+            final float pad = line.getStrokeWidth();
+            final float w = getWidth() - pad * 2;
+            final float h = getHeight() - pad * 2;
+            int min = Integer.MAX_VALUE;
+            int max = Integer.MIN_VALUE;
+            for (final int v : data) {
+                if (v < min) min = v;
+                if (v > max) max = v;
+            }
+            if (max <= min) {
+                max = min + 1;
+            }
+            final android.graphics.Path p = new android.graphics.Path();
+            final float step = w / (data.length - 1);
+            float lastX = pad;
+            float lastY = pad + h;
+            for (int i = 0; i < data.length; i++) {
+                final float x = pad + i * step;
+                final float y = pad + h - (data[i] - min) / (float) (max - min) * h;
+                if (i == 0) {
+                    p.moveTo(x, y);
+                } else {
+                    p.lineTo(x, y);
+                }
+                lastX = x;
+                lastY = y;
+            }
+            if (fill) {
+                final android.graphics.Path f = new android.graphics.Path(p);
+                f.lineTo(lastX, getHeight());
+                f.lineTo(pad, getHeight());
+                f.close();
+                c.drawPath(f, area);
+            }
+            c.drawPath(p, line);
+            if (fill) {
+                c.drawCircle(lastX, lastY, line.getStrokeWidth() * 1.6f, dot);
+            }
+        }
     }
 
     /** Read a numeric goal stored as a string pref, falling back to a default. */

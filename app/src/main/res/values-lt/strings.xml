@@ -771,4 +771,13 @@
         <item quantity="many">Trūksta dar %d būtino leidimo — sinchronizavimas be jo neprasidės</item>
         <item quantity="other">Trūksta dar %d būtinų leidimų — sinchronizavimas be jų neprasidės</item>
     </plurals>
+    <string name="pulse_health_vitals">Gyvybiniai rodikliai</string>
+    <string name="pulse_health_edit">Redaguoti pagrindinį rodiklį ir tvarką</string>
+    <string name="pulse_health_headline_title">Pagrindinis rodiklis</string>
+    <string name="pulse_health_headline_none">Be pagrindinio rodiklio</string>
+    <string name="pulse_health_headline_sub">Rodomas dideliu formatu viršuje su didesne diagrama.</string>
+    <string name="pulse_health_steady">Nepakito, palyginti su 7 d. vidurkiu</string>
+    <string name="pulse_health_delta_up">↑ %1$d, palyginti su 7 d. vidurkiu</string>
+    <string name="pulse_health_delta_down">↓ %1$d, palyginti su 7 d. vidurkiu</string>
+    <string name="pulse_edit_hint_health">Vilkite, kad pertvarkytumėte, perjunkite, kad paslėptumėte. Pagrindinis rodiklis lieka viršuje; kiti sudaro sąrašą po juo.</string>
 </resources>

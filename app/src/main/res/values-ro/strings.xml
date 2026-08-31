@@ -1444,4 +1444,13 @@
         <item quantity="few">Mai este nevoie de %d permisiuni obligatorii — sincronizarea nu pornește fără ele</item>
         <item quantity="other">Mai este nevoie de %d de permisiuni obligatorii — sincronizarea nu pornește fără ele</item>
     </plurals>
+    <string name="pulse_health_vitals">Semne vitale</string>
+    <string name="pulse_health_edit">Editează valoarea principală și ordinea</string>
+    <string name="pulse_health_headline_title">Valoare principală</string>
+    <string name="pulse_health_headline_none">Fără valoare principală</string>
+    <string name="pulse_health_headline_sub">Afișată mare în partea de sus, cu un grafic mai mare.</string>
+    <string name="pulse_health_steady">Constant față de media pe 7 zile</string>
+    <string name="pulse_health_delta_up">↑ %1$d față de media pe 7 zile</string>
+    <string name="pulse_health_delta_down">↓ %1$d față de media pe 7 zile</string>
+    <string name="pulse_edit_hint_health">Trage pentru a reordona, comută pentru a ascunde. Valoarea principală stă în partea de sus; restul devin lista de dedesubt.</string>
 </resources>

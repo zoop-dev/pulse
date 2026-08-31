@@ -46,11 +46,15 @@ import nodomain.freeyourgadget.gadgetbridge.R;
 
 /** Pulse: drag-and-drop editor for the Today metric cards (top 3 = hero, rest = grid). */
 public class PulseDashboardEditActivity extends AbstractGBActivity {
+    public static final String EXTRA_SECTION = "pulse_edit_section";
+
     private final List<String> metrics = new ArrayList<>();
     private final Set<String> enabled = new HashSet<>();
     private ItemTouchHelper touchHelper;
     private String origMetrics = "";
     private boolean origExpanded;
+    private boolean health;
+    private String metricsPref = "pulse_today_metrics";
 
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
@@ -58,26 +62,43 @@ public class PulseDashboardEditActivity extends AbstractGBActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pulse_edit);
 
+        health = "health".equals(getIntent().getStringExtra(EXTRA_SECTION));
+        metricsPref = health ? "pulse_health_metrics" : "pulse_today_metrics";
+        final String defMetrics = health
+                ? DashboardFragment.DEFAULT_HEALTH_METRICS
+                : String.join(",", DashboardFragment.ALL_METRICS);
+
         final ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setTitle(R.string.pulse_customize_today);
+            actionBar.setTitle(health ? R.string.pulse_customize_health : R.string.pulse_customize_today);
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.pulse_bg)));
         }
         getWindow().setStatusBarColor(getResources().getColor(R.color.pulse_bg));
 
-        // Expanded layout toggle: stack the hero (no swiping) vs the swipeable carousel
-        final com.google.android.material.materialswitch.MaterialSwitch expandedSwitch =
-                findViewById(R.id.pulse_expanded_switch);
-        origExpanded = GBApplication.getPrefs().getBoolean("pulse_today_expanded", false);
-        expandedSwitch.setChecked(origExpanded);
-        expandedSwitch.setOnCheckedChangeListener((b, checked) ->
-                GBApplication.getPrefs().getPreferences().edit()
-                        .putBoolean("pulse_today_expanded", checked).apply());
+        final View expandedRow = findViewById(R.id.pulse_expanded_row);
+        final View headlineRow = findViewById(R.id.pulse_headline_row);
+        final TextView hint = findViewById(R.id.pulse_edit_hint);
+
+        if (health) {
+            expandedRow.setVisibility(View.GONE);
+            headlineRow.setVisibility(View.VISIBLE);
+            hint.setText(R.string.pulse_edit_hint_health);
+            final TextView headlineValue = findViewById(R.id.pulse_headline_value);
+            headlineValue.setText(headlineLabel());
+            headlineRow.setOnClickListener(v -> showHeadlinePicker(headlineValue));
+        } else {
+            final com.google.android.material.materialswitch.MaterialSwitch expandedSwitch =
+                    findViewById(R.id.pulse_expanded_switch);
+            origExpanded = GBApplication.getPrefs().getBoolean("pulse_today_expanded", false);
+            expandedSwitch.setChecked(origExpanded);
+            expandedSwitch.setOnCheckedChangeListener((b, checked) ->
+                    GBApplication.getPrefs().getPreferences().edit()
+                            .putBoolean("pulse_today_expanded", checked).apply());
+        }
 
         // Load saved order (enabled, in order), then append any disabled metrics
-        final String saved = GBApplication.getPrefs().getString("pulse_today_metrics",
-                String.join(",", DashboardFragment.ALL_METRICS));
+        final String saved = GBApplication.getPrefs().getString(metricsPref, defMetrics);
         origMetrics = saved;
         for (final String m : saved.split(",")) {
             if (isKnown(m) && !metrics.contains(m)) {
@@ -159,15 +180,53 @@ public class PulseDashboardEditActivity extends AbstractGBActivity {
             }
         }
         final String newMetrics = sb.toString();
-        final boolean newExpanded = GBApplication.getPrefs().getBoolean("pulse_today_expanded", false);
+        final boolean newExpanded = health || GBApplication.getPrefs().getBoolean("pulse_today_expanded", false);
         if (newMetrics.equals(origMetrics) && newExpanded == origExpanded) {
             return;
         }
         GBApplication.getPrefs().getPreferences().edit()
-                .putString("pulse_today_metrics", newMetrics).apply();
+                .putString(metricsPref, newMetrics).apply();
         origMetrics = newMetrics;
         origExpanded = newExpanded;
         LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(DashboardFragment.ACTION_CONFIG_CHANGE));
+    }
+
+    private String headlineLabel() {
+        final String m = GBApplication.getPrefs().getString(
+                DashboardFragment.PREF_HEALTH_HEADLINE, DashboardFragment.DEFAULT_HEALTH_HEADLINE);
+        return m.isEmpty() ? getString(R.string.pulse_health_headline_none) : labelFor(m);
+    }
+
+    private void showHeadlinePicker(final TextView valueLabel) {
+        final List<String> options = new ArrayList<>();
+        for (final String m : metrics) {
+            if (enabled.contains(m)) {
+                options.add(m);
+            }
+        }
+        options.add("");
+        final String current = GBApplication.getPrefs().getString(
+                DashboardFragment.PREF_HEALTH_HEADLINE, DashboardFragment.DEFAULT_HEALTH_HEADLINE);
+        final String[] labels = new String[options.size()];
+        int checked = options.size() - 1;
+        for (int i = 0; i < options.size(); i++) {
+            final String m = options.get(i);
+            labels[i] = m.isEmpty() ? getString(R.string.pulse_health_headline_none) : labelFor(m);
+            if (m.equals(current)) {
+                checked = i;
+            }
+        }
+        new androidx.appcompat.app.AlertDialog.Builder(this)
+                .setTitle(R.string.pulse_health_headline_title)
+                .setSingleChoiceItems(labels, checked, (d, which) -> {
+                    GBApplication.getPrefs().getPreferences().edit()
+                            .putString(DashboardFragment.PREF_HEALTH_HEADLINE, options.get(which)).apply();
+                    valueLabel.setText(headlineLabel());
+                    LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(DashboardFragment.ACTION_CONFIG_CHANGE));
+                    d.dismiss();
+                })
+                .setNegativeButton(android.R.string.cancel, null)
+                .show();
     }
 
     @Override

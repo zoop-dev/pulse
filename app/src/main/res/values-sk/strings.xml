@@ -924,4 +924,13 @@
         <item quantity="many">Stále chýba %d povinného povolenia — synchronizácia sa bez nich nespustí</item>
         <item quantity="other">Stále chýba %d povinných povolení — synchronizácia sa bez nich nespustí</item>
     </plurals>
+    <string name="pulse_health_vitals">Vitálne funkcie</string>
+    <string name="pulse_health_edit">Upraviť hlavnú metriku a poradie</string>
+    <string name="pulse_health_headline_title">Hlavná metrika</string>
+    <string name="pulse_health_headline_none">Bez hlavnej metriky</string>
+    <string name="pulse_health_headline_sub">Zobrazuje sa veľká navrchu, s väčším grafom.</string>
+    <string name="pulse_health_steady">Bez zmeny oproti 7-dňovému priemeru</string>
+    <string name="pulse_health_delta_up">↑ %1$d oproti 7-dňovému priemeru</string>
+    <string name="pulse_health_delta_down">↓ %1$d oproti 7-dňovému priemeru</string>
+    <string name="pulse_edit_hint_health">Potiahnutím zmeníte poradie, prepnutím skryjete. Hlavná metrika je navrchu; ostatné tvoria zoznam pod ňou.</string>
 </resources>

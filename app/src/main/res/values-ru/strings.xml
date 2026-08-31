@@ -5026,4 +5026,13 @@
         <item quantity="many">Не хватает ещё %d обязательных разрешений — синхронизация без них не начнётся</item>
         <item quantity="other">Не хватает ещё %d обязательного разрешения — синхронизация без них не начнётся</item>
     </plurals>
+    <string name="pulse_health_vitals">Показатели здоровья</string>
+    <string name="pulse_health_edit">Изменить главный показатель и порядок</string>
+    <string name="pulse_health_headline_title">Главный показатель</string>
+    <string name="pulse_health_headline_none">Без главного показателя</string>
+    <string name="pulse_health_headline_sub">Отображается крупно вверху, с увеличенным графиком.</string>
+    <string name="pulse_health_steady">Без изменений к среднему за 7 дней</string>
+    <string name="pulse_health_delta_up">↑ %1$d к среднему за 7 дней</string>
+    <string name="pulse_health_delta_down">↓ %1$d к среднему за 7 дней</string>
+    <string name="pulse_edit_hint_health">Перетаскивайте для порядка, переключайте для скрытия. Главный показатель находится вверху; остальные образуют список под ним.</string>
 </resources>

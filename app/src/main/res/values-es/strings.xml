@@ -4837,4 +4837,13 @@
         <item quantity="one">Aún falta %d permiso obligatorio — la sincronización no empezará sin él</item>
         <item quantity="other">Aún faltan %d permisos obligatorios — la sincronización no empezará sin ellos</item>
     </plurals>
+    <string name="pulse_health_vitals">Constantes vitales</string>
+    <string name="pulse_health_edit">Editar la métrica principal y el orden</string>
+    <string name="pulse_health_headline_title">Métrica principal</string>
+    <string name="pulse_health_headline_none">Sin métrica principal</string>
+    <string name="pulse_health_headline_sub">Se muestra en grande en la parte superior, con un gráfico más grande.</string>
+    <string name="pulse_health_steady">Sin cambios respecto a la media de 7 días</string>
+    <string name="pulse_health_delta_up">↑ %1$d respecto a la media de 7 días</string>
+    <string name="pulse_health_delta_down">↓ %1$d respecto a la media de 7 días</string>
+    <string name="pulse_edit_hint_health">Arrastra para reordenar, toca para ocultar. La métrica principal va arriba; el resto forma la lista de debajo.</string>
 </resources>

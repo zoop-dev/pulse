@@ -730,4 +730,13 @@
         <item quantity="one">Aínda falta %d permiso obrigatorio — a sincronización non comezará sen el</item>
         <item quantity="other">Aínda faltan %d permisos obrigatorios — a sincronización non comezará sen eles</item>
     </plurals>
+    <string name="pulse_health_vitals">Constantes vitais</string>
+    <string name="pulse_health_edit">Editar a métrica principal e a orde</string>
+    <string name="pulse_health_headline_title">Métrica principal</string>
+    <string name="pulse_health_headline_none">Sen métrica principal</string>
+    <string name="pulse_health_headline_sub">Móstrase grande na parte superior, cunha gráfica máis grande.</string>
+    <string name="pulse_health_steady">Sen cambios respecto á media de 7 días</string>
+    <string name="pulse_health_delta_up">↑ %1$d respecto á media de 7 días</string>
+    <string name="pulse_health_delta_down">↓ %1$d respecto á media de 7 días</string>
+    <string name="pulse_edit_hint_health">Arrastra para reordenar, toca para agochar. A métrica principal vai arriba; o resto forma a lista de abaixo.</string>
 </resources>

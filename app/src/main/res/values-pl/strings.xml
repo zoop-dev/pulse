@@ -5106,4 +5106,13 @@
         <item quantity="many">Nadal brakuje %d wymaganych uprawnień — synchronizacja bez nich się nie rozpocznie</item>
         <item quantity="other">Nadal brakuje %d wymaganego uprawnienia — synchronizacja bez nich się nie rozpocznie</item>
     </plurals>
+    <string name="pulse_health_vitals">Funkcje życiowe</string>
+    <string name="pulse_health_edit">Edytuj główny wskaźnik i kolejność</string>
+    <string name="pulse_health_headline_title">Główny wskaźnik</string>
+    <string name="pulse_health_headline_none">Bez głównego wskaźnika</string>
+    <string name="pulse_health_headline_sub">Pokazywany na górze w dużym formacie, z większym wykresem.</string>
+    <string name="pulse_health_steady">Bez zmian wobec średniej z 7 dni</string>
+    <string name="pulse_health_delta_up">↑ %1$d wobec średniej z 7 dni</string>
+    <string name="pulse_health_delta_down">↓ %1$d wobec średniej z 7 dni</string>
+    <string name="pulse_edit_hint_health">Przeciągnij, aby zmienić kolejność, przełącz, aby ukryć. Główny wskaźnik jest na górze; reszta tworzy listę pod nim.</string>
 </resources>
