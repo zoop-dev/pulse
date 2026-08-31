@@ -41,7 +41,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
@@ -68,8 +67,8 @@ public class DevicesFragment extends Fragment {
     private RecyclerView deviceListView;
     private FloatingActionButton fab;
     List<GBDevice> deviceList;
-    private  HashMap<String, DailyTotals> deviceActivityHashMap = new HashMap();
-    private final HashMap<String, Long> deviceLastSyncHashMap = new HashMap<>();
+    private final java.util.concurrent.ConcurrentHashMap<String, DailyTotals> deviceActivityHashMap = new java.util.concurrent.ConcurrentHashMap<>();
+    private final java.util.concurrent.ConcurrentHashMap<String, Long> deviceLastSyncHashMap = new java.util.concurrent.ConcurrentHashMap<>();
 
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
@@ -254,9 +253,13 @@ public class DevicesFragment extends Fragment {
             if (device != null) {
                 updateDevice(db, device);
             } else {
+                final java.util.Set<String> present = new java.util.HashSet<>();
                 for (GBDevice gbDevice : deviceList) {
+                    present.add(gbDevice.getAddress());
                     updateDevice(db, gbDevice);
                 }
+                deviceActivityHashMap.keySet().retainAll(present);
+                deviceLastSyncHashMap.keySet().retainAll(present);
             }
         }
 

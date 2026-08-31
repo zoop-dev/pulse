@@ -172,10 +172,34 @@ public class DashboardFragment extends Fragment implements MenuProvider {
             case "sleep":
                 return new String[]{"respiration", "hrv", "bodybattery"};
             case "health":
-                return GBApplication.getPrefs().getString("pulse_health_metrics", DEFAULT_HEALTH_METRICS).split(",");
+                return knownMetrics(GBApplication.getPrefs().getString("pulse_health_metrics", DEFAULT_HEALTH_METRICS),
+                        DEFAULT_HEALTH_METRICS);
             default: // today
-                return GBApplication.getPrefs().getString("pulse_today_metrics", DEFAULT_TODAY_METRICS).split(",");
+                return knownMetrics(GBApplication.getPrefs().getString("pulse_today_metrics", DEFAULT_TODAY_METRICS),
+                        DEFAULT_TODAY_METRICS);
         }
+    }
+
+    private static boolean isKnownMetric(final String m) {
+        for (final String k : ALL_METRICS) {
+            if (k.equals(m)) return true;
+        }
+        return false;
+    }
+
+    private static String[] knownMetrics(final String csv, final String fallback) {
+        final java.util.List<String> out = new java.util.ArrayList<>();
+        for (final String raw : csv.split(",")) {
+            final String m = raw.trim();
+            if (isKnownMetric(m) && !out.contains(m)) out.add(m);
+        }
+        if (out.isEmpty()) {
+            for (final String raw : fallback.split(",")) {
+                final String m = raw.trim();
+                if (isKnownMetric(m) && !out.contains(m)) out.add(m);
+            }
+        }
+        return out.toArray(new String[0]);
     }
 
     private String sectionTitle() {
@@ -191,6 +215,8 @@ public class DashboardFragment extends Fragment implements MenuProvider {
     private boolean isConfigChanged = false;
     // when true (default), snap to the real today so stats roll over at midnight
     private boolean followingToday = true;
+    private volatile long warmDayMillis;
+    private final java.util.concurrent.atomic.AtomicInteger refreshGen = new java.util.concurrent.atomic.AtomicInteger();
 
     private ActivityResultLauncher<Intent> calendarLauncher;
     private final ActivityResultCallback<ActivityResult> calendarCallback = result -> {
@@ -538,6 +564,8 @@ public class DashboardFragment extends Fragment implements MenuProvider {
         day.set(Calendar.MINUTE, 59);
         day.set(Calendar.SECOND, 59);
         reloadPreferences();
+        warmDayMillis = day.getTimeInMillis();
+        final int gen = refreshGen.incrementAndGet();
 
         if (!hasLoadedOnce && loadingOverlay != null) {
             loadingOverlay.setVisibility(View.VISIBLE);
@@ -557,9 +585,9 @@ public class DashboardFragment extends Fragment implements MenuProvider {
             } catch (final Exception e) {
                 LOG.warn("Failed to warm dashboard data", e);
             }
-            if (!isAdded()) return;
+            if (!isAdded() || gen != refreshGen.get()) return;
             requireActivity().runOnUiThread(() -> {
-                if (!isAdded()) return;
+                if (!isAdded() || gen != refreshGen.get()) return;
                 draw();
                 hasLoadedOnce = true;
                 if (loadingOverlay != null) {
@@ -672,12 +700,23 @@ public class DashboardFragment extends Fragment implements MenuProvider {
 
     /** Pulse: latest values for the richer Garmin metrics (HR, Body Battery, stress, SpO2, …). */
     private long selectedDayEnd() {
-        final Calendar end = (Calendar) day.clone();
+        final Calendar end = GregorianCalendar.getInstance();
+        end.setTimeInMillis(warmDayMillis);
         end.set(Calendar.HOUR_OF_DAY, 23);
         end.set(Calendar.MINUTE, 59);
         end.set(Calendar.SECOND, 59);
         end.set(Calendar.MILLISECOND, 999);
         return Math.min(end.getTimeInMillis(), System.currentTimeMillis());
+    }
+
+    private long selectedDayStart() {
+        final Calendar start = GregorianCalendar.getInstance();
+        start.setTimeInMillis(warmDayMillis);
+        start.set(Calendar.HOUR_OF_DAY, 0);
+        start.set(Calendar.MINUTE, 0);
+        start.set(Calendar.SECOND, 0);
+        start.set(Calendar.MILLISECOND, 0);
+        return start.getTimeInMillis();
     }
 
     private void warmExtraMetrics() {
@@ -688,38 +727,39 @@ public class DashboardFragment extends Fragment implements MenuProvider {
         }
         final GBDevice dev = devices.get(0);
         final long until = selectedDayEnd();
+        final long since = selectedDayStart();
         try (nodomain.freeyourgadget.gadgetbridge.database.DBHandler db = GBApplication.acquireDbReadOnly()) {
             final nodomain.freeyourgadget.gadgetbridge.entities.DaoSession s = db.getDaoSession();
             final nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator c = dev.getDeviceCoordinator();
             try {
                 final nodomain.freeyourgadget.gadgetbridge.model.BodyEnergySample x = c.getBodyEnergySampleProvider(dev, s).getLatestSample(until);
-                if (x != null) extraMetrics.put("bodybattery", x.getEnergy());
+                if (x != null && x.getTimestamp() >= since) extraMetrics.put("bodybattery", x.getEnergy());
             } catch (final Exception ignored) { }
             try {
                 final nodomain.freeyourgadget.gadgetbridge.model.StressSample x = c.getStressSampleProvider(dev, s).getLatestSample(until);
-                if (x != null) extraMetrics.put("stress", x.getStress());
+                if (x != null && x.getTimestamp() >= since) extraMetrics.put("stress", x.getStress());
             } catch (final Exception ignored) { }
             try {
                 final nodomain.freeyourgadget.gadgetbridge.model.Spo2Sample x = c.getSpo2SampleProvider(dev, s).getLatestSample(until);
-                if (x != null) extraMetrics.put("spo2", x.getSpo2());
+                if (x != null && x.getTimestamp() >= since) extraMetrics.put("spo2", x.getSpo2());
             } catch (final Exception ignored) { }
             try {
                 final nodomain.freeyourgadget.gadgetbridge.model.HeartRateSample x = c.getHeartRateRestingSampleProvider(dev, s).getLatestSample(until);
-                if (x != null && x.getHeartRate() > 0) extraMetrics.put("heartrate", x.getHeartRate());
+                if (x != null && x.getHeartRate() > 0 && x.getTimestamp() >= since) extraMetrics.put("heartrate", x.getHeartRate());
             } catch (final Exception ignored) { }
             try {
                 final nodomain.freeyourgadget.gadgetbridge.model.HrvValueSample x = c.getHrvValueSampleProvider(dev, s).getLatestSample(until);
-                if (x != null) extraMetrics.put("hrv", x.getValue());
+                if (x != null && x.getTimestamp() >= since) extraMetrics.put("hrv", x.getValue());
             } catch (final Exception ignored) { }
             try {
                 final nodomain.freeyourgadget.gadgetbridge.model.RespiratoryRateSample x = c.getRespiratoryRateSampleProvider(dev, s).getLatestSample(until);
-                if (x != null) extraMetrics.put("respiration", Math.round(x.getRespiratoryRate()));
+                if (x != null && x.getTimestamp() >= since) extraMetrics.put("respiration", Math.round(x.getRespiratoryRate()));
             } catch (final Exception ignored) { }
             try {
-                // Intensity minutes: weekly total (Mon→now) plus today's, where vigorous counts double.
                 final nodomain.freeyourgadget.gadgetbridge.devices.GarminIntensityMinutesSampleProvider imp =
                         new nodomain.freeyourgadget.gadgetbridge.devices.GarminIntensityMinutesSampleProvider(dev, s);
                 final Calendar weekStart = GregorianCalendar.getInstance();
+                weekStart.setTimeInMillis(warmDayMillis);
                 weekStart.set(Calendar.HOUR_OF_DAY, 0);
                 weekStart.set(Calendar.MINUTE, 0);
                 weekStart.set(Calendar.SECOND, 0);
@@ -727,15 +767,10 @@ public class DashboardFragment extends Fragment implements MenuProvider {
                 while (weekStart.get(Calendar.DAY_OF_WEEK) != Calendar.MONDAY) {
                     weekStart.add(Calendar.DAY_OF_MONTH, -1);
                 }
-                final Calendar todayStart = GregorianCalendar.getInstance();
-                todayStart.set(Calendar.HOUR_OF_DAY, 0);
-                todayStart.set(Calendar.MINUTE, 0);
-                todayStart.set(Calendar.SECOND, 0);
-                todayStart.set(Calendar.MILLISECOND, 0);
-                final long todayMs = todayStart.getTimeInMillis();
+                final long todayMs = since;
                 int week = 0, today = 0;
                 for (final nodomain.freeyourgadget.gadgetbridge.entities.GarminIntensityMinutesSample im
-                        : imp.getAllSamples(weekStart.getTimeInMillis(), System.currentTimeMillis())) {
+                        : imp.getAllSamples(weekStart.getTimeInMillis(), until)) {
                     final int mod = im.getModerate() != null ? im.getModerate() : 0;
                     final int vig = im.getVigorous() != null ? im.getVigorous() : 0;
                     final int v = mod + vig * 2;
@@ -765,6 +800,7 @@ public class DashboardFragment extends Fragment implements MenuProvider {
         dashboardData.hrIntervalSecs = prefs.getInt("dashboard_widget_today_hr_interval", 1) * 60;
         dashboardData.timeTo = (int) (day.getTimeInMillis() / 1000);
         dashboardData.timeFrom = DateTimeUtils.shiftDays(dashboardData.timeTo, -1);
+        dashboardData.clear();
     }
 
     private void draw() {
@@ -1048,7 +1084,8 @@ public class DashboardFragment extends Fragment implements MenuProvider {
         try (nodomain.freeyourgadget.gadgetbridge.database.DBHandler db = GBApplication.acquireDbReadOnly()) {
             final nodomain.freeyourgadget.gadgetbridge.entities.DaoSession s = db.getDaoSession();
             final nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator c = dev.getDeviceCoordinator();
-            final Calendar anchor = (Calendar) day.clone();
+            final Calendar anchor = GregorianCalendar.getInstance();
+            anchor.setTimeInMillis(warmDayMillis);
             for (final String metric : pulseMetrics()) {
                 final int[] vals = new int[7];
                 for (int i = 0; i < 7; i++) {
@@ -1070,7 +1107,9 @@ public class DashboardFragment extends Fragment implements MenuProvider {
         final Calendar d0 = (Calendar) day.clone();
         d0.set(Calendar.HOUR_OF_DAY, 0); d0.set(Calendar.MINUTE, 0); d0.set(Calendar.SECOND, 0); d0.set(Calendar.MILLISECOND, 0);
         final long from = d0.getTimeInMillis();
-        final long to = from + 86400000L - 1;
+        final Calendar d1 = (Calendar) d0.clone();
+        d1.add(Calendar.DAY_OF_MONTH, 1);
+        final long to = d1.getTimeInMillis() - 1;
         try {
             switch (metric) {
                 case "steps":    return (int) DailyTotals.getDailyTotalsForDevice(dev, day, db).getSteps();
@@ -1328,7 +1367,7 @@ public class DashboardFragment extends Fragment implements MenuProvider {
         if (hist != null) { for (final int v : hist) { if (v > max) max = v; } }
         final int barAreaH = dp(40, scale);
         final java.text.SimpleDateFormat dayFmt = new java.text.SimpleDateFormat("EEEEE", java.util.Locale.getDefault());
-        final Calendar today = Calendar.getInstance();
+        final Calendar today = (Calendar) day.clone();
 
         for (int i = 0; i < 7; i++) {
             final LinearLayout col = new LinearLayout(ctx);
@@ -1430,7 +1469,7 @@ public class DashboardFragment extends Fragment implements MenuProvider {
         try (nodomain.freeyourgadget.gadgetbridge.database.DBHandler db = GBApplication.acquireDbReadOnly()) {
             final nodomain.freeyourgadget.gadgetbridge.entities.DaoSession s = db.getDaoSession();
             final long now = System.currentTimeMillis();
-            final long selEnd = Math.min(day.getTimeInMillis(), now);
+            final long selEnd = Math.min(warmDayMillis, now);
             for (final GBDevice dev : devices) {
                 try {
                     final nodomain.freeyourgadget.gadgetbridge.model.SleepScoreSample x =
@@ -1438,7 +1477,8 @@ public class DashboardFragment extends Fragment implements MenuProvider {
                     if (x != null) sleepScore = Math.max(sleepScore, x.getSleepScore());
                 } catch (final Exception ignored) { }
             }
-            final Calendar to = (Calendar) day.clone();
+            final Calendar to = GregorianCalendar.getInstance();
+            to.setTimeInMillis(warmDayMillis);
             to.set(Calendar.HOUR_OF_DAY, 12); to.set(Calendar.MINUTE, 0); to.set(Calendar.SECOND, 0); to.set(Calendar.MILLISECOND, 0);
             if (to.getTimeInMillis() > now) to.setTimeInMillis(now);
             final int toSec = (int) (to.getTimeInMillis() / 1000L);
@@ -1465,9 +1505,10 @@ public class DashboardFragment extends Fragment implements MenuProvider {
                 sleepBed = best.getSleepStart();
                 sleepWake = best.getSleepEnd();
             }
-            final Calendar today = (Calendar) day.clone();
+            final Calendar weekAnchor = GregorianCalendar.getInstance();
+            weekAnchor.setTimeInMillis(warmDayMillis);
             for (int i = 0; i < 7; i++) {
-                final Calendar d = (Calendar) today.clone();
+                final Calendar d = (Calendar) weekAnchor.clone();
                 d.add(Calendar.DAY_OF_MONTH, -(6 - i));
                 long mins = 0;
                 for (final GBDevice dev : devices) {

@@ -149,11 +149,11 @@ public class GBDeviceAdapterv2 extends ListAdapter<GBDevice, GBDeviceAdapterv2.V
     private String expandedDeviceAddress = "";
     private String expandedFolderName = "";
     private ViewGroup parent;
-    private HashMap<String, DailyTotals> deviceActivityMap = new HashMap<>();
-    private HashMap<String, Long> deviceLastSyncMap = new HashMap<>();
+    private Map<String, DailyTotals> deviceActivityMap = new HashMap<>();
+    private Map<String, Long> deviceLastSyncMap = new HashMap<>();
     private final StableIdGenerator idGenerator = new StableIdGenerator();
 
-    public GBDeviceAdapterv2(Context context, List<GBDevice> deviceList, HashMap<String, DailyTotals> deviceMap, HashMap<String, Long> lastSyncMap) {
+    public GBDeviceAdapterv2(Context context, List<GBDevice> deviceList, Map<String, DailyTotals> deviceMap, Map<String, Long> lastSyncMap) {
         super(new GBDeviceDiffUtil());
         this.context = context;
         this.deviceList = deviceList;
@@ -230,6 +230,11 @@ public class GBDeviceAdapterv2 extends ListAdapter<GBDevice, GBDeviceAdapterv2.V
         holder.lastSyncLabel.setVisibility(View.GONE);
         holder.deviceInfoBox.setVisibility(View.GONE);
         holder.cardViewActivityCardLayout.setVisibility(View.GONE);
+        holder.batteryStatusBox0.setVisibility(View.GONE);
+        holder.batteryStatusBox1.setVisibility(View.GONE);
+        holder.batteryStatusBox2.setVisibility(View.GONE);
+        holder.busyIndicator.setVisibility(View.INVISIBLE);
+        holder.deviceStatusLabel.setTextColor(context.getColor(R.color.pulse_text_dim));
         holder.deviceImageView.setImageResource(R.drawable.ic_device_folder);
 
         if (countDevicesInFolder(folder.getName(), true) == 0) {
@@ -906,7 +911,6 @@ public class GBDeviceAdapterv2 extends ListAdapter<GBDevice, GBDeviceAdapterv2.V
         }
 
         holder.cardViewActivityCardLayout.setVisibility(coordinator.supportsActivityTracking(device) ? View.VISIBLE : View.GONE);
-        holder.cardViewActivityCardLayout.setMinimumWidth(coordinator.supportsActivityTracking(device) ? View.VISIBLE : View.GONE);
 
         // custom actions
         final List<DeviceCardAction> customActions = coordinator.getCustomActions();
@@ -968,14 +972,14 @@ public class GBDeviceAdapterv2 extends ListAdapter<GBDevice, GBDeviceAdapterv2.V
         };
         for (int i = 0; i < customItems.length; i++) {
             final boolean visible = holder.customActions[i].layout.getVisibility() == View.VISIBLE;
-            customItems[i].setVisible(visible);
-            if (visible) {
-                final CharSequence label = holder.customActions[i].label.getVisibility() == View.VISIBLE
-                        ? holder.customActions[i].label.getText()
-                        : holder.customActions[i].layout.getContentDescription();
-                if (!TextUtils.isEmpty(label)) {
-                    customItems[i].setTitle(label);
-                }
+            final CharSequence label = holder.customActions[i].label.getVisibility() == View.VISIBLE
+                    ? holder.customActions[i].label.getText()
+                    : holder.customActions[i].layout.getContentDescription();
+            if (visible && !TextUtils.isEmpty(label)) {
+                customItems[i].setVisible(true);
+                customItems[i].setTitle(label);
+            } else {
+                customItems[i].setVisible(false);
             }
         }
 

@@ -81,6 +81,7 @@ public class PulseDashboardEditActivity extends AbstractGBActivity {
         final TextView hint = findViewById(R.id.pulse_edit_hint);
 
         if (health) {
+            origExpanded = true;
             expandedRow.setVisibility(View.GONE);
             headlineRow.setVisibility(View.VISIBLE);
             hint.setText(R.string.pulse_edit_hint_health);
@@ -125,6 +126,9 @@ public class PulseDashboardEditActivity extends AbstractGBActivity {
                                   @NonNull final RecyclerView.ViewHolder target) {
                 final int from = vh.getAdapterPosition();
                 final int to = target.getAdapterPosition();
+                if (from == RecyclerView.NO_POSITION || to == RecyclerView.NO_POSITION) {
+                    return false;
+                }
                 Collections.swap(metrics, from, to);
                 adapter.notifyItemMoved(from, to);
                 return true;
@@ -181,11 +185,25 @@ public class PulseDashboardEditActivity extends AbstractGBActivity {
         }
         final String newMetrics = sb.toString();
         final boolean newExpanded = health || GBApplication.getPrefs().getBoolean("pulse_today_expanded", false);
-        if (newMetrics.equals(origMetrics) && newExpanded == origExpanded) {
+
+        String headlineFix = null;
+        if (health) {
+            final String headline = GBApplication.getPrefs().getString(
+                    DashboardFragment.PREF_HEALTH_HEADLINE, DashboardFragment.DEFAULT_HEALTH_HEADLINE);
+            if (!headline.isEmpty() && !enabled.contains(headline)) {
+                headlineFix = "";
+            }
+        }
+
+        if (newMetrics.equals(origMetrics) && newExpanded == origExpanded && headlineFix == null) {
             return;
         }
-        GBApplication.getPrefs().getPreferences().edit()
-                .putString(metricsPref, newMetrics).apply();
+        final android.content.SharedPreferences.Editor editor = GBApplication.getPrefs().getPreferences().edit()
+                .putString(metricsPref, newMetrics);
+        if (headlineFix != null) {
+            editor.putString(DashboardFragment.PREF_HEALTH_HEADLINE, headlineFix);
+        }
+        editor.apply();
         origMetrics = newMetrics;
         origExpanded = newExpanded;
         LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(DashboardFragment.ACTION_CONFIG_CHANGE));
@@ -267,12 +285,14 @@ public class PulseDashboardEditActivity extends AbstractGBActivity {
         @SuppressLint("ClickableViewAccessibility")
         @Override
         public void onBindViewHolder(@NonNull final Holder h, final int position) {
-            final String metric = metrics.get(h.getAdapterPosition());
+            final String metric = metrics.get(position);
             h.label.setText(labelFor(metric));
             h.toggle.setOnCheckedChangeListener(null);
             h.toggle.setChecked(enabled.contains(metric));
             h.toggle.setOnCheckedChangeListener((b, checked) -> {
-                final String m = metrics.get(h.getAdapterPosition());
+                final int pos = h.getAdapterPosition();
+                if (pos == RecyclerView.NO_POSITION) return;
+                final String m = metrics.get(pos);
                 if (checked) enabled.add(m); else enabled.remove(m);
             });
             h.drag.setOnTouchListener((v, event) -> {

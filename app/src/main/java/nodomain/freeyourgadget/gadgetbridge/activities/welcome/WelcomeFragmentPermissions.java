@@ -56,6 +56,7 @@ public class WelcomeFragmentPermissions extends Fragment {
     private PermissionAdapter optionalAdapter;
     private List<String> requestingPermissions = new ArrayList<>();
     private boolean showDoNotAskAgain;
+    private boolean requiredOnlyChosen;
 
     @Nullable
     @Override
@@ -85,7 +86,10 @@ public class WelcomeFragmentPermissions extends Fragment {
         });
 
         binding.buttonRequestAll.setOnClickListener(v -> queueAndRequest(tierPermissions(null)));
-        binding.buttonRequiredOnly.setOnClickListener(v -> queueAndRequest(tierPermissions(true)));
+        binding.buttonRequiredOnly.setOnClickListener(v -> {
+            requiredOnlyChosen = true;
+            queueAndRequest(tierPermissions(true));
+        });
 
         final ActionBar supportActionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
         if (supportActionBar != null && supportActionBar.isShowing()) {
@@ -123,14 +127,16 @@ public class WelcomeFragmentPermissions extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        requiredAdapter.notifyDataSetChanged();
-        optionalAdapter.notifyDataSetChanged();
+        requiredAdapter.resort();
+        optionalAdapter.resort();
         updateCallout();
         if (PermissionsUtils.checkAllPermissions(requireActivity())) {
             binding.buttonRequestAll.setEnabled(false);
-            if (showDoNotAskAgain) {
-                requireActivity().finish();
-            }
+        }
+        if (showDoNotAskAgain
+                && (PermissionsUtils.checkAllPermissions(requireActivity())
+                    || (requiredOnlyChosen && ungrantedRequiredCount() == 0))) {
+            requireActivity().finish();
         }
         if (!requestingPermissions.isEmpty()) {
             requestAllPermissions();
@@ -200,14 +206,18 @@ public class WelcomeFragmentPermissions extends Fragment {
             }
             String[] combinedPermissions = requestingPermissions.toArray(new String[0]);
             requestingPermissions.clear();
-            ActivityCompat.requestPermissions(requireActivity(), combinedPermissions, 0);
+            if (combinedPermissions.length > 0) {
+                ActivityCompat.requestPermissions(requireActivity(), combinedPermissions, 0);
+            }
         }
     }
 
     private static int accentColor(final Context context) {
         final TypedValue typedValue = new TypedValue();
-        context.getTheme().resolveAttribute(R.attr.pulseAccent, typedValue, true);
-        return typedValue.data;
+        if (context.getTheme().resolveAttribute(R.attr.pulseAccent, typedValue, true) && typedValue.data != 0) {
+            return typedValue.data;
+        }
+        return ContextCompat.getColor(context, R.color.accent_blue);
     }
 
     private static int softTint(final int color) {
@@ -240,6 +250,11 @@ public class WelcomeFragmentPermissions extends Fragment {
         public PermissionAdapter(List<PermissionsUtils.PermissionDetails> permissionList, Context context) {
             this.permissionList = permissionList;
             this.context = context;
+        }
+
+        void resort() {
+            sortByGrantThenName(permissionList);
+            notifyDataSetChanged();
         }
 
         @NonNull
