@@ -8,6 +8,9 @@
 
 Neon-blue, near-black, fully on-device. No accounts, no vendor cloud, no telemetry.
 
+[<img src="fdroid/badges/badge_fdroid.png" alt="Get it on F-Droid" height="60">](https://fdroid.zachy.cc/repo)
+[<img src="fdroid/badges/badge_obtainium.png" alt="Add to Obtainium" height="60">](https://apps.obtainium.imranr.dev/redirect?r=obtainium%3A%2F%2Fapp%2F%257B%2522id%2522%253A%2520%2522cc.zachy.pulse%2522%252C%2520%2522url%2522%253A%2520%2522https%253A%252F%252Ffdroid.zachy.cc%252Frepo%253FappId%253Dcc.zachy.pulse%2522%252C%2520%2522author%2522%253A%2520%2522zoop%2522%252C%2520%2522name%2522%253A%2520%2522Pulse%2522%252C%2520%2522overrideSource%2522%253A%2520%2522FDroidRepo%2522%252C%2520%2522additionalSettings%2522%253A%2520%2522%257B%255C%2522appIdOrName%255C%2522%253A%2520%255C%2522cc.zachy.pulse%255C%2522%257D%2522%257D)
+
 </div>
 
 ---
