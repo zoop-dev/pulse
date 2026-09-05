@@ -2792,6 +2792,7 @@
     <string name="codeberg_url" translatable="false">Code: <a href="https://github.com/zoop-dev/pulse">https://github.com/zoop-dev/pulse</a></string>
     <string name="fdroid_url" translatable="false">Releases: <a href="https://github.com/zoop-dev/pulse/releases">https://github.com/zoop-dev/pulse/releases</a></string>
     <string name="upstream_url" translatable="false">Built on Gadgetbridge: <a href="https://codeberg.org/Freeyourgadget/Gadgetbridge">codeberg.org/Freeyourgadget/Gadgetbridge</a></string>
+    <string name="pulse_donate_gb_url" translatable="false">Support upstream: <a href="https://liberapay.com/Gadgetbridge">Donate to Gadgetbridge</a></string>
     <string name="about_title">About</string>
     <string name="about_version">Version %s</string>
     <string name="about_hash">Commit %s</string>
@@ -5634,9 +5635,36 @@
     <string name="pulse_widget_slot_1">Slot 1</string>
     <string name="pulse_widget_slot_2">Slot 2</string>
     <string name="pulse_widget_slot_3">Slot 3</string>
+    <string name="pulse_widget_slot_4">Slot 4</string>
     <string name="pulse_widget_save">Add to home screen</string>
     <string name="pulse_widget_none">None</string>
     <string name="pulse_widget_title">Configure widget</string>
+    <string name="pulse_widget_strip_label">Pulse Stat strip</string>
+    <string name="pulse_widget_strip_desc">2–4 stats with progress bars</string>
+    <string name="pulse_widget_stat_label">Pulse Stat</string>
+    <string name="pulse_widget_stat_desc">One stat, big, with goal progress</string>
+    <string name="pulse_widget_rings_label">Pulse Rings</string>
+    <string name="pulse_widget_rings_desc">One goal as a ring, plus sub-stats</string>
+    <string name="pulse_widget_vitals_label">Pulse Vitals</string>
+    <string name="pulse_widget_vitals_desc">A headline metric with a trend list</string>
+    <string name="pulse_widget_metric">Metric</string>
+    <string name="pulse_widget_headline">Headline</string>
+    <string name="pulse_widget_substats">Sub-stats</string>
+    <string name="pulse_widget_rows">Rows</string>
+    <string name="pulse_widget_accent">Accent</string>
+    <string name="pulse_widget_theme">Theme</string>
+    <string name="pulse_widget_theme_auto">Auto</string>
+    <string name="pulse_widget_theme_light">Light</string>
+    <string name="pulse_widget_theme_dark">Dark</string>
+    <string name="pulse_widget_tap">Tap opens</string>
+    <string name="pulse_widget_tap_charts">Charts</string>
+    <string name="pulse_widget_tap_home">Pulse home</string>
+    <string name="pulse_widget_tap_health">Health tab</string>
+    <string name="pulse_accent_blue">Blue</string>
+    <string name="pulse_accent_violet">Violet</string>
+    <string name="pulse_accent_coral">Coral</string>
+    <string name="pulse_accent_mint">Mint</string>
+    <string name="pulse_accent_pink">Pink</string>
     <string name="pulse_no_sleep">No sleep</string>
     <string name="pulse_details">Details</string>
     <string name="pulse_no_device">No device</string>

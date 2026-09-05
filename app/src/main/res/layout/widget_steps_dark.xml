@@ -3,7 +3,7 @@
     android:id="@+id/stat_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/pulse_widget_bg_light"
+    android:background="@drawable/pulse_widget_bg_dark"
     android:padding="12dp">
 
     <LinearLayout
@@ -34,7 +34,7 @@
             android:textAllCaps="true"
             android:letterSpacing="0.09"
             android:fontFamily="@font/spacegrotesk_semibold"
-            android:textColor="#6B6F78"
+            android:textColor="#8A8A93"
             android:textSize="11sp" />
 
         <ImageView
@@ -51,7 +51,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
             android:fontFamily="@font/plusjakarta_regular"
-            android:textColor="#6B6F78"
+            android:textColor="#8A8A93"
             android:textSize="11sp" />
     </LinearLayout>
 

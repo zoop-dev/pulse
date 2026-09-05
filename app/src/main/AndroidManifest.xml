@@ -964,7 +964,7 @@
 
         <receiver
             android:name=".Widget"
-            android:label="@string/widget_listing_label"
+            android:label="@string/pulse_widget_strip_label"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -991,14 +991,47 @@
 
         <receiver
             android:name=".WidgetSteps"
-            android:label="@string/pulse_widget_steps_description"
+            android:label="@string/pulse_widget_stat_label"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.appwidget.action.APPWIDGET_ENABLED" />
+                <action android:name="android.appwidget.action.APPWIDGET_DISABLED" />
+                <action android:name="android.appwidget.action.APPWIDGET_DELETED" />
             </intent-filter>
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget_steps_info" />
+        </receiver>
+
+        <receiver
+            android:name=".WidgetRings"
+            android:label="@string/pulse_widget_rings_label"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.appwidget.action.APPWIDGET_ENABLED" />
+                <action android:name="android.appwidget.action.APPWIDGET_DISABLED" />
+                <action android:name="android.appwidget.action.APPWIDGET_DELETED" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_rings_info" />
+        </receiver>
+
+        <receiver
+            android:name=".WidgetVitals"
+            android:label="@string/pulse_widget_vitals_label"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.appwidget.action.APPWIDGET_ENABLED" />
+                <action android:name="android.appwidget.action.APPWIDGET_DISABLED" />
+                <action android:name="android.appwidget.action.APPWIDGET_DELETED" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_vitals_info" />
         </receiver>
 
         <activity

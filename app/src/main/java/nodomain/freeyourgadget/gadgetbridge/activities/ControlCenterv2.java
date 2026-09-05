@@ -93,6 +93,7 @@ public class ControlCenterv2 extends AppCompatActivity
     private static final Logger LOG = LoggerFactory.getLogger(ControlCenterv2.class);
     public static final long REALTIME_HR_SAMPLE_TTL_MS = 5_000L;
     public static final int MENU_REFRESH_CODE = 1;
+    public static final String EXTRA_OPEN_TAB = "pulse_open_tab";
     private boolean isLanguageInvalid = false;
     private boolean isThemeInvalid = false;
     private ViewPager2 viewPager;
@@ -316,6 +317,7 @@ public class ControlCenterv2 extends AppCompatActivity
         viewPager.setAdapter(pagerAdapter);
         // Pulse: preload all 4 tabs so switching is instant (stats warm off the UI thread now)
         viewPager.setOffscreenPageLimit(3);
+        applyOpenTabIntent(getIntent());
         // Always land on the Today tab
 
         // Sync ViewPager changes with BottomNavigationView
@@ -427,6 +429,31 @@ public class ControlCenterv2 extends AppCompatActivity
     }
 
     @Override
+    protected void onNewIntent(final Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+        applyOpenTabIntent(intent);
+    }
+
+    private void applyOpenTabIntent(final Intent intent) {
+        if (intent == null || viewPager == null) {
+            return;
+        }
+        final String tab = intent.getStringExtra(EXTRA_OPEN_TAB);
+        if (tab == null) {
+            return;
+        }
+        final int position;
+        switch (tab) {
+            case "fitness": position = 1; break;
+            case "sleep":   position = 2; break;
+            case "health":  position = 3; break;
+            default:        position = 0; break;
+        }
+        viewPager.post(() -> viewPager.setCurrentItem(position, false));
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         handleShortcut(getIntent());
@@ -513,11 +540,6 @@ public class ControlCenterv2 extends AppCompatActivity
             return false;
         } else if (itemId == R.id.action_quit) {
             GBApplication.quit();
-            return false;
-        } else if (itemId == R.id.donation_link) {
-            final Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("https://liberapay.com/Gadgetbridge")); //TODO: centralize if ever used somewhere else
-            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(i);
             return false;
         } else if (itemId == R.id.external_changelog) {
             final GBChangeLog cl = GBChangeLog.createChangeLog(this);

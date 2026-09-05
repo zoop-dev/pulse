@@ -26,6 +26,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.RemoteViews;
 import android.widget.Toast;
@@ -35,293 +36,208 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.concurrent.TimeUnit;
+import java.util.List;
 
-import nodomain.freeyourgadget.gadgetbridge.activities.ControlCenterv2;
-import nodomain.freeyourgadget.gadgetbridge.activities.WidgetAlarmsActivity;
-import nodomain.freeyourgadget.gadgetbridge.activities.charts.ActivityChartsActivity;
+import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
+import nodomain.freeyourgadget.gadgetbridge.devices.SampleProvider;
+import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityUser;
 import nodomain.freeyourgadget.gadgetbridge.model.DailyTotals;
 import nodomain.freeyourgadget.gadgetbridge.model.RecordedDataTypes;
 import nodomain.freeyourgadget.gadgetbridge.util.AndroidUtils;
-import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
-import nodomain.freeyourgadget.gadgetbridge.util.FormatUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
+import nodomain.freeyourgadget.gadgetbridge.util.PulseWidgetGraphics;
+import nodomain.freeyourgadget.gadgetbridge.util.PulseWidgetMetric;
+import nodomain.freeyourgadget.gadgetbridge.util.PulseWidgetStyle;
 import nodomain.freeyourgadget.gadgetbridge.util.WidgetPreferenceStorage;
 
+/** Pulse: the "Stat strip" home-screen widget — 2–4 metric-tinted slots with progress bars. */
 public class Widget extends AppWidgetProvider {
     public static final String WIDGET_CLICK = "nodomain.freeyourgadget.gadgetbridge.WidgetClick";
     public static final String APPWIDGET_DELETED = "android.appwidget.action.APPWIDGET_DELETED";
 
     private static final Logger LOG = LoggerFactory.getLogger(Widget.class);
+    private static final String DEFAULT_METRICS = "steps,calories,sleep";
     static BroadcastReceiver broadcastReceiver = null;
 
-
-    private DailyTotals getSteps(GBDevice gbDevice) {
-        Context context = GBApplication.getContext();
-        Calendar day = GregorianCalendar.getInstance();
-
-        if (!(context instanceof GBApplication)) {
-            return new DailyTotals();
-        }
-        return DailyTotals.getDailyTotalsForDevice(gbDevice, day);
-    }
-
-    private String getHM(long value) {
-        return DateTimeUtils.formatDurationHoursMinutes(value, TimeUnit.MINUTES);
-    }
-
-    private void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
-                                 int appWidgetId) {
-
-        GBDevice deviceForWidget = new WidgetPreferenceStorage().getDeviceForWidget(appWidgetId);
-        if (deviceForWidget == null) {
-            LOG.debug("Widget: no device, bailing out");
-            return;
-        }
-
-        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget);
-
-        //onclick refresh
-        Intent intent = new Intent(context, Widget.class);
-        intent.setPackage(BuildConfig.APPLICATION_ID);
-        intent.setAction(WIDGET_CLICK);
-        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-        PendingIntent refreshDataIntent = PendingIntent.getBroadcast(
-                context,
-                appWidgetId,
-                intent,
-                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
-        );
-        views.setOnClickPendingIntent(R.id.todaywidget_header_container, refreshDataIntent);
-
-        //open GB main window
-        Intent startMainIntent = new Intent(context, ControlCenterv2.class);
-        startMainIntent.setPackage(BuildConfig.APPLICATION_ID);
-        PendingIntent startMainPIntent = PendingIntent.getActivity(
-                context,
-                0,
-                startMainIntent,
-                PendingIntent.FLAG_IMMUTABLE
-        );
-        views.setOnClickPendingIntent(R.id.todaywidget_header_icon, startMainPIntent);
-
-        //charts (tap the widget body to open charts)
-        Intent startChartsIntent = new Intent(context, ActivityChartsActivity.class);
-        startChartsIntent.setPackage(BuildConfig.APPLICATION_ID);
-        startChartsIntent.putExtra(GBDevice.EXTRA_DEVICE, deviceForWidget);
-        PendingIntent startChartsPIntent = PendingIntent.getActivity(
-                context, appWidgetId, startChartsIntent,
-                PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_IMMUTABLE);
-        views.setOnClickPendingIntent(R.id.todaywidget_bottom_layout, startChartsPIntent);
-
-        // Header: device name + battery
-        views.setViewVisibility(R.id.todaywidget_battery_icon, View.GONE);
-        String status = deviceForWidget.getStateString(context);
-        if (deviceForWidget.isConnected() && deviceForWidget.getBatteryLevel(0) > 1) {
-            views.setViewVisibility(R.id.todaywidget_battery_icon, View.VISIBLE);
-            status = deviceForWidget.getBatteryLevel(0) + "%";
-        }
-        views.setTextViewText(R.id.todaywidget_device_status, status);
-        views.setTextViewText(R.id.todaywidget_device_name,
-                deviceForWidget.getAlias() != null ? deviceForWidget.getAlias() : deviceForWidget.getName());
-
-        // Configurable stat slots
-        final DailyTotals dailyTotals = getSteps(deviceForWidget);
-        final ActivityUser activityUser = new ActivityUser();
-        final String[] metrics = getWidgetMetrics(appWidgetId);
-        final int[] slotIds = {R.id.pulse_w0, R.id.pulse_w1, R.id.pulse_w2};
-        final int[] iconIds = {R.id.pulse_w0_icon, R.id.pulse_w1_icon, R.id.pulse_w2_icon};
-        final int[] valueIds = {R.id.pulse_w0_value, R.id.pulse_w1_value, R.id.pulse_w2_value};
-        final int[] labelIds = {R.id.pulse_w0_label, R.id.pulse_w1_label, R.id.pulse_w2_label};
-        final int[] progIds = {R.id.pulse_w0_prog, R.id.pulse_w1_prog, R.id.pulse_w2_prog};
-        for (int i = 0; i < 3; i++) {
-            if (i < metrics.length && !metrics[i].trim().isEmpty()) {
-                fillSlot(context, views, iconIds[i], valueIds[i], labelIds[i], progIds[i],
-                        metrics[i].trim(), deviceForWidget, dailyTotals, activityUser);
-                views.setViewVisibility(slotIds[i], View.VISIBLE);
-            } else {
-                views.setViewVisibility(slotIds[i], View.GONE);
-            }
-        }
-
-        // Pulse: top-right refresh icon re-reads + redraws this widget.
-        final Intent refreshIntent = new Intent(context, Widget.class)
-                .setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE)
-                .putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, new int[]{appWidgetId});
-        final android.app.PendingIntent refreshPi = android.app.PendingIntent.getBroadcast(
-                context, appWidgetId, refreshIntent,
-                android.app.PendingIntent.FLAG_UPDATE_CURRENT | android.app.PendingIntent.FLAG_IMMUTABLE);
-        views.setOnClickPendingIntent(R.id.todaywidget_refresh, refreshPi);
-
-        // Instruct the widget manager to update the widget
-        appWidgetManager.updateAppWidget(appWidgetId, views);
-    }
+    private static final int[] SLOT = {R.id.strip_s0, R.id.strip_s1, R.id.strip_s2, R.id.strip_s3};
+    private static final int[] CHIP = {R.id.strip_s0_chip, R.id.strip_s1_chip, R.id.strip_s2_chip, R.id.strip_s3_chip};
+    private static final int[] VAL = {R.id.strip_s0_value, R.id.strip_s1_value, R.id.strip_s2_value, R.id.strip_s3_value};
+    private static final int[] LBL = {R.id.strip_s0_label, R.id.strip_s1_label, R.id.strip_s2_label, R.id.strip_s3_label};
+    private static final int[] BAR = {R.id.strip_s0_bar, R.id.strip_s1_bar, R.id.strip_s2_bar, R.id.strip_s3_bar};
 
     public static String[] getWidgetMetrics(final int appWidgetId) {
-        return GBApplication.getPrefs()
-                .getString("pulse_widget_metrics_" + appWidgetId, "steps,distance,sleep")
-                .split(",");
+        final String csv = GBApplication.getPrefs()
+                .getString(PulseWidgetStyle.PREF_METRICS + appWidgetId, DEFAULT_METRICS);
+        final List<String> out = new ArrayList<>();
+        for (final String raw : csv.split(",")) {
+            final String k = raw.trim();
+            if (PulseWidgetMetric.isKnown(k) && !out.contains(k)) {
+                out.add(k);
+            }
+        }
+        if (out.isEmpty()) {
+            for (final String k : DEFAULT_METRICS.split(",")) {
+                out.add(k);
+            }
+        }
+        while (out.size() > 4) {
+            out.remove(out.size() - 1);
+        }
+        return out.toArray(new String[0]);
     }
 
-    private void fillSlot(final Context context, final RemoteViews views,
-                          final int iconId, final int valueId, final int labelId, final int progId,
-                          final String metric, final GBDevice device,
-                          final DailyTotals totals, final ActivityUser user) {
-        final int iconRes;
-        final String label;
-        final String value;
-        int max = 0;
-        int progress = 0;
-        switch (metric) {
-            case "distance": {
-                // getDistance() is in cm; fall back to steps * stride when no GPS distance
-                long cm = totals.getDistance();
-                if (cm <= 0 && totals.getSteps() > 0) {
-                    cm = totals.getSteps() * user.getStepLengthCm();
+    private void updateAppWidget(final Context context, final AppWidgetManager appWidgetManager,
+                                 final int appWidgetId) {
+        final RemoteViews views = buildViews(context, appWidgetId);
+        if (views != null) {
+            appWidgetManager.updateAppWidget(appWidgetId, views);
+        }
+    }
+
+    public static RemoteViews buildViews(final Context context, final int appWidgetId) {
+        final GBDevice device = new WidgetPreferenceStorage().getDeviceForWidget(appWidgetId);
+        if (device == null) {
+            LOG.debug("Widget: no device, bailing out");
+            return null;
+        }
+
+        final String accentKey = PulseWidgetStyle.accentKey(appWidgetId);
+        final boolean dark = PulseWidgetStyle.isDark(context, PulseWidgetStyle.themeKey(appWidgetId));
+        final int accent = PulseWidgetStyle.accent(accentKey, dark);
+        final int track = PulseWidgetStyle.track(dark);
+        final int textDim = PulseWidgetStyle.textDim(dark);
+
+        final RemoteViews views = new RemoteViews(context.getPackageName(),
+                dark ? R.layout.widget_dark : R.layout.widget);
+
+        views.setTextColor(R.id.strip_wordmark, accent);
+        views.setInt(R.id.strip_refresh, "setColorFilter", textDim);
+        views.setTextViewText(R.id.strip_device, device.getAlias() != null ? device.getAlias() : device.getName());
+
+        final String[] metrics = getWidgetMetrics(appWidgetId);
+        final ActivityUser user = new ActivityUser();
+        final int chipPx = PulseWidgetGraphics.dp(context, 28);
+        final int barH = PulseWidgetGraphics.dp(context, 5);
+
+        try (DBHandler db = GBApplication.acquireDbReadOnly()) {
+            final DaoSession session = db.getDaoSession();
+            final DailyTotals totals = DailyTotals.getDailyTotalsForDevice(device, GregorianCalendar.getInstance(), db);
+
+            final long lastSync = lastSyncMillis(device, session);
+            if (lastSync > 0) {
+                views.setViewVisibility(R.id.strip_sync_dot, View.VISIBLE);
+                views.setTextViewText(R.id.strip_status, DateUtils.getRelativeTimeSpanString(
+                        lastSync, System.currentTimeMillis(), DateUtils.MINUTE_IN_MILLIS,
+                        DateUtils.FORMAT_ABBREV_RELATIVE));
+            } else {
+                views.setViewVisibility(R.id.strip_sync_dot, View.GONE);
+                views.setTextViewText(R.id.strip_status, device.getStateString(context));
+            }
+
+            for (int i = 0; i < 4; i++) {
+                if (i >= metrics.length) {
+                    views.setViewVisibility(SLOT[i], View.GONE);
+                    continue;
                 }
-                final double m = cm * 0.01;
-                iconRes = R.drawable.ic_map;
-                label = context.getString(R.string.distance);
-                value = FormatUtils.getFormattedDistanceLabel(m);
-                max = user.getDistanceGoalMeters();
-                progress = (int) m;
-                break;
-            }
-            case "calories": {
-                // DailyTotals stores raw calories; dashboard shows kcal (÷1000)
-                final int cal = (int) (totals.getActiveCalories() / 1000);
-                iconRes = R.drawable.ic_calories;
-                label = context.getString(R.string.calories);
-                value = String.valueOf(cal);
-                max = user.getCaloriesBurntGoal();
-                progress = cal;
-                break;
-            }
-            case "sleep": {
-                final int sl = (int) totals.getSleep();
-                iconRes = R.drawable.ic_nights_stay;
-                label = context.getString(R.string.menuitem_sleep);
-                value = sl > 0 ? getHM(sl) : context.getString(R.string.pulse_no_sleep);
-                max = user.getSleepDurationGoal();
-                progress = sl;
-                break;
-            }
-            case "heartrate": {
-                final int hr = latestHeartRate(device);
-                iconRes = R.drawable.ic_heartrate;
-                label = context.getString(R.string.menuitem_hr);
-                value = hr > 0 ? String.valueOf(hr) : "-";
-                break;
-            }
-            case "bodybattery": {
-                final int be = latestBodyEnergy(device);
-                iconRes = R.drawable.ic_battery_full;
-                label = context.getString(R.string.body_energy);
-                value = be >= 0 ? String.valueOf(be) : "-";
-                max = 100;
-                progress = Math.max(be, 0);
-                break;
-            }
-            default: { // steps
-                final int steps = (int) totals.getSteps();
-                iconRes = R.drawable.ic_steps;
-                label = context.getString(R.string.steps);
-                value = String.valueOf(steps);
-                max = user.getStepsGoal();
-                progress = steps;
-                break;
-            }
-        }
-        views.setInt(iconId, "setBackgroundResource", iconRes);
-        views.setTextViewText(valueId, value);
-        views.setTextViewText(labelId, label);
-        if (max > 0) {
-            views.setViewVisibility(progId, View.VISIBLE);
-            views.setProgressBar(progId, max, progress, false);
-        } else {
-            views.setViewVisibility(progId, View.INVISIBLE);
-        }
-    }
+                views.setViewVisibility(SLOT[i], View.VISIBLE);
+                final PulseWidgetMetric metric = PulseWidgetMetric.fromKey(metrics[i]);
+                final int tint = metric.tint(dark);
+                final PulseWidgetMetric.Reading r = metric.read(context, device, totals, user, session);
 
-    private int latestHeartRate(final GBDevice device) {
-        try (nodomain.freeyourgadget.gadgetbridge.database.DBHandler db = GBApplication.acquireDbReadOnly()) {
-            final nodomain.freeyourgadget.gadgetbridge.model.HeartRateSample s =
-                    device.getDeviceCoordinator().getHeartRateRestingSampleProvider(device, db.getDaoSession()).getLatestSample();
-            return s != null ? s.getHeartRate() : -1;
+                views.setImageViewBitmap(CHIP[i],
+                        PulseWidgetGraphics.chip(context, chipPx, chipPx * 0.34f, metric.iconRes, tint));
+                views.setTextViewText(VAL[i], r.value);
+                views.setTextViewText(LBL[i], metric.label(context).toUpperCase());
+                if (r.hasBar()) {
+                    views.setViewVisibility(BAR[i], View.VISIBLE);
+                    views.setImageViewBitmap(BAR[i],
+                            PulseWidgetGraphics.bar(360, barH, r.fraction(), track, tint));
+                } else {
+                    views.setViewVisibility(BAR[i], View.INVISIBLE);
+                }
+            }
         } catch (final Exception e) {
-            return -1;
+            LOG.warn("Widget: failed to build strip", e);
         }
+
+        final PendingIntent tap = PulseWidgetStyle.tapIntent(context, appWidgetId, device,
+                PulseWidgetStyle.tapKey(appWidgetId));
+        views.setOnClickPendingIntent(R.id.strip_slots, tap);
+        views.setOnClickPendingIntent(R.id.strip_wordmark, tap);
+
+        final Intent refreshIntent = new Intent(context, Widget.class);
+        refreshIntent.setPackage(BuildConfig.APPLICATION_ID);
+        refreshIntent.setAction(WIDGET_CLICK);
+        refreshIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+        final PendingIntent refreshPi = PendingIntent.getBroadcast(context, appWidgetId, refreshIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+        views.setOnClickPendingIntent(R.id.strip_refresh, refreshPi);
+        views.setOnClickPendingIntent(R.id.strip_device, refreshPi);
+
+        return views;
     }
 
-    private int latestBodyEnergy(final GBDevice device) {
-        try (nodomain.freeyourgadget.gadgetbridge.database.DBHandler db = GBApplication.acquireDbReadOnly()) {
-            final nodomain.freeyourgadget.gadgetbridge.model.BodyEnergySample s =
-                    device.getDeviceCoordinator().getBodyEnergySampleProvider(device, db.getDaoSession()).getLatestSample();
-            return s != null ? s.getEnergy() : -1;
+    private static long lastSyncMillis(final GBDevice device, final DaoSession session) {
+        try {
+            final SampleProvider<? extends ActivitySample> p =
+                    device.getDeviceCoordinator().getSampleProvider(device, session);
+            final ActivitySample s = p.getLatestActivitySample();
+            return s != null ? s.getTimestamp() * 1000L : 0L;
         } catch (final Exception e) {
-            return -1;
+            return 0L;
         }
     }
 
-    public void refreshData(int appWidgetId) {
-        Context context = GBApplication.getContext();
-        GBDevice deviceForWidget = new WidgetPreferenceStorage().getDeviceForWidget(appWidgetId);
-
-        if (deviceForWidget == null || !deviceForWidget.isInitialized()) {
-            GB.toast(context,
-                    context.getString(R.string.device_not_connected),
-                    Toast.LENGTH_SHORT, GB.ERROR);
-            GBApplication.deviceService(deviceForWidget).connect();
-            GB.toast(context,
-                    context.getString(R.string.connecting),
-                    Toast.LENGTH_SHORT, GB.INFO);
-
+    public void refreshData(final int appWidgetId) {
+        final Context context = GBApplication.getContext();
+        final GBDevice device = new WidgetPreferenceStorage().getDeviceForWidget(appWidgetId);
+        if (device == null || !device.isInitialized()) {
+            GB.toast(context, context.getString(R.string.device_not_connected), Toast.LENGTH_SHORT, GB.ERROR);
+            if (device != null) {
+                GBApplication.deviceService(device).connect();
+                GB.toast(context, context.getString(R.string.connecting), Toast.LENGTH_SHORT, GB.INFO);
+            }
             return;
         }
-        GB.toast(context,
-                context.getString(R.string.busy_task_fetch_activity_data),
-                Toast.LENGTH_SHORT, GB.INFO);
-
-        GBApplication.deviceService(deviceForWidget).onFetchRecordedData(RecordedDataTypes.TYPE_ACTIVITY);
+        GB.toast(context, context.getString(R.string.busy_task_fetch_activity_data), Toast.LENGTH_SHORT, GB.INFO);
+        GBApplication.deviceService(device).onFetchRecordedData(RecordedDataTypes.TYPE_ACTIVITY);
     }
 
     public void updateWidget() {
-        Context context = GBApplication.getContext();
-        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-        ComponentName thisAppWidget = new ComponentName(context.getPackageName(), Widget.class.getName());
-        int[] appWidgetIds = appWidgetManager.getAppWidgetIds(thisAppWidget);
+        final Context context = GBApplication.getContext();
+        final AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+        final ComponentName thisAppWidget = new ComponentName(context.getPackageName(), Widget.class.getName());
+        final int[] appWidgetIds = appWidgetManager.getAppWidgetIds(thisAppWidget);
         onUpdate(context, appWidgetManager, appWidgetIds);
     }
 
-    public void removeWidget(Context context, int appWidgetId) {
-        WidgetPreferenceStorage widgetPreferenceStorage = new WidgetPreferenceStorage();
-        widgetPreferenceStorage.removeWidgetById(context, appWidgetId);
+    public void removeWidget(final Context context, final int appWidgetId) {
+        new WidgetPreferenceStorage().removeWidgetById(context, appWidgetId);
     }
 
     @Override
-    public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        // There may be multiple widgets active, so update all of them
-        for (int appWidgetId : appWidgetIds) {
+    public void onUpdate(final Context context, final AppWidgetManager appWidgetManager, final int[] appWidgetIds) {
+        for (final int appWidgetId : appWidgetIds) {
             updateAppWidget(context, appWidgetManager, appWidgetId);
         }
     }
 
     @Override
-    public void onEnabled(Context context) {
+    public void onEnabled(final Context context) {
         if (broadcastReceiver == null) {
-            LOG.debug("gbwidget BROADCAST receiver initialized.");
             broadcastReceiver = new BroadcastReceiver() {
                 @Override
-                public void onReceive(Context context, Intent intent) {
-                    LOG.debug("gbwidget BROADCAST, action" + intent.getAction());
+                public void onReceive(final Context context, final Intent intent) {
                     updateWidget();
                 }
             };
-            IntentFilter intentFilter = new IntentFilter();
+            final IntentFilter intentFilter = new IntentFilter();
             intentFilter.addAction(GBApplication.ACTION_NEW_DATA);
             intentFilter.addAction(GBDevice.ACTION_DEVICE_CHANGED);
             LocalBroadcastManager.getInstance(context).registerReceiver(broadcastReceiver, intentFilter);
@@ -329,7 +245,7 @@ public class Widget extends AppWidgetProvider {
     }
 
     @Override
-    public void onDisabled(Context context) {
+    public void onDisabled(final Context context) {
         if (broadcastReceiver != null) {
             AndroidUtils.safeUnregisterBroadcastReceiver(context, broadcastReceiver);
             broadcastReceiver = null;
@@ -337,29 +253,21 @@ public class Widget extends AppWidgetProvider {
     }
 
     @Override
-    public void onReceive(Context context, Intent intent) {
+    public void onReceive(final Context context, final Intent intent) {
         super.onReceive(context, intent);
-        LOG.debug("gbwidget LOCAL onReceive, action: " + intent.getAction() + intent);
-        Bundle extras = intent.getExtras();
+        final Bundle extras = intent.getExtras();
         int appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
         if (extras != null) {
-            appWidgetId = extras.getInt(
-                    AppWidgetManager.EXTRA_APPWIDGET_ID,
-                    AppWidgetManager.INVALID_APPWIDGET_ID);
+            appWidgetId = extras.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
         }
-
-        //this handles widget re-connection after apk updates
         if (WIDGET_CLICK.equals(intent.getAction())) {
             if (broadcastReceiver == null) {
                 onEnabled(context);
             }
-                refreshData(appWidgetId);
-            //updateWidget();
+            refreshData(appWidgetId);
         } else if (APPWIDGET_DELETED.equals(intent.getAction())) {
             onDisabled(context);
             removeWidget(context, appWidgetId);
         }
     }
-
 }
-

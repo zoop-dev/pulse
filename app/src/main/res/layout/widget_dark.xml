@@ -3,7 +3,7 @@
     android:id="@+id/strip_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/pulse_widget_bg_light"
+    android:background="@drawable/pulse_widget_bg_dark"
     android:orientation="vertical"
     android:padding="12dp">
 
@@ -34,7 +34,7 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:fontFamily="@font/plusjakarta_medium"
-            android:textColor="#6B6F78"
+            android:textColor="#8A8A93"
             android:textSize="11sp" />
 
         <ImageView
@@ -43,14 +43,14 @@
             android:layout_height="7dp"
             android:layout_marginEnd="5dp"
             android:contentDescription="@string/icon_placeholder"
-            android:background="@drawable/pulse_widget_dot_light" />
+            android:background="@drawable/pulse_widget_dot_dark" />
 
         <TextView
             android:id="@+id/strip_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/spacegrotesk_semibold"
-            android:textColor="#6B6F78"
+            android:textColor="#8A8A93"
             android:textSize="10sp" />
 
         <ImageView
@@ -89,7 +89,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/spacegrotesk_bold"
-                android:textColor="#16181D"
+                android:textColor="#ECEBE6"
                 android:textSize="17sp" />
 
             <TextView
@@ -99,7 +99,7 @@
                 android:textAllCaps="true"
                 android:letterSpacing="0.09"
                 android:fontFamily="@font/spacegrotesk_semibold"
-                android:textColor="#6B6F78"
+                android:textColor="#8A8A93"
                 android:textSize="9sp" />
 
             <ImageView
@@ -131,7 +131,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/spacegrotesk_bold"
-                android:textColor="#16181D"
+                android:textColor="#ECEBE6"
                 android:textSize="17sp" />
 
             <TextView
@@ -141,7 +141,7 @@
                 android:textAllCaps="true"
                 android:letterSpacing="0.09"
                 android:fontFamily="@font/spacegrotesk_semibold"
-                android:textColor="#6B6F78"
+                android:textColor="#8A8A93"
                 android:textSize="9sp" />
 
             <ImageView
@@ -173,7 +173,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/spacegrotesk_bold"
-                android:textColor="#16181D"
+                android:textColor="#ECEBE6"
                 android:textSize="17sp" />
 
             <TextView
@@ -183,7 +183,7 @@
                 android:textAllCaps="true"
                 android:letterSpacing="0.09"
                 android:fontFamily="@font/spacegrotesk_semibold"
-                android:textColor="#6B6F78"
+                android:textColor="#8A8A93"
                 android:textSize="9sp" />
 
             <ImageView
@@ -214,7 +214,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/spacegrotesk_bold"
-                android:textColor="#16181D"
+                android:textColor="#ECEBE6"
                 android:textSize="17sp" />
 
             <TextView
@@ -224,7 +224,7 @@
                 android:textAllCaps="true"
                 android:letterSpacing="0.09"
                 android:fontFamily="@font/spacegrotesk_semibold"
-                android:textColor="#6B6F78"
+                android:textColor="#8A8A93"
                 android:textSize="9sp" />
 
             <ImageView

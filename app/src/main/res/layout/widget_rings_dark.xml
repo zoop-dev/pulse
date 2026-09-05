@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rings_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/pulse_widget_bg_dark"
+    android:padding="12dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:baselineAligned="false"
+        android:gravity="center_vertical">
+
+        <FrameLayout
+            android:layout_width="112dp"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/rings_arc"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitCenter"
+                android:contentDescription="@string/icon_placeholder" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/rings_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/unbounded"
+                    android:textColor="#ECEBE6"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:id="@+id/rings_sub"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:textAllCaps="true"
+                    android:letterSpacing="0.08"
+                    android:fontFamily="@font/spacegrotesk_semibold"
+                    android:textColor="#8A8A93"
+                    android:textSize="8sp" />
+            </LinearLayout>
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="14dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/rings_wordmark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="PULSE"
+                android:fontFamily="@font/spacegrotesk_bold"
+                android:letterSpacing="0.14"
+                android:textColor="#1488D6"
+                android:textSize="10sp" />
+
+            <LinearLayout
+                android:id="@+id/rings_sub0"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:id="@+id/rings_sub0_label"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textAllCaps="true"
+                    android:letterSpacing="0.06"
+                    android:fontFamily="@font/plusjakarta_medium"
+                    android:textColor="#8A8A93"
+                    android:textSize="9sp" />
+
+                <TextView
+                    android:id="@+id/rings_sub0_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/spacegrotesk_semibold"
+                    android:textColor="#ECEBE6"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/rings_sub1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:id="@+id/rings_sub1_label"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textAllCaps="true"
+                    android:letterSpacing="0.06"
+                    android:fontFamily="@font/plusjakarta_medium"
+                    android:textColor="#8A8A93"
+                    android:textSize="9sp" />
+
+                <TextView
+                    android:id="@+id/rings_sub1_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/spacegrotesk_semibold"
+                    android:textColor="#ECEBE6"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/rings_sub2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:id="@+id/rings_sub2_label"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textAllCaps="true"
+                    android:letterSpacing="0.06"
+                    android:fontFamily="@font/plusjakarta_medium"
+                    android:textColor="#8A8A93"
+                    android:textSize="9sp" />
+
+                <TextView
+                    android:id="@+id/rings_sub2_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/spacegrotesk_semibold"
+                    android:textColor="#ECEBE6"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/rings_refresh"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_gravity="top|end"
+        android:src="@drawable/ic_ms_sync"
+        android:contentDescription="@string/icon_placeholder" />
+</FrameLayout>

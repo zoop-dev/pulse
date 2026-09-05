@@ -11,41 +11,20 @@
         android:orientation="vertical"
         android:padding="20dp">
 
-        <!-- Live preview -->
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/pulse_widget_preview"
-            android:textAllCaps="true"
-            android:textColor="?attr/pulseAccent"
-            android:textSize="12sp"
-            android:letterSpacing="0.08"
-            android:textStyle="bold"
-            android:layout_marginBottom="10dp" />
+            style="@style/PulseWidgetConfigSection"
+            android:text="@string/pulse_widget_preview" />
 
         <FrameLayout
+            android:id="@+id/widget_preview_host"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp">
+            android:minHeight="110dp"
+            android:layout_marginBottom="24dp" />
 
-            <include
-                android:id="@+id/widget_preview"
-                layout="@layout/widget"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </FrameLayout>
-
-        <!-- Device -->
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/pref_header_device"
-            android:textAllCaps="true"
-            android:textColor="?attr/pulseAccent"
-            android:textSize="12sp"
-            android:letterSpacing="0.08"
-            android:textStyle="bold"
-            android:layout_marginBottom="6dp" />
+            style="@style/PulseWidgetConfigSection"
+            android:text="@string/pref_header_device" />
 
         <LinearLayout
             android:id="@+id/widget_device_row"
@@ -76,79 +55,86 @@
                 android:textSize="15sp" />
         </LinearLayout>
 
-        <!-- Stats -->
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/pulse_widget_pick_stats"
-            android:textAllCaps="true"
-            android:textColor="?attr/pulseAccent"
-            android:textSize="12sp"
-            android:letterSpacing="0.08"
-            android:textStyle="bold"
-            android:layout_marginBottom="10dp" />
+            android:id="@+id/widget_metrics_label"
+            style="@style/PulseWidgetConfigSection"
+            android:text="@string/pulse_widget_metric" />
 
         <LinearLayout
+            android:id="@+id/widget_metrics_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_marginBottom="4dp">
+            android:orientation="vertical"
+            android:layout_marginBottom="24dp" />
 
-            <TextView
-                android:layout_width="64dp"
-                android:layout_height="wrap_content"
-                android:text="@string/pulse_widget_slot_1"
-                android:textColor="@color/pulse_text_dim"
-                android:textSize="14sp" />
-
-            <Spinner
-                android:id="@+id/widget_slot0"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-        </LinearLayout>
+        <TextView
+            style="@style/PulseWidgetConfigSection"
+            android:text="@string/pulse_widget_accent" />
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_marginBottom="4dp">
-
-            <TextView
-                android:layout_width="64dp"
-                android:layout_height="wrap_content"
-                android:text="@string/pulse_widget_slot_2"
-                android:textColor="@color/pulse_text_dim"
-                android:textSize="14sp" />
-
-            <Spinner
-                android:id="@+id/widget_slot1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-        </LinearLayout>
-
-        <LinearLayout
+            android:id="@+id/widget_accent_row"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
             android:layout_marginBottom="24dp">
 
-            <TextView
-                android:layout_width="64dp"
-                android:layout_height="wrap_content"
-                android:text="@string/pulse_widget_slot_3"
-                android:textColor="@color/pulse_text_dim"
-                android:textSize="14sp" />
+            <View android:id="@+id/widget_accent_0" android:layout_width="30dp" android:layout_height="30dp" android:layout_marginEnd="16dp" android:background="@drawable/pulse_widget_swatch" />
+            <View android:id="@+id/widget_accent_1" android:layout_width="30dp" android:layout_height="30dp" android:layout_marginEnd="16dp" android:background="@drawable/pulse_widget_swatch" />
+            <View android:id="@+id/widget_accent_2" android:layout_width="30dp" android:layout_height="30dp" android:layout_marginEnd="16dp" android:background="@drawable/pulse_widget_swatch" />
+            <View android:id="@+id/widget_accent_3" android:layout_width="30dp" android:layout_height="30dp" android:layout_marginEnd="16dp" android:background="@drawable/pulse_widget_swatch" />
+            <View android:id="@+id/widget_accent_4" android:layout_width="30dp" android:layout_height="30dp" android:background="@drawable/pulse_widget_swatch" />
+        </LinearLayout>
 
-            <Spinner
-                android:id="@+id/widget_slot2"
+        <TextView
+            style="@style/PulseWidgetConfigSection"
+            android:text="@string/pulse_widget_theme" />
+
+        <LinearLayout
+            android:id="@+id/widget_theme_row"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/pulse_widget_segment_track"
+            android:padding="3dp"
+            android:layout_marginBottom="24dp">
+
+            <TextView android:id="@+id/widget_theme_auto" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:paddingVertical="9dp" android:text="@string/pulse_widget_theme_auto" android:textColor="@color/pulse_text" android:textSize="13sp" />
+            <TextView android:id="@+id/widget_theme_light" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:paddingVertical="9dp" android:text="@string/pulse_widget_theme_light" android:textColor="@color/pulse_text_dim" android:textSize="13sp" />
+            <TextView android:id="@+id/widget_theme_dark" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:paddingVertical="9dp" android:text="@string/pulse_widget_theme_dark" android:textColor="@color/pulse_text_dim" android:textSize="13sp" />
+        </LinearLayout>
+
+        <TextView
+            style="@style/PulseWidgetConfigSection"
+            android:text="@string/pulse_widget_tap" />
+
+        <LinearLayout
+            android:id="@+id/widget_tap_row"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/pulse_widget_bg"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="16dp"
+            android:layout_marginBottom="28dp"
+            android:clickable="true"
+            android:focusable="true">
+
+            <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:text="@string/pulse_widget_tap"
+                android:textColor="@color/pulse_text_dim"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/widget_tap_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/pulse_text"
+                android:textStyle="bold"
+                android:textSize="15sp" />
         </LinearLayout>
 
         <Button

@@ -33,8 +33,17 @@ echo "building release (r8)…"
 ./gradlew :app:assembleMainlineRelease --no-daemon -x lintVitalMainlineRelease
 
 VCODE=$(grep -oE 'versionCode +[0-9]+' app/build.gradle | grep -oE '[0-9]+' | head -1)
+VNAME=$(grep -oE 'versionName +"[^"]+"' app/build.gradle | grep -oE '"[^"]+"' | tr -d '"' | head -1)-pulse
 UNSIGNED=$(ls -t app/build/outputs/apk/mainline/release/*.apk | head -1)
 mkdir -p fdroid/repo/icons
+
+# keep the "suggested version" metadata in lockstep with the actual build - a stale
+# CurrentVersionCode here makes fdroidserver point clients at an older APK (it clamps
+# suggestedVersionCode down to the highest one that actually exists in the repo).
+sed -i \
+    -e "s/^CurrentVersion:.*/CurrentVersion: ${VNAME}/" \
+    -e "s/^CurrentVersionCode:.*/CurrentVersionCode: ${VCODE}/" \
+    fdroid/metadata/cc.zachy.pulse.yml
 
 echo "signing…"
 APKSIGNER=$(ls "$ANDROID_HOME"/build-tools/*/apksigner 2>/dev/null | sort -V | tail -1)
@@ -55,7 +64,7 @@ PUB=$(mktemp -d)
 mkdir -p "$PUB/repo"
 cp -r fdroid/repo/. "$PUB/repo/"
 python3 - "$FINGERPRINT" "$PUB" <<'PY'
-import sys, json
+import sys, json, urllib.parse
 fp, pub = sys.argv[1], sys.argv[2]
 try:
     import qrcode
@@ -69,10 +78,27 @@ for p in pkgs.values():
     name = p["metadata"]["name"]["en-US"]
     ver = max(p["versions"].values(), key=lambda v: v["manifest"]["versionCode"])["manifest"]["versionName"]
     apps.append(f"{name} {ver}")
+
+# "Add to Obtainium" deep link for our main app - overrideSource "FDroidRepo" and
+# additionalSettings.appIdOrName are what Obtainium actually reads on import (verified
+# via a real export from the app, not the wiki docs, which don't document this field).
+app_id = "cc.zachy.pulse"
+app_name = pkgs.get(app_id, {}).get("metadata", {}).get("name", {}).get("en-US", "Pulse")
+obtainium_cfg = {
+    "id": app_id,
+    "url": f"https://fdroid.zachy.cc/repo?appId={app_id}",
+    "author": "zoop",
+    "name": app_name,
+    "overrideSource": "FDroidRepo",
+    "additionalSettings": json.dumps({"appIdOrName": app_id}),
+}
+obtainium_link = urllib.parse.quote(json.dumps(obtainium_cfg), safe="")
+
 html = open("fdroid/landing.html").read()
 html = (html.replace("__FP__", fp)
             .replace("__APPCOUNT__", str(len(pkgs)))
-            .replace("__APPS__", ", ".join(sorted(apps))))
+            .replace("__APPS__", ", ".join(sorted(apps)))
+            .replace("__OBTAINIUM__", obtainium_link))
 open(f"{pub}/index.html", "w").write(html)
 PY
 
