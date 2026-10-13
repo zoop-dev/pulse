@@ -247,6 +247,93 @@ public class WaypointHelperTest extends TestBase {
         }
     }
 
+    private static void assertPosition(String input, WaypointHelper actual, String name, double latitude, double longitude) {
+        Assert.assertNotNull(input, actual);
+        Assert.assertEquals(input, name, actual.getName());
+        Assert.assertNotNull(input, actual.getLatitude());
+        Assert.assertNotNull(input, actual.getLongitude());
+        Assert.assertEquals(input, latitude, actual.getLatitude(), 1e-9);
+        Assert.assertEquals(input, longitude, actual.getLongitude(), 1e-9);
+    }
+
+    @Test
+    public void TestPlusCodes() {
+        // center of 8FVC2222+22
+        final double zLat = 47.0000625;
+        final double zLong = 8.0000625;
+        final String[] full = {
+                "8FVC2222+22",
+                "8fvc2222+22",
+                " 8FVC2222+22 ",
+                "Meet at 8FVC2222+22, gate 3",
+                "https://plus.codes/8FVC2222+22",
+                "https://plus.codes/8FVC2222%2B22",
+                "https://www.google.com/maps/search/?api=1&query=8FVC2222%2B22",
+        };
+        for (String input : full) {
+            assertPosition(input, WaypointHelper.Companion.fromText(input), null, zLat, zLong);
+        }
+
+        // short codes need a reference position: QM9X+83 near Ho Chi Minh City is 7P28QM9X+83
+        final WaypointHelper saigon = new WaypointHelper(null, 10.77, 106.69, null);
+        final double sLat = 10.7683125;
+        final double sLong = 106.6976875;
+        final String[] shortCodes = {
+                "QM9X+83",
+                "QM9X+83 Ho Chi Minh City, Vietnam",
+                "https://plus.codes/QM9X%2B83",
+                "https://www.google.com/maps/search/?api=1&query=QM9X%2B83+Ho+Chi+Minh+City",
+        };
+        for (String input : shortCodes) {
+            assertPosition(input, WaypointHelper.Companion.fromText(input, saigon), null, sLat, sLong);
+            Assert.assertNull(input, WaypointHelper.Companion.fromText(input));
+            Assert.assertTrue(input, WaypointHelper.Companion.containsShortPlusCode(input));
+        }
+        Assert.assertFalse(WaypointHelper.Companion.containsShortPlusCode("8FVC2222+22"));
+        Assert.assertFalse(WaypointHelper.Companion.containsShortPlusCode("-34.603889, -58.381389"));
+
+        // not Plus Codes
+        // a code needs digits before the "+": "+855" alone is a valid short code, but here a phone prefix
+        final String[] invalid = {"8FVC2222+2", "8FVC2222+22+", "CAFE+22", "1600+Amphitheatre+Parkway", "QM9X+83Z", "Call +855 23 999 999"};
+        for (String input : invalid) {
+            Assert.assertNull(input, WaypointHelper.Companion.fromText(input, saigon));
+        }
+    }
+
+    @Test
+    public void TestPlusCodeGeoUri() {
+        final WaypointHelper saigon = new WaypointHelper(null, 10.77, 106.69, null);
+        final double sLat = 10.7683125;
+        final double sLong = 106.6976875;
+
+        String input = "geo:0,0?q=8FVC2222+22";
+        assertPosition(input, WaypointHelper.Companion.fromGeoUri(Uri.parse(input)), null, 47.0000625, 8.0000625);
+
+        input = "geo:0,0?q=8FVC2222%2B22(Camp)";
+        assertPosition(input, WaypointHelper.Companion.fromGeoUri(Uri.parse(input)), "Camp", 47.0000625, 8.0000625);
+
+        input = "geo:0,0?q=QM9X+83+Ho+Chi+Minh+City";
+        assertPosition(input, WaypointHelper.Companion.fromGeoUri(Uri.parse(input), saigon), "Ho Chi Minh City", sLat, sLong);
+
+        // the geo: position is the reference, no other position needed
+        input = "geo:10.77,106.69?q=QM9X+83";
+        assertPosition(input, WaypointHelper.Companion.fromGeoUri(Uri.parse(input)), null, sLat, sLong);
+
+        // short code, no reference: nothing to place
+        input = "geo:0,0?q=QM9X+83";
+        Assert.assertNull(input, WaypointHelper.Companion.fromGeoUri(Uri.parse(input)));
+        Assert.assertNull(input, WaypointHelper.Companion.fromText(input));
+        assertPosition(input, WaypointHelper.Companion.fromText(input, saigon), null, sLat, sLong);
+
+        // short code with a label but no reference keeps the label
+        input = "geo:0,0?q=QM9X+83(Camp)";
+        final WaypointHelper labelOnly = WaypointHelper.Companion.fromGeoUri(Uri.parse(input));
+        Assert.assertNotNull(input, labelOnly);
+        Assert.assertEquals("Camp", labelOnly.getName());
+        Assert.assertNull(labelOnly.getLatitude());
+        Assert.assertNull(labelOnly.getLongitude());
+    }
+
     @Test
     public void TestToString() {
         ToStringRoundTrip(ACONCAGUA, "geo:-32.653056,-70.011667,6967.150000?q=-32.653056,-70.011667(Aconcagua)");

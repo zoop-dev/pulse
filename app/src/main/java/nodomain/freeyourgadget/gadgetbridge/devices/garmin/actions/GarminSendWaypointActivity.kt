@@ -45,6 +45,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.AbstractDeviceSupport.BUNDLE
 import nodomain.freeyourgadget.gadgetbridge.util.GB
 import nodomain.freeyourgadget.gadgetbridge.util.WaypointHelper
 import nodomain.freeyourgadget.gadgetbridge.util.kotlin.getParcelableCompat
+import nodomain.freeyourgadget.gadgetbridge.webview.CurrentPosition
 import org.slf4j.LoggerFactory
 
 class GarminSendWaypointActivity : AbstractGBActivity() {
@@ -98,7 +99,7 @@ class GarminSendWaypointActivity : AbstractGBActivity() {
 
         val noLocationShared = intent.getBooleanExtra(EXTRA_NO_LOCATION_SHARED, false)
         if (!noLocationShared && binding.waypointLatitude.length() < 1) {
-            val waypointHelper = WaypointHelper.fromIntent(intent)
+            val waypointHelper = WaypointHelper.fromIntent(intent, referencePosition())
             if (waypointHelper != null) {
                 binding.waypointName.setText(waypointHelper.name)
                 if (waypointHelper.latitude != null) {
@@ -128,7 +129,7 @@ class GarminSendWaypointActivity : AbstractGBActivity() {
         binding.waypointPaste.setOnClickListener(ClickToPaste())
 
         if (!noLocationShared && binding.waypointLatitude.length() < 1) {
-            noLocationFound()
+            noLocationFound(intent.dataString ?: intent.getCharSequenceExtra(Intent.EXTRA_TEXT))
         }
 
         LocalBroadcastManager.getInstance(this).registerReceiver(receiver, IntentFilter().apply {
@@ -141,13 +142,29 @@ class GarminSendWaypointActivity : AbstractGBActivity() {
         super.onDestroy()
     }
 
-    fun noLocationFound() {
+    fun noLocationFound(received: CharSequence? = null) {
+        val shortPlusCode = WaypointHelper.containsShortPlusCode(received)
         MaterialAlertDialogBuilder(this)
             .setIcon(R.drawable.ic_not_listed_location)
             .setTitle(R.string.activity_send_waypoint_no_location)
-            .setMessage(R.string.activity_send_waypoint_no_location_details)
+            .setMessage(
+                if (shortPlusCode) {
+                    R.string.activity_send_waypoint_short_plus_code_details
+                } else {
+                    R.string.activity_send_waypoint_no_location_details
+                }
+            )
             .setNeutralButton(android.R.string.ok, null)
             .show()
+    }
+
+    /** Position used to recover short Plus Codes, null if none is known. */
+    private fun referencePosition(): WaypointHelper? {
+        val location = CurrentPosition().lastKnownLocation ?: return null
+        if (location.latitude == 0.0 && location.longitude == 0.0) {
+            return null
+        }
+        return WaypointHelper(null, location.latitude, location.longitude, null)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -166,13 +183,15 @@ class GarminSendWaypointActivity : AbstractGBActivity() {
             ) as ClipboardManager?
 
             val clipData = clipboard?.primaryClip
+            var pasted: CharSequence? = null
             if (clipData != null) {
                 var index = 0
                 while (index < clipData.itemCount) {
                     val item = clipData.getItemAt(index)
                     val text = item.coerceToText(view.context)
                     if (text.length > 0) {
-                        val waypointHelper = WaypointHelper.fromText(text)
+                        pasted = text
+                        val waypointHelper = WaypointHelper.fromText(text, referencePosition())
                         if (waypointHelper != null) {
                             binding.waypointName.setText(waypointHelper.name)
                             if (waypointHelper.latitude != null) {
@@ -188,13 +207,16 @@ class GarminSendWaypointActivity : AbstractGBActivity() {
                                 }
                                 binding.waypointElevation.setText(elevation.toString())
                             }
+                            if (waypointHelper.latitude == null) {
+                                noLocationFound(text)
+                            }
                             return
                         }
                     }
                     index++
                 }
             }
-            noLocationFound()
+            noLocationFound(pasted)
         }
 
     }

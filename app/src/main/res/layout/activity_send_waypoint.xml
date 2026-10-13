@@ -109,6 +109,13 @@
         </LinearLayout>
 
         <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/about_margin"
+            android:text="@string/activity_send_waypoint_paste_hint"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <TextView
             android:id="@+id/waypoint_info_0"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

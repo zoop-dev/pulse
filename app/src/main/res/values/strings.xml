@@ -5188,9 +5188,11 @@
     </plurals>
     <string name="activity_send_waypoint_name_missing">name is empty</string>
     <string name="activity_send_waypoint_paste">Paste</string>
+    <string name="activity_send_waypoint_paste_hint">Paste or share coordinates, a geo: link or a Plus Code (8FVC9G8F+6X).</string>
     <string name="activity_send_waypoint_titel">Send Waypoint</string>
     <string name="activity_send_waypoint_no_location">No Location</string>
     <string name="activity_send_waypoint_no_location_details">No location information found in the received data.</string>
+    <string name="activity_send_waypoint_short_plus_code_details">A short Plus Code needs a nearby position to find its place. Set your location in the Gadgetbridge settings, or use the full code (for example 8FVC9G8F+6X instead of 9G8F+6X).</string>
     <string name="activity_send_waypoint_to_device">Send</string>
 
     <!-- Export Health Connect preferences -->

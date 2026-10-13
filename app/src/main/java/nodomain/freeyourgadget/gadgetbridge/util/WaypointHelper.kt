@@ -82,9 +82,17 @@ data class WaypointHelper(
 
         private val REGEX_DMS by lazy { Regex("""^([NnSs+-])?\s*(\d+)[°ºd:_\s/-]\s*(\d+)[’'′:_\s/-]\s*(\d+(?:[.]\d+)?)[″"¨˝]?\s*([NnSs]?)[/\\|,;\s]*([EeWw+-])?\s*(\d+)[°ºd:_\s/-]\s*(\d+)[’'′:_\s/-]\s*(\d+(?:[.]\d+)?)[″"¨˝]?\s*([EeWw]?)""") }
         private val REGEX_DM by lazy { Regex("""^([NnSs+-])?\s*(\d+)[°ºd:_\s/-]\s*(\d+(?:[.]\d+)?)[’'′:]?\s*([NnSs]?)[/\\|,;\s]*([EeWw+-])?\s*(\d+)[°ºd:_\s/-]\s*(\d+(?:[.]\d+)?)[’'′:]?\s*([EeWw]?)""") }
+        // Plus Code, "+" possibly URL encoded, e.g. 7P2QQM9X+83, QM9X+83, plus.codes/7P2QQM9X%2B83
+        // A "+" right after the code is only allowed as an encoded space before a word (QM9X%2B83+Hue)
+        private val REGEX_PLUS_CODE by lazy { Regex("""(?<![0-9A-Za-z+])([23456789CFGHJMPQRVWXcfghjmpqrvwx]{2,8}0*(?:\+|%2[Bb])[23456789CFGHJMPQRVWXcfghjmpqrvwx]*)(?![0-9A-Za-z])(?!\+(?![A-Za-z]))""") }
         private val REGEX_DD by lazy { Regex("""^([NnSs+-])?\s*(\d+[.]\d+)[°º]?\s*([NnSs]?)[/\\|,;\s]*([EeWw+-])?\s*(\d+[.]\d+)[°º]?\s*([EeWw]?)""") }
 
-        fun fromIntent(intent: Intent?): WaypointHelper? {
+        /**
+         * [near] is an optional reference position, used to recover short Plus Codes
+         * (like QM9X+83) that come without coordinates of their own.
+         */
+        @JvmOverloads
+        fun fromIntent(intent: Intent?, near: WaypointHelper? = null): WaypointHelper? {
             if (intent == null) {
                 return null
             }
@@ -95,7 +103,7 @@ data class WaypointHelper(
             }
 
             if (uri != null) {
-                val wh = fromGeoUri(uri)
+                val wh = fromGeoUri(uri, near)
                 if (wh != null) {
                     return wh
                 }
@@ -106,11 +114,12 @@ data class WaypointHelper(
                 text = intent.getStringExtra(Intent.EXTRA_TEXT)
             }
 
-            return fromText(text)
+            return fromText(text, near)
         }
 
         // see WaypointHelperTest for example text formats
-        fun fromText(text: CharSequence?): WaypointHelper? {
+        @JvmOverloads
+        fun fromText(text: CharSequence?, near: WaypointHelper? = null): WaypointHelper? {
             if (text == null || text.length < 1) {
                 return null
             }
@@ -121,7 +130,7 @@ data class WaypointHelper(
                 try {
                     val uriText = geoMatchResult.groupValues[1]
                     val pastedUri = uriText.toUri()
-                    val wh = fromGeoUri(pastedUri)
+                    val wh = fromGeoUri(pastedUri, near)
                     if (wh != null) {
                         return wh
                     }
@@ -201,7 +210,9 @@ data class WaypointHelper(
             }
 
             if (latDeg == null || lonDeg == null) {
-                return null
+                val plusCode = findPlusCode(clean)
+                val position = plusCode?.let { decodePlusCode(it, near) } ?: return null
+                return WaypointHelper(null, position.first, position.second, null)
             }
 
             var lat: Double = latDeg
@@ -234,7 +245,8 @@ data class WaypointHelper(
         }
 
         // see WaypointHelperTest for example Uris
-        fun fromGeoUri(uri: Uri?): WaypointHelper? {
+        @JvmOverloads
+        fun fromGeoUri(uri: Uri?, near: WaypointHelper? = null): WaypointHelper? {
             if (uri == null) {
                 return null
             }
@@ -300,8 +312,87 @@ data class WaypointHelper(
                 }
             }
 
+            // geo:0,0?q=7P2QQM9X+83(Camp), or a short code near the given position:
+            // geo:13.36,103.86?q=QM9X+83
+            // getQueryParameter turns "+" into " ", so the Plus Code is taken from the raw query
+            val rawQ = rawQueryParameter(cleanUri, "q")
+            val plusCode = if (rawQ == null) null else findPlusCode(rawQ)
+            if (plusCode != null && REGEX_GEO_LABEL.matchEntire(rawQ!!.trim()) == null) {
+                val uriPosition = if (lat?.isFinite() == true && long?.isFinite() == true && (lat != 0.0 || long != 0.0)) {
+                    WaypointHelper(null, lat, long, null)
+                } else {
+                    null
+                }
+                val position = decodePlusCode(plusCode, uriPosition ?: near)
+                label = plusCodeLabel(rawQ, plusCode)
+                if (position == null && label == null) {
+                    return null
+                }
+                return WaypointHelper(label, position?.first, position?.second, ele)
+            }
+
             if (lat?.isFinite() == true || long?.isFinite() == true || ele?.isFinite() == true || !label.isNullOrEmpty()) {
                 return WaypointHelper(label, lat, long, ele)
+            }
+            return null
+        }
+
+        /** Whether the text holds a short Plus Code, which needs a reference position to decode. */
+        fun containsShortPlusCode(text: CharSequence?): Boolean {
+            if (text.isNullOrEmpty()) {
+                return false
+            }
+            val code = findPlusCode(Uri.decode(text.toString())) ?: return false
+            return OpenLocationCode.isShort(code)
+        }
+
+        /** First valid Plus Code in the text, with the separator decoded. */
+        private fun findPlusCode(text: String): String? {
+            for (match in REGEX_PLUS_CODE.findAll(text)) {
+                val code = match.groupValues[1].replace("%2B", "+").replace("%2b", "+")
+                if (OpenLocationCode.isValid(code)) {
+                    return code
+                }
+            }
+            return null
+        }
+
+        /** Center of the Plus Code area, or null for a short code without a usable reference. */
+        private fun decodePlusCode(code: String, near: WaypointHelper?): Pair<Double, Double>? {
+            val full = if (OpenLocationCode.isFull(code)) {
+                code
+            } else if (OpenLocationCode.isShort(code)) {
+                val refLat = near?.latitude
+                val refLong = near?.longitude
+                if (refLat == null || refLong == null || !refLat.isFinite() || !refLong.isFinite()) {
+                    return null
+                }
+                OpenLocationCode.recoverNearest(code, refLat, refLong)
+            } else {
+                return null
+            }
+            val area = OpenLocationCode.decode(full)
+            return Pair(area.centerLatitude, area.centerLongitude)
+        }
+
+        /** "(Camp)" label if present, otherwise any text left around the Plus Code. */
+        private fun plusCodeLabel(query: String, code: String): String? {
+            val bracket = Regex("""[(](.*)[)]\s*$""").find(query)
+            if (bracket != null) {
+                return bracket.groupValues[1].trim().ifEmpty { null }
+            }
+            val rest = query.replace(code, " ").replace(Regex("""[\s,;+]+"""), " ").trim()
+            return rest.ifEmpty { null }
+        }
+
+        /** Query parameter without turning "+" into a space, unlike [Uri.getQueryParameter]. */
+        private fun rawQueryParameter(uri: Uri, name: String): String? {
+            val query = uri.encodedQuery ?: return null
+            for (part in query.split('&')) {
+                val eq = part.indexOf('=')
+                if (eq > 0 && part.substring(0, eq) == name) {
+                    return Uri.decode(part.substring(eq + 1))
+                }
             }
             return null
         }
