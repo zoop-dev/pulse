@@ -207,6 +207,7 @@ public class KhmerTransliterator implements Transliterator {
                     hadVowel = true;
                 }
             } else {
+                hadVowel &= isKhmerLetter(c); // symbols without a rule, such as ៛, end the word too
                 output.append(c);
             }
             pos++;

@@ -58,6 +58,9 @@ public class KhmerTransliteratorTest extends TestCase {
         Assert.assertEquals("ka kâ", transliterator.transliterate("កា ក"));
         Assert.assertEquals("ka kâ", transliterator.transliterate("កា\u200Bក"));
         Assert.assertEquals("ka.kâ", transliterator.transliterate("កា។ក"));
+        // so do Khmer symbols without a romanization
+        Assert.assertEquals("ka៛kâ", transliterator.transliterate("កា៛ក"));
+        Assert.assertEquals("ka៚kâ", transliterator.transliterate("កា៚ក"));
     }
 
     @Test
