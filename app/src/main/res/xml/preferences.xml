@@ -179,6 +179,13 @@
         android:title="@string/pref_header_notifications"
         app:iconSpaceReserved="false" />
 
+    <Preference
+        android:icon="@drawable/ic_heart"
+        android:key="pref_category_healthconnect"
+        android:summary="@string/pulse_settings_healthconnect_desc"
+        android:title="@string/healthconnect_settings"
+        app:iconSpaceReserved="false" />
+
     <PreferenceScreen
         android:icon="@drawable/ic_paint"
         android:key="pref_screen_user_interface"

@@ -7,8 +7,9 @@ cd "$(dirname "$0")"
 
 MSG="${1:-deploy}"
 OUT=pulse-vs-gadgetbridge.diff
-# wherever our fork currently branches off upstream (tracks syncs automatically)
-BASE=$(git merge-base HEAD upstream/master 2>/dev/null || echo 79ad5a6)
+# upstream tip we track - our syncs squash upstream in, so merge-base points at the
+# ancient 2017 fork point rather than the sync point and must not be used here
+BASE=$(git rev-parse upstream/master 2>/dev/null || echo 79ad5a6)
 
 if [ -z "$SKIP_BUILD" ]; then
     echo "building…"

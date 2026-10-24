@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Pulse changelog. Newest release on top. -->
 <changelog>
+    <release version="0.99.1" versioncode="259">
+        <change>Fixed the Today tiles cutting off their values at larger system font sizes</change>
+        <change>Restored Settings &#8250; Health Connect, for sharing your health data with other apps</change>
+        <change>Fixed Max Speed and pace showing impossible values on part-synced workouts</change>
+    </release>
     <release version="0.99.0" versioncode="258">
         <change>New: Settings &#8250; Advanced &#8250; Send debug logs &#8212; bundle your recent logs and send them to the developer to help track down a bug</change>
         <change>The crash notification can now send a full debug report in one tap</change>

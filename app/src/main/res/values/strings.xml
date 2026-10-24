@@ -5536,6 +5536,7 @@
     <string name="pulse_accent_title">Accent color</string>
     <string name="pulse_settings_appearance_desc">Theme, colors and home screen</string>
     <string name="pulse_settings_notifications_desc">Choose what reaches your watch</string>
+    <string name="pulse_settings_healthconnect_desc">Share your health data with other apps</string>
     <string name="pulse_settings_devices">Devices</string>
     <string name="pulse_settings_devices_desc">Add or manage your watch</string>
     <string name="pulse_settings_weather_desc">Send local weather to your watch</string>

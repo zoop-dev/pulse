@@ -85,6 +85,15 @@ import nodomain.freeyourgadget.gadgetbridge.util.StringUtils;
 
 public class GarminWorkoutParser implements ActivitySummaryParser {
     private static final Logger LOG = LoggerFactory.getLogger(GarminWorkoutParser.class);
+    private static final double MAX_PLAUSIBLE_SPEED_MPS = 1000;
+
+    private static boolean isPlausibleSpeed(final Number speed) {
+        if (speed == null) {
+            return false;
+        }
+        final double mps = speed.doubleValue();
+        return !Double.isNaN(mps) && mps > 0 && mps < MAX_PLAUSIBLE_SPEED_MPS;
+    }
 
     private final Context context;
 
@@ -549,7 +558,7 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
         if (speedAvg == null) {
             speedAvg = session.getAvgSpeed();
         }
-        if (speedAvg != null) {
+        if (isPlausibleSpeed(speedAvg)) {
             if (ActivityKind.isPaceActivity(activityKind)) {
                 summaryData.add(PACE_AVG_SECONDS_KM, 1000.0 / speedAvg.doubleValue(), UNIT_SECONDS_PER_KM);
             } else if (ActivityKind.isDiving(activityKind)) {
@@ -563,7 +572,7 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
         if (speedMax == null) {
             speedMax = session.getMaxSpeed();
         }
-        if (speedMax != null) {
+        if (isPlausibleSpeed(speedMax)) {
             if (ActivityKind.isPaceActivity(activityKind)) {
                 summaryData.add(PACE_MAX, 1000.0 / speedMax.doubleValue(), UNIT_SECONDS_PER_KM);
             } else if (ActivityKind.isDiving(activityKind)) {

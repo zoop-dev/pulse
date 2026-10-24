@@ -37,6 +37,8 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.SwitchPreferenceCompat;
 
+import androidx.health.connect.client.HealthConnectClient;
+
 import com.bytehamster.lib.preferencesearch.SearchPreferenceResult;
 import com.google.android.material.color.DynamicColors;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -52,6 +54,7 @@ import nodomain.freeyourgadget.gadgetbridge.Logging;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.charts.ChartsPreferencesActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.discovery.DiscoveryPairingPreferenceActivity;
+import nodomain.freeyourgadget.gadgetbridge.activities.preferences.HealthConnectPreferencesActivity;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.TimeChangeReceiver;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
@@ -319,6 +322,18 @@ public class SettingsActivity extends AbstractSettingsActivityV2 {
                     startActivity(enableIntent);
                     return true;
                 });
+            }
+
+            pref = findPreference("pref_category_healthconnect");
+            if (pref != null) {
+                if (HealthConnectClient.getSdkStatus(requireContext()) == HealthConnectClient.SDK_UNAVAILABLE) {
+                    pref.setVisible(false);
+                } else {
+                    pref.setOnPreferenceClickListener(preference -> {
+                        startActivity(new Intent(requireContext(), HealthConnectPreferencesActivity.class));
+                        return true;
+                    });
+                }
             }
 
             final Preference theme = findPreference("pref_key_theme");

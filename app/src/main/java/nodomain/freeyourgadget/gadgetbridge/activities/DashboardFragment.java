@@ -2354,6 +2354,24 @@ public class DashboardFragment extends Fragment implements MenuProvider {
         if (carouselPage >= pages.size()) carouselPage = 0;
         todayCarousel.setCurrentItem(carouselPage, false);
 
+        todayCarousel.post(() -> {
+            if (!isAdded() || todayCarousel == null) return;
+            final int w = todayCarousel.getWidth();
+            if (w <= 0) return;
+            int needed = dp(188, scale);
+            for (final View page : pages) {
+                page.measure(
+                        View.MeasureSpec.makeMeasureSpec(w, View.MeasureSpec.EXACTLY),
+                        View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+                needed = Math.max(needed, page.getMeasuredHeight());
+            }
+            final View host = requireView().findViewById(R.id.pulse_carousel_host);
+            if (host != null && host.getLayoutParams().height != needed) {
+                host.getLayoutParams().height = needed;
+                host.requestLayout();
+            }
+        });
+
         carouselDots.removeAllViews();
         for (int i = 0; i < pages.size(); i++) {
             final View dot = new View(ctx);
@@ -2627,9 +2645,8 @@ public class DashboardFragment extends Fragment implements MenuProvider {
         tcol.addView(val);
         row.addView(tcol, tlp);
 
-        // Fixed content height so the proportional fill is bounded (this column isn't
-        // height-constrained like the grid, so MATCH_PARENT would grow unbounded).
-        final int tileH = dp(60, scale);
+        final float fontScale = Math.max(1f, ctx.getResources().getConfiguration().fontScale);
+        final int tileH = Math.round(dp(60, scale) * fontScale);
         final android.widget.FrameLayout frame = new android.widget.FrameLayout(ctx);
         // Clip the (rectangular) fill layer to the card's rounded corners.
         final float radiusPx = dp(20, scale);
